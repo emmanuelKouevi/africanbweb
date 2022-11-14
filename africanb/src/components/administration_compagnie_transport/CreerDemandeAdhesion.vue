@@ -2,7 +2,7 @@
     <v-app>
         <v-form>
             <v-card max-width="1500px" class="mx-auto">
-                <v-card-title class="title">CREER UNE COMPAGNIE</v-card-title>
+                <v-card-title class="title">CREER UNE DEMANDE D'ADHESION</v-card-title>
                 
                 <v-container>
                     <v-row>
@@ -45,9 +45,9 @@
 
 <script>
 export default {
-    name:"CreerModifierCompagnieTransport",
+    name:'CreerModifierAdhesion',
     data(){
-        return{}
+
     },
 }
 </script>

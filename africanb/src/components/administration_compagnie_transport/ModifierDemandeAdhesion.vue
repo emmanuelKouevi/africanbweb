@@ -2,7 +2,7 @@
     <v-app>
         <v-form>
             <v-card max-width="1500px" class="mx-auto">
-                <v-card-title class="title">CREER UNE COMPAGNIE</v-card-title>
+                <v-card-title class="title">CREER UNE DEMANDE D'ADHESION</v-card-title>
                 
                 <v-container>
                     <v-row>
@@ -35,8 +35,8 @@
             </v-card>   
             
             <v-row class="mt-5" justify-lg="space-between">
-                <v-col cols="5"><v-btn color="secondary"><v-icon>mdi-sync</v-icon> REINITIALISER</v-btn></v-col>
-                <v-col cols="5"><v-btn color="primary"><v-icon>mdi-check</v-icon> CREER</v-btn></v-col>
+                <v-col cols="5"><v-btn color="secondary"><v-icon>mdi-sync</v-icon> RETOUR</v-btn></v-col>
+                <v-col cols="5"><v-btn color="primary"><v-icon>mdi-check</v-icon> MODIFIER</v-btn></v-col>
             </v-row>
         
         </v-form>
@@ -45,16 +45,9 @@
 
 <script>
 export default {
-    name:"CreerModifierCompagnieTransport",
+    name:'ModifierDemandeAdhesion',
     data(){
         return{}
     },
 }
 </script>
-
-<style scoped>
-    .title{
-        color: teal;
-        font-weight: bold;
-    }
-</style>
