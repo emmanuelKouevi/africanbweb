@@ -108,7 +108,7 @@ export default {
       { title: 'A PROPOS', icon: 'mdi-help' },
     ],
     cruds: [
-      ['NOUVELLE COMPAGNIE' , 'mdi-plus-outline' , '/creerModifierCompagnieTransport'],
+      ['NOUVELLE COMPAGNIE' , 'mdi-plus-outline' , '/creerCompagnieTransport'],
       ['ADMINISTRER' , 'mdi-gesture-tap-button' , '/selectionnerCompagnieTransport'],
     ],
   }),

@@ -2,7 +2,8 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import HomeView from '../views/HomeView.vue'
 
-import creerModifierCompagnieTransport from '../components/administrateur_societe/CreerModifierCompagnieTransport'
+import creerCompagnieTransport from '../components/administrateur_societe/CreerCompagnieTransport'
+import modifierCompagnieTransport from '../components/administrateur_societe/ModifierCompagnieTransport'
 import selectionnerCompagnieTransport from '../components/administrateur_societe/SelectionnerCompagnieTransport'
 import selectionnerDemandeAdhesionCompagnie from '../components/administrateur_societe/SelectionnerDemandeAdhesionCompagnie'
 Vue.use(VueRouter)
@@ -22,9 +23,14 @@ const routes = [
     component: () => import(/* webpackChunkName: "about" */ '../views/AboutView.vue')
   },
   {
-    path: '/creerModifierCompagnieTransport',
-    name: 'creerModifierCompagnieTransport',
-    component: creerModifierCompagnieTransport
+    path: '/creerCompagnieTransport',
+    name: 'creerCompagnieTransport',
+    component: creerCompagnieTransport
+  },
+  { 
+    path:'/modifierCompagnieTransport',
+    name:'modifierCompagnieTransport',
+    component:modifierCompagnieTransport
   },
   {
     path: '/selectionnerCompagnieTransport',

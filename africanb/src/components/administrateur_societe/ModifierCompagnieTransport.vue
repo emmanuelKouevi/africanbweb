@@ -1,6 +1,6 @@
 <template>
     <v-app>
-        <v-form>
+        <v-form @submit.prevent="submitForm">
             <v-card max-width="1200px" class="mx-auto">
                 <v-card-title class="title">CREER UNE COMPAGNIE</v-card-title>
 
@@ -67,7 +67,7 @@
                 <v-container>
                     <v-row class="mt-5" justify-lg="space-between">
                         <v-col cols="5"><v-btn color="secondary"><v-icon>mdi-sync</v-icon> REINITIALISER</v-btn></v-col>
-                        <v-col cols="5"><v-btn color="primary"><v-icon>mdi-check</v-icon> CREER</v-btn></v-col>
+                        <v-col cols="5"><v-btn type="submit" color="primary"><v-icon>mdi-check</v-icon> CREER</v-btn></v-col>
                     </v-row>
                 </v-container>
             </v-card>   
@@ -83,9 +83,11 @@
 
 <script>
 import { required , minLength , maxLength , email } from 'vuelidate/lib/validators' 
+import { API_MODIFIER_COMPAGNIE_TRANSPORT } from '../globalConfig/globalConstConfig'
+import $ from 'jquery'
 import axios from 'axios'
 export default {
-    name:"CreerModifierCompagnieTransport",
+    name:"ModifierCompagnieTransport",
     data(){
         return{
             successMsg : null, 
@@ -106,11 +108,8 @@ export default {
                 sigle:null,
                 telephone:null,
                 ville:{
-                    id:null
+                    id:"Abidjan"
                 },
-                statusActual:{
-                    id: null
-                }
             }
         }
     },
@@ -151,8 +150,8 @@ export default {
     methods:{
 
         // CREATION D'UNE COMPAGNIE DE TRANSPORT
-        async creerCompagnieTransport(){
-            await axios.post(API_CREER_COMPAGNIE_TRANSPORT, this.compagnieTransport).then((response) => {
+        async modifierCompagnieTransport(){
+            await axios.post(API_MODIFIER_COMPAGNIE_TRANSPORT, this.compagnieTransport).then((response) => {
                 if (response.status == 200) {  
                     this.successMsg = "La compagnie a bien été crée"
                     $(".alert-success").fadeIn();
@@ -185,7 +184,20 @@ export default {
             })
         },
 
-        submitForm(){},
+        submitForm(){
+            console.log('bonjour je suis la methode form')
+            this.$v.$touch();
+            if (this.$v.compagnieTransport.$invalid) {
+                this.errorMsg = 'Des informations sont manquantes'
+                $(".alert-error").fadeIn();
+                setTimeout(function(){
+                    $(".alert-error").fadeOut(); 
+                }, 3000)
+            }
+            else{
+                this.modifierCompagnieTransport()
+            }
+        },
     },
 
     computed:{
