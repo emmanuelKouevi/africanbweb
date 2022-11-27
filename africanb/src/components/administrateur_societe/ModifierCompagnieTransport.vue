@@ -2,14 +2,17 @@
     <v-app>
         <v-form @submit.prevent="submitForm">
             <v-card max-width="1200px" class="mx-auto">
-                <v-card-title class="title">CREER UNE COMPAGNIE</v-card-title>
+                <v-card-title class="title"><v-icon color="teal">mdi-domain</v-icon> MODIFIER UNE COMPAGNIE</v-card-title>
 
                 <v-divider></v-divider>
                 
                 <v-container>
                     <v-row>
+                        <v-col cols="2">
+                            <v-label>Designation:</v-label>
+                        </v-col>
                         <v-col>
-                            <v-text-field color="teal" label="Designation"
+                            <v-text-field outlined color="teal" placeholder="Entrer une designation"
                                 :error-messages="designationCompagnieErrors"
                                 v-model.trim="$v.compagnieTransport.designation.$model"
                                 @input="$v.compagnieTransport.designation.$touch()"
@@ -19,8 +22,11 @@
                     </v-row>
                     
                     <v-row>
+                        <v-col cols="2">
+                            <v-label>Description:</v-label>
+                        </v-col>
                         <v-col>
-                            <v-textarea color="teal" label="Description"
+                            <v-textarea outlined color="teal" aria-placeholder="entrer une description"
                                 :error-messages="descriptionCompagnieErrors"
                                 v-model.trim="$v.compagnieTransport.description.$model"
                                 @input="$v.compagnieTransport.description.$touch()"
@@ -29,8 +35,12 @@
                         </v-col>
                     </v-row>
                     <v-row>
+                        <v-col cols="2">
+                            <v-label>E-mail:</v-label>
+                        </v-col>
                         <v-col>
-                            <v-text-field color="teal" label="Email" append-icon="mdi-email"
+                            <v-text-field outlined color="teal" append-icon="mdi-email"
+                                placeholder="Adresse électronique de la compagnie"
                                 :error-messages="emailCompagnieErrors"
                                 v-model.trim="$v.compagnieTransport.email.$model"
                                 @input="$v.compagnieTransport.email.$touch()"
@@ -39,21 +49,30 @@
                             </v-text-field>
                         </v-col>
                     </v-row>
+
                     <v-row>
-                        <v-col cols="6">
-                            <v-select :items="villesList" color="teal" label="Ville"
+                        <v-col cols="2">
+                            <v-label>ville :</v-label>
+                        </v-col>
+                        <v-col cols="3">
+                            <v-select outlined :items="villesList" color="teal"
+                                item-text="designation"
+                                item-value="designation"
                                 :error-messages="villeCompagnieErrors"
-                                v-model.trim="$v.compagnieTransport.ville.id.$model"
-                                @input="$v.compagnieTransport.ville.id.$touch()"
-                                @blur="$v.compagnieTransport.ville.id.$touch()">
+                                v-model.trim="$v.compagnieTransport.villeDesignation.$model"
+                                @input="$v.compagnieTransport.villeDesignation.$touch()"
+                                @blur="$v.compagnieTransport.villeDesignation.$touch()">
 
                             </v-select>
                         </v-col>
-                    </v-row>
 
-                    <v-row>
-                        <v-col cols="6">
-                            <v-text-field color="teal" prefix="+225" label="N° Télephone" append-icon="mdi-phone"
+                        <v-col cols="2">
+                            <v-label>N° Télephone :</v-label>
+                        </v-col>
+
+                        <v-col cols="3">
+                            <v-text-field outlined color="teal" prefix="+225" append-icon="mdi-phone"
+                                placeholder="N° de Téléphone"
                                 :error-messages="telephoneCompagnieErrors"
                                 v-model.trim="$v.compagnieTransport.telephone.$model"
                                 @input="$v.compagnieTransport.telephone.$touch()"
@@ -62,12 +81,45 @@
                             </v-text-field>
                         </v-col>
                     </v-row>
+
+                    <v-row>
+                        <v-col cols="2">
+                            <v-label>Sigle:</v-label>
+                        </v-col>
+                        <v-col cols="5">
+                            <v-text-field outlined color="teal"
+                                placeholder="le sigle de la compagnie"
+                                :error-messages="sigleCompagnieErrors"
+                                v-model.trim="$v.compagnieTransport.sigle.$model"
+                                @input="$v.compagnieTransport.sigle.$touch()"
+                                @blur="$v.compagnieTransport.sigle.$touch()">
+
+                            </v-text-field>
+                        </v-col>
+                    </v-row>
+
+                    <v-row>
+                        <v-col cols="2">
+                            <v-label>Raison sociale:</v-label>
+                        </v-col>
+                        <v-col>
+                            <v-text-field outlined color="teal"
+                                placeholder="La raison sociale de la compagnie"
+                                :error-messages="raisonSocialeCompagnieErrors"
+                                v-model.trim="$v.compagnieTransport.raisonSociale.$model"
+                                @input="$v.compagnieTransport.raisonSociale.$touch()"
+                                @blur="$v.compagnieTransport.raisonSociale.$touch()">
+
+                            </v-text-field>
+                        </v-col>
+                    </v-row>
+
                 </v-container>
 
                 <v-container>
-                    <v-row class="mt-5" justify-lg="space-between">
+                    <v-row class="mt-5" justify-lg="space-around">
                         <v-col cols="5"><v-btn color="secondary"><v-icon>mdi-sync</v-icon> REINITIALISER</v-btn></v-col>
-                        <v-col cols="5"><v-btn type="submit" color="primary"><v-icon>mdi-check</v-icon> CREER</v-btn></v-col>
+                        <v-col cols="5"><v-btn type="submit" color="primary"><v-icon>mdi-check</v-icon> MODIFIER</v-btn></v-col>
                     </v-row>
                 </v-container>
             </v-card>   
@@ -83,7 +135,7 @@
 
 <script>
 import { required , minLength , maxLength , email } from 'vuelidate/lib/validators' 
-import { API_MODIFIER_COMPAGNIE_TRANSPORT } from '../globalConfig/globalConstConfig'
+import { API_MODIFIER_COMPAGNIE_TRANSPORT , API_OBTENIR_LISTE_DES_VILLES_DISPONIBLE} from '../globalConfig/globalConstConfig'
 import $ from 'jquery'
 import axios from 'axios'
 export default {
@@ -96,20 +148,21 @@ export default {
             overlay : false,
 
             villesList:[],
+            defaultObject:{},
+            objectContainList :{
+                datas : []
+            },
 
             compagnieTransport:{
                 id: null,
                 designation: null,
                 description: null,
                 estActif: null,
-                raisonSocial: null,
-                siegeSocial: null,
+                raisonSociale: null,
+                sigle: null,
                 email:null,
-                sigle:null,
                 telephone:null,
-                ville:{
-                    id:"Abidjan"
-                },
+                villeDesignation:null
             }
         }
     },
@@ -134,10 +187,16 @@ export default {
                 email
             },
 
-            ville:{
-                id:{
-                    required, 
-                }
+            raisonSociale:{
+                required
+            },
+
+            sigle:{
+                required
+            },
+
+            villeDesignation:{
+                required,
             },
 
             telephone :{
@@ -149,9 +208,44 @@ export default {
 
     methods:{
 
+        //EDITION D'UNE COMPAGNIE DE TRANSPORT
+
+        async editingCompagnieTransport(){
+            if (localStorage.getItem("compagnie")) {
+                try {
+                    const compagnieEditing = JSON.parse(localStorage.getItem("compagnie"));
+                    this.compagnieTransport.id = compagnieEditing.id
+                    this.compagnieTransport.designation = compagnieEditing.designation
+                    this.compagnieTransport.description = compagnieEditing.description
+                    this.compagnieTransport.raisonSociale = compagnieEditing.raisonSociale
+                    this.compagnieTransport.villeDesignation = compagnieEditing.villeDesignation
+                    this.compagnieTransport.telephone = compagnieEditing.telephone
+                    this.compagnieTransport.sigle = compagnieEditing.sigle
+                    this.compagnieTransport.email = compagnieEditing.email
+                    localStorage.removeItem("compagnie");
+                } catch (error) {
+                    localStorage.removeItem("compagnie");
+                }
+            }else{
+                this.$router.replace({path:'/'})
+            }
+        },
+
+        // OBTENIR LA LISTE DES VILLES DISPONIBLES
+        async obtenirListeVillesDispo(){
+            await axios.post(API_OBTENIR_LISTE_DES_VILLES_DISPONIBLE, this.defaultObject).then((response) => {
+                this.villesList = response.data.items
+            }).catch((e) => {
+                console.log(e)
+            })
+        },
+
         // CREATION D'UNE COMPAGNIE DE TRANSPORT
         async modifierCompagnieTransport(){
-            await axios.post(API_MODIFIER_COMPAGNIE_TRANSPORT, this.compagnieTransport).then((response) => {
+            this.objectContainList.datas.push(this.compagnieTransport)
+            this.overlay = true
+            await axios.put(API_MODIFIER_COMPAGNIE_TRANSPORT, this.objectContainList).then((response) => {
+                console.log(response)
                 if (response.status == 200) {  
                     this.successMsg = "La compagnie a bien été crée"
                     $(".alert-success").fadeIn();
@@ -185,7 +279,6 @@ export default {
         },
 
         submitForm(){
-            console.log('bonjour je suis la methode form')
             this.$v.$touch();
             if (this.$v.compagnieTransport.$invalid) {
                 this.errorMsg = 'Des informations sont manquantes'
@@ -222,10 +315,24 @@ export default {
             return errors
         },
 
+        raisonSocialeCompagnieErrors(){
+            const errors = [];
+            if (!this.$v.compagnieTransport.raisonSociale.$dirty) return errors
+            !this.$v.compagnieTransport.raisonSociale.required && errors.push('La raison sociale est obligatoire est obligatoire.')
+            return errors
+        },
+
+        sigleCompagnieErrors(){
+            const errors = [];
+            if (!this.$v.compagnieTransport.sigle.$dirty) return errors
+            !this.$v.compagnieTransport.sigle.required && errors.push('Le sigle est obligatoire est obligatoire.')
+            return errors
+        },
+
         villeCompagnieErrors(){
             const errors = [];
-            if (!this.$v.compagnieTransport.ville.id.$dirty) return errors
-            !this.$v.compagnieTransport.designation.required && errors.push('La ville est obligatoire est obligatoire.')
+            if (!this.$v.compagnieTransport.villeDesignation.$dirty) return errors
+            !this.$v.compagnieTransport.villeDesignation.required && errors.push('La ville est obligatoire est obligatoire.')
             return errors
         },
 
@@ -242,6 +349,11 @@ export default {
             !this.$v.compagnieTransport.email.email && errors.push('exemple@xyz.com')
             return errors
         },
+    },
+
+    mounted(){
+        this.obtenirListeVillesDispo();
+        this.editingCompagnieTransport();
     }
 }
 </script>

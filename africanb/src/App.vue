@@ -1,6 +1,6 @@
 <template>
   <v-app>
-    <v-navigation-drawer app v-model="drawer">
+    <v-navigation-drawer app v-model="drawer" :mini-variant.sync="mini">
       <v-list-item>
           <v-list-item-content>
             <v-list-item-title class="text-h6">AFRICANB</v-list-item-title>
@@ -102,6 +102,7 @@ export default {
   name: 'App',
 
   data: () => ({
+    mini:true,
     drawer: true,
     tabs: [
       { title: 'TABLEAU DE BORD', icon: 'mdi-view-dashboard' },

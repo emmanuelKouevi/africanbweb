@@ -2,7 +2,7 @@
     <v-app>
         <v-form @submit.prevent="submitForm">
             <v-card max-width="1200px" class="mx-auto">
-                <v-card-title class="title">CREER UNE COMPAGNIE</v-card-title>
+                <v-card-title class="title"><v-icon color="teal">mdi-domain</v-icon> CREER UNE COMPAGNIE</v-card-title>
 
                 <v-divider></v-divider>
                 
@@ -49,16 +49,19 @@
                             </v-text-field>
                         </v-col>
                     </v-row>
+
                     <v-row>
                         <v-col cols="2">
                             <v-label>ville :</v-label>
                         </v-col>
                         <v-col cols="3">
                             <v-select outlined :items="villesList" color="teal"
+                                item-text="designation"
+                                item-value="designation"
                                 :error-messages="villeCompagnieErrors"
-                                v-model.trim="$v.compagnieTransport.ville.designation.$model"
-                                @input="$v.compagnieTransport.ville.designation.$touch()"
-                                @blur="$v.compagnieTransport.ville.designation.$touch()">
+                                v-model.trim="$v.compagnieTransport.villeDesignation.$model"
+                                @input="$v.compagnieTransport.villeDesignation.$touch()"
+                                @blur="$v.compagnieTransport.villeDesignation.$touch()">
 
                             </v-select>
                         </v-col>
@@ -79,11 +82,43 @@
                         </v-col>
                     </v-row>
 
+                    <v-row>
+                        <v-col cols="2">
+                            <v-label>Sigle:</v-label>
+                        </v-col>
+                        <v-col cols="5">
+                            <v-text-field outlined color="teal"
+                                placeholder="le sigle de la compagnie"
+                                :error-messages="sigleCompagnieErrors"
+                                v-model.trim="$v.compagnieTransport.sigle.$model"
+                                @input="$v.compagnieTransport.sigle.$touch()"
+                                @blur="$v.compagnieTransport.sigle.$touch()">
+
+                            </v-text-field>
+                        </v-col>
+                    </v-row>
+
+                    <v-row>
+                        <v-col cols="2">
+                            <v-label>Raison sociale:</v-label>
+                        </v-col>
+                        <v-col>
+                            <v-text-field outlined color="teal"
+                                placeholder="La raison sociale de la compagnie"
+                                :error-messages="raisonSocialeCompagnieErrors"
+                                v-model.trim="$v.compagnieTransport.raisonSociale.$model"
+                                @input="$v.compagnieTransport.raisonSociale.$touch()"
+                                @blur="$v.compagnieTransport.raisonSociale.$touch()">
+
+                            </v-text-field>
+                        </v-col>
+                    </v-row>
+
                 </v-container>
 
                 <v-container>
-                    <v-row class="mt-5" justify-lg="space-between">
-                        <v-col cols="5"><v-btn color="secondary"><v-icon>mdi-sync</v-icon> RETOUR</v-btn></v-col>
+                    <v-row class="mt-5" justify-lg="space-around">
+                        <v-col cols="5"><v-btn color="secondary"><v-icon>mdi-sync</v-icon> REINITIALISER</v-btn></v-col>
                         <v-col cols="5"><v-btn type="submit" color="primary"><v-icon>mdi-check</v-icon> CREER</v-btn></v-col>
                     </v-row>
                 </v-container>
@@ -116,19 +151,18 @@ export default {
             defaultObject:{},
             villesList:[],
 
+            objectContainList :{
+                datas : []
+            },
+
             compagnieTransport:{
-                id: null,
                 designation: null,
                 description: null,
-                estActif: null,
-                raisonSocial: null,
-                siegeSocial: null,
+                raisonSociale:null,
                 email:null,
                 sigle:null,
                 telephone:null,
-                ville:{
-                    designation:"Abidjan"
-                },
+                villeDesignation:null,
             }
         }
     },
@@ -153,10 +187,16 @@ export default {
                 email
             },
 
-            ville:{
-                designation:{
-                    required, 
-                }
+            raisonSociale:{
+                required
+            },
+
+            sigle:{
+                required
+            },
+
+            villeDesignation:{
+                required,
             },
 
             telephone :{
@@ -171,7 +211,7 @@ export default {
         // OBTENIR LA LISTE DES VILLES DISPONIBLES
         async obtenirListeVillesDispo(){
             await axios.post(API_OBTENIR_LISTE_DES_VILLES_DISPONIBLE, this.defaultObject).then((response) => {
-                console.log(response)
+                this.villesList = response.data.items
             }).catch((e) => {
                 console.log(e)
             })
@@ -179,24 +219,34 @@ export default {
 
         // CREATION D'UNE COMPAGNIE DE TRANSPORT
         async creerCompagnieTransport(){
+            this.objectContainList.datas.push(this.compagnieTransport)
             this.overlay = true ;
-            await axios.post(API_CREER_COMPAGNIE_TRANSPORT, this.compagnieTransport).then((response) => {
-                if (response.status == 200) {  
-                    this.successMsg = "Modification éffectuée avec succés"
-                    $(".alert-success").fadeIn();
-                    setTimeout(function(){
-                        $(".alert-success").fadeOut(); 
-                    }, 3000)
+            await axios.post(API_CREER_COMPAGNIE_TRANSPORT, this.objectContainList).then((response) => {
+                if (response.status == 200) {
+                    if (response.data.status.code == 800) {
+                        this.successMsg = response.data.status.message
+                        $(".alert-success").fadeIn();
+                        setTimeout(function(){
+                            $(".alert-success").fadeOut(); 
+                        }, 4000)
+                    }else{
+                        this.errorMsg = response.data.status.message
+                        $(".alert-error").fadeIn();
+                        setTimeout(function(){
+                            $(".alert-error").fadeOut(); 
+                        }, 3000)
+                    }  
+                    
                 }
                 else if (response.status == 204) {
-                    this.warningMsg = "Erreur , lors de la modification";
+                    this.warningMsg = "Erreur , lors de la création";
                     $(".alert-warning").fadeIn();
                     setTimeout(function(){
                         $(".alert-warning").fadeOut(); 
                     }, 3000)
                 }
                 else{
-                    this.errorMsg = "Erreur , opération de modification impossible";
+                    this.errorMsg = "Erreur , opération de création impossible";
                     $(".alert-error").fadeIn();
                     setTimeout(function(){
                         $(".alert-error").fadeOut(); 
@@ -209,7 +259,7 @@ export default {
                     $(".alert-error").fadeOut(); 
                 }, 3000)
             }).finally(() => {
-                this.overlay = false  
+                this.overlay = false;
             })
         },
 
@@ -253,10 +303,24 @@ export default {
             return errors
         },
 
+        raisonSocialeCompagnieErrors(){
+            const errors = [];
+            if (!this.$v.compagnieTransport.raisonSociale.$dirty) return errors
+            !this.$v.compagnieTransport.raisonSociale.required && errors.push('La raison sociale est obligatoire est obligatoire.')
+            return errors
+        },
+
+        sigleCompagnieErrors(){
+            const errors = [];
+            if (!this.$v.compagnieTransport.sigle.$dirty) return errors
+            !this.$v.compagnieTransport.sigle.required && errors.push('Le sigle est obligatoire est obligatoire.')
+            return errors
+        },
+
         villeCompagnieErrors(){
             const errors = [];
-            if (!this.$v.compagnieTransport.ville.designation.$dirty) return errors
-            !this.$v.compagnieTransport.ville.designation.required && errors.push('La ville est obligatoire est obligatoire.')
+            if (!this.$v.compagnieTransport.villeDesignation.$dirty) return errors
+            !this.$v.compagnieTransport.villeDesignation.required && errors.push('La ville est obligatoire est obligatoire.')
             return errors
         },
 
