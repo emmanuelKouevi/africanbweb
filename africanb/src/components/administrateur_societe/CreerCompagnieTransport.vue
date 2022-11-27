@@ -213,7 +213,11 @@ export default {
             await axios.post(API_OBTENIR_LISTE_DES_VILLES_DISPONIBLE, this.defaultObject).then((response) => {
                 this.villesList = response.data.items
             }).catch((e) => {
-                console.log(e)
+                this.errorMsg = e ;
+                $(".alert-error").fadeIn();
+                setTimeout(function(){
+                    $(".alert-error").fadeOut(); 
+                }, 4000)
             })
         },
 

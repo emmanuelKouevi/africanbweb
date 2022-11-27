@@ -247,21 +247,23 @@ export default {
             await axios.put(API_MODIFIER_COMPAGNIE_TRANSPORT, this.objectContainList).then((response) => {
                 console.log(response)
                 if (response.status == 200) {  
-                    this.successMsg = "La compagnie a bien été crée"
-                    $(".alert-success").fadeIn();
-                    setTimeout(function(){
-                        $(".alert-success").fadeOut(); 
-                    }, 3000)
+                    if(response.data.status.code == 800){
+                        this.successMsg = response.data.status.message
+                        $(".alert-success").fadeIn();
+                        setTimeout(function(){
+                            $(".alert-success").fadeOut(); 
+                        }, 3000)
+                    }
                 }
                 else if (response.status == 204) {
-                    this.warningMsg = "Erreur , lors de la création";
+                    this.warningMsg = "Erreur , lors de la modification";
                     $(".alert-warning").fadeIn();
                     setTimeout(function(){
                         $(".alert-warning").fadeOut(); 
                     }, 3000)
                 }
                 else{
-                    this.errorMsg = "Erreur , Impossible de créer la compagnie";
+                    this.errorMsg = "Erreur , Impossible de modifier";
                     $(".alert-error").fadeIn();
                     setTimeout(function(){
                         $(".alert-error").fadeOut(); 
