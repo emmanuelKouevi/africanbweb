@@ -2,7 +2,7 @@
     <v-app>
         <v-form @submit.prevent="submitForm">
             <v-card max-width="1200px" class="mx-auto">
-                <v-card-title class="title"><v-icon color="teal">mdi-domain</v-icon> CREER UNE DEMANDE D'ADHESION</v-card-title>
+                <v-card-title class="title"> CREER UNE DEMANDE D'ADHESION</v-card-title>
 
                 <v-divider></v-divider>
                 

@@ -253,6 +253,12 @@ export default {
                         setTimeout(function(){
                             $(".alert-success").fadeOut(); 
                         }, 3000)
+                    }else{
+                        this.errorMsg = response.data.status.message
+                        $(".alert-error").fadeIn();
+                        setTimeout(function(){
+                            $(".alert-error").fadeOut(); 
+                        }, 3000)
                     }
                 }
                 else if (response.status == 204) {
