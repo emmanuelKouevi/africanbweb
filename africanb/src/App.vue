@@ -36,13 +36,54 @@
               </v-list-item-content>
             </template>
   
-            <v-list-item v-for="([title, icon , navigation], i) in cruds" :key="i" link>
+            <v-list-item v-for="([title, icon , navigation], i) in administrationCompagnie" :key="i" link>
               <v-list-item-title v-text="title" @click="$router.push({path:navigation}).catch(() => {})"></v-list-item-title>
               <v-list-item-icon>
                 <v-icon v-text="icon"></v-icon>
               </v-list-item-icon>
             </v-list-item>
           </v-list-group>
+
+        </v-list-group>
+      </v-list>
+
+      <v-list dense nav>
+  
+        <v-list-group :value="true" prepend-icon="mdi-map-marker-plus">
+          <template v-slot:activator>
+            <v-list-item-title>LOCALITÉ</v-list-item-title>
+          </template>
+
+          <v-list-group no-action sub-group>
+            <template v-slot:activator>
+              <v-list-item-content>
+                <v-list-item-title>PAYS</v-list-item-title>
+              </v-list-item-content>
+            </template>
+  
+            <v-list-item v-for="([title, icon , navigation], i) in administrationLocalitePays" :key="i" link>
+              <v-list-item-title v-text="title" @click="$router.push({path:navigation}).catch(() => {})"></v-list-item-title>
+              <v-list-item-icon>
+                <v-icon v-text="icon"></v-icon>
+              </v-list-item-icon>
+            </v-list-item>
+          </v-list-group>
+
+          <v-list-group no-action sub-group>
+            <template v-slot:activator>
+              <v-list-item-content>
+                <v-list-item-title>VILLES</v-list-item-title>
+              </v-list-item-content>
+            </template>
+  
+            <v-list-item v-for="([title, icon , navigation], i) in administrationLocaliteVille" :key="i" link>
+              <v-list-item-title v-text="title" @click="$router.push({path:navigation}).catch(() => {})"></v-list-item-title>
+              <v-list-item-icon>
+                <v-icon v-text="icon"></v-icon>
+              </v-list-item-icon>
+            </v-list-item>
+          </v-list-group>
+
         </v-list-group>
       </v-list>
 
@@ -108,10 +149,21 @@ export default {
       { title: 'TABLEAU DE BORD', icon: 'mdi-view-dashboard' },
       { title: 'A PROPOS', icon: 'mdi-help' },
     ],
-    cruds: [
+
+    administrationCompagnie: [
       ['NOUVELLE COMPAGNIE' , 'mdi-plus-outline' , '/creerCompagnieTransport'],
       ['ADMINISTRER' , 'mdi-gesture-tap-button' , '/selectionnerCompagnieTransport'],
     ],
+
+    administrationLocalitePays : [
+      ['AJOUTER UN PAYS' , 'mdi-plus-outline' , '/creerPays'],
+      ['GERER LES PAYS' , 'mdi-gesture-tap-button' , '/selectionnerPays'],
+    ],
+
+    administrationLocaliteVille : [
+      ['AJOUTER UNE VILLE' , 'mdi-plus-outline' , '/creerVille'],
+      ['GÉRER LES VILLES' , 'mdi-gesture-tap-button' , '/selectionnerVille'],
+    ]
   }),
 };
 </script>

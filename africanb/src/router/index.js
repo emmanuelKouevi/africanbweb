@@ -6,6 +6,12 @@ import creerCompagnieTransport from '../components/administrateur_societe/CreerC
 import modifierCompagnieTransport from '../components/administrateur_societe/ModifierCompagnieTransport'
 import selectionnerCompagnieTransport from '../components/administrateur_societe/SelectionnerCompagnieTransport'
 import selectionnerDemandeAdhesionCompagnie from '../components/administrateur_societe/SelectionnerDemandeAdhesionCompagnie'
+
+import creerPays from '../components/administrateur_societe/CreerPays'
+import selectionnerPays from '../components/administrateur_societe/SelectionnerPays'
+import creerVille from '../components/administrateur_societe/SelectionnerVille'
+import selectionnerVille from '../components/administrateur_societe/CreerVille'
+
 Vue.use(VueRouter)
 
 const routes = [
@@ -41,6 +47,26 @@ const routes = [
     path: '/selectionnerDemandeAdhesionCompagnie',
     name: 'selectionnerDemandeAdhesionCompagnie',
     component: selectionnerDemandeAdhesionCompagnie
+  },
+  {
+    path: '/creerPays',
+    name: 'creerPays',
+    component: creerPays
+  },
+  {
+    path: '/creerVille',
+    name: 'creerVille',
+    component: creerVille
+  },
+  {
+    path: '/selectionnerPays',
+    name: 'selectionnerPays',
+    component: selectionnerPays
+  },
+  {
+    path: '/selectionnerVille',
+    name: 'selectionnerVille',
+    component: selectionnerVille
   }
 ]
 
