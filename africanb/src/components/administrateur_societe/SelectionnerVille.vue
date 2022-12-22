@@ -24,14 +24,15 @@
 </template>
 
 <script>
-//import axios from "axios"
-//import $ from "jquery"
-//import { API_RECUPERER_LISTE_COMPAGNIE_TRANSPORT } from '../globalConfig/globalConstConfig'
+import axios from "axios"
+import $ from "jquery"
+import { API_OBTENIR_LISTE_DES_VILLES_DISPONIBLE } from '../globalConfig/globalConstConfig'
 export default {
     name:'SelectionnerVille',
     data(){
         return{
             errorMsg:null,
+            objectValue : {},
 
             loading: true,
             options: {
@@ -43,6 +44,7 @@ export default {
             headers:[
                 {text : 'reference' , value : 'id'},
                 {text : 'Designation' , value : 'designation'},
+                {text : 'Pays' , value : 'paysDesignation'},
                 {text : 'Actions' , value : 'actions' , sortable : false}
             ]
         }
@@ -57,13 +59,25 @@ export default {
 
 
         // RECUPERER LA LISTE DES VILLES ENREGISTRÉES
-        readAllVilleFromApi(){},
+        async readAllVilleFromApi(){
+            this.loading = false
+            await axios.post(API_OBTENIR_LISTE_DES_VILLES_DISPONIBLE, this.objectValue).then((response) => {
+                this.villesList = response.data.items
+                console.log(this.villesList)
+            }).catch((e) => {
+                this.errorMsg = e ;
+                $(".alert-error").fadeIn();
+                setTimeout(function(){
+                    $(".alert-error").fadeOut(); 
+                }, 4000)
+            })
+        },
         
 
 
 
         // SUPPRIMER UNE VILLE
-        supprimerVille(){},
+        async supprimerVille(){},
     },
 
     mounted(){

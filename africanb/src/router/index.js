@@ -9,9 +9,13 @@ import selectionnerDemandeAdhesionCompagnie from '../components/administrateur_s
 
 import creerPays from '../components/administrateur_societe/CreerPays'
 import selectionnerPays from '../components/administrateur_societe/SelectionnerPays'
-import creerVille from '../components/administrateur_societe/SelectionnerVille'
-import selectionnerVille from '../components/administrateur_societe/CreerVille'
+import creerVille from '../components/administrateur_societe/CreerVille'
+import selectionnerVille from '../components/administrateur_societe/SelectionnerVille'
 
+import connexion from '../components/authentification/ConnexionUtilisateur.vue'
+import inscription from '../components/authentification/InscriptionUtilisateur.vue'
+
+import creerOffreVoyage from '../components/administration_compagnie_transport/CreerOffreVoyage'
 Vue.use(VueRouter)
 
 const routes = [
@@ -67,7 +71,23 @@ const routes = [
     path: '/selectionnerVille',
     name: 'selectionnerVille',
     component: selectionnerVille
+  },
+  {
+    path: '/connexion',
+    name: 'connexion',
+    component: connexion
+  },
+  {
+    path: '/inscription',
+    name: 'inscription',
+    component: inscription
+  },
+  {
+    path: '/creerOffreVoyage',
+    name: 'creerOffreVoyage',
+    component: creerOffreVoyage
   }
+  
 ]
 
 const router = new VueRouter({

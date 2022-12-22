@@ -2,7 +2,7 @@
     <v-app>
         <v-form @submit.prevent="submitForm">
             <v-card max-width="1200px" class="mx-auto">
-                <v-card-title class="title"><v-icon color="teal">mdi-plus</v-icon> AJOUTER UN VILLE</v-card-title>
+                <v-card-title class="title"><v-icon color="teal">mdi-plus</v-icon> AJOUTER UNE VILLE</v-card-title>
 
                 <v-divider></v-divider>
                 
@@ -29,6 +29,15 @@
                             <v-textarea outlined color="teal" aria-placeholder="entrer une description"
                                 v-model="ville.description"
                             ></v-textarea>
+                        </v-col>
+                    </v-row>
+
+                    <v-row>
+                        <v-col cols="2">
+                            <v-label>Pays:</v-label>
+                        </v-col>
+                        <v-col cols="5">
+                            <v-select outlined color="teal" v-model="ville.description"></v-select>
                         </v-col>
                     </v-row>
 
@@ -131,6 +140,10 @@ export default {
                 this.overlay = false;
             })
         },
+
+
+
+        // ENVOI DU FORMULAIRE VERS LE MIDDLEWARE
 
         submitForm(){
             this.$v.$touch();

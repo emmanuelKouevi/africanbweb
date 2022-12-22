@@ -1,0 +1,84 @@
+<template>
+    <v-app>
+        <v-main>
+            <v-container>
+                <v-row>
+                   <h1>AFRICAN<span class="initial_B">B</span></h1>
+                </v-row>
+
+                <v-row justify="center">
+                    <v-card width="380px" elevation="5">
+                        <v-row justify="center">
+                            <v-card-title class="title">CONNEXION</v-card-title>
+                        </v-row><br>
+                        
+                        <v-container>
+                            <v-text-field prepend-inner-icon="mdi-account" color="primary" label="Pseudo ou E-mail"></v-text-field><br>
+                            <v-text-field prepend-inner-icon="mdi-lock-check" color="primary" type="password" label="Mot de Passe"></v-text-field>
+                            <v-row justify="center">
+                                <small class="password_forget">Mot de passe oublié ?</small>
+                            </v-row>
+                            <v-row justify="center">
+                                <small class="no_compte">Vous n'avez pas de compte ? <span class="signup">Inscrivez-vous.</span></small>
+                            </v-row>
+                        </v-container>
+
+                        <v-container>
+                            <v-row justify="center">
+                                <v-btn color="primary">CONNEXION</v-btn>
+                            </v-row>
+                        </v-container><br>
+                    </v-card>
+                </v-row>
+            </v-container>
+        </v-main>
+    </v-app>
+</template>
+
+<script>
+export default {
+    name:'ConnexionUtilisateur',
+    data(){
+        return{}
+    },
+}
+</script>
+
+<style scoped>
+    .initial_B{
+        color: teal;
+    }
+
+    h1{
+        font-weight: bold;
+        font-size: 60px;
+        color: grey;
+    }
+    
+
+    .password_forget{
+        color: grey;
+    }
+
+
+    .password_forget:hover{
+        cursor: pointer;
+        color: #487eb0;
+    }
+
+    .title{
+        color: black;
+        font-weight: bold;
+        font-size: 60px;
+    }
+
+    .no_compte{
+        color: grey;
+    }
+
+    .signup:hover{
+        color: #487eb0;
+        cursor: pointer;
+    }
+
+</style>
