@@ -1,175 +1,123 @@
 <template>
+
   <v-app>
-    <v-navigation-drawer app v-model="drawer" :mini-variant.sync="mini">
-      <v-list-item>
-          <v-list-item-content>
-            <v-list-item-title class="text-h6">AFRICANB</v-list-item-title>
-            <v-list-item-subtitle>Société AFRICANB</v-list-item-subtitle>
-          </v-list-item-content>
-      </v-list-item>
 
-      <v-divider></v-divider>
+    <v-system-bar window fixed dark color="teal" app>
+      <v-icon color="white" size="60">mdi-train-car</v-icon><span class="text-h5 logo">AFRICAN BUS</span>
+      <v-spacer></v-spacer>
+      <v-btn text><small>FR</small><v-icon>mdi-menu-down</v-icon></v-btn>
+    </v-system-bar>
 
-      <v-list dense nav>
-        <v-list-item v-for="item in tabs" :key="item.title" link>
-          <v-list-item-icon>
-            <v-icon>{{ item.icon }}</v-icon>
-          </v-list-item-icon>
-  
-          <v-list-item-content>
-            <v-list-item-title>{{ item.title }}</v-list-item-title>
-          </v-list-item-content>
-        </v-list-item>
-      </v-list>
+    <v-app-bar absolute app color="teal" elevate-on-scroll scroll-target="#scrolling-techniques-7">
 
-      <v-list dense nav>
-  
-        <v-list-group :value="true" prepend-icon="mdi-cog">
-          <template v-slot:activator>
-            <v-list-item-title>GESTIONS</v-list-item-title>
-          </template>
-
-          <v-list-group no-action sub-group>
-            <template v-slot:activator>
-              <v-list-item-content>
-                <v-list-item-title>COMPAGNIE</v-list-item-title>
-              </v-list-item-content>
-            </template>
-  
-            <v-list-item v-for="([title, icon , navigation], i) in administrationCompagnie" :key="i" link>
-              <v-list-item-title v-text="title" @click="$router.push({path:navigation}).catch(() => {})"></v-list-item-title>
-              <v-list-item-icon>
-                <v-icon v-text="icon"></v-icon>
-              </v-list-item-icon>
-            </v-list-item>
-          </v-list-group>
-
-        </v-list-group>
-      </v-list>
-
-      <v-list dense nav>
-  
-        <v-list-group :value="true" prepend-icon="mdi-map-marker-plus">
-          <template v-slot:activator>
-            <v-list-item-title>LOCALITÉ</v-list-item-title>
-          </template>
-
-          <v-list-group no-action sub-group>
-            <template v-slot:activator>
-              <v-list-item-content>
-                <v-list-item-title>PAYS</v-list-item-title>
-              </v-list-item-content>
-            </template>
-  
-            <v-list-item v-for="([title, icon , navigation], i) in administrationLocalitePays" :key="i" link>
-              <v-list-item-title v-text="title" @click="$router.push({path:navigation}).catch(() => {})"></v-list-item-title>
-              <v-list-item-icon>
-                <v-icon v-text="icon"></v-icon>
-              </v-list-item-icon>
-            </v-list-item>
-          </v-list-group>
-
-          <v-list-group no-action sub-group>
-            <template v-slot:activator>
-              <v-list-item-content>
-                <v-list-item-title>VILLES</v-list-item-title>
-              </v-list-item-content>
-            </template>
-  
-            <v-list-item v-for="([title, icon , navigation], i) in administrationLocaliteVille" :key="i" link>
-              <v-list-item-title v-text="title" @click="$router.push({path:navigation}).catch(() => {})"></v-list-item-title>
-              <v-list-item-icon>
-                <v-icon v-text="icon"></v-icon>
-              </v-list-item-icon>
-            </v-list-item>
-          </v-list-group>
-
-        </v-list-group>
-      </v-list>
-
-      <v-list dense nav>
-        <v-list-item link @click="$router.push({path:'/selectionnerDemandeAdhesionCompagnie'}).catch(() => {})">
-          <v-list-item-icon>
-            <v-icon>mdi-view-list-outline</v-icon>
-          </v-list-item-icon>
-  
-          <v-list-item-content>
-            <v-list-item-title>DEMANDE DES ADHESIONS</v-list-item-title>
-          </v-list-item-content>
-        </v-list-item>
-      </v-list>
-
-    </v-navigation-drawer>
-
-    <v-app-bar app color="white">
-      <v-app-bar-nav-icon color="dark" @click="drawer = !drawer"></v-app-bar-nav-icon>
       <v-spacer></v-spacer>
 
-      <v-btn icon>
-        <v-icon color="black">mdi-bell-outline</v-icon>
-      </v-btn>
-
-      <v-btn icon>
-        <v-icon color="black">mdi-email</v-icon>
-      </v-btn>
-
-      <v-btn text>
-        <v-avatar size="30px">
-          <img src="">
-        </v-avatar>
-      </v-btn>
-      
+      <v-btn text><span class="link">À PROPOS</span></v-btn>
+      <v-btn text><span class="link">NOUS JOINDRE</span></v-btn>
+      <v-menu offset-y>
+        <template v-slot:activator="{ on, attrs }">
+          <v-btn text v-bind="attrs" v-on="on">
+            <v-avatar size="30"><img src="../src/assets/undraw_profile.svg" alt="John"></v-avatar>
+            <v-icon color="white">mdi-menu-down</v-icon>
+          </v-btn>
+        </template>
+        <v-list>
+          <v-list-item link v-for="(item, index) in items" :key="index">
+            <v-list-item-icon><v-icon v-text="item.icon"></v-icon></v-list-item-icon>
+            <v-list-item-title class="subtitle">{{ item.title }}</v-list-item-title>
+          </v-list-item>
+        </v-list>
+      </v-menu>
     </v-app-bar>
 
-    <!-- Sizes your content based upon application components -->
-    <v-main>
+    <v-card class="container_image">
+      <v-container>
+        <v-card class="search_offers_travels" width="700" color="white">
+          <v-card-title class="card_subtitle" color="teal">RECHERCHER DES OFFRES DE VOYAGES
+            <v-spacer></v-spacer>
+            <v-btn icon><v-icon color="teal">mdi-sync</v-icon></v-btn>
+          </v-card-title>
+          <v-container fluid>
+            <v-row justify="space-between">
+              <v-col><v-select prefix="De: " outlined dense color="teal" label="Ville Départ"></v-select></v-col>
+              <v-col><v-select prefix="Vers: " outlined dense color="teal" label="Ville Arrivée"></v-select></v-col>
+            </v-row>
+            <v-row justify="space-between">
+              <v-col>
+                <v-dialog ref="dialog" v-model="modal" :return-value.sync="date" persistent width="290px">
+                  <template v-slot:activator="{ on, attrs }">
+                    <v-text-field outlined dense v-model="date" label="Date de l'offre" prepend-icon="mdi-calendar" readonly v-bind="attrs" v-on="on"></v-text-field>
+                  </template>
 
-      <!-- Provides the application the proper gutter -->
-      <v-container fluid>
-        <router-view></router-view>
+                  <v-date-picker v-model="date" scrollable>
+                    <v-spacer></v-spacer>
+                    <v-btn text color="primary" @click="modal = false">Cancel</v-btn>
+                    <v-btn text color="primary" @click="$refs.dialog.save(date)">OK</v-btn>
+                  </v-date-picker>
+                </v-dialog>
+              </v-col>
+              <v-col><v-text-field color="" outlined dense label="Ville Arrivée"></v-text-field></v-col>
+            </v-row>
+
+            <v-row justify="center">
+              <v-btn text outlined rounded color="teal"><v-icon color="teal">mdi-magnify</v-icon> RECHERCHER LES OFFRES</v-btn>
+            </v-row><br>
+          </v-container>
+        </v-card>
       </v-container>
-      
-    </v-main>
+    </v-card>
 
-  <v-footer app>
-    <!-- -->
-  </v-footer>
-</v-app>
+  </v-app>
+
 </template>
 
 <script>
-
-export default {
-  name: 'App',
-
-  data: () => ({
-    mini:true,
-    drawer: true,
-    tabs: [
-      { title: 'TABLEAU DE BORD', icon: 'mdi-view-dashboard' },
-      { title: 'A PROPOS', icon: 'mdi-help' },
-    ],
-
-    administrationCompagnie: [
-      ['NOUVELLE COMPAGNIE' , 'mdi-plus-outline' , '/creerCompagnieTransport'],
-      ['ADMINISTRER' , 'mdi-gesture-tap-button' , '/selectionnerCompagnieTransport'],
-    ],
-
-    administrationLocalitePays : [
-      ['AJOUTER UN PAYS' , 'mdi-plus-outline' , '/creerPays'],
-      ['GERER LES PAYS' , 'mdi-gesture-tap-button' , '/selectionnerPays'],
-    ],
-
-    administrationLocaliteVille : [
-      ['AJOUTER UNE VILLE' , 'mdi-plus-outline' , '/creerVille'],
-      ['GÉRER LES VILLES' , 'mdi-gesture-tap-button' , '/selectionnerVille'],
-    ]
-  }),
-};
+  export default {
+    data(){
+      return{
+        items:[
+          { title : "Faire une réservation" , icon : "mdi-server-plus"},
+          { title : "Voir mes favoris" , icon : "mdi-heart"},
+          { title : "Mes réquêtes préenregistrés" , icon : "mdi-clipboard-list-outline"},
+          { title : "Se connecter" , icon : "mdi-account-cog"},
+          { title : "Créer un compte" , icon : "mdi-account-plus"},
+        ],
+        date: (new Date(Date.now() - (new Date()).getTimezoneOffset() * 60000)).toISOString().substr(0, 10),
+        modal: false,
+      }
+    }
+  }
 </script>
 
 <style scoped>
-  .text-h6{
-    color: teal;
+  .logo{
+    font-weight: bold;
+    word-spacing: 2px;
+    color: #fff;
   }
+
+  .link{
+    color: white;
+    font-weight: bold;
+    font-size: 17px;
+  }
+
+  .container_image{
+    background-image: url("../src/assets/inside_bus.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    height: 500px;
+  }
+
+  .search_offers_travels{
+    position: relative;
+    margin-top: 120px;
+    margin-left: 220px;
+  }
+
+  .card_subtitle{
+    font-size: 15px;
+    font-weight: 500;
+  }
+
 </style>
