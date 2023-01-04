@@ -16,6 +16,7 @@ import connexion from '../components/authentification/ConnexionUtilisateur.vue'
 import inscription from '../components/authentification/InscriptionUtilisateur.vue'
 
 import creerOffreVoyage from '../components/administration_compagnie_transport/CreerOffreVoyage'
+import creerDemandeAdhesion from '../components/administration_compagnie_transport/CreerDemandeAdhesion'
 Vue.use(VueRouter)
 
 const routes = [
@@ -25,12 +26,24 @@ const routes = [
     component: HomeView
   },
   {
-    path: '/about',
-    name: 'about',
+    path: '/EspaceCompagnieTransport',
+    name: 'EspaceCompagnieTransport',
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/AboutView.vue')
+    component: () => import(/* webpackChunkName: "about" */ '../views/EspaceCompagnieTransport.vue'),
+    children:[
+      {
+        path: '/creerOffreVoyage',
+        name: 'creerOffreVoyage',
+        component: creerOffreVoyage
+      },
+      {
+        path: '/creerDemandeAdhesion',
+        name: 'creerDemandeAdhesion',
+        component: creerDemandeAdhesion
+      }
+    ]
   },
   {
     path: '/creerCompagnieTransport',
@@ -82,11 +95,6 @@ const routes = [
     name: 'inscription',
     component: inscription
   },
-  {
-    path: '/creerOffreVoyage',
-    name: 'creerOffreVoyage',
-    component: creerOffreVoyage
-  }
   
 ]
 

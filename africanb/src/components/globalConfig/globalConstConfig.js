@@ -20,3 +20,7 @@ export const API_CREER_VILLE = `${BASE_URL}villes`
 export const API_OBTENIR_LISTE_DES_VILLES_DISPONIBLE = `${BASE_URL}villes/getAllCities`
 export const API_OBTENIR_LISTE_DES_PAYS_DISPONIBLE = `${BASE_URL}villes/getAllCities`
 
+
+
+// ------------------------------- APIS ADMINISTRATEUR COMPAGNIE DE TRANSPORT ----------------------------------//
+

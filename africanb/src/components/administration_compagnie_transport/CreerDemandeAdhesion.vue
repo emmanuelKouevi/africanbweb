@@ -135,6 +135,8 @@
 
 <script>
 import axios from 'axios'
+import $ from 'jquery'
+import { API_CREER_COMPAGNIE_TRANSPORT } from '../globalConfig/globalConstConfig'
 export default {
     name:'CreerDemandeAdhesion',
     data(){
