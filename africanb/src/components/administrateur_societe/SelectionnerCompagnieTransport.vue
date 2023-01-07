@@ -18,7 +18,8 @@
                 </template>
 
                 <template v-slot:[`item.actions`]="{ item }">
-                    <v-icon title="editer" color="blue" small class="mr-2" @click="editCompagnieTransport(item)">mdi-pencil</v-icon>                       
+                    <v-icon title="editer" color="blue" small class="mr-2" @click="editCompagnieTransport(item)">mdi-pencil</v-icon>
+                    <v-icon title="valider" color="success" small class="mr-2" @click="validerCompagnieTransport(item)">mdi-sync</v-icon>                       
                     <v-icon title="supprimer" color="red" small class="mr-2" @click="supprimerProduitLogement(item)">mdi-delete</v-icon>
                 </template>
 
@@ -31,7 +32,7 @@
 <script>
 import axios from "axios"
 import $ from "jquery"
-import { API_RECUPERER_LISTE_COMPAGNIE_TRANSPORT } from '../globalConfig/globalConstConfig'
+import { API_RECUPERER_LISTE_COMPAGNIE_TRANSPORT, API_VALIDER_DEMANDE_ADHESION_COMPAGNIE } from '../globalConfig/globalConstConfig'
 export default {
     name:'SelectionnerCompagnieTransport',
     data(){
@@ -82,6 +83,10 @@ export default {
         },
         
         supprimerCompagnieTransport(){},
+
+        async validerCompagnieTransport(){
+            axios.post(API_VALIDER_DEMANDE_ADHESION_COMPAGNIE , )
+        },
     },
 
     mounted(){

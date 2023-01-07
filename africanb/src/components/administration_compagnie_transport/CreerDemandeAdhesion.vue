@@ -136,7 +136,8 @@
 <script>
 import axios from 'axios'
 import $ from 'jquery'
-import { API_CREER_COMPAGNIE_TRANSPORT } from '../globalConfig/globalConstConfig'
+import { API_CREER_COMPAGNIE_TRANSPORT , API_OBTENIR_LISTE_DES_VILLES_DISPONIBLE } from '../globalConfig/globalConstConfig'
+import { required , minLength , maxLength , email } from 'vuelidate/lib/validators'
 export default {
     name:'CreerDemandeAdhesion',
     data(){
@@ -166,7 +167,61 @@ export default {
         }
     },
 
+    validations:{
+        compagnieTransport:{
+
+            designation :{
+                required,
+                minLength : minLength(4),
+                maxLength : maxLength(150),
+            },
+
+            description :{
+                required,
+                minLength : minLength(4),
+                maxLength : maxLength(150),
+            },
+
+            email:{
+                required,
+                email
+            },
+
+            raisonSociale:{
+                required
+            },
+
+            sigle:{
+                required
+            },
+
+            villeDesignation:{
+                required,
+            },
+
+            telephone :{
+                required,
+            },
+
+        }
+    },
+
     methods:{
+
+        // OBTENIR LA LISTE DES VILLES DISPONIBLES
+        async obtenirListeVillesDispo(){
+            await axios.post(API_OBTENIR_LISTE_DES_VILLES_DISPONIBLE, this.defaultObject).then((response) => {
+                this.villesList = response.data.items
+            }).catch((e) => {
+                this.errorMsg = e ;
+                $(".alert-error").fadeIn();
+                setTimeout(function(){
+                    $(".alert-error").fadeOut(); 
+                }, 4000)
+            })
+        },
+
+
         // CREATION D'UNE DEMANDE D'ADHESION
         async creerDemandeAdhesion(){
             this.objectContainList.datas.push(this.compagnieTransport)
@@ -287,6 +342,10 @@ export default {
             return errors
         },
     },
+
+    mounted(){
+        this.obtenirListeVillesDispo()
+    }
 }
 </script>
 

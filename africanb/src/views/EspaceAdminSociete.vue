@@ -140,14 +140,13 @@
 <script>
 
 export default {
-  name: 'App',
+  name: 'EspaceAdminSociete',
 
   data: () => ({
     mini:true,
     drawer: true,
     tabs: [
       { title: 'TABLEAU DE BORD', icon: 'mdi-view-dashboard' },
-      { title: 'A PROPOS', icon: 'mdi-help' },
     ],
 
     administrationCompagnie: [

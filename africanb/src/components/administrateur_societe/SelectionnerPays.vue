@@ -24,13 +24,14 @@
 </template>
 
 <script>
-//import axios from "axios"
-//import $ from "jquery"
-//import { API_RECUPERER_LISTE_COMPAGNIE_TRANSPORT } from '../globalConfig/globalConstConfig'
+import axios from "axios"
+import $ from "jquery"
+import { API_OBTENIR_LISTE_DES_PAYS_DISPONIBLE } from '../globalConfig/globalConstConfig'
 export default {
     name:'SelectionnerPays',
     data(){
         return{
+            objectValue : {},
             errorMsg:null,
 
             loading: true,
@@ -57,7 +58,18 @@ export default {
 
 
         // RECUPERER LA LISTE DES PAYS ENREGISTRÉS
-        readAllPaysFromApi(){},
+        async readAllPaysFromApi(){
+            this.loading = false
+            await axios.post(API_OBTENIR_LISTE_DES_PAYS_DISPONIBLE, this.objectValue).then((response) => {
+                this.paysList = response.data.items
+            }).catch((e) => {
+                this.errorMsg = e ;
+                $(".alert-error").fadeIn();
+                setTimeout(function(){
+                    $(".alert-error").fadeOut(); 
+                }, 4000)
+            })
+        },
         
 
 

@@ -11,7 +11,7 @@
       <v-divider></v-divider>
 
       <v-list dense nav>
-        <v-list-item link @click="$router.push({path:'/selectionnerDemandeAdhesionCompagnie'}).catch(() => {})">
+        <v-list-item link>
           <v-list-item-icon>
             <v-icon color="teal">mdi-view-dashboard</v-icon>
           </v-list-item-icon>
@@ -63,7 +63,7 @@
       </v-list>
 
       <v-list dense nav>
-        <v-list-item link @click="$router.push({path:'/selectionnerDemandeAdhesionCompagnie'}).catch(() => {})">
+        <v-list-item link>
           <v-list-item-icon>
             <v-icon color="teal">mdi-view-list-outline</v-icon>
           </v-list-item-icon>
@@ -75,7 +75,7 @@
       </v-list>
 
       <v-list dense nav>
-        <v-list-item link @click="$router.push({path:'/selectionnerDemandeAdhesionCompagnie'}).catch(() => {})">
+        <v-list-item link>
           <v-list-item-icon>
             <v-icon color="teal">mdi-account-group</v-icon>
           </v-list-item-icon>
@@ -87,7 +87,7 @@
       </v-list>
 
       <v-list dense nav>
-        <v-list-item link @click="$router.push({path:'/selectionnerDemandeAdhesionCompagnie'}).catch(() => {})">
+        <v-list-item link>
           <v-list-item-icon>
             <v-icon color="teal">mdi-account-edit</v-icon>
           </v-list-item-icon>
@@ -139,12 +139,12 @@
         drawer: true,
         operationCompagnieTransport: [
           ['NOUVELLE OFFRE' , 'mdi-plus-outline' , '/creerOffreVoyage'],
-          ['ADMINISTRER' , 'mdi-gesture-tap-button' , '/selectionnerCompagnieTransport'],
+          ['ADMINISTRER' , 'mdi-gesture-tap-button' , ''],
         ],
 
         operationAdhesion : [
           ['DEMANDER UNE ADHESION' , 'mdi-plus-outline' , '/creerDemandeAdhesion'],
-          ['ADMINISTRER LES ADHÉSIONS' , 'mdi-gesture-tap-button' , '/selectionnerPays'],
+          ['ADMINISTRER LES ADHÉSIONS' , 'mdi-gesture-tap-button' , ''],
         ],
       }
     }

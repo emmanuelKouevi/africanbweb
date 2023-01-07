@@ -63,7 +63,6 @@ export default {
             this.loading = false
             await axios.post(API_OBTENIR_LISTE_DES_VILLES_DISPONIBLE, this.objectValue).then((response) => {
                 this.villesList = response.data.items
-                console.log(this.villesList)
             }).catch((e) => {
                 this.errorMsg = e ;
                 $(".alert-error").fadeIn();

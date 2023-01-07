@@ -86,7 +86,7 @@
       return{
         items:[
           { title : "Espace Compagnie Transport" , icon : "mdi-wallet-travel" , link:"/EspaceCompagnieTransport"},
-          { title : "Mes réquêtes préenregistrés" , icon : "mdi-clipboard-list-outline" , link:""},
+          { title : "Espace Administrateur" , icon : "mdi-shield-account" , link:"/EspaceAdminSociete"},
           { title : "Se connecter" , icon : "mdi-account-cog" , link:""},
           { title : "Créer un compte" , icon : "mdi-account-plus" , link:""},
         ],

@@ -8,8 +8,15 @@
             <v-data-table
                 :headers="headers"
                 :items="compagnieTransportList"
-                :search="search"
-            ></v-data-table>
+                :search="search">
+
+                <template v-slot:[`item.actions`]="{ item }">
+                    <v-icon title="editer" color="blue" small class="mr-2" @click="editCompagnieTransport(item)">mdi-pencil</v-icon>
+                    <v-icon title="valider" color="success" small class="mr-2" @click="editCompagnieTransport(item)">mdi-async</v-icon>                       
+                    <v-icon title="supprimer" color="red" small class="mr-2" @click="supprimerProduitLogement(item)">mdi-delete</v-icon>
+                </template>
+            
+            </v-data-table>
         </v-card>
     </v-app>
 </template>

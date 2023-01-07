@@ -45,46 +45,63 @@ const routes = [
       }
     ]
   },
+
   {
-    path: '/creerCompagnieTransport',
-    name: 'creerCompagnieTransport',
-    component: creerCompagnieTransport
+    path: '/EspaceAdminSociete',
+    name: 'EspaceAdminSociete',
+    // route level code-splitting
+    // this generates a separate chunk (about.[hash].js) for this route
+    // which is lazy-loaded when the route is visited.
+    component: () => import(/* webpackChunkName: "about" */ '../views/EspaceAdminSociete'),
+    children:[
+      {
+        path: '/creerPays',
+        name: 'creerPays',
+        component: creerPays
+      },
+      {
+        path: '/selectionnerPays',
+        name: 'selectionnerPays',
+        component: selectionnerPays
+      },
+      {
+        path: '/creerCompagnieTransport',
+        name: 'creerCompagnieTransport',
+        component: creerCompagnieTransport
+      },
+      { 
+        path:'/modifierCompagnieTransport',
+        name:'modifierCompagnieTransport',
+        component:modifierCompagnieTransport
+      },
+      {
+        path: '/selectionnerCompagnieTransport',
+        name: 'selectionnerCompagnieTransport',
+        component: selectionnerCompagnieTransport
+      },
+      {
+        path: '/creerVille',
+        name: 'creerVille',
+        component: creerVille
+      },
+      {
+        path: '/selectionnerVille',
+        name: 'selectionnerVille',
+        component: selectionnerVille
+      },
+      {
+        path: '/selectionnerDemandeAdhesionCompagnie',
+        name: 'selectionnerDemandeAdhesionCompagnie',
+        component: selectionnerDemandeAdhesionCompagnie
+      },
+    ]
   },
-  { 
-    path:'/modifierCompagnieTransport',
-    name:'modifierCompagnieTransport',
-    component:modifierCompagnieTransport
-  },
-  {
-    path: '/selectionnerCompagnieTransport',
-    name: 'selectionnerCompagnieTransport',
-    component: selectionnerCompagnieTransport
-  },
-  {
-    path: '/selectionnerDemandeAdhesionCompagnie',
-    name: 'selectionnerDemandeAdhesionCompagnie',
-    component: selectionnerDemandeAdhesionCompagnie
-  },
-  {
-    path: '/creerPays',
-    name: 'creerPays',
-    component: creerPays
-  },
-  {
-    path: '/creerVille',
-    name: 'creerVille',
-    component: creerVille
-  },
-  {
-    path: '/selectionnerPays',
-    name: 'selectionnerPays',
-    component: selectionnerPays
-  },
-  {
-    path: '/selectionnerVille',
-    name: 'selectionnerVille',
-    component: selectionnerVille
-  },
+  
+  
+  
+  
+  
+  
   {
     path: '/connexion',
     name: 'connexion',
