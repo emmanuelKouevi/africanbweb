@@ -39,8 +39,8 @@
           </v-card-title>
           <v-container fluid>
             <v-row justify="space-between">
-              <v-col><v-select prefix="De: " outlined dense color="teal" label="Ville Départ"></v-select></v-col>
-              <v-col><v-select prefix="Vers: " outlined dense color="teal" label="Ville Arrivée"></v-select></v-col>
+              <v-col><v-select :items="villesList" item-value="designation" item-text="designation" prefix="De: " outlined dense color="teal" label="Ville Départ"></v-select></v-col>
+              <v-col><v-select :items="villesList" item-value="designation" item-text="designation" prefix="Vers: " outlined dense color="teal" label="Ville Arrivée"></v-select></v-col>
             </v-row>
             <v-row justify="space-between">
               <v-col>
@@ -79,7 +79,9 @@
 </template>
 
 <script>
-
+  import axios from 'axios';
+  import {API_OBTENIR_LISTE_DES_VILLES_DISPONIBLE} from '../components/globalConfig/globalConstConfig'
+  import $ from 'jquery'
   export default {
     name: 'HomeView',
     data(){
@@ -87,12 +89,33 @@
         items:[
           { title : "Espace Compagnie Transport" , icon : "mdi-wallet-travel" , link:"/EspaceCompagnieTransport"},
           { title : "Espace Administrateur" , icon : "mdi-shield-account" , link:"/EspaceAdminSociete"},
-          { title : "Se connecter" , icon : "mdi-account-cog" , link:""},
-          { title : "Créer un compte" , icon : "mdi-account-plus" , link:""},
+          { title : "Se connecter" , icon : "mdi-account-cog" , link:"/connexion"},
+          { title : "Créer un compte" , icon : "mdi-account-plus" , link:"/inscription"},
         ],
         date: (new Date(Date.now() - (new Date()).getTimezoneOffset() * 60000)).toISOString().substr(0, 10),
         modal: false,
+
+        villesList:[],
+        objectValue : {}
       }
+    }, 
+    methods:{
+      // RECUPERER LA LISTE DES VILLES ENREGISTRÉES
+      async readAllVilleFromApi(){
+        await axios.post(API_OBTENIR_LISTE_DES_VILLES_DISPONIBLE, this.objectValue).then((response) => {
+          this.villesList = response.data.items
+        }).catch((e) => {
+          this.errorMsg = e ;
+          $(".alert-error").fadeIn();
+          setTimeout(function(){
+            $(".alert-error").fadeOut(); 
+          }, 4000)
+        })
+      },
+    },
+
+    mounted(){
+      this.readAllVilleFromApi();
     }
   }
 </script>

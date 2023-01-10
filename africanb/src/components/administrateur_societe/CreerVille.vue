@@ -12,7 +12,7 @@
                             <v-label>Designation:</v-label>
                         </v-col>
                         <v-col>
-                            <v-text-field outlined color="teal" placeholder="Entrer une designation"
+                            <v-text-field dense outlined color="teal" placeholder="Entrer une designation"
                                 :error-messages="designationVilleErrors"
                                 v-model.trim="$v.ville.designation.$model"
                                 @input="$v.ville.designation.$touch()"
@@ -20,24 +20,14 @@
                             </v-text-field>
                         </v-col>
                     </v-row>
-                    
-                    <v-row>
-                        <v-col cols="2">
-                            <v-label>Description:</v-label>
-                        </v-col>
-                        <v-col>
-                            <v-textarea outlined color="teal" aria-placeholder="entrer une description"
-                                v-model="ville.description"
-                            ></v-textarea>
-                        </v-col>
-                    </v-row>
+                
 
                     <v-row>
                         <v-col cols="2">
                             <v-label>Pays:</v-label>
                         </v-col>
                         <v-col cols="5">
-                            <v-select outlined color="teal" v-model="ville.description"></v-select>
+                            <v-select :items="paysList" item-text="designation" item-value="id" dense outlined color="teal" v-model="ville.paysId"></v-select>
                         </v-col>
                     </v-row>
 
@@ -63,7 +53,7 @@
 import axios from 'axios';
 import $ from 'jquery';
 import { required } from 'vuelidate/lib/validators'
-import { API_CREER_VILLE } from '../globalConfig/globalConstConfig'
+import { API_CREER_VILLE , API_OBTENIR_LISTE_DES_PAYS_DISPONIBLE} from '../globalConfig/globalConstConfig'
 export default {
     name: 'CreerVille',
     data(){
@@ -73,13 +63,15 @@ export default {
             warningMsg : null ,
             successMsg : null,
 
+            paysList : [],  
+
             objectContainList:{
                 datas:[]
             },
 
             ville:{
                 designation:null,
-                description:null
+                paysId : null
             },
         }
     },
@@ -142,6 +134,30 @@ export default {
         },
 
 
+        // RECUPERER LA LISTE DES PAYS DISPONIBLES
+        async obtenirListePaysDisponible(){
+            var objectToSend = {};
+            await axios.post(API_OBTENIR_LISTE_DES_PAYS_DISPONIBLE , objectToSend).then((response) => {
+                if (response.status == 200) {
+                    if (response.data.status.code == 800) {
+                        this.paysList = response.data.items
+                    }
+                }
+                else{
+                    this.errorMsg = "Erreur coté serveur";
+                    setTimeout(function(){
+                        $(".alert-error").fadeOut(); 
+                    }, 3000)
+                }
+            }).catch((e) => {
+                this.errorMsg = e;
+                setTimeout(function(){
+                    $(".alert-error").fadeOut(); 
+                }, 3000)
+            })
+        },
+
+
 
         // ENVOI DU FORMULAIRE VERS LE MIDDLEWARE
 
@@ -169,6 +185,10 @@ export default {
             return errors
         }
 
+    },
+
+    mounted(){
+        this.obtenirListePaysDisponible();
     }
 }
 </script>

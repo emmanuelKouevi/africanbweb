@@ -15,8 +15,8 @@
                             <v-row><v-col><v-text-field color="teal" label="Désignation" ></v-text-field></v-col></v-row><br>
                             <v-row><v-col><v-textarea color="teal" label="Description" dense></v-textarea></v-col></v-row><br>
                             <v-row>
-                                <v-col cols="6"><v-select color="teal" prefix="De :" label="Ville de départ"></v-select></v-col>
-                                <v-col cols="6"><v-select color="teal" prefix="Vers :" label="ville d'arrivée"></v-select></v-col>
+                                <v-col cols="6"><v-select dense :items="villesList" item-text="designation" item-value="designation" color="teal" prefix="De :" label="Ville de départ"></v-select></v-col>
+                                <v-col cols="6"><v-select dense :items="villesList" item-text="designation" item-value="designation" color="teal" prefix="Vers :" label="ville d'arrivée"></v-select></v-col>
                             </v-row><br>
                             <v-row>
                                 <v-col cols="6"><v-select color="teal" label="Type de voyage" dense></v-select></v-col>
@@ -37,7 +37,7 @@
                                                         </v-subheader>
                                                         <v-row justify="space-between" v-for="ville , index in villesEscalesList" :key="index">
                                                             <v-col cols="3"><v-text-field color="black" dense outlined rounded type="number" min="0" label="N° Ordre"></v-text-field></v-col>
-                                                            <v-col cols="6"><v-select dense outlined rounded label="Sélectionnez la ville"></v-select></v-col>
+                                                            <v-col cols="6"><v-select :items="villesList" item-text="designation" item-value="designation" dense outlined rounded label="Sélectionnez la ville"></v-select></v-col>
                                                             <v-col><v-btn icon dense><v-icon color="primary">mdi-pencil</v-icon></v-btn></v-col>
                                                             <v-col><v-btn icon dense @click="supprimerVilleEscale(index)"><v-icon color="red">mdi-delete</v-icon></v-btn></v-col>
                                                         </v-row>
@@ -55,6 +55,8 @@
                     </v-expansion-panel-content>
                 </v-expansion-panel>
 
+
+                <!--
                 <v-expansion-panel>
                     <v-expansion-panel-header class="font-weight-bold">PROGRAMME DE L'OFFRE</v-expansion-panel-header>
                     <v-expansion-panel-content>
@@ -173,6 +175,8 @@
                     </v-expansion-panel-content>
                 </v-expansion-panel>
 
+                -->
+
                 <v-expansion-panel>
                     <v-expansion-panel-header class="font-weight-bold">PRIX DE L'OFFRE</v-expansion-panel-header>
                     <v-expansion-panel-content>
@@ -210,10 +214,16 @@
 </template>
 
 <script>
+import axios from 'axios';
+import { API_OBTENIR_LISTE_DES_VILLES_DISPONIBLE } from '../globalConfig/globalConstConfig'
+import $ from 'jquery'
+
 export default {
     name:"CreerOffreVoyage",
     data(){
         return{
+            villesList : [],
+            objectValue : {},
             villesEscalesList:[],
             dialog: false,
             date:(new Date(Date.now() - (new Date()).getTimezoneOffset() * 60000)).toISOString().substr(0, 10),
@@ -226,15 +236,33 @@ export default {
     },
 
     methods:{
+        
 
+        // AJOUTER UNE VILLE D'ESCALE
         ajouterNouvelleVilleEscale(){
             var nouvelleVille = {}
             this.villesEscalesList.push(nouvelleVille);
         },
 
+
+        // SUPPRIMER UNE VILLE D'ESCALE
         supprimerVilleEscale(position){
             this.villesEscalesList.splice(position , 1);
-        }
+        },
+
+        // RECUPERER LA LISTE DES VILLES ENREGISTRÉES
+        async readAllVilleFromApi(){
+            this.loading = false
+            await axios.post(API_OBTENIR_LISTE_DES_VILLES_DISPONIBLE, this.objectValue).then((response) => {
+                this.villesList = response.data.items
+            }).catch((e) => {
+                this.errorMsg = e ;
+                $(".alert-error").fadeIn();
+                setTimeout(function(){
+                    $(".alert-error").fadeOut(); 
+                }, 4000)
+            })
+        },
 
     },
 
@@ -243,6 +271,10 @@ export default {
             return this.dates
         },
     },
+
+    mounted(){
+        this.readAllVilleFromApi();
+    }
 
 }
 </script>

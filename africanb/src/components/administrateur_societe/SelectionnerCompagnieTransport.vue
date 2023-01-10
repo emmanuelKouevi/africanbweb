@@ -38,6 +38,9 @@ export default {
     data(){
         return{
             errorMsg:null,
+            compagnieToValidate:{
+                id:null
+            },
 
             loading: true,
             options: {
@@ -78,14 +81,33 @@ export default {
                     }else{
                         this.compagnieTransportList = response.data.items
                     }
+                }else{
+                    this.errorMsg = "Erreur";
                 }
+            }).catch((e) => {
+                this.errorMsg = e
             })
         },
         
         supprimerCompagnieTransport(){},
 
-        async validerCompagnieTransport(){
-            axios.post(API_VALIDER_DEMANDE_ADHESION_COMPAGNIE , )
+        async validerCompagnieTransport(compagnie){
+            this.compagnieToValidate.id = compagnie.id
+            axios.post(API_VALIDER_DEMANDE_ADHESION_COMPAGNIE ,this.compagnieToValidate).then((response) => {
+                if (response.status == 200) {
+                    if (response.data.status.code != 800) {
+                        this.$swal.fire('Validation',response.data.status.message,'error')
+                    }
+                    else{
+                        this.$swal.fire('Validation',response.data.status.message,'success')
+                    }
+                }
+                else{
+                    this.$swal.fire('Validation','Error lors de la validation','error')
+                }
+            }).catch((e) => {
+                this.$swal.fire('Validation' , e , 'error')
+            })
         },
     },
 

@@ -97,11 +97,6 @@ const routes = [
     ]
   },
   
-  
-  
-  
-  
-  
   {
     path: '/connexion',
     name: 'connexion',
