@@ -1,60 +1,35 @@
 <template>
     <v-app>
+        <v-form @submit.prevent="creerOffreVoyage()">
+            <v-container fluid>
+                <v-card elevation="5">
+                    <v-card-title>CREER UNE OFFRE DE VOYAGE</v-card-title>
+                    <v-card-subtitle>Mettre en ligne un nouvel offre de voyage</v-card-subtitle><br>
 
-        <v-container fluid>
-        <v-card elevation="5" width="3000px">
-            <v-card-title>CREER UNE OFFRE DE VOYAGE</v-card-title>
-            <v-card-subtitle>Mettre en ligne un nouvel offre de voyage</v-card-subtitle>
-                    
-            <v-expansion-panels multiple>
+                    <v-container fluid>
+                        <v-row><v-col><v-text-field :error-messages="designationOffreVoyageErrors" dense rounded outlined color="teal" label="Désignation de l'offre" v-model.trim="$v.offreVoyage.designation.$model" ></v-text-field></v-col></v-row><br>
+                        <v-row><v-col><v-textarea :error-messages="descriptionOffreVoyageErrors" dense outlined rounded color="teal" label="Description de l'offre"></v-textarea></v-col></v-row><br>
+                        <v-row>
+                            <v-col cols="6"><v-select :error-messages="villeDepartErrors" v-model.trim="$v.offreVoyage.villeDepartDesignation.$model" dense rounded outlined :items="villesList" item-text="designation" item-value="designation" color="teal" prefix="De :" label="Ville de départ"></v-select></v-col>
+                            <v-col cols="6"><v-select :error-messages="villeDestinationErrors" v-model.trim="$v.offreVoyage.villeDestinationDesignation.$model" dense rounded outlined :items="villesList" item-text="designation" item-value="designation" color="teal" prefix="Vers :" label="ville d'arrivée"></v-select></v-col>
+                        </v-row><br>
+                        <v-row>
+                            <v-col cols="6"><v-select :items="referenceTypeOffreVoyageList" item-text="designation" item-value="designation" :error-messages="typeOffreVoyageErrors" v-model.trim="$v.offreVoyage.typeOffreVoyageDesignation.$model" dense outlined rounded color="teal" label="Type de voyage"></v-select></v-col>
+                        </v-row><br>
 
-                <v-expansion-panel>
-                    <v-expansion-panel-header class="font-weight-bold">INFORMATION(S) GÉNÉRALE(S) SUR L'OFFRE</v-expansion-panel-header>
-                    <v-expansion-panel-content>
-                        <v-container fluid>
-                            <v-row><v-col><v-text-field color="teal" label="Désignation" ></v-text-field></v-col></v-row><br>
-                            <v-row><v-col><v-textarea color="teal" label="Description" dense></v-textarea></v-col></v-row><br>
-                            <v-row>
-                                <v-col cols="6"><v-select dense :items="villesList" item-text="designation" item-value="designation" color="teal" prefix="De :" label="Ville de départ"></v-select></v-col>
-                                <v-col cols="6"><v-select dense :items="villesList" item-text="designation" item-value="designation" color="teal" prefix="Vers :" label="ville d'arrivée"></v-select></v-col>
-                            </v-row><br>
-                            <v-row>
-                                <v-col cols="6"><v-select color="teal" label="Type de voyage" dense></v-select></v-col>
-                                <v-col cols="6">
-                                    <v-dialog transition="dialog-top-transition" max-width="700">
-                                        <template v-slot:activator="{ on, attrs }">
-                                            <v-btn color="secondary" rounded small v-bind="attrs" v-on="on">Ajouter des villes escales &nbsp;<v-icon>mdi-plus-circle</v-icon></v-btn>
-                                        </template>
+                        <v-row justify="space-around">
+                            <v-col cols="6"><v-btn outlined rounded><v-icon>mdi-sync</v-icon> REINITIALISER</v-btn></v-col>
+                            <v-col cols="6"><v-btn type="submit" outlined rounded dark color="teal"><v-icon>mdi-check</v-icon> CRÉER L'OFFRE</v-btn></v-col>                
+                        </v-row>
+                    </v-container>
+                </v-card>
+            </v-container>
+        </v-form>
 
-                                        <template v-slot:default="dialog">
-                                            <v-card>
-                                                <v-toolbar color="black" dark><span class="font-weight-bold">PARAMÈTRAGE DES VILLES D'ESCALES</span></v-toolbar>
-                                                <v-card-text>
-                                                    <v-container fluid>
-                                                        <v-subheader>Définissez l'ordre et vos villes pour les escales
-                                                            <v-spacer></v-spacer>
-                                                            <v-btn small rounded icon title="Ajouter une ville" @click="ajouterNouvelleVilleEscale()"><v-icon color="black" size="20">mdi-plus</v-icon></v-btn>
-                                                        </v-subheader>
-                                                        <v-row justify="space-between" v-for="ville , index in villesEscalesList" :key="index">
-                                                            <v-col cols="3"><v-text-field color="black" dense outlined rounded type="number" min="0" label="N° Ordre"></v-text-field></v-col>
-                                                            <v-col cols="6"><v-select :items="villesList" item-text="designation" item-value="designation" dense outlined rounded label="Sélectionnez la ville"></v-select></v-col>
-                                                            <v-col><v-btn icon dense><v-icon color="primary">mdi-pencil</v-icon></v-btn></v-col>
-                                                            <v-col><v-btn icon dense @click="supprimerVilleEscale(index)"><v-icon color="red">mdi-delete</v-icon></v-btn></v-col>
-                                                        </v-row>
-                                                    </v-container>
-                                                </v-card-text>
-                                                <v-card-actions class="justify-end">
-                                                    <v-btn text @click="dialog.value = false">Effectuer</v-btn>
-                                                </v-card-actions>
-                                            </v-card>
-                                        </template>
-                                    </v-dialog>
-                                </v-col>
-                            </v-row>
-                        </v-container>
-                    </v-expansion-panel-content>
-                </v-expansion-panel>
-
+        <v-alert class="myalert alert-success" type="success" width="350px" dismissible>{{ successMsg }}</v-alert> 
+        <v-alert class="myalert alert-warning" type="warning" width="350px" dismissible>{{ warningMsg }}</v-alert>
+        <v-alert class="myalert alert-error" type="error" width="350px" dismissible>{{ errorMsg }}</v-alert>
+        <v-overlay :value="overlay"><v-progress-circular indeterminate size="64"></v-progress-circular></v-overlay>
 
                 <!--
                 <v-expansion-panel>
@@ -177,18 +152,7 @@
 
                 -->
 
-                <v-expansion-panel>
-                    <v-expansion-panel-header class="font-weight-bold">PRIX DE L'OFFRE</v-expansion-panel-header>
-                    <v-expansion-panel-content>
-                        <v-container fluid>
-                            <v-row>
-                                <v-col cols="6"><v-select color="teal" label="Mode de l'offre"></v-select></v-col>
-                                <v-col cols="6"><v-text-field color="teal" suffix="Francs CFA" label="Prix de l'offre"></v-text-field></v-col>
-                            </v-row>
-                        </v-container>
-                    </v-expansion-panel-content>
-                </v-expansion-panel>
-
+                <!--
                 <v-expansion-panel>
                         <v-expansion-panel-header class="font-weight-bold">CARACTERISTIQUES DE L'OFFRE</v-expansion-panel-header>
                     <v-expansion-panel-content>
@@ -202,40 +166,143 @@
                         </v-row>
                     </v-expansion-panel-content>
                 </v-expansion-panel>
-            </v-expansion-panels>    
-        </v-card>
-        </v-container>
-        <br><br>
-        <v-row justify="space-around">
-            <v-col cols="6"><v-btn outlined rounded><v-icon>mdi-sync</v-icon> REINITIALISER</v-btn></v-col>
-            <v-col cols="6"><v-btn outlined rounded dark color="teal"><v-icon>mdi-check</v-icon> CRÉER L'OFFRE</v-btn></v-col>                
-        </v-row>
+            -->
     </v-app>
 </template>
 
 <script>
 import axios from 'axios';
-import { API_OBTENIR_LISTE_DES_VILLES_DISPONIBLE } from '../globalConfig/globalConstConfig'
+import { API_OBTENIR_LISTE_DES_VILLES_DISPONIBLE , API_OBTENIR_REFERENCE_PAR_PAR_FAMILLE , API_CREER_OFFRE_VOYAGE } from '../globalConfig/globalConstConfig'
+import { required , minLength } from 'vuelidate/lib/validators'
 import $ from 'jquery'
 
 export default {
     name:"CreerOffreVoyage",
     data(){
         return{
+            successMsg : null, 
+            errorMsg:null,
+            warningMsg: null,
+            overlay : false,
+
             villesList : [],
             objectValue : {},
             villesEscalesList:[],
-            dialog: false,
-            date:(new Date(Date.now() - (new Date()).getTimezoneOffset() * 60000)).toISOString().substr(0, 10),
-            time:null,
-            heureArrivee:null,
-            heureDepart:null,
-            menu2:false,
-            menu3:false
+            referenceTypeOffreVoyageList : [],
+            objectToSend:{
+                datas:[],
+            },
+
+            offreVoyageToSend:{
+                datas:[]
+            },
+            
+        
+
+            offreVoyage:{
+                designation : null ,
+                description: null,
+                compagnieTransportRaisonSociale : "COMPAGNIE KOUEVI CT",
+                typeOffreVoyageDesignation : null,
+                villeDepartDesignation : null,
+                villeDestinationDesignation : null
+            },
+
+            referenceTypeOffreVoyage:{
+                referenceFamilleDesignation: "referenceFamilleTypeOffreVoyage"
+            }
+        }
+    },
+
+    validations : {
+        offreVoyage :{
+            designation:{
+                required,
+                minLength : minLength(4)
+            },
+            description:{
+                required,
+                minLength : minLength(4)
+            },
+            villeDepartDesignation:{
+                required,
+            },
+            villeDestinationDesignation:{
+                required,
+            },
+            typeOffreVoyageDesignation:{
+                required
+            }
         }
     },
 
     methods:{
+
+        //OBTENIR REFERENCE DESIGNATION TYPE OFFRE DE VOYAGE
+        async obtenirReferenceTypeOffreVoyage(){
+            this.objectToSend.datas.push(this.referenceTypeOffreVoyage)
+            await axios.post(API_OBTENIR_REFERENCE_PAR_PAR_FAMILLE, this.objectToSend).then((response) => {
+                this.referenceTypeOffreVoyageList = response.data.items
+            }).catch((e) => {
+                this.errorMsg = e ;
+                $(".alert-error").fadeIn();
+                setTimeout(function(){
+                    $(".alert-error").fadeOut(); 
+                }, 4000)
+            })
+        },
+
+        // CREATION D'UNE OFFRE DE VOYAGE 
+
+        async creerOffreVoyage(){
+            this.offreVoyageToSend.datas.push(this.offreVoyage)
+            this.overlay = true ;
+            await axios.post(API_CREER_OFFRE_VOYAGE, this.offreVoyageToSend).then((response) => {
+                if (response.status == 200) {
+                    if (response.data.status.code == 800) {
+                        this.successMsg = response.data.status.message
+                        $(".alert-success").fadeIn();
+                        setTimeout(function(){
+                            $(".alert-success").fadeOut(); 
+                        }, 4000)
+                        this.offreVoyageToSend.datas = [] ;
+                    }else{
+                        this.errorMsg = response.data.status.message
+                        $(".alert-error").fadeIn();
+                        setTimeout(function(){
+                            $(".alert-error").fadeOut(); 
+                        }, 3000)
+                        this.offreVoyageToSend.datas = [] ;
+                    }  
+                    
+                }
+                else if (response.status == 204) {
+                    this.warningMsg = "Erreur , lors de la création de l'offre de voyage";
+                    $(".alert-warning").fadeIn();
+                    setTimeout(function(){
+                        $(".alert-warning").fadeOut(); 
+                    }, 3000)
+                    this.offreVoyageToSend.datas = [] ;
+                }
+                else{
+                    this.errorMsg = "Erreur , opération de création impossible";
+                    $(".alert-error").fadeIn();
+                    setTimeout(function(){
+                        $(".alert-error").fadeOut(); 
+                    }, 3000)
+                    this.offreVoyageToSend.datas = [] ;
+                }
+            }).catch((e) => {
+                this.errorMsg = e ;
+                $(".alert-error").fadeIn();
+                setTimeout(function(){
+                    $(".alert-error").fadeOut(); 
+                }, 4000)
+                this.offreVoyageToSend.datas = [] ;
+            }).finally(() => {
+                this.overlay = false;
+            })
+        },
         
 
         // AJOUTER UNE VILLE D'ESCALE
@@ -267,18 +334,81 @@ export default {
     },
 
     computed: {
-        dateRangeText () {
-            return this.dates
+
+        // GESTION DES CONTRAINTES DE CHAMPS D'ENTREES POUR LA CREATION D'UNE OFFRE DE VOYAGE
+
+        designationOffreVoyageErrors(){
+           const errors = [];
+            if (!this.$v.offreVoyage.designation.$dirty) return errors
+            !this.$v.offreVoyage.designation.minLength && errors.push('Au moins quatres (4) caractères pour la designation')
+            !this.$v.offreVoyage.designation.required && errors.push('La désignation est obligatoire.')
+            return errors 
         },
+
+        descriptionOffreVoyageErrors(){
+           const errors = [];
+            if (!this.$v.offreVoyage.description.$dirty) return errors
+            !this.$v.offreVoyage.description.minLength && errors.push('Au moins quatres (4) caractères pour la description')
+            !this.$v.offreVoyage.description.required && errors.push('La description est obligatoire.')
+            return errors 
+        },
+
+        villeDepartErrors(){
+           const errors = [];
+            if (!this.$v.offreVoyage.villeDepartDesignation.$dirty) return errors
+            !this.$v.offreVoyage.villeDepartDesignation.required && errors.push('La ville de depart est obligatoire.')
+            return errors 
+        },
+
+        villeDestinationErrors(){
+           const errors = [];
+            if (!this.$v.offreVoyage.villeDestinationDesignation.$dirty) return errors
+            !this.$v.offreVoyage.villeDestinationDesignation.required && errors.push('La ville de destination est obligatoire.')
+            return errors 
+        },
+
+        typeOffreVoyageErrors(){
+           const errors = [];
+            if (!this.$v.offreVoyage.typeOffreVoyageDesignation.$dirty) return errors
+            !this.$v.offreVoyage.typeOffreVoyageDesignation.required && errors.push('Le type d\'offre de voyage est obligatoire.')
+            return errors 
+        },
+
+        
     },
 
     mounted(){
         this.readAllVilleFromApi();
+        this.obtenirReferenceTypeOffreVoyage();
     }
 
 }
 </script>
 
 <style scoped>
+    .myalert{
+        display: none;
+        z-index: 1900;
+    }
 
+    .alert-success{
+        position: fixed;
+        top: 25px;
+        right:2%;
+        width: 25%;
+    }
+
+    .alert-error{
+        position: fixed;
+        top: 25px;
+        right:2%;
+        width: 25%;
+    }
+
+    .alert-warning{
+        position: fixed;
+        top: 25px;
+        right:2%;
+        width: 25%;
+    } 
 </style>

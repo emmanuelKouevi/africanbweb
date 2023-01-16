@@ -16,6 +16,8 @@ import connexion from '../components/authentification/ConnexionUtilisateur.vue'
 import inscription from '../components/authentification/InscriptionUtilisateur.vue'
 
 import creerOffreVoyage from '../components/administration_compagnie_transport/CreerOffreVoyage'
+import creerVilleEscale from '../components/administration_compagnie_transport/CreerVilleEscale'
+import programmerOffreVoyage from '../components/administration_compagnie_transport/ProgrammerOffreVoyage'
 import creerDemandeAdhesion from '../components/administration_compagnie_transport/CreerDemandeAdhesion'
 Vue.use(VueRouter)
 
@@ -39,9 +41,19 @@ const routes = [
         component: creerOffreVoyage
       },
       {
+        path: '/creerVilleEscale',
+        name: 'creerVilleEscale',
+        component: creerVilleEscale
+      },
+      {
         path: '/creerDemandeAdhesion',
         name: 'creerDemandeAdhesion',
         component: creerDemandeAdhesion
+      },
+      {
+        path: '/programmeOffreVoyage',
+        name: 'programmeOffreVoyage',
+        component: programmerOffreVoyage
       }
     ]
   },

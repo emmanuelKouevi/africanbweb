@@ -139,6 +139,9 @@
         drawer: true,
         operationCompagnieTransport: [
           ['NOUVELLE OFFRE' , 'mdi-plus-outline' , '/creerOffreVoyage'],
+          ['PROGRAMMER UNE OFFRE' , 'mdi-wrench-clock' , '/creerOffreVoyage'],
+          ['VILLES ESCALES' , 'mdi-city' , '/creerVilleEscale'],
+          ['MODE ET TARIFS' , 'mdi-currency-usd' , '/creerOffreVoyage'],
           ['ADMINISTRER' , 'mdi-gesture-tap-button' , ''],
         ],
 

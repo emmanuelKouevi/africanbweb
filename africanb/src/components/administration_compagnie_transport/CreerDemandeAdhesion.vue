@@ -62,7 +62,6 @@
                                 v-model.trim="$v.compagnieTransport.villeDesignation.$model"
                                 @input="$v.compagnieTransport.villeDesignation.$touch()"
                                 @blur="$v.compagnieTransport.villeDesignation.$touch()">
-
                             </v-select>
                         </v-col>
 

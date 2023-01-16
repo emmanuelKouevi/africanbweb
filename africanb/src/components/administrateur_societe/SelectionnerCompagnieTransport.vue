@@ -38,14 +38,17 @@ export default {
     data(){
         return{
             errorMsg:null,
+
             compagnieToValidate:{
-                id:null
+                data:{
+                    id:null
+                }
             },
 
             loading: true,
             options: {
                 index : 0,
-                size : 4
+                size : 8
             },
             search : '',
             compagnieTransportList : [],
@@ -60,6 +63,8 @@ export default {
     },
 
     methods :{
+
+        // EDITER UNE COMPAGNIE DE TRANSPORT
         editCompagnieTransport(compagnie){
             const parsedCompagnie = JSON.stringify(compagnie);
             localStorage.setItem('compagnie', parsedCompagnie);
@@ -89,12 +94,16 @@ export default {
             })
         },
         
+        // SUPPRESSION D'UNE COMPAGNIE DE TRANSPORT
         supprimerCompagnieTransport(){},
 
+
+        // VALIDER UNE COMPAGNIE DE TRANSPORT
         async validerCompagnieTransport(compagnie){
-            this.compagnieToValidate.id = compagnie.id
+            this.compagnieToValidate.data.id = compagnie.id
             axios.post(API_VALIDER_DEMANDE_ADHESION_COMPAGNIE ,this.compagnieToValidate).then((response) => {
                 if (response.status == 200) {
+                    console.log(response)
                     if (response.data.status.code != 800) {
                         this.$swal.fire('Validation',response.data.status.message,'error')
                     }
