@@ -12,7 +12,7 @@
                             <v-label>Designation:</v-label>
                         </v-col>
                         <v-col>
-                            <v-text-field dense outlined color="teal" placeholder="Entrer une designation"
+                            <v-text-field rounded dense outlined color="teal" placeholder="Entrer une designation"
                                 :error-messages="designationCompagnieErrors"
                                 v-model.trim="$v.compagnieTransport.designation.$model"
                                 @input="$v.compagnieTransport.designation.$touch()"
@@ -26,7 +26,7 @@
                             <v-label>Description:</v-label>
                         </v-col>
                         <v-col>
-                            <v-textarea dense outlined color="teal" aria-placeholder="entrer une description"
+                            <v-textarea rounded dense outlined color="teal" aria-placeholder="entrer une description"
                                 :error-messages="descriptionCompagnieErrors"
                                 v-model.trim="$v.compagnieTransport.description.$model"
                                 @input="$v.compagnieTransport.description.$touch()"
@@ -39,7 +39,7 @@
                             <v-label>E-mail:</v-label>
                         </v-col>
                         <v-col>
-                            <v-text-field dense outlined color="teal" append-icon="mdi-email"
+                            <v-text-field rounded dense outlined color="teal" append-icon="mdi-email"
                                 placeholder="Adresse électronique de la compagnie"
                                 :error-messages="emailCompagnieErrors"
                                 v-model.trim="$v.compagnieTransport.email.$model"
@@ -55,7 +55,7 @@
                             <v-label>ville :</v-label>
                         </v-col>
                         <v-col cols="3">
-                            <v-select dense outlined :items="villesList" color="teal"
+                            <v-select rounded dense outlined :items="villesList" color="teal"
                                 item-text="designation"
                                 item-value="designation"
                                 :error-messages="villeCompagnieErrors"
@@ -70,7 +70,7 @@
                         </v-col>
 
                         <v-col cols="3">
-                            <v-text-field dense outlined color="teal" prefix="+225" append-icon="mdi-phone"
+                            <v-text-field rounded dense outlined color="teal" prefix="+225" append-icon="mdi-phone"
                                 placeholder="N° de Téléphone"
                                 :error-messages="telephoneCompagnieErrors"
                                 v-model.trim="$v.compagnieTransport.telephone.$model"
@@ -86,7 +86,7 @@
                             <v-label>Sigle:</v-label>
                         </v-col>
                         <v-col cols="5">
-                            <v-text-field dense outlined color="teal"
+                            <v-text-field rounded dense outlined color="teal"
                                 placeholder="le sigle de la compagnie"
                                 :error-messages="sigleCompagnieErrors"
                                 v-model.trim="$v.compagnieTransport.sigle.$model"
@@ -102,7 +102,7 @@
                             <v-label>Raison sociale:</v-label>
                         </v-col>
                         <v-col>
-                            <v-text-field dense outlined color="teal"
+                            <v-text-field rounded dense outlined color="teal"
                                 placeholder="La raison sociale de la compagnie"
                                 :error-messages="raisonSocialeCompagnieErrors"
                                 v-model.trim="$v.compagnieTransport.raisonSociale.$model"
@@ -117,8 +117,8 @@
 
                 <v-container>
                     <v-row class="mt-5" justify-lg="space-around">
-                        <v-col cols="5"><v-btn color="secondary"><v-icon>mdi-sync</v-icon> REINITIALISER</v-btn></v-col>
-                        <v-col cols="5"><v-btn type="submit" color="primary"><v-icon>mdi-check</v-icon> FAIRE UNE DEMANDE</v-btn></v-col>
+                        <v-col cols="5"><v-btn rounded color="secondary"><v-icon>mdi-sync</v-icon> REINITIALISER</v-btn></v-col>
+                        <v-col cols="5"><v-btn rounded type="submit" color="primary"><v-icon>mdi-check</v-icon> FAIRE UNE DEMANDE</v-btn></v-col>
                     </v-row>
                 </v-container>
             </v-card>   

@@ -18,6 +18,7 @@ import inscription from '../components/authentification/InscriptionUtilisateur.v
 import creerOffreVoyage from '../components/administration_compagnie_transport/CreerOffreVoyage'
 import creerVilleEscale from '../components/administration_compagnie_transport/CreerVilleEscale'
 import programmerOffreVoyage from '../components/administration_compagnie_transport/ProgrammerOffreVoyage'
+import creerModeTarif from '../components/administration_compagnie_transport/CreerModeTarif'
 import creerDemandeAdhesion from '../components/administration_compagnie_transport/CreerDemandeAdhesion'
 Vue.use(VueRouter)
 
@@ -49,6 +50,11 @@ const routes = [
         path: '/creerDemandeAdhesion',
         name: 'creerDemandeAdhesion',
         component: creerDemandeAdhesion
+      },
+      {
+        path: '/creerModeTarif',
+        name: 'creerModeTarif',
+        component: creerModeTarif
       },
       {
         path: '/programmeOffreVoyage',
