@@ -142,7 +142,7 @@
           ['PROGRAMMER UNE OFFRE' , 'mdi-wrench-clock' , '/programmeOffreVoyage'],
           ['VILLES ESCALES' , 'mdi-city' , '/creerVilleEscale'],
           ['MODE ET TARIFS' , 'mdi-currency-usd' , '/creerModeTarif'],
-          ['ADMINISTRER' , 'mdi-gesture-tap-button' , ''],
+          ['ADMINISTRER' , 'mdi-gesture-tap-button' , '/selectionnerOffreVoyage'],
         ],
 
         operationAdhesion : [

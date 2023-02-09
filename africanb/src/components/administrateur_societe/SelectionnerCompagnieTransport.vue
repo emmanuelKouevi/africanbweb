@@ -103,7 +103,6 @@ export default {
             this.compagnieToValidate.data.id = compagnie.id
             axios.post(API_VALIDER_DEMANDE_ADHESION_COMPAGNIE ,this.compagnieToValidate).then((response) => {
                 if (response.status == 200) {
-                    console.log(response)
                     if (response.data.status.code != 800) {
                         this.$swal.fire('Validation',response.data.status.message,'error')
                     }

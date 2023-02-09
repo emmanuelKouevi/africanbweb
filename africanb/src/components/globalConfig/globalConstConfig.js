@@ -30,6 +30,8 @@ export const API_OBTENIR_LISTE_DES_DEMANDES_ADHESIONS_VALIDEES = `${BASE_URL}com
 //-------------------------------- APIs OFFRE DE VOYAGE---------------------------------------------------------------------//
 
 export const API_CREER_OFFRE_VOYAGE = `${BASE_URL}offreVoyages`
+export const API_RECUPERER_LISTE_OFFRE_VOYAGE = `${BASE_URL}offreVoyages/getTravelOfferByCompagnieTransport`
+export const API_ACTIVER_OFFRE_DE_VOYAGE = `${BASE_URL}offreVoyages/toActivateTravelOffer`
 export const API_CREER_PROGRAMME_OFFRE_VOYAGE = `${BASE_URL}programmes`
 
 export const API_OBTENIR_REFERENCE_PAR_PAR_FAMILLE = `${BASE_URL}references/getReferenceByReferenceFamille`

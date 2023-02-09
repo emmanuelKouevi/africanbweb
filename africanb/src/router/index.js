@@ -20,6 +20,7 @@ import creerVilleEscale from '../components/administration_compagnie_transport/C
 import programmerOffreVoyage from '../components/administration_compagnie_transport/ProgrammerOffreVoyage'
 import creerModeTarif from '../components/administration_compagnie_transport/CreerModeTarif'
 import creerDemandeAdhesion from '../components/administration_compagnie_transport/CreerDemandeAdhesion'
+import selectionnerOffreVoyage from '../components/administration_compagnie_transport/SelectionnerOffreVoyage'
 Vue.use(VueRouter)
 
 const routes = [
@@ -60,6 +61,11 @@ const routes = [
         path: '/programmeOffreVoyage',
         name: 'programmeOffreVoyage',
         component: programmerOffreVoyage
+      },
+      {
+        path: '/selectionnerOffreVoyage',
+        name: 'selectionnerOffreVoyage',
+        component: selectionnerOffreVoyage
       }
     ]
   },
