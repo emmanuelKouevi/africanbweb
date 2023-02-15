@@ -21,6 +21,8 @@ import programmerOffreVoyage from '../components/administration_compagnie_transp
 import creerModeTarif from '../components/administration_compagnie_transport/CreerModeTarif'
 import creerDemandeAdhesion from '../components/administration_compagnie_transport/CreerDemandeAdhesion'
 import selectionnerOffreVoyage from '../components/administration_compagnie_transport/SelectionnerOffreVoyage'
+import modifierOffreVoyage from '../components/administration_compagnie_transport/ModifierOffreVoyage'
+
 Vue.use(VueRouter)
 
 const routes = [
@@ -66,7 +68,12 @@ const routes = [
         path: '/selectionnerOffreVoyage',
         name: 'selectionnerOffreVoyage',
         component: selectionnerOffreVoyage
-      }
+      },
+      {
+        path: '/modifierOffreVoyage',
+        name: 'modifierOffreVoyage',
+        component: modifierOffreVoyage
+      },
     ]
   },
 

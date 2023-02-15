@@ -7,7 +7,7 @@
                     <v-card-subtitle>Mettre en ligne un nouvel offre de voyage</v-card-subtitle><br>
 
                     <v-container fluid>
-                        <v-row><v-col><v-text-field :error-messages="designationOffreVoyageErrors" dense rounded outlined color="teal" label="Désignation de l'offre" v-model.trim="$v.offreVoyage.designation.$model" ></v-text-field></v-col></v-row><br>
+                        <v-row><v-col><v-text-field :error-messages="designationOffreVoyageErrors" dense rounded outlined color="teal" label="Désignation de l'offre" v-model.trim="$v.offreVoyage.designation.$model"></v-text-field></v-col></v-row><br>
                         <v-row><v-col><v-textarea :error-messages="descriptionOffreVoyageErrors" dense outlined rounded color="teal" label="Description de l'offre"></v-textarea></v-col></v-row><br>
                         <v-row>
                             <v-col cols="6"><v-select :error-messages="villeDepartErrors" v-model.trim="$v.offreVoyage.villeDepartDesignation.$model" dense rounded outlined :items="villesList" item-text="designation" item-value="designation" color="teal" prefix="De :" label="Ville de départ"></v-select></v-col>
@@ -30,143 +30,6 @@
         <v-alert class="myalert alert-warning" type="warning" width="350px" dismissible>{{ warningMsg }}</v-alert>
         <v-alert class="myalert alert-error" type="error" width="350px" dismissible>{{ errorMsg }}</v-alert>
         <v-overlay :value="overlay"><v-progress-circular indeterminate size="64"></v-progress-circular></v-overlay>
-
-                <!--
-                <v-expansion-panel>
-                    <v-expansion-panel-header class="font-weight-bold">PROGRAMME DE L'OFFRE</v-expansion-panel-header>
-                    <v-expansion-panel-content>
-                        <v-subheader>Programmez vos offres de voyages
-                            <v-spacer></v-spacer>
-                            <v-dialog v-model="dialog" fullscreen hide-overlay transition="dialog-bottom-transition">
-                                <template v-slot:activator="{ on, attrs }">
-                                    <v-btn rounded small color="secondary" dark v-bind="attrs" v-on="on"><v-icon>mdi-calendar-sync</v-icon> Programmer une offre</v-btn>
-                                </template>
-
-                                <v-card>
-                                    <v-toolbar dark dense color="teal">
-                                        <v-btn icon dark @click="dialog = false"><v-icon>mdi-close</v-icon></v-btn>
-                                        <v-toolbar-title><span class="font-weight-bold">Programmer une offre</span></v-toolbar-title>
-                                        <v-spacer></v-spacer>
-                                        <v-toolbar-items>
-                                            <v-btn dark text @click="dialog = false">Save</v-btn>
-                                        </v-toolbar-items>
-                                    </v-toolbar><br>
-
-                                    <v-container>
-                                        <v-row>                                          
-                                            <v-col cols="12" sm="6">
-                                                <v-text-field disabled rounded outlined dense color="teal" v-model="dateRangeText" label="Jour de la semaine" prepend-icon="mdi-calendar" readonly></v-text-field>
-                                            </v-col>
-
-                                            <v-col cols="12" sm="6">
-                                                <v-date-picker color="teal" v-model="dates"></v-date-picker>
-                                            </v-col>
-                                        </v-row>
-                                    </v-container>
-
-                                    <v-divider></v-divider>
-
-                                    <v-container>
-                                        <v-row>
-                                            <v-col>
-                                                <v-menu ref="menu" v-model="menu" :close-on-content-click="false"
-                                                    :return-value.sync="date" transition="scale-transition" offset-y
-                                                    min-width="auto">
-
-                                                    <template v-slot:activator="{ on, attrs }">
-                                                        <v-text-field v-model="date" label="Date de départ" prepend-icon="mdi-calendar"
-                                                            readonly v-bind="attrs" v-on="on">
-                                                        </v-text-field>
-                                                    </template>
-
-                                                    <v-date-picker v-model="date" no-title scrollable>
-                                                        <v-spacer></v-spacer>
-                                                        <v-btn text color="primary" @click="menu = false">Cancel</v-btn>
-                                                        <v-btn text color="primary" @click="$refs.menu.save(date)">OK</v-btn>
-                                                    </v-date-picker>
-                                                </v-menu>
-                                            </v-col>
-
-                                            <v-col>
-                                                <v-menu ref="menu" v-model="menu" :close-on-content-click="false"
-                                                    :return-value.sync="date" transition="scale-transition" offset-y
-                                                    min-width="auto">
-
-                                                    <template v-slot:activator="{ on, attrs }">
-                                                        <v-text-field v-model="date" label="Date d'arrivée" prepend-icon="mdi-calendar"
-                                                            readonly v-bind="attrs" v-on="on">
-                                                        </v-text-field>
-                                                    </template>
-
-                                                    <v-date-picker v-model="date" no-title scrollable>
-                                                        <v-spacer></v-spacer>
-                                                        <v-btn text color="primary" @click="menu = false">Cancel</v-btn>
-                                                        <v-btn text color="primary" @click="$refs.menu.save(date)">OK</v-btn>
-                                                    </v-date-picker>
-                                                </v-menu>
-                                            </v-col>
-                                        </v-row>
-
-                                        <v-row>
-                                            <v-col>
-                                                <v-menu ref="menu" v-model="menu2" :close-on-content-click="false" :nudge-right="40"
-                                                    :return-value.sync="time" transition="scale-transition" offset-y max-width="290px"
-                                                    min-width="290px">
-
-                                                    <template v-slot:activator="{ on, attrs }">
-                                                        <v-text-field v-model="heureDepart" label="Heure de départ" prepend-icon="mdi-clock-time-four-outline"
-                                                            readonly v-bind="attrs" v-on="on">
-                                                        </v-text-field>
-                                                    </template>
-                                                    <v-time-picker v-if="menu2" v-model="heureDepart" full-width 
-                                                        @click:minute="$refs.menu.save(heureDepart)">
-                                                    </v-time-picker>
-                                                </v-menu>
-                                            </v-col>
-
-                                            <v-col>
-                                                <v-menu ref="menu" v-model="menu3" :close-on-content-click="false" :nudge-right="40"
-                                                    :return-value.sync="time" transition="scale-transition" offset-y max-width="290px"
-                                                    min-width="290px">
-
-                                                    <template v-slot:activator="{ on, attrs }">
-                                                        <v-text-field v-model="heureDepart" label="Heure d'arrivée'" prepend-icon="mdi-clock-time-four-outline"
-                                                            readonly v-bind="attrs" v-on="on">
-                                                        </v-text-field>
-                                                    </template>
-                                                    <v-time-picker v-if="menu3" v-model="heureArrivee" full-width 
-                                                        @click:minute="$refs.menu.save(heureArrivee)">
-                                                    </v-time-picker>
-                                                </v-menu>
-                                            </v-col>
-                                        </v-row>
-                                    </v-container>
-                                        
-                                    <v-divider></v-divider>
-                                </v-card>
-                            </v-dialog>
-                        </v-subheader>
-                                
-                    </v-expansion-panel-content>
-                </v-expansion-panel>
-
-                -->
-
-                <!--
-                <v-expansion-panel>
-                        <v-expansion-panel-header class="font-weight-bold">CARACTERISTIQUES DE L'OFFRE</v-expansion-panel-header>
-                    <v-expansion-panel-content>
-                        <v-row>
-                            <v-col>
-                                <v-checkbox label="Wifi à bord" color="teal" value="red" hide-details></v-checkbox>
-                            </v-col>
-                            <v-col>
-                                <v-checkbox label="Prise éléctrique" color="teal" value="red" hide-details></v-checkbox>
-                            </v-col>
-                        </v-row>
-                    </v-expansion-panel-content>
-                </v-expansion-panel>
-            -->
     </v-app>
 </template>
 
@@ -187,7 +50,6 @@ export default {
 
             villesList : [],
             objectValue : {},
-            villesEscalesList:[],
             referenceTypeOffreVoyageList : [],
             objectToSend:{
                 datas:[],
@@ -252,8 +114,8 @@ export default {
             })
         },
 
-        // CREATION D'UNE OFFRE DE VOYAGE 
 
+        // CREATION D'UNE OFFRE DE VOYAGE 
         async creerOffreVoyage(){
             this.offreVoyageToSend.datas.push(this.offreVoyage)
             this.overlay = true ;
@@ -305,17 +167,6 @@ export default {
         },
         
 
-        // AJOUTER UNE VILLE D'ESCALE
-        ajouterNouvelleVilleEscale(){
-            var nouvelleVille = {}
-            this.villesEscalesList.push(nouvelleVille);
-        },
-
-
-        // SUPPRIMER UNE VILLE D'ESCALE
-        supprimerVilleEscale(position){
-            this.villesEscalesList.splice(position , 1);
-        },
 
         // RECUPERER LA LISTE DES VILLES ENREGISTRÉES
         async readAllVilleFromApi(){

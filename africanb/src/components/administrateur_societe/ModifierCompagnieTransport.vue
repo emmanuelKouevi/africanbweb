@@ -209,7 +209,6 @@ export default {
     methods:{
 
         //EDITION D'UNE COMPAGNIE DE TRANSPORT
-
         async editingCompagnieTransport(){
             if (localStorage.getItem("compagnie")) {
                 try {
