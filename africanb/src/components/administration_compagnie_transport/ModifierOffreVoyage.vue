@@ -22,6 +22,61 @@
                         <v-col cols="6"><v-select :items="referenceTypeOffreVoyageList" item-text="designation" item-value="designation" :error-messages="typeOffreVoyageErrors" v-model.trim="$v.offreVoyage.typeOffreVoyageDesignation.$model" dense outlined rounded color="teal" label="Type de voyage"></v-select></v-col>
                     </v-row>
                 </v-container>
+            </v-card><br>
+
+            <v-card :loading="true"><br>
+                <v-card-title>MODE ET PRIX DE L'OFFRE
+                </v-card-title>
+                <v-container>
+                    <v-row>
+                        <v-col cols="6" v-for="(mode,index) in prixEtModeParOffreVoyageList" :key="index">
+                            <v-card>
+                                <v-card-title>Mode n° {{ index + 1 }}
+                                    <v-spacer></v-spacer>
+                                    <v-btn icon><v-icon color="primary">mdi-pencil</v-icon></v-btn>
+                                    <v-btn icon><v-icon color="red">mdi-close</v-icon></v-btn>
+                                </v-card-title>
+                                <v-container>
+                                    <v-row>
+                                        <v-col cols="3"><small class="muted-text">Désignation :</small></v-col>
+                                        <v-col><span class="label-text">{{ mode.designation }}</span></v-col>
+                                    </v-row>
+                                    <v-row>
+                                        <v-col cols="3"><small class="muted-text">Mode de l'offre :</small></v-col>
+                                        <v-col><span class="label-text">{{ mode.modeDesignation }}</span></v-col>
+                                    </v-row>
+
+                                    <v-row>
+                                        <v-col cols="3"><small class="muted-text">Catégorie :</small></v-col>
+                                        <v-col><span class="label-text">{{ mode.categorieVoyageurDesignation }}</span></v-col>
+                                    </v-row>
+
+                                    <v-row>
+                                        <v-col cols="3"><small class="muted-text">Prix de l'offre :</small></v-col>
+                                        <v-col><span class="label-text">{{ mode.prix }} FCFA</span></v-col>
+                                    </v-row>
+                                </v-container>
+                            </v-card>
+                        </v-col>
+                    </v-row>
+                </v-container>
+            </v-card><br>
+
+            <v-card :loading="true"><br>
+                <v-card-title>VILLES ESCALES</v-card-title>
+                <v-container>
+                    <v-data-table
+                        :headers="headers"
+                        :items="villesEscalesParOffreVoyagesList"
+                        :search="search">
+
+                        <template v-slot:[`item.actions`]="{ item }">
+                            <v-icon title="editer" color="blue" small class="mr-2" @click="editCompagnieTransport(item)">mdi-pencil</v-icon>                       
+                            <v-icon title="supprimer" color="red" small class="mr-2" @click="supprimerProduitLogement(item)">mdi-delete</v-icon>
+                        </template>
+
+                    </v-data-table>
+                </v-container>
             </v-card>
 
         </v-form>
@@ -36,17 +91,32 @@
 <script>
 import { required , minLength } from 'vuelidate/lib/validators';
 import { API_OBTENIR_REFERENCE_PAR_PAR_FAMILLE ,API_OBTENIR_LISTE_DES_VILLES_DISPONIBLE } from '../globalConfig/globalConstConfig'
+import { API_RECUPERER_PRIX_PAR_OFFRE_VOYAGE , API_RECUPERER_VILLE_ESCALE_PAR_OFFRE_VOYAGE } from '../globalConfig/globalConstConfig'
 import axios from 'axios'
 import $ from 'jquery'
 export default {
     name: 'ModifierOffreVoyage',
     data(){
         return{
+            search:'',
+            headers:[
+                {text : 'Position' , value : 'index'},
+                {text : 'Designation' , value : 'designation'},
+                {text : 'Pays' , value : 'paysDesignation'},
+                {text : 'Actions' , value : 'actions' , sortable : false}
+            ],
             errorMsg : null,
             successMsg : null,
             overlay : false,
 
             simpleObject:{},
+
+
+            offreVoyageReceivedPrice:{
+                data:{
+                    designation:null
+                }
+            },
 
             offreVoyage:{
                 id:null,
@@ -67,7 +137,10 @@ export default {
 
             objectToSend:{
                 datas:[]
-            }
+            },
+
+            prixEtModeParOffreVoyageList:[],
+            villesEscalesParOffreVoyagesList:[],
         }
     },
 
@@ -94,6 +167,27 @@ export default {
     },
 
     methods:{
+
+        //OBTENIR LE PRIX ET LE MODE PAR OFFRE DE VOYAGE
+        async obtenirPrixEtModeParOffreVoyage(){
+            this.offreVoyageReceivedPrice.data.designation = this.offreVoyage.designation;
+            await axios.post(API_RECUPERER_PRIX_PAR_OFFRE_VOYAGE, this.offreVoyageReceivedPrice).then((response) => {
+                this.prixEtModeParOffreVoyageList = response.data.items
+            }).catch((e) => {
+                console.log(e)
+            })
+        },
+
+        async obtenirVilleEscaleParOffreVoyage(){
+            this.offreVoyageReceivedPrice.data.designation = this.offreVoyage.designation;
+            await axios.post(API_RECUPERER_VILLE_ESCALE_PAR_OFFRE_VOYAGE, this.offreVoyageReceivedPrice).then((response) => {
+                this.villesEscalesParOffreVoyagesList = response.data.items
+                console.log(this.villesEscalesParOffreVoyagesList)
+            }).catch((e) => {
+                console.log(e)
+            })
+        },
+
 
         //OBTENIR REFERENCE DESIGNATION TYPE OFFRE DE VOYAGE
         async obtenirTypeOffreVoyageList(){
@@ -190,6 +284,8 @@ export default {
         this.obtenirTypeOffreVoyageList();
         this.editerOffreVoyage();
         this.obtenirListeDesVillesDisponible();
+        this.obtenirPrixEtModeParOffreVoyage();
+        this.obtenirVilleEscaleParOffreVoyage();
     }
 }
 </script>
@@ -217,5 +313,15 @@ export default {
         top: 25px;
         right:2%;
         width: 25%;
+    }
+
+    .muted-text{
+        color: grey;
+    }
+
+    .label-text{
+        color: teal;
+        font-weight: 600;
+        font-size: 16px;
     }
 </style>

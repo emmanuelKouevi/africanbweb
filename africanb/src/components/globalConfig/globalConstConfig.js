@@ -35,6 +35,9 @@ export const API_RATTACHER_PRIX_OFFRE_VOYAGE = `${BASE_URL}prixOffreVoyages`
 export const API_ACTIVER_OFFRE_DE_VOYAGE = `${BASE_URL}offreVoyages/toActiveTravelOffer`
 export const API_CREER_PROGRAMME_OFFRE_VOYAGE = `${BASE_URL}programmes`
 export const API_CREER_VILLES_ESCALES_OFFRE_VOYAGE = `${BASE_URL}villeEscales`
-
 export const API_OBTENIR_REFERENCE_PAR_PAR_FAMILLE = `${BASE_URL}references/getReferenceByReferenceFamille`
+
+
+export const API_RECUPERER_PRIX_PAR_OFFRE_VOYAGE = `${BASE_URL}prixOffreVoyages/getPrixTravelOfferByOffreVoyageDesignation`
+export const API_RECUPERER_VILLE_ESCALE_PAR_OFFRE_VOYAGE = `${BASE_URL}villeEscales/getVilleByOffreVoyageDesignation`
 
