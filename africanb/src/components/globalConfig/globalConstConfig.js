@@ -41,3 +41,7 @@ export const API_OBTENIR_REFERENCE_PAR_PAR_FAMILLE = `${BASE_URL}references/getR
 export const API_RECUPERER_PRIX_PAR_OFFRE_VOYAGE = `${BASE_URL}prixOffreVoyages/getPrixTravelOfferByOffreVoyageDesignation`
 export const API_RECUPERER_VILLE_ESCALE_PAR_OFFRE_VOYAGE = `${BASE_URL}villeEscales/getVilleByOffreVoyageDesignation`
 
+
+export const API_CREER_JOUR_SEMAINE_OFFRE_VOYAGE = `${BASE_URL}jourSemaines`
+
+export const API_OBENIR_JOUR_SEMAINE_PAR_OFFRE_VOYAGE = `${BASE_URL}jourSemaines/getJourSemaineByVoyageDesignation`

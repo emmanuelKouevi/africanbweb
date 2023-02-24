@@ -80,7 +80,7 @@ export default {
                             $(".alert-error").fadeOut(); 
                         }, 4000)
                     }else{
-                        this.offreVoyageDisponibleList = response.data.items
+                        this.offreVoyageDisponibleList = response.data.items;
                     }
                 }else{
                     this.errorMsg = "Erreur";

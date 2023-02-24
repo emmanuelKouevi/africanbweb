@@ -79,6 +79,34 @@
                 </v-container>
             </v-card>
 
+            <v-card :loading="true"><br>
+                <v-card-title>PROGRAMME DE L'OFFRE</v-card-title>
+                <v-container>
+                    <v-row>
+                        <v-col cols="6" v-for="(jourSemaine,index) in jourSemainesParOffreVoyagesList" :key="index">
+                            <v-card>
+                                <v-card-title>Programme n° {{ index + 1 }}
+                                    <v-spacer></v-spacer>
+                                    <v-btn icon><v-icon color="primary">mdi-pencil</v-icon></v-btn>
+                                    <v-btn icon><v-icon color="red">mdi-close</v-icon></v-btn>
+                                </v-card-title>
+                                <v-container>
+                                    <v-row>
+                                        <v-col cols="3"><small class="muted-text">Désignation :</small></v-col>
+                                        <v-col><span class="label-text">{{ jourSemaine.designation }}</span></v-col>
+                                    </v-row>
+                                    <v-row>
+                                        <v-col cols="3"><small class="muted-text">Jour :</small></v-col>
+                                        <v-col><span class="label-text">{{ jourSemaine.jourSemaineDesignation }}</span></v-col>
+                                    </v-row>
+
+                                </v-container>
+                            </v-card>
+                        </v-col>
+                    </v-row>
+                </v-container>
+            </v-card>
+
         </v-form>
 
         <v-alert class="myalert alert-success" type="success" width="350px" dismissible>{{ successMsg }}</v-alert> 
@@ -92,6 +120,7 @@
 import { required , minLength } from 'vuelidate/lib/validators';
 import { API_OBTENIR_REFERENCE_PAR_PAR_FAMILLE ,API_OBTENIR_LISTE_DES_VILLES_DISPONIBLE } from '../globalConfig/globalConstConfig'
 import { API_RECUPERER_PRIX_PAR_OFFRE_VOYAGE , API_RECUPERER_VILLE_ESCALE_PAR_OFFRE_VOYAGE } from '../globalConfig/globalConstConfig'
+import { API_OBENIR_JOUR_SEMAINE_PAR_OFFRE_VOYAGE  } from '../globalConfig/globalConstConfig'
 import axios from 'axios'
 import $ from 'jquery'
 export default {
@@ -100,7 +129,6 @@ export default {
         return{
             search:'',
             headers:[
-                {text : 'Position' , value : 'index'},
                 {text : 'Designation' , value : 'designation'},
                 {text : 'Pays' , value : 'paysDesignation'},
                 {text : 'Actions' , value : 'actions' , sortable : false}
@@ -141,6 +169,7 @@ export default {
 
             prixEtModeParOffreVoyageList:[],
             villesEscalesParOffreVoyagesList:[],
+            jourSemainesParOffreVoyagesList:[],
         }
     },
 
@@ -178,11 +207,20 @@ export default {
             })
         },
 
+        //OBTENIR LE JOUR DE LA SEMAINE DE L'OFFRE
+        async obtenirJourSemaineParOffreVoyage(){
+            this.offreVoyageReceivedPrice.data.designation = this.offreVoyage.designation;
+            await axios.post(API_OBENIR_JOUR_SEMAINE_PAR_OFFRE_VOYAGE , this.offreVoyageReceivedPrice).then((response) => {
+                this.jourSemainesParOffreVoyagesList = response.data.items
+            }).catch((e) => {
+                console.log(e)
+            })
+        },
+
         async obtenirVilleEscaleParOffreVoyage(){
             this.offreVoyageReceivedPrice.data.designation = this.offreVoyage.designation;
             await axios.post(API_RECUPERER_VILLE_ESCALE_PAR_OFFRE_VOYAGE, this.offreVoyageReceivedPrice).then((response) => {
                 this.villesEscalesParOffreVoyagesList = response.data.items
-                console.log(this.villesEscalesParOffreVoyagesList)
             }).catch((e) => {
                 console.log(e)
             })
@@ -286,6 +324,7 @@ export default {
         this.obtenirListeDesVillesDisponible();
         this.obtenirPrixEtModeParOffreVoyage();
         this.obtenirVilleEscaleParOffreVoyage();
+        this.obtenirJourSemaineParOffreVoyage();
     }
 }
 </script>

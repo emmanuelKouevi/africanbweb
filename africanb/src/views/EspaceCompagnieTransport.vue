@@ -141,6 +141,7 @@
           ['NOUVELLE OFFRE' , 'mdi-plus-outline' , '/creerOffreVoyage'],
           ['PROGRAMMER UNE OFFRE' , 'mdi-wrench-clock' , '/programmeOffreVoyage'],
           ['VILLES ESCALES' , 'mdi-city' , '/creerVilleEscale'],
+          ['DATER UNE OFFRE' , 'mdi-calendar' , '/rattacherJourSemaineOffreVoyage'],
           ['MODE ET TARIFS' , 'mdi-currency-usd' , '/creerModeTarif'],
           ['ADMINISTRER' , 'mdi-gesture-tap-button' , '/selectionnerOffreVoyage'],
         ],

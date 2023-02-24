@@ -63,7 +63,6 @@ export default {
             this.loading = false;
             axios.post(API_OBTENIR_LISTE_DES_DEMANDES_ADHESIONS_VALIDEES , this.options ).then((response) => {
                 if (response.status == 200) {
-                    console.log(response)
                     if (response.data.status.code != 800) {
                         this.errorMsg = response.data.status.message
                         $(".alert-error").fadeIn();
@@ -71,7 +70,7 @@ export default {
                             $(".alert-error").fadeOut(); 
                         }, 4000)
                     }else{
-                        this.demandeAdhesionValidesList = response.data.items
+                        this.demandeAdhesionValidesList = response.data.items;
                     }
                 }else{
                     this.errorMsg = "Erreur";

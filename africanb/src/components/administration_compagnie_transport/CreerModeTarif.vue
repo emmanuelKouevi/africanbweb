@@ -200,7 +200,6 @@ export default {
                         }, 4000)
                     }else{
                         this.offreVoyageParCompagnieTransportList = response.data.items
-                        console.log(this.offreVoyageParCompagnieTransportList)
                     }
                 }else{
                     this.errorMsg = "Erreur";

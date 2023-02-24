@@ -22,6 +22,7 @@ import creerModeTarif from '../components/administration_compagnie_transport/Cre
 import creerDemandeAdhesion from '../components/administration_compagnie_transport/CreerDemandeAdhesion'
 import selectionnerOffreVoyage from '../components/administration_compagnie_transport/SelectionnerOffreVoyage'
 import modifierOffreVoyage from '../components/administration_compagnie_transport/ModifierOffreVoyage'
+import rattacherJourSemaineOffreVoyage from '../components/administration_compagnie_transport/RattacherJourSemaineOffreVoyage'
 
 Vue.use(VueRouter)
 
@@ -68,6 +69,11 @@ const routes = [
         path: '/selectionnerOffreVoyage',
         name: 'selectionnerOffreVoyage',
         component: selectionnerOffreVoyage
+      },
+      {
+        path: '/rattacherJourSemaineOffreVoyage',
+        name: 'rattacherJourSemaineOffreVoyage',
+        component: rattacherJourSemaineOffreVoyage
       },
       {
         path: '/modifierOffreVoyage',
