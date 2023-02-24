@@ -6,6 +6,119 @@
                 <v-card-subtitle>Modiifier portant sur votre de voyage</v-card-subtitle>
             </v-card><br>
 
+
+
+
+            <v-card>
+                <v-card-title class="title_card">INFORMATION(S) GÉNÉRALE(S) DE L'OFFRE DE VOYAGE
+                    <v-spacer></v-spacer>
+                    <v-btn outlined rounded icon small color="teal" title="Voir plus" @click="isVisibleOffreVoyageInfo()"><v-icon>mdi-plus-outline</v-icon></v-btn>
+                </v-card-title>
+                <v-card max-height="675" id="card-info-offre-voyage">
+                    <v-container fluid>
+                        <v-row><v-col><v-text-field :error-messages="designationOffreVoyageErrors" dense rounded outlined color="teal" label="Désignation de l'offre" v-model.trim="$v.offreVoyage.designation.$model"></v-text-field></v-col></v-row><br>
+                        <v-row><v-col><v-textarea :error-messages="descriptionOffreVoyageErrors" dense outlined rounded color="teal" label="Description de l'offre"></v-textarea></v-col></v-row><br>
+                        <v-row>
+                            <v-col cols="6"><v-select :error-messages="villeDepartErrors" v-model.trim="$v.offreVoyage.villeDepartDesignation.$model" dense rounded outlined :items="villesList" item-text="designation" item-value="designation" color="teal" prefix="De :" label="Ville de départ"></v-select></v-col>
+                            <v-col cols="6"><v-select :error-messages="villeDestinationErrors" v-model.trim="$v.offreVoyage.villeDestinationDesignation.$model" dense rounded outlined :items="villesList" item-text="designation" item-value="designation" color="teal" prefix="Vers :" label="ville d'arrivée"></v-select></v-col>
+                        </v-row><br>
+                        <v-row>
+                            <v-col cols="6"><v-select :items="referenceTypeOffreVoyageList" item-text="designation" item-value="designation" :error-messages="typeOffreVoyageErrors" v-model.trim="$v.offreVoyage.typeOffreVoyageDesignation.$model" dense outlined rounded color="teal" label="Type de voyage"></v-select></v-col>
+                        </v-row>
+                    </v-container>
+                </v-card>
+            </v-card><br>
+
+            <v-card :loading="loadingModePrix">
+                <v-card-title class="title_card">MODE ET PRIX DE L'OFFRE
+                    <v-spacer></v-spacer>
+                    <v-btn outlined rounded icon small color="teal" title="Voir plus" @click="isVisiblePrixModeOffreVoyage()"><v-icon>mdi-plus-outline</v-icon></v-btn>
+                </v-card-title>
+                <v-card id="card-prix-mode-offre-voyage">
+                    <v-container>
+                        <v-row v-if="prixEtModeParOffreVoyageList.length">
+                            <v-col cols="6" v-for="(mode,index) in prixEtModeParOffreVoyageList" :key="index">
+                                <v-card>
+                                    <v-card-title>Mode n° {{ index + 1 }}
+                                        <v-spacer></v-spacer>
+                                        <v-btn icon><v-icon color="primary">mdi-pencil</v-icon></v-btn>
+                                        <v-btn icon><v-icon color="red">mdi-close</v-icon></v-btn>
+                                    </v-card-title>
+                                    <v-container>
+                                        <v-row>
+                                            <v-col cols="3"><small class="muted-text">Désignation :</small></v-col>
+                                            <v-col><span class="label-text">{{ mode.designation }}</span></v-col>
+                                        </v-row>
+                                        <v-row>
+                                            <v-col cols="3"><small class="muted-text">Mode de l'offre :</small></v-col>
+                                            <v-col><span class="label-text">{{ mode.modeDesignation }}</span></v-col>
+                                        </v-row>
+
+                                        <v-row>
+                                            <v-col cols="3"><small class="muted-text">Catégorie :</small></v-col>
+                                            <v-col><span class="label-text">{{ mode.categorieVoyageurDesignation }}</span></v-col>
+                                        </v-row>
+
+                                        <v-row>
+                                            <v-col cols="3"><small class="muted-text">Prix de l'offre :</small></v-col>
+                                            <v-col><span class="label-text">{{ mode.prix }} FCFA</span></v-col>
+                                        </v-row>
+                                    </v-container>
+                                </v-card>
+                            </v-col>
+                        </v-row>
+
+                        <v-row v-else justify="center">
+                            <h4>AUCUN MODE OU PRIX DÉFINI POUR CETTE OFFRE</h4> 
+                        </v-row>
+                    </v-container>
+                </v-card>
+            </v-card><br>
+
+            <v-card :loading="loadingVilleEscale">
+                <v-card-title class="title_card">VILLES ESCALES
+                    <v-spacer></v-spacer>
+                    <v-btn outlined rounded icon small color="teal" title="Voir plus" @click="isVisibleVilleEscaleOffreVoyage()"><v-icon>mdi-plus-outline</v-icon></v-btn>
+                </v-card-title>
+                <v-card id="card-ville-escale-offre-voyage">
+                    <v-container>
+                        <v-data-table
+                            :headers="headers"
+                            :items="villesEscalesParOffreVoyagesList"
+                            :search="search">
+
+                            <template v-slot:[`item.actions`]="{ item }">
+                                <v-icon title="editer" color="blue" small class="mr-2" @click="editCompagnieTransport(item)">mdi-pencil</v-icon>                       
+                                <v-icon title="supprimer" color="red" small class="mr-2" @click="supprimerProduitLogement(item)">mdi-delete</v-icon>
+                            </template>
+
+                        </v-data-table>
+                    </v-container>
+                </v-card>
+            </v-card><br>
+
+            <v-card>
+                <v-card-title class="title_card">PROPRIETES DE L'OFFRE
+                    <v-spacer></v-spacer>
+                    <v-btn outlined rounded icon small color="teal" title="Voir plus"><v-icon>mdi-plus-outline</v-icon></v-btn>
+                </v-card-title>
+            </v-card><br>
+
+            <v-card>
+                <v-card-title class="title_card">PROGRAMME DE L'OFFRE
+                    <v-spacer></v-spacer>
+                    <v-btn outlined rounded icon small color="teal" title="Voir plus"><v-icon>mdi-plus-outline</v-icon></v-btn>
+                </v-card-title>
+            </v-card><br>
+
+
+
+
+
+
+
+
+            <!--
             <v-card max-height="675">
                 <v-card-title class="title_card">INFORMATION(S) GÉNÉRALE(S) DE L'OFFRE DE VOYAGE
                     <v-spacer></v-spacer>
@@ -22,8 +135,10 @@
                         <v-col cols="6"><v-select :items="referenceTypeOffreVoyageList" item-text="designation" item-value="designation" :error-messages="typeOffreVoyageErrors" v-model.trim="$v.offreVoyage.typeOffreVoyageDesignation.$model" dense outlined rounded color="teal" label="Type de voyage"></v-select></v-col>
                     </v-row>
                 </v-container>
-            </v-card><br>
+            </v-card><br>-->
+            
 
+            <!--
             <v-card :loading="true"><br>
                 <v-card-title>MODE ET PRIX DE L'OFFRE
                 </v-card-title>
@@ -105,7 +220,7 @@
                         </v-col>
                     </v-row>
                 </v-container>
-            </v-card>
+            </v-card>-->
 
         </v-form>
 
@@ -136,6 +251,9 @@ export default {
             errorMsg : null,
             successMsg : null,
             overlay : false,
+
+            loadingModePrix:false,
+            loadingVilleEscale:false,
 
             simpleObject:{},
 
@@ -197,13 +315,41 @@ export default {
 
     methods:{
 
+        //RENDRE VISIBLE LES INFORMATIONS SUR L'OFFRE DE VOYAGE SÉLECTIONNÉ
+        isVisibleOffreVoyageInfo(){
+            $("#card-info-offre-voyage").slideToggle(500);           
+        },
+
+        //VISIBILITE DU MODE ET DU PRIX
+        async isVisiblePrixModeOffreVoyage(){
+            $("#card-prix-mode-offre-voyage").slideToggle(500);
+            this.obtenirPrixEtModeParOffreVoyage();
+        },
+
+         //VISIBILITE DES VILLES ESCALES
+        async isVisibleVilleEscaleOffreVoyage(){
+            $("#card-ville-escale-offre-voyage").slideToggle(500);
+            this.obtenirVilleEscaleParOffreVoyage();
+        },
+
         //OBTENIR LE PRIX ET LE MODE PAR OFFRE DE VOYAGE
         async obtenirPrixEtModeParOffreVoyage(){
+            this.loadingModePrix = true
             this.offreVoyageReceivedPrice.data.designation = this.offreVoyage.designation;
             await axios.post(API_RECUPERER_PRIX_PAR_OFFRE_VOYAGE, this.offreVoyageReceivedPrice).then((response) => {
-                this.prixEtModeParOffreVoyageList = response.data.items
+                if (response.data.status.code == 800) {
+                    this.prixEtModeParOffreVoyageList = response.data.items
+                }else{
+                    this.prixEtModeParOffreVoyageList = [];
+                }
             }).catch((e) => {
-                console.log(e)
+                this.errorMsg = e ;
+                $(".alert-error").fadeIn();
+                setTimeout(function(){
+                    $(".alert-error").fadeOut(); 
+                }, 4000)
+            }).finally(() => {
+                this.loadingModePrix = false;
             })
         },
 
@@ -218,13 +364,25 @@ export default {
         },
 
         async obtenirVilleEscaleParOffreVoyage(){
+            this.loadingVilleEscale = true
             this.offreVoyageReceivedPrice.data.designation = this.offreVoyage.designation;
             await axios.post(API_RECUPERER_VILLE_ESCALE_PAR_OFFRE_VOYAGE, this.offreVoyageReceivedPrice).then((response) => {
-                this.villesEscalesParOffreVoyagesList = response.data.items
+                if (response.data.status.code == 800) {
+                    this.villesEscalesParOffreVoyagesList = response.data.items
+                }else{
+                    this.villesEscalesParOffreVoyagesList = [];
+                }
             }).catch((e) => {
-                console.log(e)
+                this.errorMsg = e ;
+                $(".alert-error").fadeIn();
+                setTimeout(function(){
+                    $(".alert-error").fadeOut(); 
+                }, 4000)
+            }).finally(() => {
+                this.loadingVilleEscale = false;
             })
         },
+
 
 
         //OBTENIR REFERENCE DESIGNATION TYPE OFFRE DE VOYAGE
@@ -321,8 +479,8 @@ export default {
     mounted(){
         this.obtenirTypeOffreVoyageList();
         this.editerOffreVoyage();
-        this.obtenirListeDesVillesDisponible();
-        this.obtenirPrixEtModeParOffreVoyage();
+        //this.obtenirListeDesVillesDisponible();
+        //this.obtenirPrixEtModeParOffreVoyage();
         this.obtenirVilleEscaleParOffreVoyage();
         this.obtenirJourSemaineParOffreVoyage();
     }
@@ -362,5 +520,17 @@ export default {
         color: teal;
         font-weight: 600;
         font-size: 16px;
+    }
+
+    #card-info-offre-voyage{
+        display: none;
+    }
+
+    #card-prix-mode-offre-voyage{
+        display: none;
+    }
+
+    #card-ville-escale-offre-voyage{
+        display: none;
     }
 </style>
