@@ -232,7 +232,7 @@ export default {
 
         // RECUPERER LA LISTE DES OFFRES DE VOYAGES DISPONIBLES PAR COMPAGNIE DE TRANSPORT
         async obtenirOffreVoyageParCompagnieTransport(){
-            axios.post(API_RECUPERER_LISTE_OFFRE_VOYAGE, this.offreVoyageObject ).then((response) => {
+            await axios.post(API_RECUPERER_LISTE_OFFRE_VOYAGE, this.offreVoyageObject ).then((response) => {
                 if (response.status == 200) {
                     if (response.data.status.code != 800) {
                         this.errorMsg = response.data.status.message

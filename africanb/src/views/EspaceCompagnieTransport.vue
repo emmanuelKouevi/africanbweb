@@ -63,13 +63,13 @@
       </v-list>
 
       <v-list dense nav>
-        <v-list-item link>
+        <v-list-item link @click="$router.push({path:'/creerProprieteCaracteristiqueOffreVoyage'}).catch(() => {})">
           <v-list-item-icon>
-            <v-icon color="teal">mdi-view-list-outline</v-icon>
+            <v-icon color="teal">mdi-clipboard-list-outline</v-icon>
           </v-list-item-icon>
   
           <v-list-item-content>
-            <v-list-item-title>GÉRER LES OFFRES DE VOYAGES</v-list-item-title>
+            <v-list-item-title>PROPRIETES OFFRE DE VOYAGES</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
       </v-list>

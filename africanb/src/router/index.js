@@ -23,6 +23,7 @@ import creerDemandeAdhesion from '../components/administration_compagnie_transpo
 import selectionnerOffreVoyage from '../components/administration_compagnie_transport/SelectionnerOffreVoyage'
 import modifierOffreVoyage from '../components/administration_compagnie_transport/ModifierOffreVoyage'
 import rattacherJourSemaineOffreVoyage from '../components/administration_compagnie_transport/RattacherJourSemaineOffreVoyage'
+import creerProprieteCaracteristiqueOffreVoyage from '../components/administration_compagnie_transport/CreerProprieteCaracteristiqueOffreVoyage'
 
 Vue.use(VueRouter)
 
@@ -79,6 +80,11 @@ const routes = [
         path: '/modifierOffreVoyage',
         name: 'modifierOffreVoyage',
         component: modifierOffreVoyage
+      },
+      {
+        path: '/creerProprieteCaracteristiqueOffreVoyage',
+        name: 'creerProprieteCaracteristiqueOffreVoyage',
+        component: creerProprieteCaracteristiqueOffreVoyage
       },
     ]
   },
