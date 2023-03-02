@@ -24,6 +24,7 @@ import selectionnerOffreVoyage from '../components/administration_compagnie_tran
 import modifierOffreVoyage from '../components/administration_compagnie_transport/ModifierOffreVoyage'
 import rattacherJourSemaineOffreVoyage from '../components/administration_compagnie_transport/RattacherJourSemaineOffreVoyage'
 import creerProprieteCaracteristiqueOffreVoyage from '../components/administration_compagnie_transport/CreerProprieteCaracteristiqueOffreVoyage'
+import modifierModeTarif from '../components/administration_compagnie_transport/ModifierModeTarif'
 
 Vue.use(VueRouter)
 
@@ -85,6 +86,11 @@ const routes = [
         path: '/creerProprieteCaracteristiqueOffreVoyage',
         name: 'creerProprieteCaracteristiqueOffreVoyage',
         component: creerProprieteCaracteristiqueOffreVoyage
+      },
+      {
+        path: '/modifierModeTarif',
+        name: 'modifierModeTarif',
+        component: modifierModeTarif
       },
     ]
   },

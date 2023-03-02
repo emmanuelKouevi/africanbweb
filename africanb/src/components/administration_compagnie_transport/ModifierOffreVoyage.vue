@@ -26,6 +26,10 @@
                             <v-col cols="6"><v-select :items="referenceTypeOffreVoyageList" item-text="designation" item-value="designation" :error-messages="typeOffreVoyageErrors" v-model.trim="$v.offreVoyage.typeOffreVoyageDesignation.$model" dense outlined rounded color="teal" label="Type de voyage"></v-select></v-col>
                         </v-row>
                     </v-container>
+
+                    <v-card-actions>
+                        <v-btn outlined rounded small color="teal" @click="modifierOffreVoyageInfo()">VALIDER LES MODIFICATIONS</v-btn>
+                    </v-card-actions>
                 </v-card>
             </v-card><br>
 
@@ -41,7 +45,7 @@
                                 <v-card>
                                     <v-card-title>Mode n° {{ index + 1 }}
                                         <v-spacer></v-spacer>
-                                        <v-btn icon><v-icon color="primary">mdi-pencil</v-icon></v-btn>
+                                        <v-btn icon @click="editerModeOffreVoyage(mode)"><v-icon color="primary">mdi-pencil</v-icon></v-btn>
                                         <v-btn icon><v-icon color="red">mdi-close</v-icon></v-btn>
                                     </v-card-title>
                                     <v-container>
@@ -97,11 +101,20 @@
                 </v-card>
             </v-card><br>
 
-            <v-card>
+            <v-card :loading="loadingProprieteOffreVoyage">
                 <v-card-title class="title_card">PROPRIETES DE L'OFFRE
                     <v-spacer></v-spacer>
-                    <v-btn outlined rounded icon small color="teal" title="Voir plus"><v-icon>mdi-plus-outline</v-icon></v-btn>
+                    <v-btn outlined rounded icon small color="teal" title="Voir plus" @click="isVisibleProprieteOffreVoyage()"><v-icon>mdi-plus-outline</v-icon></v-btn>
                 </v-card-title>
+                <v-card id="card-propriete-offre-voyage"> 
+                    <v-container>
+                        <v-row>
+                            <v-col cols="6" v-for="(propriete,index) in proprieteParOffreVoyageList" :key="index">
+                                <v-chip color="teal" text-color="white" class="mr-2"><span class="etat">{{ propriete.designation }}</span></v-chip>
+                            </v-col>
+                        </v-row>
+                    </v-container>
+                </v-card>
             </v-card><br>
 
             <v-card :loading="loadingProgrammeOffreVoyage">
@@ -148,9 +161,9 @@
 
 <script>
 import { required , minLength } from 'vuelidate/lib/validators';
-import { API_OBTENIR_REFERENCE_PAR_PAR_FAMILLE ,API_OBTENIR_LISTE_DES_VILLES_DISPONIBLE } from '../globalConfig/globalConstConfig'
+import { API_OBTENIR_REFERENCE_PAR_PAR_FAMILLE ,API_OBTENIR_LISTE_DES_VILLES_DISPONIBLE, API_CREER_OFFRE_VOYAGE } from '../globalConfig/globalConstConfig'
 import { API_RECUPERER_PRIX_PAR_OFFRE_VOYAGE , API_RECUPERER_VILLE_ESCALE_PAR_OFFRE_VOYAGE } from '../globalConfig/globalConstConfig'
-import { API_OBENIR_JOUR_SEMAINE_PAR_OFFRE_VOYAGE  } from '../globalConfig/globalConstConfig'
+import { API_OBENIR_JOUR_SEMAINE_PAR_OFFRE_VOYAGE , API_RECUPERER_PROPRIETE_PAR_OFFRE_VOYAGE } from '../globalConfig/globalConstConfig'
 import axios from 'axios'
 import $ from 'jquery'
 export default {
@@ -170,14 +183,19 @@ export default {
             loadingModePrix:false,
             loadingVilleEscale:false,
             loadingProgrammeOffreVoyage:false,
+            loadingProprieteOffreVoyage:false,
 
             simpleObject:{},
 
 
-            offreVoyageReceivedPrice:{
+            offreVoyageObject:{
                 data:{
                     designation:null
                 }
+            },
+
+            offreVoyageToModify:{
+                datas:[]
             },
 
             offreVoyage:{
@@ -204,6 +222,7 @@ export default {
             prixEtModeParOffreVoyageList:[],
             villesEscalesParOffreVoyagesList:[],
             jourSemainesParOffreVoyagesList:[],
+            proprieteParOffreVoyageList:[],
         }
     },
 
@@ -231,6 +250,64 @@ export default {
 
     methods:{
 
+        //MODIFIER UN MODE PORTANT SUR UNE OFFRE DE VOYAGE
+        editerModeOffreVoyage(modeOffreVoyage){
+            const parsedModeOffreVoyage = JSON.stringify(modeOffreVoyage);
+            localStorage.setItem('modeOffreVoyage', parsedModeOffreVoyage);
+            this.$router.push({path: "/modifierModeTarif" });
+        },
+
+        // MODIFIER UNE OFFRE DE VOYAGE
+        async modifierOffreVoyageInfo(){
+            this.offreVoyageToModify.datas.push(this.offreVoyage);
+            this.overlay = true ;
+            await axios.put(API_CREER_OFFRE_VOYAGE , this.offreVoyageToModify).then((response) => {
+                if (response.status == 200) {
+                    if (response.data.status.code == 800) {
+                        this.successMsg = response.data.status.message
+                        $(".alert-success").fadeIn();
+                        setTimeout(function(){
+                            $(".alert-success").fadeOut(); 
+                        }, 4000)
+                        this.offreVoyageToModify.datas = [] ;
+                    }else{
+                        this.errorMsg = response.data.status.message
+                        $(".alert-error").fadeIn();
+                        setTimeout(function(){
+                            $(".alert-error").fadeOut(); 
+                        }, 3000)
+                        this.offreVoyageToModify.datas = [] ;
+                    }  
+                    
+                }
+                else if (response.status == 204) {
+                    this.warningMsg = "Erreur , lors de la modification de l'offre de voyage";
+                    $(".alert-warning").fadeIn();
+                    setTimeout(function(){
+                        $(".alert-warning").fadeOut(); 
+                    }, 3000)
+                    this.offreVoyageToSend.datas = [] ;
+                }
+                else{
+                    this.errorMsg = "Erreur , opération de modification impossible";
+                    $(".alert-error").fadeIn();
+                    setTimeout(function(){
+                        $(".alert-error").fadeOut(); 
+                    }, 3000)
+                    this.offreVoyageToModify.datas = [] ;
+                }
+            }).catch((e) => {
+                this.errorMsg = e ;
+                $(".alert-error").fadeIn();
+                setTimeout(function(){
+                    $(".alert-error").fadeOut(); 
+                }, 4000)
+                this.offreVoyageToModify.datas = [] ;
+            }).finally(() => {
+                this.overlay = false;
+            })
+        },
+
         //RENDRE VISIBLE LES INFORMATIONS SUR L'OFFRE DE VOYAGE SÉLECTIONNÉ
         isVisibleOffreVoyageInfo(){
             $("#card-info-offre-voyage").slideToggle(500);           
@@ -250,14 +327,19 @@ export default {
 
         async isVisibleProgrammeOffreVoyage(){
             $("#card-programme-offre-voyage").slideToggle(500);
-            this.obtenirVilleEscaleParOffreVoyage();
+            this.obtenirJourSemaineParOffreVoyage();
+        },
+
+        async isVisibleProprieteOffreVoyage(){
+            $("#card-propriete-offre-voyage").slideToggle(500);
+            this.obtenirProprietesOffreVoyage();
         },
 
         //OBTENIR LE PRIX ET LE MODE PAR OFFRE DE VOYAGE
         async obtenirPrixEtModeParOffreVoyage(){
             this.loadingModePrix = true
-            this.offreVoyageReceivedPrice.data.designation = this.offreVoyage.designation;
-            await axios.post(API_RECUPERER_PRIX_PAR_OFFRE_VOYAGE, this.offreVoyageReceivedPrice).then((response) => {
+            this.offreVoyageObject.data.designation = this.offreVoyage.designation;
+            await axios.post(API_RECUPERER_PRIX_PAR_OFFRE_VOYAGE, this.offreVoyageObject).then((response) => {
                 if (response.data.status.code == 800) {
                     this.prixEtModeParOffreVoyageList = response.data.items
                 }else{
@@ -277,8 +359,8 @@ export default {
         //OBTENIR LE JOUR DE LA SEMAINE DE L'OFFRE
         async obtenirJourSemaineParOffreVoyage(){
             this.loadingProgrammeOffreVoyage = true
-            this.offreVoyageReceivedPrice.data.designation = this.offreVoyage.designation;
-            await axios.post(API_OBENIR_JOUR_SEMAINE_PAR_OFFRE_VOYAGE , this.offreVoyageReceivedPrice).then((response) => {
+            this.offreVoyageObject.data.designation = this.offreVoyage.designation;
+            await axios.post(API_OBENIR_JOUR_SEMAINE_PAR_OFFRE_VOYAGE , this.offreVoyageObject).then((response) => {
                 if (response.data.status.code == 800) {
                     this.jourSemainesParOffreVoyagesList = response.data.items
                 }else{
@@ -300,8 +382,8 @@ export default {
         // OBTENIR LA LISTE DES VILLES ESCALES PAR OFFRE DE VOYAGE
         async obtenirVilleEscaleParOffreVoyage(){
             this.loadingVilleEscale = true
-            this.offreVoyageReceivedPrice.data.designation = this.offreVoyage.designation;
-            await axios.post(API_RECUPERER_VILLE_ESCALE_PAR_OFFRE_VOYAGE, this.offreVoyageReceivedPrice).then((response) => {
+            this.offreVoyageObject.data.designation = this.offreVoyage.designation;
+            await axios.post(API_RECUPERER_VILLE_ESCALE_PAR_OFFRE_VOYAGE, this.offreVoyageObject).then((response) => {
                 if (response.data.status.code == 800) {
                     this.villesEscalesParOffreVoyagesList = response.data.items
                 }else{
@@ -315,6 +397,28 @@ export default {
                 }, 4000)
             }).finally(() => {
                 this.loadingVilleEscale = false;
+            })
+        },
+
+
+        // OBTENIR LA LISTE DES PROPRIETES (CARACTERISTIQUES) PAR OFFRE DE VOYAGES
+        async obtenirProprietesOffreVoyage(){
+            this.loadingProprieteOffreVoyage = true
+            this.offreVoyageObject.data.designation = this.offreVoyage.designation;
+            await axios.post(API_RECUPERER_PROPRIETE_PAR_OFFRE_VOYAGE, this.offreVoyageObject).then((response) => {
+                if (response.data.status.code == 800) {
+                    this.proprieteParOffreVoyageList = response.data.items
+                }else{
+                    this.proprieteParOffreVoyageList = [];
+                }
+            }).catch((e) => {
+                this.errorMsg = e ;
+                $(".alert-error").fadeIn();
+                setTimeout(function(){
+                    $(".alert-error").fadeOut(); 
+                }, 4000)
+            }).finally(() => {
+                this.loadingProprieteOffreVoyage = false;
             })
         },
 
@@ -414,15 +518,16 @@ export default {
     mounted(){
         this.obtenirTypeOffreVoyageList();
         this.editerOffreVoyage();
-        //this.obtenirListeDesVillesDisponible();
-        //this.obtenirPrixEtModeParOffreVoyage();
-        this.obtenirVilleEscaleParOffreVoyage();
-        this.obtenirJourSemaineParOffreVoyage();
+        this.obtenirListeDesVillesDisponible();
     }
 }
 </script>
 
 <style scoped>
+    .etat{
+        font-weight: bold;
+    }
+
     .title_card{
         font-weight: bold;
         font-size: 17px;
@@ -470,6 +575,10 @@ export default {
     }
 
     #card-programme-offre-voyage{
+        display: none;
+    }
+
+    #card-propriete-offre-voyage{
         display: none;
     }
 </style>

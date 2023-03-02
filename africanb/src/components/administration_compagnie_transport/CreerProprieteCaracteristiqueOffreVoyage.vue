@@ -103,6 +103,7 @@ export default {
                         offreVoyageDesignation : null,
                         proprieteOffreVoyageDesignation : null,
                     };
+                    caracteristicToSend.designation = element.proprieteOffreVoyageDesignation
                     caracteristicToSend.valeurTexte = element.valeurTexte;
                     caracteristicToSend.offreVoyageDesignation = this.offreVoyageDesignation;
                     caracteristicToSend.proprieteOffreVoyageDesignation = element.proprieteOffreVoyageDesignation;
