@@ -44,3 +44,8 @@ export const API_OBENIR_JOUR_SEMAINE_PAR_OFFRE_VOYAGE = `${BASE_URL}jourSemaines
 export const API_OBTENIR_LISTE_PROPRIETE_OFFRE_VOYAGE = `${BASE_URL}proprieteOffreVoyages/getAllProprieteOffreVoyage`
 export const API_CREER_CARACTERISTIQUES_OFFRE_VOYAGE = `${BASE_URL}valeurCaracteristiqueOffreVoyages`
 export const API_RECUPERER_PROPRIETE_PAR_OFFRE_VOYAGE = `${BASE_URL}valeurCaracteristiqueOffreVoyages/getAllValeurCaracteristiqueOffreVoyageByOffreVoyageDesignation`
+
+
+//-------------------------------- APIs GESTION DES BAGAGES---------------------------------------------------------------------//
+
+export const API_CREER_BAGAGE = `${BASE_URL}bagages`

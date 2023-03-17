@@ -85,15 +85,19 @@
                     <v-btn outlined rounded icon small color="teal" title="Voir plus" @click="isVisibleVilleEscaleOffreVoyage()"><v-icon>mdi-plus-outline</v-icon></v-btn>
                 </v-card-title>
                 <v-card id="card-ville-escale-offre-voyage">
+                    <v-card-title>
+                        <v-spacer></v-spacer>
+                        <v-btn small rounded color="teal" outlined>FAIRE DES MODIFICATIONS</v-btn>
+                    </v-card-title>
+
                     <v-container>
                         <v-data-table
                             :headers="headers"
                             :items="villesEscalesParOffreVoyagesList"
                             :search="search">
-
                             <template v-slot:[`item.actions`]="{ item }">
-                                <v-icon title="editer" color="blue" small class="mr-2" @click="editCompagnieTransport(item)">mdi-pencil</v-icon>                       
-                                <v-icon title="supprimer" color="red" small class="mr-2" @click="supprimerProduitLogement(item)">mdi-delete</v-icon>
+                                <v-icon title="editer" color="blue" small class="mr-2" @click="editerVilleEscale(item)">mdi-pencil</v-icon>                       
+                                <v-icon title="supprimer" color="red" small class="mr-2">mdi-delete</v-icon>
                             </template>
 
                         </v-data-table>
@@ -129,7 +133,7 @@
                                 <v-card>
                                     <v-card-title>Programme n° {{ index + 1 }}
                                         <v-spacer></v-spacer>
-                                        <v-btn icon><v-icon color="primary">mdi-pencil</v-icon></v-btn>
+                                        <v-btn icon @click="editerJourOffre(jourSemaine)"><v-icon color="primary">mdi-pencil</v-icon></v-btn>
                                         <v-btn icon><v-icon color="red">mdi-close</v-icon></v-btn>
                                     </v-card-title>
                                     <v-container>
@@ -255,6 +259,20 @@ export default {
             const parsedModeOffreVoyage = JSON.stringify(modeOffreVoyage);
             localStorage.setItem('modeOffreVoyage', parsedModeOffreVoyage);
             this.$router.push({path: "/modifierModeTarif" });
+        },
+
+        //MODIFIER UN MODE PORTANT SUR UNE OFFRE DE VOYAGE
+        editerVilleEscale(villeEscale){
+            const parsedVilleEscale = JSON.stringify(villeEscale);
+            localStorage.setItem('villeEscaleEdit', parsedVilleEscale);
+            this.$router.push({path: "/modifierVilleEscaleOffreVoyage" });
+        },
+
+        //MODIFIER UN JOUR LIE A UNE OFFRE DE VOYAGE
+        editerJourOffre(jourOffreVoyage){
+            const parsedJourOffre = JSON.stringify(jourOffreVoyage);
+            localStorage.setItem('jourOffreEdit', parsedJourOffre);
+            this.$router.push({path: "/modifierJourOffreVoyage" });
         },
 
         // MODIFIER UNE OFFRE DE VOYAGE
@@ -385,7 +403,7 @@ export default {
             this.offreVoyageObject.data.designation = this.offreVoyage.designation;
             await axios.post(API_RECUPERER_VILLE_ESCALE_PAR_OFFRE_VOYAGE, this.offreVoyageObject).then((response) => {
                 if (response.data.status.code == 800) {
-                    this.villesEscalesParOffreVoyagesList = response.data.items
+                    this.villesEscalesParOffreVoyagesList = response.data.items;
                 }else{
                     this.villesEscalesParOffreVoyagesList = [];
                 }

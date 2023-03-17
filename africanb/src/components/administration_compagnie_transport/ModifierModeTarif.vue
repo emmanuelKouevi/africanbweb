@@ -13,7 +13,7 @@
                         </v-row>
                         <v-row>
                             <v-col cols="5">
-                                <v-text-field :error-messages="designationPrixOffreVoyageErrors" rounded dense outlined label="Réference" v-model.trim="$v.prixOffreVoyageModel.designation.$model"></v-text-field>
+                                <v-text-field disabled :error-messages="designationPrixOffreVoyageErrors" rounded dense outlined label="Réference" v-model.trim="$v.prixOffreVoyageModel.designation.$model"></v-text-field>
                             </v-col>
                             <v-col cols="5">
                                 <v-select :error-messages="categoriePrixOffreVoyageErrors" :items="referenceModeCategorieVoyageurList" item-text="designation" item-value="designation" rounded dense outlined color="teal" label="sélectionnez une categorie" v-model.trim="$v.prixOffreVoyageModel.categorieVoyageurDesignation.$model"></v-select>
@@ -31,7 +31,7 @@
 
                     <v-card-actions>
                         <v-btn small rounded outlined>REINITIALISER</v-btn>
-                        <v-btn small type="submit" rounded outlined color="teal">ACCEPTER LES MODIFICATIONS</v-btn>
+                        <v-btn small type="submit" rounded outlined color="teal">ENREGISTRER LES MODIFICATIONS</v-btn>
                     </v-card-actions>
                 </v-card>
             </v-container>
@@ -47,6 +47,7 @@ import axios from 'axios'
 import $ from 'jquery'
 import { required } from 'vuelidate/lib/validators'
 import { API_OBTENIR_REFERENCE_PAR_PAR_FAMILLE , API_RECUPERER_LISTE_OFFRE_VOYAGE} from '../globalConfig/globalConstConfig'
+import { API_RATTACHER_PRIX_OFFRE_VOYAGE } from '../globalConfig/globalConstConfig'
 export default {
     name:'ModifierModeTarif.vue',
     data(){
@@ -89,6 +90,10 @@ export default {
                 data:{
                     compagnieTransportRaisonSociale:"COMPAGNIE KOUEVI CT"
                 }
+            },
+
+            prixModeOffreVoyageToModify:{
+                datas:[]
             }
 
 
@@ -119,12 +124,67 @@ export default {
 
     methods:{
 
-        //MODIFIER UN MODE PORTANT SUR UNE OFFRE DE VOYAGE
+        // SOUMISSION DU FORMULAIRE
+        submitForm(){
+            this.modifierModePrixOffreVoyage();
+        },
+
+        //MODIFIER UN MODE , UNE CATEGORIE OU UN PRIX
+        async modifierModePrixOffreVoyage(){
+            this.prixModeOffreVoyageToModify.datas.push(this.prixOffreVoyageModel);
+            this.overlay = true ;
+            await axios.put(API_RATTACHER_PRIX_OFFRE_VOYAGE , this.prixModeOffreVoyageToModify).then((response) => {
+                if (response.status == 200) {
+                    if (response.data.status.code == 800) {
+                        this.successMsg = response.data.status.message
+                        $(".alert-success").fadeIn();
+                        setTimeout(function(){
+                            $(".alert-success").fadeOut(); 
+                        }, 4000)
+                        this.prixModeOffreVoyageToModify.datas = [] ;
+                    }else{
+                        this.errorMsg = response.data.status.message
+                        $(".alert-error").fadeIn();
+                        setTimeout(function(){
+                            $(".alert-error").fadeOut(); 
+                        }, 3000)
+                        this.prixModeOffreVoyageToModify.datas = [] ;
+                    }  
+                    
+                }
+                else if (response.status == 204) {
+                    this.warningMsg = "Erreur , lors de la modification de l'offre de voyage";
+                    $(".alert-warning").fadeIn();
+                    setTimeout(function(){
+                        $(".alert-warning").fadeOut(); 
+                    }, 3000)
+                    this.prixModeOffreVoyageToModify.datas = [] ;
+                }
+                else{
+                    this.errorMsg = "Erreur , opération de modification impossible";
+                    $(".alert-error").fadeIn();
+                    setTimeout(function(){
+                        $(".alert-error").fadeOut(); 
+                    }, 3000)
+                    this.prixModeOffreVoyageToModify.datas = [] ;
+                }
+            }).catch((e) => {
+                this.errorMsg = e ;
+                $(".alert-error").fadeIn();
+                setTimeout(function(){
+                    $(".alert-error").fadeOut(); 
+                }, 4000)
+                this.prixModeOffreVoyageToModify.datas = [] ;
+            }).finally(() => {
+                this.overlay = false;
+            })
+        },
+
+        //EDITER UN MODE PORTANT SUR UNE OFFRE DE VOYAGE
         async editerModeOffreVoyage(){
             if (localStorage.getItem("modeOffreVoyage")) {
                 try {
                     const modeOffreVoyageEditing = JSON.parse(localStorage.getItem("modeOffreVoyage"));
-                    console.log(modeOffreVoyageEditing)
                     this.prixOffreVoyageModel.id = modeOffreVoyageEditing.id;
                     this.prixOffreVoyageModel.designation = modeOffreVoyageEditing.designation;
                     this.prixOffreVoyageModel.offreVoyageDesignation = modeOffreVoyageEditing.offreVoyageDesignation;
@@ -191,6 +251,11 @@ export default {
                     $(".alert-error").fadeOut(); 
                 }, 4000)
             })
+        },
+
+        //VERIFIE SI CEST UN NOMBRE POSITIF
+        isNumber(item){
+          return  item  > 0
         },
 
     },

@@ -75,6 +75,30 @@
       </v-list>
 
       <v-list dense nav>
+        <v-list-item link @click="$router.push({path:'/creerGareCompagnieTransport'}).catch(() => {})">
+          <v-list-item-icon>
+            <v-icon color="teal">mdi-subway-alert-variant</v-icon>
+          </v-list-item-icon>
+  
+          <v-list-item-content>
+            <v-list-item-title>GESTIONS DES GARES</v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
+      </v-list>
+
+      <v-list dense nav>
+        <v-list-item link @click="$router.push({path:'/gestionBagageCompagnieTransport'}).catch(() => {})">
+          <v-list-item-icon>
+            <v-icon color="teal">mdi-bag-checked</v-icon>
+          </v-list-item-icon>
+  
+          <v-list-item-content>
+            <v-list-item-title>GESTIONS DES BAGAGES</v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
+      </v-list>
+
+      <v-list dense nav>
         <v-list-item link>
           <v-list-item-icon>
             <v-icon color="teal">mdi-account-group</v-icon>

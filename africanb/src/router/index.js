@@ -25,6 +25,11 @@ import modifierOffreVoyage from '../components/administration_compagnie_transpor
 import rattacherJourSemaineOffreVoyage from '../components/administration_compagnie_transport/RattacherJourSemaineOffreVoyage'
 import creerProprieteCaracteristiqueOffreVoyage from '../components/administration_compagnie_transport/CreerProprieteCaracteristiqueOffreVoyage'
 import modifierModeTarif from '../components/administration_compagnie_transport/ModifierModeTarif'
+import modifierVilleEscaleOffreVoyage from '../components/administration_compagnie_transport/ModifierVilleEscaleOffreVoyage'
+import modifierJourOffreVoyage from '../components/administration_compagnie_transport/ModifierJourOffreVoyage'
+import gestionBagageCompagnieTransport from '../components/administration_compagnie_transport/GestionBagageCompagnieTransport'
+import creerGareCompagnieTransport from '../components/administration_compagnie_transport/CreerGareCompagnieTransport'
+
 
 Vue.use(VueRouter)
 
@@ -91,6 +96,26 @@ const routes = [
         path: '/modifierModeTarif',
         name: 'modifierModeTarif',
         component: modifierModeTarif
+      },
+      {
+        path: '/modifierVilleEscaleOffreVoyage',
+        name: 'modifierVilleEscaleOffreVoyage',
+        component: modifierVilleEscaleOffreVoyage
+      },
+      {
+        path: '/modifierJourOffreVoyage',
+        name: 'modifierJourOffreVoyage',
+        component: modifierJourOffreVoyage
+      },
+      {
+        path: '/gestionBagageCompagnieTransport',
+        name: 'gestionBagageCompagnieTransport',
+        component: gestionBagageCompagnieTransport
+      },
+      {
+        path: '/creerGareCompagnieTransport',
+        name: 'creerGareCompagnieTransport',
+        component: creerGareCompagnieTransport
       },
     ]
   },
