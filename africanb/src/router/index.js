@@ -29,6 +29,7 @@ import modifierVilleEscaleOffreVoyage from '../components/administration_compagn
 import modifierJourOffreVoyage from '../components/administration_compagnie_transport/ModifierJourOffreVoyage'
 import gestionBagageCompagnieTransport from '../components/administration_compagnie_transport/GestionBagageCompagnieTransport'
 import creerGareCompagnieTransport from '../components/administration_compagnie_transport/CreerGareCompagnieTransport'
+import selectionnerGareCompagnieTransport from '../components/administration_compagnie_transport/SelectionnerGareCompagnieTransport'
 
 
 Vue.use(VueRouter)
@@ -116,6 +117,11 @@ const routes = [
         path: '/creerGareCompagnieTransport',
         name: 'creerGareCompagnieTransport',
         component: creerGareCompagnieTransport
+      },
+      {
+        path: '/selectionnerGareCompagnieTransport',
+        name: 'selectionnerGareCompagnieTransport',
+        component: selectionnerGareCompagnieTransport
       },
     ]
   },

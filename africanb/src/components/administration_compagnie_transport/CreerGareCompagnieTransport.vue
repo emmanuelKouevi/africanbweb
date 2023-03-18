@@ -9,25 +9,31 @@
                     <v-container>
                         <v-row>
                             <v-col cols="5">
-                                <v-text-field :error-messages="designationBagage" rounded dense outlined label="Réference du sac" v-model.trim="$v.bagageModel.designation.$model"></v-text-field>
+                                <v-text-field :error-messages="designationGareErrors" rounded dense outlined label="Désignation de la gare" v-model.trim="$v.gareTransportModel.designation.$model"></v-text-field>
                             </v-col>
                             <v-col cols="5">
-                                <v-select :error-messages="typeBagageErrors" :items="referenceBagageList" item-text="designation" item-value="designation" rounded dense outlined color="teal" label="sélectionnez un type de bagage" v-model.trim="$v.bagageModel.typeBagageDesignation.$model"></v-select>
+                                <v-text-field :error-messages="emailGareErrors" rounded dense outlined label="E-mail" v-model.trim="$v.gareTransportModel.email.$model"></v-text-field>
                             </v-col>
                         </v-row>
                         <v-row>
-                            <v-col cols="3">
-                                <v-text-field :error-messages="nombreBagageErrors" rounded dense outlined label="nombre de sac gratuit" v-model.trim="$v.bagageModel.nombreBagageGratuitParTypeBagage.$model"></v-text-field>
+                            <v-col cols="5">
+                                <v-text-field type="tel" :error-messages="premierTelephoneGareErrors" rounded dense outlined label="Téléphone N°1" v-model.trim="$v.gareTransportModel.telephone1.$model"></v-text-field>
                             </v-col>
                             <v-col cols="5">
-                                <v-text-field :error-messages="prixBagageErrors" rounded dense outlined color="teal" label="prix par type de sac" suffix="FCFA" v-model.number="$v.bagageModel.coutBagageParTypeBagage.$model"></v-text-field>
+                                <v-text-field rounded dense outlined label="Téléphone N°2" v-model.trim="$v.gareTransportModel.telephone2.$model"></v-text-field>
+                            </v-col>
+                        </v-row>
+
+                        <v-row>
+                            <v-col cols="5">
+                                <v-text-field :error-messages="addresseLocalisationGareError" rounded dense outlined label="Addresse de la gare" v-model.trim="$v.gareTransportModel.adresseLocalisation.$model"></v-text-field>
                             </v-col>
                         </v-row>
                     </v-container>
 
                     <v-card-actions>
                         <v-btn small rounded outlined>REINITIALISER</v-btn>
-                        <v-btn small type="submit" rounded outlined color="primary">VALIDER</v-btn>
+                        <v-btn small type="submit" rounded outlined color="primary">CREER LA GARE</v-btn>
                     </v-card-actions>
                 </v-card>
             </v-container>
@@ -41,11 +47,18 @@
 
 <script>
 import { required , email} from 'vuelidate/lib/validators'
-
+import axios from 'axios';
+import $ from 'jquery';
+import { API_CREER_GARE_COMPAGNIE_TRANSPORT } from '../globalConfig/globalConstConfig';
 export default {
     name:'CreerGareCompagnieTransport',
     data(){
         return{
+            errorMsg: null,
+            successMsg : null,
+            overlay : false,
+
+
             gareTransportToSend:{
                 datas:[],
             },
@@ -56,7 +69,7 @@ export default {
                 telephone1:null,
                 telephone2:null,
                 adresseLocalisation:null,
-                compagnieTransportRaisonSocial:null,
+                compagnieTransportRaisonSociale:"COMPAGNIE KOUEVI CT",
             }
         }
     },
@@ -92,8 +105,73 @@ export default {
     
     methods:{
 
-        //CREER UNE COMPAGNIE DE TRANSPORT
+        // SOUMISSION DU FORMULAIRE
+        submitForm(){
+            this.$v.$touch();
+            if (this.$v.gareTransportModel.$invalid) {
+                this.errorMsg = 'Des informations sont manquantes'
+                $(".alert-error").fadeIn();
+                setTimeout(function(){
+                    $(".alert-error").fadeOut(); 
+                }, 3000)
+            }
+            else{
+                this.creerGareCompagnieTransport();
+            }
+        },
 
+
+
+        //CREER UNE COMPAGNIE DE TRANSPORT
+        async creerGareCompagnieTransport(){
+            this.gareTransportToSend.datas.push(this.gareTransportModel)
+            this.overlay = true ;
+            await axios.post(API_CREER_GARE_COMPAGNIE_TRANSPORT, this.gareTransportToSend).then((response) => {
+                if (response.status == 200) {
+                    if (response.data.status.code == 800) {
+                        this.successMsg = response.data.status.message
+                        $(".alert-success").fadeIn();
+                        setTimeout(function(){
+                            $(".alert-success").fadeOut(); 
+                        }, 4000)
+                        this.gareTransportToSend.datas = [] ;
+                    }else{
+                        this.errorMsg = response.data.status.message
+                        $(".alert-error").fadeIn();
+                        setTimeout(function(){
+                            $(".alert-error").fadeOut(); 
+                        }, 3000)
+                        this.gareTransportToSend.datas = [] ;
+                    }  
+                    
+                }
+                else if (response.status == 204) {
+                    this.warningMsg = "Erreur , lors de la création de la gare";
+                    $(".alert-warning").fadeIn();
+                    setTimeout(function(){
+                        $(".alert-warning").fadeOut(); 
+                    }, 3000)
+                    this.gareTransportToSend.datas = [] ;
+                }
+                else{
+                    this.errorMsg = "Erreur , opération de création impossible";
+                    $(".alert-error").fadeIn();
+                    setTimeout(function(){
+                        $(".alert-error").fadeOut(); 
+                    }, 3000)
+                    this.gareTransportToSend.datas = [] ;
+                }
+            }).catch((e) => {
+                this.errorMsg = e ;
+                $(".alert-error").fadeIn();
+                setTimeout(function(){
+                    $(".alert-error").fadeOut(); 
+                }, 4000)
+                this.gareTransportToSend.datas = [] ;
+            }).finally(() => {
+                this.overlay = false;
+            })
+        }
     },
 
     computed:{

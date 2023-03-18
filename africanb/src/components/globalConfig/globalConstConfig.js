@@ -49,3 +49,12 @@ export const API_RECUPERER_PROPRIETE_PAR_OFFRE_VOYAGE = `${BASE_URL}valeurCaract
 //-------------------------------- APIs GESTION DES BAGAGES---------------------------------------------------------------------//
 
 export const API_CREER_BAGAGE = `${BASE_URL}bagages`
+
+// --------------------------------APIs GESTION DES GARES ----------------------------------------------------------------------//
+
+export const API_CREER_GARE_COMPAGNIE_TRANSPORT = `${BASE_URL}gares`
+export const API_RECUPERER_LISTE_GARES_PAR_COMPAGNIE = `${BASE_URL}gares/getGareByCompagnieTransportRaisonScoiale`
+
+
+
+
