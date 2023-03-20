@@ -11,7 +11,7 @@
       <v-divider></v-divider>
 
       <v-list dense nav>
-        <v-list-item link>
+        <v-list-item link @click="$router.push({path:'/tableauBord'}).catch(() => {})">
           <v-list-item-icon>
             <v-icon color="teal">mdi-view-dashboard</v-icon>
           </v-list-item-icon>
