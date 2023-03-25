@@ -32,6 +32,8 @@ import creerGareCompagnieTransport from '../components/administration_compagnie_
 import selectionnerGareCompagnieTransport from '../components/administration_compagnie_transport/SelectionnerGareCompagnieTransport'
 import tableauBord from '../components/administration_compagnie_transport/TableauBord';
 import creerModeAbonnement from '../components/administration_compagnie_transport/CreerModeAbonnement'
+import creerModePaiement from '../components/administration_compagnie_transport/CreerModePaiement'
+import selectionnerModeAbonnementEtPaiement from '../components/administration_compagnie_transport/SelectionnerModeAbonnementEtPaiement'
 
 
 Vue.use(VueRouter)
@@ -129,6 +131,16 @@ const routes = [
         path: '/creerModeAbonnement',
         name: 'creerModeAbonnement',
         component: creerModeAbonnement
+      },
+      {
+        path: '/creerModePaiement',
+        name: 'creerModePaiement',
+        component: creerModePaiement
+      },
+      {
+        path: '/selectionnerModeAbonnementEtPaiement',
+        name: 'selectionnerModeAbonnementEtPaiement',
+        component: selectionnerModeAbonnementEtPaiement
       },
       {
         path: '/tableauBord',

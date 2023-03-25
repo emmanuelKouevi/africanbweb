@@ -51,10 +51,10 @@
               </v-list-item-content>
             </template>
   
-            <v-list-item v-for="([title, icon , navigation], i) in operationAdhesion" :key="i" link>
-              <v-list-item-title v-text="title" @click="$router.push({path:navigation}).catch(() => {})"></v-list-item-title>
+            <v-list-item v-for="([title, icon , navigation], i) in operationAdhesion" :key="i" link @click="$router.push({path:navigation}).catch(() => {})">
+              <v-list-item-title> {{ title }} </v-list-item-title>
               <v-list-item-icon>
-                <v-icon color="teal" v-text="icon"></v-icon>
+                <v-icon color="teal"> {{ icon }} </v-icon>
               </v-list-item-icon>
             </v-list-item>
           </v-list-group>
@@ -123,25 +123,25 @@
       </v-list>
 
       <v-list dense nav>
-        <v-list-item link>
+        <v-list-item link @click="$router.push({path:'/creerModePaiement'}).catch(() => {})">
           <v-list-item-icon>
-            <v-icon color="teal">mdi-account-group</v-icon>
+            <v-icon color="teal">mdi-finance</v-icon>
           </v-list-item-icon>
   
           <v-list-item-content>
-            <v-list-item-title>UTILISATEURS</v-list-item-title>
+            <v-list-item-title>MODE DE PAIEMENTS</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
       </v-list>
 
       <v-list dense nav>
-        <v-list-item link>
+        <v-list-item link @click="$router.push({path:'/selectionnerModeAbonnementEtPaiement'}).catch(() => {})">
           <v-list-item-icon>
-            <v-icon color="teal">mdi-account-edit</v-icon>
+            <v-icon color="teal">mdi-view-list-outline</v-icon>
           </v-list-item-icon>
   
           <v-list-item-content>
-            <v-list-item-title>MON PROFIL</v-list-item-title>
+            <v-list-item-title>ABONNEMENT ET PAIEMENT</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
       </v-list>

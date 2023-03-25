@@ -56,7 +56,9 @@ export const API_RECUPERER_LISTE_GARES_PAR_COMPAGNIE = `${BASE_URL}gares/getGare
 
 //---------------------------------APIs MODE D'ABONNEMENT ET DE PAIEMENT ---------------------------------------------------//
 export const API_CREER_MODE_ABONNEMENT = `${BASE_URL}modeAbonnements`
+export const API_OBTENIR_MODE_ABONNEMENT_PAR_COMPAGNIE = `${BASE_URL}modeAbonnements/getModeAbonnementByCompagnieTransport`
 export const API_CREER_MODE_PAIEMENT = `${BASE_URL}modePaiements`
+export const API_OBTENIR_MODE_PAIEMENT_PAR_COMPAGNIE = `${BASE_URL}modePaiements/getModePaiementByCompagnieTransport`
 
 
 
