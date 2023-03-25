@@ -107,8 +107,6 @@ export default {
             overlay: false,
             errorMsg:null,
             successMsg:null,
-            menuDateDepart :false,
-            menuDateArrivee: false,
 
             menuHeureDepart:false,
             menuHeureArrivee:false,

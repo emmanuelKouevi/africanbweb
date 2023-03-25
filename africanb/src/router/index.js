@@ -31,6 +31,7 @@ import gestionBagageCompagnieTransport from '../components/administration_compag
 import creerGareCompagnieTransport from '../components/administration_compagnie_transport/CreerGareCompagnieTransport'
 import selectionnerGareCompagnieTransport from '../components/administration_compagnie_transport/SelectionnerGareCompagnieTransport'
 import tableauBord from '../components/administration_compagnie_transport/TableauBord';
+import creerModeAbonnement from '../components/administration_compagnie_transport/CreerModeAbonnement'
 
 
 Vue.use(VueRouter)
@@ -123,6 +124,11 @@ const routes = [
         path: '/selectionnerGareCompagnieTransport',
         name: 'selectionnerGareCompagnieTransport',
         component: selectionnerGareCompagnieTransport
+      },
+      {
+        path: '/creerModeAbonnement',
+        name: 'creerModeAbonnement',
+        component: creerModeAbonnement
       },
       {
         path: '/tableauBord',

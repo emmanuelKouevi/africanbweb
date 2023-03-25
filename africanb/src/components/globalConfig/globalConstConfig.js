@@ -51,10 +51,12 @@ export const API_RECUPERER_PROPRIETE_PAR_OFFRE_VOYAGE = `${BASE_URL}valeurCaract
 export const API_CREER_BAGAGE = `${BASE_URL}bagages`
 
 // --------------------------------APIs GESTION DES GARES ----------------------------------------------------------------------//
-
 export const API_CREER_GARE_COMPAGNIE_TRANSPORT = `${BASE_URL}gares`
 export const API_RECUPERER_LISTE_GARES_PAR_COMPAGNIE = `${BASE_URL}gares/getGareByCompagnieTransportRaisonScoiale`
 
+//---------------------------------APIs MODE D'ABONNEMENT ET DE PAIEMENT ---------------------------------------------------//
+export const API_CREER_MODE_ABONNEMENT = `${BASE_URL}modeAbonnements`
+export const API_CREER_MODE_PAIEMENT = `${BASE_URL}modePaiements`
 
 
 
