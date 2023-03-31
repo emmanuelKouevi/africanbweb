@@ -89,7 +89,17 @@ export default {
 
         // SOUMISSION DU FORMULAIRE 
         submitForm(){
-            this.creerModePaiement();
+            this.$v.$touch();
+            if (this.$v.modePaiementModel.$invalid) {
+                this.errorMsg = 'Des informations sont manquantes'
+                $(".alert-error").fadeIn();
+                setTimeout(function(){
+                    $(".alert-error").fadeOut(); 
+                }, 3000)
+            }
+            else{
+                this.creerModePaiement();
+            }
         },
 
         // CREATION D'UN MODE DE PAIEMENT

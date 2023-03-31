@@ -60,5 +60,5 @@ export const API_OBTENIR_MODE_ABONNEMENT_PAR_COMPAGNIE = `${BASE_URL}modeAbonnem
 export const API_CREER_MODE_PAIEMENT = `${BASE_URL}modePaiements`
 export const API_OBTENIR_MODE_PAIEMENT_PAR_COMPAGNIE = `${BASE_URL}modePaiements/getModePaiementByCompagnieTransport`
 
-
+export const API_MODIFIER_MODE_PAIEMENT = `${BASE_URL}modePaiements`
 

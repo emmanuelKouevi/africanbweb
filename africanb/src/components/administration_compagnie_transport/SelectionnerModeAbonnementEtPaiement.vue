@@ -45,7 +45,7 @@
                                             </template>
   
                                             <v-list>
-                                                <v-list-item>
+                                                <v-list-item link @click="editerModePaiement(paiement)">
                                                     <v-list-item-action><v-icon color="primary">mdi-pencil</v-icon></v-list-item-action>                         
                                                     <v-list-item-subtitle>Editer</v-list-item-subtitle>
                                                 </v-list-item>
@@ -196,6 +196,13 @@ export default {
             }).finally(() => {
                 this.loading = false;   
             })
+        },
+
+        //EDITER UN MODE DE PAIEMENT
+        editerModePaiement(modePaiement){
+            const parsedModePaiement = JSON.stringify(modePaiement);
+            localStorage.setItem('modePaiement', parsedModePaiement);
+            this.$router.push({path: "/modifierModePaiement" });
         },
 
 
