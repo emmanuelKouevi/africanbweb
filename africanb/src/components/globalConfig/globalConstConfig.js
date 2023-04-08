@@ -62,3 +62,7 @@ export const API_OBTENIR_MODE_PAIEMENT_PAR_COMPAGNIE = `${BASE_URL}modePaiements
 
 export const API_MODIFIER_MODE_PAIEMENT = `${BASE_URL}modePaiements`
 
+// ---------------------------------- DOCUMENT COMPAGNIE TRANSPORT -------------------------------------------------//
+
+export const API_CREER_DOCUMENT_TRANSPORT = `${BASE_URL}compagnieTransport/uploadAttestionTransport`
+

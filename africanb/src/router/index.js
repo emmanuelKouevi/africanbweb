@@ -35,6 +35,7 @@ import creerModeAbonnement from '../components/administration_compagnie_transpor
 import creerModePaiement from '../components/administration_compagnie_transport/CreerModePaiement'
 import selectionnerModeAbonnementEtPaiement from '../components/administration_compagnie_transport/SelectionnerModeAbonnementEtPaiement'
 import modifierModePaiement from '../components/administration_compagnie_transport/ModifierModePaiement'
+import documentAttestationTransport from '../components/administration_compagnie_transport/DocumentAttestationTransport'
 
 
 Vue.use(VueRouter)
@@ -147,6 +148,11 @@ const routes = [
         path: '/modifierModePaiement',
         name: 'modifierModePaiement',
         component: modifierModePaiement
+      },
+      {
+        path: '/documentAttestationTransport',
+        name: 'documentAttestationTransport',
+        component: documentAttestationTransport
       },
       {
         path: '/tableauBord',
