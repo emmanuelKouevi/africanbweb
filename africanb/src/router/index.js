@@ -12,8 +12,9 @@ import selectionnerPays from '../components/administrateur_societe/SelectionnerP
 import creerVille from '../components/administrateur_societe/CreerVille'
 import selectionnerVille from '../components/administrateur_societe/SelectionnerVille'
 
-import connexion from '../components/authentification/ConnexionUtilisateur.vue'
+//import connexion from '../components/authentification/ConnexionUtilisateur.vue'
 import inscription from '../components/authentification/InscriptionUtilisateur.vue'
+import connexionUtilisateurCompagnieTransport from '../components/administration_compagnie_transport/authentification/connexionUtilisateurCompagnieTransport'
 
 import creerOffreVoyage from '../components/administration_compagnie_transport/CreerOffreVoyage'
 import creerVilleEscale from '../components/administration_compagnie_transport/CreerVilleEscale'
@@ -37,7 +38,6 @@ import selectionnerModeAbonnementEtPaiement from '../components/administration_c
 import modifierModePaiement from '../components/administration_compagnie_transport/ModifierModePaiement'
 import documentAttestationTransport from '../components/administration_compagnie_transport/DocumentAttestationTransport'
 
-
 Vue.use(VueRouter)
 
 const routes = [
@@ -54,6 +54,11 @@ const routes = [
     // which is lazy-loaded when the route is visited.
     component: () => import(/* webpackChunkName: "about" */ '../views/EspaceCompagnieTransport.vue'),
     children:[
+      {
+        path: '/connexionUtilisateurCompagnieTransport',
+        name: 'connexionUtilisateurCompagnieTransport',
+        component: connexionUtilisateurCompagnieTransport
+      },
       {
         path: '/creerOffreVoyage',
         name: 'creerOffreVoyage',
@@ -216,7 +221,7 @@ const routes = [
   {
     path: '/connexion',
     name: 'connexion',
-    component: connexion
+    component: connexionUtilisateurCompagnieTransport
   },
   {
     path: '/inscription',
