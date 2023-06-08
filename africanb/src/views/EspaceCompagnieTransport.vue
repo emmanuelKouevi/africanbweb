@@ -3,7 +3,7 @@
     <v-navigation-drawer app v-model="drawer" :mini-variant.sync="mini">
       <v-list-item>
           <v-list-item-content>
-            <v-list-item-title class="text-h6">AFRICANB</v-list-item-title>
+            <v-list-item-title class="text-h6">Nom de la compagnie</v-list-item-title>
             <v-list-item-subtitle>Société AFRICANB</v-list-item-subtitle>
           </v-list-item-content>
       </v-list-item>
@@ -162,6 +162,9 @@
 
     <v-app-bar app color="white">
       <v-app-bar-nav-icon color="dark" @click="drawer = !drawer"></v-app-bar-nav-icon>
+      <v-tootbar-title>
+        <v-img max-height="50px" max-width="75px" src="../assets/logo_africanbus.jpg"></v-img>
+      </v-tootbar-title>
       <v-spacer></v-spacer>
 
       <v-btn icon>

@@ -1,6 +1,6 @@
 // URL A UTILISER POUR LES API
 
-export const BASE_URL = "http://localhost:8080/";
+export const BASE_URL = "https://localhost:8443/";
 
 
 // ------------------ OPERATION SUR LES COMPAGNIE DE TRANSPORT --------------------------- //
