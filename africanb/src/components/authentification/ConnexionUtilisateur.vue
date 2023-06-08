@@ -40,8 +40,27 @@
 export default {
     name:'ConnexionUtilisateur',
     data(){
-        return{}
+        return{
+            credentialsValid : false
+        }
     },
+
+    methods:{
+
+        /*connexion() {
+            // Vérification des informations d'identification côté client
+            if (credentialsValid) {
+                localStorage.setItem('isLoggedIn', 'true');
+            
+                // Redirection vers la page appropriée en fonction des rôles de l'utilisateur
+                if (estAdministrateur) {
+                    this.$router.push('/EspaceAdmin');
+                } else {
+                    this.$router.push('/EspaceAdministrateurTransport');
+                }
+            }
+        }*/
+    }
 }
 </script>
 

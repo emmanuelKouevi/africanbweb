@@ -228,6 +228,24 @@ const routes = [
     name: 'inscription',
     component: inscription
   },
+
+  /*{
+    path: '/',
+    name: 'Home',
+    component: Home,
+    meta: { requiresAuth: true, roles: ['admin', 'user'] } // Exemple de garde d'authentification et de rôles
+  },
+  {
+    path: '/login',
+    name: 'Login',
+    component: Login
+  },
+  {
+    path: '/admin',
+    name: 'Admin',
+    component: Admin,
+    meta: { requiresAuth: true, roles: ['admin'] } // Exemple de garde d'authentification et de rôles
+  },*/
   
 ]
 
@@ -237,4 +255,32 @@ const router = new VueRouter({
   routes
 })
 
+// Définition d'une garde de navigation globale
+
+//router.beforeEach((to, from, next) => {
+//  const isLoggedIn =true /* Vérifier si l'utilisateur est connecté */;
+//  const userRoles = []/* Obtenir les rôles de l'utilisateur */;
+  
+//  if (to.meta.requiresAuth && !isLoggedIn) {
+    // Redirection vers la page de connexion si l'utilisateur n'est pas connecté
+//    next('/login');
+ // } else if (to.meta.roles && !hasRequiredRoles(userRoles, to.meta.roles)) {
+    // Redirection vers une page d'erreur ou une page par défaut si l'utilisateur n'a pas les rôles requis
+   // next('/error');
+ // } else {
+    // Continuer vers la route demandée
+   // next();
+ // }
+//});
+
+// Méthode utilitaire pour vérifier si l'utilisateur a les rôles requis
+/*function hasRequiredRoles(userRoles, requiredRoles) {
+  return userRoles.some(role => requiredRoles.includes(role));
+}*/
+
+
+
 export default router
+
+
+

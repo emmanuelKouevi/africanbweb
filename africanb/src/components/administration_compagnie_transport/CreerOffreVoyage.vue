@@ -3,7 +3,7 @@
         <v-form @submit.prevent="creerOffreVoyage()">
             <v-container fluid>
                 <v-card elevation="5">
-                    <v-card-title>CREER UNE OFFRE DE VOYAGE</v-card-title>
+                    <v-card-title><h2>CREER UNE OFFRE DE VOYAGE</h2></v-card-title>
                     <v-card-subtitle>Mettre en ligne un nouvel offre de voyage</v-card-subtitle><br>
 
                     <v-container fluid>
@@ -17,11 +17,11 @@
                             <v-col cols="6"><v-select :items="referenceTypeOffreVoyageList" item-text="designation" item-value="designation" :error-messages="typeOffreVoyageErrors" v-model.trim="$v.offreVoyage.typeOffreVoyageDesignation.$model" dense outlined rounded color="teal" label="Type de voyage"></v-select></v-col>
                         </v-row><br>
 
-                        <v-row justify="space-around">
-                            <v-col cols="6"><v-btn outlined rounded><v-icon>mdi-sync</v-icon> REINITIALISER</v-btn></v-col>
-                            <v-col cols="6"><v-btn type="submit" outlined rounded dark color="teal"><v-icon>mdi-check</v-icon> CRÉER L'OFFRE</v-btn></v-col>                
-                        </v-row>
                     </v-container>
+                    <v-card-actions>
+                        <v-btn small rounded dark color="secondary"><v-icon>mdi-sync</v-icon> REINITIALISER</v-btn>
+                        <v-btn small type="submit" rounded dark color="primary"><v-icon>mdi-check</v-icon> CRÉER L'OFFRE</v-btn>
+                </v-card-actions>
                 </v-card>
             </v-container>
         </v-form>

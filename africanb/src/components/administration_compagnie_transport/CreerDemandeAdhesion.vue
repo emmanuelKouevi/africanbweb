@@ -1,45 +1,23 @@
 <template>
     <v-app>
         <v-form @submit.prevent="submitForm">
-            <v-card max-width="1200px" class="mx-auto">
-                <v-card-title class="title"> CREER UNE DEMANDE D'ADHESION</v-card-title>
+            <v-card max-width="900px" class="mx-auto">
+                <v-card-title><h4>CREER UNE DEMANDE D'ADHESION</h4></v-card-title>
+                <v-card-subtitle>Faites une requête aupres de l'administrateur pour votre espace personnel</v-card-subtitle>
 
-                <v-divider></v-divider>
-                
-                <v-container>
+                <v-container fluid>
                     <v-row>
-                        <v-col cols="2">
-                            <v-label>Designation:</v-label>
-                        </v-col>
                         <v-col>
-                            <v-text-field rounded dense outlined color="teal" placeholder="Entrer une designation"
+                            <v-text-field class="my_input" label="Désignation" rounded dense outlined color="teal" placeholder="Entrer une designation"
                                 :error-messages="designationCompagnieErrors"
                                 v-model.trim="$v.compagnieTransport.designation.$model"
                                 @input="$v.compagnieTransport.designation.$touch()"
                                 @blur="$v.compagnieTransport.designation.$touch()">
                             </v-text-field>
                         </v-col>
-                    </v-row>
-                    
-                    <v-row>
-                        <v-col cols="2">
-                            <v-label>Description:</v-label>
-                        </v-col>
+
                         <v-col>
-                            <v-textarea rounded dense outlined color="teal" aria-placeholder="entrer une description"
-                                :error-messages="descriptionCompagnieErrors"
-                                v-model.trim="$v.compagnieTransport.description.$model"
-                                @input="$v.compagnieTransport.description.$touch()"
-                                @blur="$v.compagnieTransport.description.$touch()"
-                            ></v-textarea>
-                        </v-col>
-                    </v-row>
-                    <v-row>
-                        <v-col cols="2">
-                            <v-label>E-mail:</v-label>
-                        </v-col>
-                        <v-col>
-                            <v-text-field rounded dense outlined color="teal" append-icon="mdi-email"
+                            <v-text-field class="my_input" label="Votre e-mail" rounded dense outlined color="teal" append-icon="mdi-email"
                                 placeholder="Adresse électronique de la compagnie"
                                 :error-messages="emailCompagnieErrors"
                                 v-model.trim="$v.compagnieTransport.email.$model"
@@ -49,13 +27,22 @@
                             </v-text-field>
                         </v-col>
                     </v-row>
+                    
+                    <v-row>
+                        <v-col>
+                            <v-textarea class="my_input" label="Description " rounded dense outlined color="teal" aria-placeholder="entrer une description"
+                                placeholder="Entrer une Description"
+                                :error-messages="descriptionCompagnieErrors"
+                                v-model.trim="$v.compagnieTransport.description.$model"
+                                @input="$v.compagnieTransport.description.$touch()"
+                                @blur="$v.compagnieTransport.description.$touch()"
+                            ></v-textarea>
+                        </v-col>
+                    </v-row>
 
                     <v-row>
-                        <v-col cols="2">
-                            <v-label>ville :</v-label>
-                        </v-col>
-                        <v-col cols="3">
-                            <v-select rounded dense outlined :items="villesList" color="teal"
+                        <v-col>
+                            <v-select class="my_input" label="Où-vous localisez ?" rounded dense outlined :items="villesList" color="teal"
                                 item-text="designation"
                                 item-value="designation"
                                 :error-messages="villeCompagnieErrors"
@@ -65,12 +52,8 @@
                             </v-select>
                         </v-col>
 
-                        <v-col cols="2">
-                            <v-label>N° Télephone :</v-label>
-                        </v-col>
-
-                        <v-col cols="3">
-                            <v-text-field rounded dense outlined color="teal" prefix="+225" append-icon="mdi-phone"
+                        <v-col>
+                            <v-text-field class="my_input" label="Tél" rounded dense outlined color="teal" prefix="+225" append-icon="mdi-phone"
                                 placeholder="N° de Téléphone"
                                 :error-messages="telephoneCompagnieErrors"
                                 v-model.trim="$v.compagnieTransport.telephone.$model"
@@ -79,14 +62,9 @@
 
                             </v-text-field>
                         </v-col>
-                    </v-row>
 
-                    <v-row>
-                        <v-col cols="2">
-                            <v-label>Sigle:</v-label>
-                        </v-col>
-                        <v-col cols="5">
-                            <v-text-field rounded dense outlined color="teal"
+                        <v-col>
+                            <v-text-field class="my_input" label="Sigle de la compagnie" rounded dense outlined color="teal"
                                 placeholder="le sigle de la compagnie"
                                 :error-messages="sigleCompagnieErrors"
                                 v-model.trim="$v.compagnieTransport.sigle.$model"
@@ -95,15 +73,13 @@
 
                             </v-text-field>
                         </v-col>
+
                     </v-row>
 
                     <v-row>
-                        <v-col cols="2">
-                            <v-label>Raison sociale:</v-label>
-                        </v-col>
                         <v-col>
-                            <v-text-field rounded dense outlined color="teal"
-                                placeholder="La raison sociale de la compagnie"
+                            <v-text-field class="my_input" label="Raison sociale de la compagnie" rounded dense outlined color="teal"
+                                placeholder="Entrer une raison sociale"
                                 :error-messages="raisonSocialeCompagnieErrors"
                                 v-model.trim="$v.compagnieTransport.raisonSociale.$model"
                                 @input="$v.compagnieTransport.raisonSociale.$touch()"
@@ -112,15 +88,12 @@
                             </v-text-field>
                         </v-col>
                     </v-row>
-
                 </v-container>
 
-                <v-container>
-                    <v-row class="mt-5" justify-lg="space-around">
-                        <v-col cols="5"><v-btn rounded color="secondary"><v-icon>mdi-sync</v-icon> REINITIALISER</v-btn></v-col>
-                        <v-col cols="5"><v-btn rounded type="submit" color="primary"><v-icon>mdi-check</v-icon> FAIRE UNE DEMANDE</v-btn></v-col>
-                    </v-row>
-                </v-container>
+                <v-card-actions>
+                    <v-btn small rounded color="secondary"><v-icon>mdi-sync</v-icon> REINITIALISER</v-btn>
+                    <v-btn small rounded type="submit" color="primary"><v-icon>mdi-check</v-icon> FAIRE UNE DEMANDE</v-btn>
+                </v-card-actions>
             </v-card>   
         </v-form>
 
@@ -128,7 +101,6 @@
         <v-alert class="myalert alert-warning" type="warning" width="350px" dismissible>{{ warningMsg }}</v-alert>
         <v-alert class="myalert alert-error" type="error" width="350px" dismissible>{{ errorMsg }}</v-alert>
         <v-overlay :value="overlay"><v-progress-circular indeterminate size="64"></v-progress-circular></v-overlay>
-
     </v-app>
 </template>
 
@@ -349,8 +321,13 @@ export default {
 </script>
 
 <style scoped>
-    .title{
-        color: teal;
+
+    h4{
+        font-family: Verdana, Geneva, Tahoma, sans-serif;
+    }
+    
+    .my_input{
+        font-family: Verdana, Geneva, Tahoma, sans-serif;
         font-weight: bold;
     }
 
