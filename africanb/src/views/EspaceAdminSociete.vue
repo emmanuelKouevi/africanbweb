@@ -37,9 +37,9 @@
             </template>
   
             <v-list-item v-for="([title, icon , navigation], i) in administrationCompagnie" :key="i" link>
-              <v-list-item-title v-text="title" @click="$router.push({path:navigation}).catch(() => {})"></v-list-item-title>
+              <v-list-item-title @click="$router.push({path:navigation}).catch(() => {})"> {{ title }} </v-list-item-title>
               <v-list-item-icon>
-                <v-icon v-text="icon"></v-icon>
+                <v-icon> {{ icon }} </v-icon>
               </v-list-item-icon>
             </v-list-item>
           </v-list-group>
@@ -62,9 +62,9 @@
             </template>
   
             <v-list-item v-for="([title, icon , navigation], i) in administrationLocalitePays" :key="i" link>
-              <v-list-item-title v-text="title" @click="$router.push({path:navigation}).catch(() => {})"></v-list-item-title>
+              <v-list-item-title  @click="$router.push({path:navigation}).catch(() => {})"> {{ title }} </v-list-item-title>
               <v-list-item-icon>
-                <v-icon v-text="icon"></v-icon>
+                <v-icon> {{ icon }} </v-icon>
               </v-list-item-icon>
             </v-list-item>
           </v-list-group>
@@ -77,9 +77,9 @@
             </template>
   
             <v-list-item v-for="([title, icon , navigation], i) in administrationLocaliteVille" :key="i" link>
-              <v-list-item-title v-text="title" @click="$router.push({path:navigation}).catch(() => {})"></v-list-item-title>
+              <v-list-item-title @click="$router.push({path:navigation}).catch(() => {})"> {{ title }} </v-list-item-title>
               <v-list-item-icon>
-                <v-icon v-text="icon"></v-icon>
+                <v-icon> {{ icon }} </v-icon>
               </v-list-item-icon>
             </v-list-item>
           </v-list-group>

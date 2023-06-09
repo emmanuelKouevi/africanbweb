@@ -56,7 +56,7 @@ export default {
         return{
             errorMsg : null,
             successMsg:null,
-            overlay : null,
+            overlay : false,
 
             offreVoyageDesignation: null,
 

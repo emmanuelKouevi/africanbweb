@@ -158,13 +158,25 @@
         </v-list-item>
       </v-list>
 
+      <v-list dense nav>
+        <v-list-item link @click="$router.push({path:'/associerBusCompagnieTransport'}).catch(() => {})">
+          <v-list-item-icon>
+            <v-icon color="teal">mdi-bus-alert</v-icon>
+          </v-list-item-icon>
+  
+          <v-list-item-content>
+            <v-list-item-title>GESTION DES BUS</v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
+      </v-list>
+
     </v-navigation-drawer>
 
     <v-app-bar app color="white">
       <v-app-bar-nav-icon color="dark" @click="drawer = !drawer"></v-app-bar-nav-icon>
-      <v-tootbar-title>
+      <v-toolbar-title>
         <v-img max-height="50px" max-width="75px" src="../assets/logo_africanbus.jpg"></v-img>
-      </v-tootbar-title>
+      </v-toolbar-title>
       <v-spacer></v-spacer>
 
       <v-btn icon>

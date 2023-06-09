@@ -2,19 +2,19 @@
     <v-app>
         <v-form @submit.prevent="creerOffreVoyage()">
             <v-container fluid>
-                <v-card elevation="5">
-                    <v-card-title><h2>CREER UNE OFFRE DE VOYAGE</h2></v-card-title>
+                <v-card max-width="900px" class="mx-auto" elevation="5">
+                    <v-card-title><h4>CREER UNE OFFRE DE VOYAGE</h4></v-card-title>
                     <v-card-subtitle>Mettre en ligne un nouvel offre de voyage</v-card-subtitle><br>
 
                     <v-container fluid>
-                        <v-row><v-col><v-text-field :error-messages="designationOffreVoyageErrors" dense rounded outlined color="teal" label="Désignation de l'offre" v-model.trim="$v.offreVoyage.designation.$model"></v-text-field></v-col></v-row><br>
-                        <v-row><v-col><v-textarea :error-messages="descriptionOffreVoyageErrors" dense outlined rounded color="teal" label="Description de l'offre"></v-textarea></v-col></v-row><br>
+                        <v-row><v-col><v-text-field class="my_input" :error-messages="designationOffreVoyageErrors" dense rounded outlined color="teal" label="Désignation de l'offre" v-model.trim="$v.offreVoyage.designation.$model"></v-text-field></v-col></v-row><br>
+                        <v-row><v-col><v-textarea class="my_input" :error-messages="descriptionOffreVoyageErrors" dense outlined rounded color="teal" label="Description de l'offre"></v-textarea></v-col></v-row><br>
                         <v-row>
-                            <v-col cols="6"><v-select :error-messages="villeDepartErrors" v-model.trim="$v.offreVoyage.villeDepartDesignation.$model" dense rounded outlined :items="villesList" item-text="designation" item-value="designation" color="teal" prefix="De :" label="Ville de départ"></v-select></v-col>
-                            <v-col cols="6"><v-select :error-messages="villeDestinationErrors" v-model.trim="$v.offreVoyage.villeDestinationDesignation.$model" dense rounded outlined :items="villesList" item-text="designation" item-value="designation" color="teal" prefix="Vers :" label="ville d'arrivée"></v-select></v-col>
+                            <v-col cols="6"><v-select class="my_input" :error-messages="villeDepartErrors" v-model.trim="$v.offreVoyage.villeDepartDesignation.$model" dense rounded outlined :items="villesList" item-text="designation" item-value="designation" color="teal" prefix="De :" label="Ville de départ"></v-select></v-col>
+                            <v-col cols="6"><v-select class="my_input" :error-messages="villeDestinationErrors" v-model.trim="$v.offreVoyage.villeDestinationDesignation.$model" dense rounded outlined :items="villesList" item-text="designation" item-value="designation" color="teal" prefix="Vers :" label="ville d'arrivée"></v-select></v-col>
                         </v-row><br>
                         <v-row>
-                            <v-col cols="6"><v-select :items="referenceTypeOffreVoyageList" item-text="designation" item-value="designation" :error-messages="typeOffreVoyageErrors" v-model.trim="$v.offreVoyage.typeOffreVoyageDesignation.$model" dense outlined rounded color="teal" label="Type de voyage"></v-select></v-col>
+                            <v-col cols="6"><v-select class="my_input" :items="referenceTypeOffreVoyageList" item-text="designation" item-value="designation" :error-messages="typeOffreVoyageErrors" v-model.trim="$v.offreVoyage.typeOffreVoyageDesignation.$model" dense outlined rounded color="teal" label="Type de voyage"></v-select></v-col>
                         </v-row><br>
 
                     </v-container>
@@ -262,4 +262,14 @@ export default {
         right:2%;
         width: 25%;
     } 
+
+    h4{
+        font-family: Verdana, Geneva, Tahoma, sans-serif;
+    }
+    
+    .my_input{
+        font-family: Verdana, Geneva, Tahoma, sans-serif;
+        font-weight: bolder;
+        font-size: 15px;
+    }
 </style>
