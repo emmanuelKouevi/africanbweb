@@ -254,16 +254,6 @@ export default {
         },
 
 
-        //AJOUTER UNE VILLE ESCALE
-        ajouterNouvelleVilleEscale(){
-            var nouvelleVille = {
-                offreVoyageDesignation : null,
-                villeDesignation : null,
-                position : null
-            }
-            this.villesEscalesList.push(nouvelleVille);
-        },
-
         //SUPPRIMER UNE VILLE ESCALE 
         supprimerVilleEscale(position){
             this.villesObject.datas.splice(position,1)
