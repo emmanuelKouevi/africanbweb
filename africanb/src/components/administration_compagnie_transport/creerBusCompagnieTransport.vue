@@ -17,11 +17,12 @@
                                     </v-toolbar>
                                     <v-card-text>
                                         <v-container fluid>
+                                            <v-subheader><v-icon color="#40407a">mdi-alert-circle</v-icon>&nbsp;&nbsp;Le nombre de place et le numéro du bus doivent être au format numerique</v-subheader>
                                             <v-subheader><br>Définissez les références de vos bus : &nbsp;&nbsp;&nbsp; </v-subheader>
                                             <v-row>
                                                 <v-col><v-text-field class="my_input" :error-messages="designationBus" v-model.trim="$v.addedBusData.designation.$model" rounded dense outlined label="Réf du bus"></v-text-field></v-col>
-                                                <v-col><v-text-field class="my_input" type="number" min="0" :error-messages="numeroBusContrainte" v-model.trim="$v.addedBusData.numeroBus.$model" rounded dense outlined label="N° du bus"></v-text-field></v-col>
-                                                <v-col><v-text-field class="my_input" type="number" min="0" :error-messages="nbrePlaceBusContrainte" v-model.trim="$v.addedBusData.nombrePlace.$model" rounded dense outlined label="Nbre de place"></v-text-field></v-col>
+                                                <v-col><v-text-field class="my_input" type="number" min="0" :error-messages="numeroBusContrainte" v-model.number="$v.addedBusData.numeroBus.$model" rounded dense outlined label="N° du bus"></v-text-field></v-col>
+                                                <v-col><v-text-field class="my_input" type="number" min="0" :error-messages="nbrePlaceBusContrainte" v-model.number="$v.addedBusData.nombrePlace.$model" rounded dense outlined label="Nbre de place"></v-text-field></v-col>
                                             </v-row>
                                         </v-container>
                                     </v-card-text>
@@ -45,7 +46,7 @@
 
                         <v-row>
                             <v-sheet width="750" class="mx-auto">
-                                <v-card-title class="title-card"><span>BUS DISPONIBLES OFFRE DE VOYAGE</span>
+                                <v-card-title class="title-card"><span><h5>BUS DISPONIBLES OFFRE DE VOYAGE</h5></span>
                                     <v-spacer></v-spacer>
                                     <v-text-field v-model="search" append-icon="mdi-magnify" label="Search" single-line hide-details></v-text-field>               
                                  </v-card-title>
@@ -53,11 +54,6 @@
                                     :headers="headers"
                                     :items="busObject.datas"
                                     :search="search">
-
-                                    <template v-slot:[`item.isActived`]="{ item }">
-                                        <v-chip x-small v-if="item.isActived == true" color="success" text-color="white" class="mr-2"><span class="etat font-weight-bold">active</span></v-chip>
-                                        <v-chip x-small v-else color="red" text-color="white" class="mr-2"><span class="etat">non-active</span></v-chip>
-                                    </template>
 
                                     <template v-slot:[`item.actions`]="{ item }">                   
                                         <v-icon title="supprimer" color="red" small class="mr-2" @click="supprimerVilleEscale(item)">mdi-delete</v-icon>
@@ -70,7 +66,7 @@
                     </v-container>
                     <v-card-actions>
                         <v-btn small shaped rounded outlined>REINITIALISER</v-btn>
-                        <v-btn type="submit" small shaped rounded outlined color="#1B1464">ENREGISTRER</v-btn>
+                        <v-btn type="submit" small shaped rounded outlined color="#474787">SAUVEGARDER</v-btn>
                     </v-card-actions>
                 </v-card>
             </v-container>
@@ -96,8 +92,9 @@ export default {
 
             headers:[
                 {text : 'Référence' , value : 'designation'},
-                {text : 'numero' , value : 'numeroBus'},
+                {text : 'N° Bus' , value : 'numeroBus'},
                 {text : 'nbre de place' , value : 'nombrePlace'},
+                {text : 'Voyage' , value : 'offreVoyageDesignation'},
                 {text : 'Actions' , value : 'actions' , sortable : false}
             ],
             search:"",
@@ -107,13 +104,6 @@ export default {
 
             busObject:{
                 datas:[]
-            },
-
-            busDataObject:{
-                designation : null ,
-                numeroBus : null , 
-                nombrePlace : null,
-                offreVoyageDesignation: null,  
             },
 
             offreVoyageObject:{
@@ -153,30 +143,20 @@ export default {
 
         // SOUMETTRE LE FORMULAIRE
         submitForm(){
-            this.$v.$touch();
-            if (this.$v.busDataObject.$invalid) {
-                this.errorMsg = 'Des informations sont manquantes'
+            if (this.busObject.datas.length == 0) {
+                this.errorMsg = 'Aucune référence de transport n\'a été ajouté'
                 $(".alert-error").fadeIn();
                 setTimeout(function(){
                     $(".alert-error").fadeOut(); 
                 }, 3000)
-            }else if(this.isNumberAndOverToZero(this.busDataObject.numeroBus)){
-                this.errorMsg = 'Vous avez saisi des champs incorrectement'
-                $(".alert-error").fadeIn();
-                setTimeout(function(){
-                    $(".alert-error").fadeOut(); 
-                }, 3000)
-            }
-            else if(this.isNumberAndOverToZero(this.busDataObject.nombrePlace)){
-                this.errorMsg = 'Vous avez saisi des champs incorrectement'
-                $(".alert-error").fadeIn();
-                setTimeout(function(){
-                    $(".alert-error").fadeOut(); 
-                }, 3000)
-            }
-            else{
+            }else{
                 this.associerBusOffreVoyage();
             }
+        },
+
+        //SUPPRIMER UN BUS
+        supprimerBus(position){
+            this.busObject.datas.splice(position,1)
         },
 
         //ENREGISTRER LE BUS
@@ -189,7 +169,13 @@ export default {
               setTimeout(function(){
                 $(".alert-error").fadeOut(); 
               }, 2000);
-            } 
+            }else if(!this.isOverToZero(this.addedBusData.nombrePlace) || !this.isOverToZero(this.addedBusData.numeroBus)){
+                this.errorMsg = "Attention des champs sont incorrects" ;
+                $(".alert-error").fadeIn();
+                setTimeout(function(){
+                    $(".alert-error").fadeOut(); 
+                }, 2000);
+            }
             else{
                 var busAddedSaisi = {
                     designation : null, 
@@ -203,14 +189,17 @@ export default {
                 busAddedSaisi.offreVoyageDesignation = busAdded.offreVoyageDesignation;
 
                 this.busObject.datas.push(busAddedSaisi);
+
+                busAdded.designation = null;
+                busAdded.nombrePlace = null;
+                busAdded.numeroBus = null;
             }
         },
 
         // ASSOCIER DES BUS À UNE OFFRE DE VOYAGE
         async associerBusOffreVoyage(){
-            this.busSimpleObject.datas.push(this.busDataObject)
             this.overlay = true ;
-            await axios.post(API_ASSOCIER_BUS_OFFRE_VOYAGE, this.busSimpleObject).then((response) => {
+            await axios.post(API_ASSOCIER_BUS_OFFRE_VOYAGE, this.busObject).then((response) => {
                 if (response.status == 200) {
                     if (response.data.status.code == 800) {
                         this.successMsg = response.data.status.message
@@ -218,14 +207,14 @@ export default {
                         setTimeout(function(){
                             $(".alert-success").fadeOut(); 
                         }, 4000)
-                        this.busSimpleObject.datas = [];
+                        this.busObject.datas = [];
                     }else{
                         this.errorMsg = response.data.status.message
                         $(".alert-error").fadeIn();
                         setTimeout(function(){
                             $(".alert-error").fadeOut(); 
                         }, 3000)
-                        this.busSimpleObject.datas = [];
+                        this.busObject.datas = [];
                     }  
                     
                 }
@@ -235,7 +224,7 @@ export default {
                     setTimeout(function(){
                         $(".alert-warning").fadeOut(); 
                     }, 3000)
-                    this.busSimpleObject.datas = [];
+                    this.busObject.datas = [];
                 }
                 else{
                     this.errorMsg = "Erreur , opération de création impossible";
@@ -243,7 +232,7 @@ export default {
                     setTimeout(function(){
                         $(".alert-error").fadeOut(); 
                     }, 3000)
-                    this.busSimpleObject.datas = [];
+                    this.busObject.datas = [];
                 }
             }).catch((e) => {
                 this.errorMsg = e;
@@ -251,7 +240,7 @@ export default {
                 setTimeout(function(){
                     $(".alert-error").fadeOut(); 
                 }, 3000)
-                this.busSimpleObject.datas = [];
+                this.busObject.datas = [];
             }).finally(() => {
                 this.overlay = false;
             })
@@ -288,11 +277,6 @@ export default {
             }
         },
 
-        isNumber(item){
-            if (typeof(item) == 'number') {
-                return true;
-            }
-        }
     },
 
     computed:{
@@ -315,7 +299,7 @@ export default {
             const errors = [];
             if (!this.$v.addedBusData.numeroBus.$dirty) return errors
             !this.$v.addedBusData.numeroBus.required && errors.push('Information requis.')
-            this.isNumber(this.addedBusData.nombrePlace) && errors.push('Champs Incorrect')
+            !this.isOverToZero(this.addedBusData.numeroBus) && errors.push('Champs Incorrect')
             return errors 
         },
 
@@ -323,7 +307,7 @@ export default {
             const errors = [];
             if (!this.$v.addedBusData.nombrePlace.$dirty) return errors
             !this.$v.addedBusData.nombrePlace.required && errors.push('Information requis.')
-            this.isNumber(this.addedBusData.nombrePlace) && errors.push("Format incorrect")
+            !this.isOverToZero(this.addedBusData.nombrePlace) && errors.push('Champs Incorrect')
             return errors 
         },
     },
@@ -364,6 +348,11 @@ export default {
 
     h4{
         font-family: Verdana, Geneva, Tahoma, sans-serif;
+    }
+
+    h5{
+        font-family: Verdana, Geneva, Tahoma, sans-serif;
+        font-size: 13px;
     }
 
     .my_input{
