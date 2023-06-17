@@ -45,6 +45,7 @@ export const API_OBTENIR_LISTE_PROPRIETE_OFFRE_VOYAGE = `${BASE_URL}proprieteOff
 export const API_CREER_CARACTERISTIQUES_OFFRE_VOYAGE = `${BASE_URL}valeurCaracteristiqueOffreVoyages`
 export const API_RECUPERER_PROPRIETE_PAR_OFFRE_VOYAGE = `${BASE_URL}valeurCaracteristiqueOffreVoyages/getAllValeurCaracteristiqueOffreVoyageByOffreVoyageDesignation`
 export const API_ASSOCIER_BUS_OFFRE_VOYAGE = `${BASE_URL}bus`
+export const API_RECUPERER_LISTE_BUS_PAR_OFFRE_VOYAGE = `${BASE_URL}bus/getBusByOffreVoyage`
 
 
 //-------------------------------- APIs GESTION DES BAGAGES---------------------------------------------------------------------//

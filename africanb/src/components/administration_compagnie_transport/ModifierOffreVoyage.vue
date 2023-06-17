@@ -1,18 +1,88 @@
 <template>
     <v-app>
+
+        <v-card class="mb-5" elevation="5" rounded="lg"><br>
+            <v-row justify="center">
+                <v-col class="text-center">
+                    <span class="subtitle font-weight-thin">OFFRE DE VOYAGE :</span>
+                    <span class="offreVoyageDesignation font-weight-bold"> {{ offreVoyage.designation }} </span>
+                </v-col>    
+            </v-row>
+
+            <v-row>
+               <v-col class="text-center">
+                    <v-list-item>
+                        <v-list-item-content>
+                            <v-list-item-subtitle class="subtitle">Total Programmation:</v-list-item-subtitle>
+                        </v-list-item-content>
+                    
+                        <v-list-item-content>
+                            <v-list-item-subtitle>{{ jourSemainesParOffreVoyagesList.length }}</v-list-item-subtitle>
+                        </v-list-item-content>
+                    </v-list-item>
+                </v-col>
+
+                <v-col>
+                    <v-list-item>
+                        <v-list-item-content>
+                            <v-list-item-subtitle class="subtitle">Total Mode de financement :</v-list-item-subtitle>
+                        </v-list-item-content>
+                    
+                        <v-list-item-content>
+                            <v-list-item-subtitle>{{ prixEtModeParOffreVoyageList.length }}</v-list-item-subtitle>
+                        </v-list-item-content>
+                    </v-list-item>
+                </v-col>
+            </v-row> 
+
+            <v-row>
+               <v-col class="text-center">
+                    <v-list-item>
+                        <v-list-item-content>
+                            <v-list-item-subtitle class="subtitle">Total Propriétés :</v-list-item-subtitle>
+                        </v-list-item-content>
+                    
+                        <v-list-item-content>
+                            <v-list-item-subtitle>{{ proprieteParOffreVoyageList.length }}</v-list-item-subtitle>
+                        </v-list-item-content>
+                    </v-list-item>
+                </v-col>
+
+                <v-col>
+                    <v-list-item>
+                        <v-list-item-content>
+                            <v-list-item-subtitle class="subtitle">Total villes Escales :</v-list-item-subtitle>
+                        </v-list-item-content>
+                    
+                        <v-list-item-content>
+                            <v-list-item-subtitle>{{ villesEscalesParOffreVoyagesList.length }}</v-list-item-subtitle>
+                        </v-list-item-content>
+                    </v-list-item>
+                </v-col>
+            </v-row>
+
+            <v-row>
+               <v-col cols="6" class="text-center">
+                    <v-list-item>
+                        <v-list-item-content>
+                            <v-list-item-subtitle class="subtitle">Total Bus :</v-list-item-subtitle>
+                        </v-list-item-content>
+                    
+                        <v-list-item-content>
+                            <v-list-item-subtitle>{{ busParOffreVoyageList.length }}</v-list-item-subtitle>
+                        </v-list-item-content>
+                    </v-list-item>
+                </v-col>
+
+            </v-row>
+
+        </v-card>
+
         <v-form>
-            <v-card color="teal">
-                <v-card-title class="title_card">MODIFIER UNE OFFRE DE VOYAGE</v-card-title>
-                <v-card-subtitle>Modiifier portant sur votre de voyage</v-card-subtitle>
-            </v-card><br>
-
-
-
-
             <v-card>
                 <v-card-title class="title_card">INFORMATION(S) GÉNÉRALE(S) DE L'OFFRE DE VOYAGE
                     <v-spacer></v-spacer>
-                    <v-btn outlined rounded icon small color="teal" title="Voir plus" @click="isVisibleOffreVoyageInfo()"><v-icon>mdi-plus-outline</v-icon></v-btn>
+                    <v-btn outlined rounded icon small title="Voir plus" @click="isVisibleOffreVoyageInfo()"><v-icon>mdi-menu-down</v-icon></v-btn>
                 </v-card-title>
                 <v-card max-height="675" id="card-info-offre-voyage">
                     <v-container fluid>
@@ -36,7 +106,7 @@
             <v-card :loading="loadingModePrix">
                 <v-card-title class="title_card">MODE ET PRIX DE L'OFFRE
                     <v-spacer></v-spacer>
-                    <v-btn outlined rounded icon small color="teal" title="Voir plus" @click="isVisiblePrixModeOffreVoyage()"><v-icon>mdi-plus-outline</v-icon></v-btn>
+                    <v-btn outlined rounded icon small title="Voir plus" @click="isVisiblePrixModeOffreVoyage()"><v-icon>mdi-menu-down</v-icon></v-btn>
                 </v-card-title>
                 <v-card id="card-prix-mode-offre-voyage">
                     <v-container>
@@ -82,7 +152,7 @@
             <v-card :loading="loadingVilleEscale">
                 <v-card-title class="title_card">VILLES ESCALES
                     <v-spacer></v-spacer>
-                    <v-btn outlined rounded icon small color="teal" title="Voir plus" @click="isVisibleVilleEscaleOffreVoyage()"><v-icon>mdi-plus-outline</v-icon></v-btn>
+                    <v-btn outlined rounded icon small title="Voir plus" @click="isVisibleVilleEscaleOffreVoyage()"><v-icon>mdi-menu-down</v-icon></v-btn>
                 </v-card-title>
                 <v-card id="card-ville-escale-offre-voyage">
                     <v-card-title>
@@ -92,9 +162,9 @@
 
                     <v-container>
                         <v-data-table
-                            :headers="headers"
+                            :headers="headersCities"
                             :items="villesEscalesParOffreVoyagesList"
-                            :search="search">
+                            :search="searchVille">
                             <template v-slot:[`item.actions`]="{ item }">
                                 <v-icon title="editer" color="blue" small class="mr-2" @click="editerVilleEscale(item)">mdi-pencil</v-icon>                       
                                 <v-icon title="supprimer" color="red" small class="mr-2">mdi-delete</v-icon>
@@ -108,7 +178,7 @@
             <v-card :loading="loadingProprieteOffreVoyage">
                 <v-card-title class="title_card">PROPRIETES DE L'OFFRE
                     <v-spacer></v-spacer>
-                    <v-btn outlined rounded icon small color="teal" title="Voir plus" @click="isVisibleProprieteOffreVoyage()"><v-icon>mdi-plus-outline</v-icon></v-btn>
+                    <v-btn outlined rounded icon small title="Voir plus" @click="isVisibleProprieteOffreVoyage()"><v-icon>mdi-menu-down</v-icon></v-btn>
                 </v-card-title>
                 <v-card id="card-propriete-offre-voyage"> 
                     <v-container>
@@ -124,7 +194,7 @@
             <v-card :loading="loadingProgrammeOffreVoyage">
                 <v-card-title class="title_card">PROGRAMME DE L'OFFRE
                     <v-spacer></v-spacer>
-                    <v-btn outlined rounded icon small color="teal" title="Voir plus" @click="isVisibleProgrammeOffreVoyage()"><v-icon>mdi-plus-outline</v-icon></v-btn>
+                    <v-btn outlined rounded icon small title="Voir plus" @click="isVisibleProgrammeOffreVoyage()"><v-icon>mdi-menu-down</v-icon></v-btn>
                 </v-card-title>
                 <v-card id="card-programme-offre-voyage">
                     <v-container>
@@ -154,6 +224,32 @@
                 </v-card>
             </v-card><br>
 
+            <v-card :loading="loadingBusOffreVoyage">
+                <v-card-title class="title_card">LISTE DES BUS
+                    <v-spacer></v-spacer>
+                    <v-btn outlined rounded icon small title="Voir plus" @click="isVisibleBusOffreVoyage()"><v-icon>mdi-menu-down</v-icon></v-btn>
+                </v-card-title>
+                <v-card id="card-bus-offre-voyage">
+                    <v-card-title>
+                        <v-spacer></v-spacer>
+                        <v-btn small rounded color="teal" outlined>FAIRE DES MODIFICATIONS</v-btn>
+                    </v-card-title>
+
+                    <v-container>
+                        <v-data-table
+                            :headers="headersCars"
+                            :items="busParOffreVoyageList"
+                            :search="searchBus">
+                            <template v-slot:[`item.actions`]="{ item }">
+                                <v-icon title="editer" color="blue" small class="mr-2" @click="editerVilleEscale(item)">mdi-pencil</v-icon>                       
+                                <v-icon title="supprimer" color="red" small class="mr-2">mdi-delete</v-icon>
+                            </template>
+
+                        </v-data-table>
+                    </v-container>
+                </v-card>
+            </v-card><br>
+
         </v-form>
 
         <v-alert class="myalert alert-success" type="success" width="350px" dismissible>{{ successMsg }}</v-alert> 
@@ -167,17 +263,25 @@
 import { required , minLength } from 'vuelidate/lib/validators';
 import { API_OBTENIR_REFERENCE_PAR_PAR_FAMILLE ,API_OBTENIR_LISTE_DES_VILLES_DISPONIBLE, API_CREER_OFFRE_VOYAGE } from '../globalConfig/globalConstConfig'
 import { API_RECUPERER_PRIX_PAR_OFFRE_VOYAGE , API_RECUPERER_VILLE_ESCALE_PAR_OFFRE_VOYAGE } from '../globalConfig/globalConstConfig'
-import { API_OBENIR_JOUR_SEMAINE_PAR_OFFRE_VOYAGE , API_RECUPERER_PROPRIETE_PAR_OFFRE_VOYAGE } from '../globalConfig/globalConstConfig'
+import { API_OBENIR_JOUR_SEMAINE_PAR_OFFRE_VOYAGE , API_RECUPERER_PROPRIETE_PAR_OFFRE_VOYAGE , API_RECUPERER_LISTE_BUS_PAR_OFFRE_VOYAGE} from '../globalConfig/globalConstConfig'
 import axios from 'axios'
 import $ from 'jquery'
 export default {
     name: 'ModifierOffreVoyage',
     data(){
         return{
-            search:'',
-            headers:[
+            searchVille:'',
+            headersCities:[
                 {text : 'Designation' , value : 'designation'},
                 {text : 'Pays' , value : 'paysDesignation'},
+                {text : 'Actions' , value : 'actions' , sortable : false}
+            ],
+
+            searchBus:'',
+            headersCars:[
+                {text : 'Designation' , value : 'designation'},
+                {text : 'N° du bus' , value : 'numeroBus'},
+                {text : 'Nbre de place' , value : 'nombrePlace'},
                 {text : 'Actions' , value : 'actions' , sortable : false}
             ],
             errorMsg : null,
@@ -188,6 +292,7 @@ export default {
             loadingVilleEscale:false,
             loadingProgrammeOffreVoyage:false,
             loadingProprieteOffreVoyage:false,
+            loadingBusOffreVoyage:false,
 
             simpleObject:{},
 
@@ -227,6 +332,7 @@ export default {
             villesEscalesParOffreVoyagesList:[],
             jourSemainesParOffreVoyagesList:[],
             proprieteParOffreVoyageList:[],
+            busParOffreVoyageList : []
         }
     },
 
@@ -353,6 +459,11 @@ export default {
             this.obtenirProprietesOffreVoyage();
         },
 
+        async isVisibleBusOffreVoyage(){
+            $("#card-bus-offre-voyage").slideToggle(500);
+            this.obtenirBusOffreVoyage();
+        },
+
         //OBTENIR LE PRIX ET LE MODE PAR OFFRE DE VOYAGE
         async obtenirPrixEtModeParOffreVoyage(){
             this.loadingModePrix = true
@@ -440,6 +551,27 @@ export default {
             })
         },
 
+        // OBTENIR LA LISTE DES BUS PAR OFFRE DE VOYAGES
+        async obtenirBusOffreVoyage(){
+            this.loadingBusOffreVoyage = true
+            this.offreVoyageObject.data.designation = this.offreVoyage.designation;
+            await axios.post(API_RECUPERER_LISTE_BUS_PAR_OFFRE_VOYAGE, this.offreVoyageObject).then((response) => {
+                if (response.data.status.code == 800) {
+                    this.busParOffreVoyageList = response.data.items
+                }else{
+                    this.busParOffreVoyageList = [];
+                }
+            }).catch((e) => {
+                this.errorMsg = e ;
+                $(".alert-error").fadeIn();
+                setTimeout(function(){
+                    $(".alert-error").fadeOut(); 
+                }, 4000)
+            }).finally(() => {
+                this.loadingBusOffreVoyage = false;
+            })
+        },
+
 
 
         //OBTENIR REFERENCE DESIGNATION TYPE OFFRE DE VOYAGE
@@ -455,6 +587,8 @@ export default {
                 }, 4000)
             })
         },
+
+        
 
         async editerOffreVoyage(){
             if (localStorage.getItem("offreVoyage")) {
@@ -598,5 +732,26 @@ export default {
 
     #card-propriete-offre-voyage{
         display: none;
+    }
+
+    #card-bus-offre-voyage{
+        display: none;
+    }
+
+    .subtitle{
+        color: #636e72;
+        font-size: 16px;
+        font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    }
+
+    .offreVoyageDesignation{
+        color: #2980b9;
+        text-transform: uppercase;
+        opacity: 0.7;
+    }
+
+    .wrap{
+        height: 10px;
+        background: linear-gradient(to left top, #2c2c54, #34ace0);
     }
 </style>
