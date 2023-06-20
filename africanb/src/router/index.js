@@ -38,7 +38,7 @@ import selectionnerModeAbonnementEtPaiement from '../components/administration_c
 import modifierModePaiement from '../components/administration_compagnie_transport/ModifierModePaiement'
 import documentAttestationTransport from '../components/administration_compagnie_transport/DocumentAttestationTransport'
 import associerBusCompagnieTransport from '../components/administration_compagnie_transport/creerBusCompagnieTransport'
-
+import creerFonctionnalite from '../components/administration_compagnie_transport/creerFonctionnalite'
 Vue.use(VueRouter)
 
 const routes = [
@@ -166,6 +166,11 @@ const routes = [
         path: '/associerBusCompagnieTransport',
         name: 'associerBusCompagnieTransport',
         component: associerBusCompagnieTransport
+      },
+      {
+        path: '/creerFonctionnalite',
+        name: 'creerFonctionnalite',
+        component: creerFonctionnalite
       },
       {
         path: '/tableauBord',

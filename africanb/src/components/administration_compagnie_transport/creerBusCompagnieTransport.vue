@@ -56,7 +56,7 @@
                                     :search="search">
 
                                     <template v-slot:[`item.actions`]="{ item }">                   
-                                        <v-icon title="supprimer" color="red" small class="mr-2" @click="supprimerVilleEscale(item)">mdi-delete</v-icon>
+                                        <v-icon title="supprimer" color="red" small class="mr-2" @click="supprimerBus(item)">mdi-delete</v-icon>
                                     </template>
 
                                 </v-data-table>

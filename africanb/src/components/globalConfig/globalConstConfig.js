@@ -68,3 +68,8 @@ export const API_MODIFIER_MODE_PAIEMENT = `${BASE_URL}modePaiements`
 
 export const API_CREER_DOCUMENT_TRANSPORT = `${BASE_URL}compagnieTransport/uploadAttestionTransport`
 
+
+//--------------------------------------ROLES ET FONCTIONNALITÉS---------------------------------------------------------------//
+
+
+export const API_CREER_FUNCTIONNALITY = `${BASE_URL}functionalities`
