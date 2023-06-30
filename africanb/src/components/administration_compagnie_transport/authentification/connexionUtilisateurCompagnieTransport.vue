@@ -8,23 +8,37 @@
                     </v-row><br><br>
 
                     <v-row justify="center">
-                        <v-card width="380px" elevation="10" rounded="100px">
-                            <v-row justify="center">
-                                <v-card-title class="title">SE CONNECTER</v-card-title>
-                            </v-row><br>
+                        <v-card width="500px"  elevation="10" rounded="100px"><br><br>
                             
+                            <div class="text_auth">
+                                <h2>AUTHENTIFIEZ-VOUS</h2>
+                                <small>Entrer vos paramètres de connexion pour accéder à votre espace de travail.</small>
+                            </div>
+                        
                             <v-container>
-                                <v-text-field v-model="username" rounded dense outlined prepend-inner-icon="mdi-account" color="teal" label="Pseudo ou E-mail"></v-text-field><br>
-                                <v-divider inset></v-divider>
-                                <v-text-field v-model="password" rounded dense outlined prepend-inner-icon="mdi-lock-check" color="teal" type="password" label="Mot de Passe"></v-text-field>
+                                <label class="label" for="">Pseudo ou E-mail</label>
+                                <v-row>
+                                    <v-col>
+                                        <v-text-field class="input_field" v-model="username" dense outlined prepend-inner-icon="mdi-account" color="primary"></v-text-field>
+                                    </v-col>
+                                </v-row>
+                                
+                                <label class="label" for="">Mot de Passe</label>
+                                <v-row>
+                                    <v-col>
+                                        <v-text-field :append-icon="passwordIsVisible ? 'mdi-eye' : 'mdi-eye-off'"  class="input_field" id="login_password" @click:append="passwordIsVisible = !passwordIsVisible"
+                                            v-model="password" dense outlined prepend-inner-icon="mdi-lock-check" color="primary" :type="passwordIsVisible ? 'text' : 'password'">
+                                        </v-text-field>
+                                    </v-col>
+                                </v-row>
                                 <v-row justify="center">
                                     <small class="password_forget">Mot de passe oublié ?</small>
                                 </v-row>
-                            </v-container><br><br>
+                            </v-container><br>
 
                             <v-container>
                                 <v-row justify="center">
-                                    <v-btn type="submit" rounded color="teal"><span class="connexion_text">CONNEXION</span></v-btn>
+                                    <v-btn type="submit" rounded color="primary"><span class="connexion_text">CONNEXION</span></v-btn>
                                 </v-row>
                             </v-container><br>
                         </v-card>
@@ -36,18 +50,40 @@
 </template>
 
 <script>
+//import axios from 'axios';
+//import $ from 'jquery';
+//import { API_LOGIN_USER } from '../../globalConfig/globalConstConfig'
 export default {
     name:"connexionUtilisateurCompagnieTransport.vue",
     data(){
         return{
-            username: '',
-      password: ''
+
+            username:'',
+            password:'',
+
+            passwordIsVisible : false ,
+
+            userLoginData:{
+                datas:[]
+            },
+
+            userLogin :{
+                login: null,
+                password:null,
+            },
+
+
+            
         }
     },
 
     methods:{
 
-        login() {
+        async login(){
+
+        }
+
+        /*login() {
             // Votre logique de connexion ici
             // Vérifiez les identifiants et le rôle de l'utilisateur
             // Exemple basique pour démonstration
@@ -62,7 +98,7 @@ export default {
             } else {
                 alert('Identifiants incorrects');
             }
-        },
+        },*/
 
     },
 
@@ -90,5 +126,24 @@ export default {
     .password_forget:hover{
         cursor: pointer;
         color: #487eb0;
+    }
+
+    .label{
+        font-size: 15px;
+        font-weight: bold;
+    }
+
+    .text_auth{
+        text-align: center;
+    }
+
+    .text_auth small{
+        color: grey;
+    }
+
+    .input_field {
+        font-family: Arial, Helvetica, sans-serif;
+        font-weight: bolder;
+        color: #596275;
     }
 </style>

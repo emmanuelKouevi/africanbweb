@@ -23,7 +23,7 @@
         </template>
         <v-list>
           <v-list-item @click="$router.push({path: item.link})" link v-for="(item, index) in items" :key="index">
-            <v-list-item-icon><v-icon color="teal" v-text="item.icon"></v-icon></v-list-item-icon>
+            <v-list-item-icon><v-icon color="teal">{{ item.icon }}</v-icon></v-list-item-icon>
             <v-list-item-title class="subtitle">{{ item.title }}</v-list-item-title>
           </v-list-item>
         </v-list>

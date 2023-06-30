@@ -39,6 +39,7 @@ import modifierModePaiement from '../components/administration_compagnie_transpo
 import documentAttestationTransport from '../components/administration_compagnie_transport/DocumentAttestationTransport'
 import associerBusCompagnieTransport from '../components/administration_compagnie_transport/creerBusCompagnieTransport'
 import creerFonctionnalite from '../components/administration_compagnie_transport/creerFonctionnalite'
+import creerRoleUtilisateur from '../components/administration_compagnie_transport/creerRoleUtilisateur'
 Vue.use(VueRouter)
 
 const routes = [
@@ -173,6 +174,11 @@ const routes = [
         component: creerFonctionnalite
       },
       {
+        path: '/creerRoleUtilisateur',
+        name: 'creerRoleUtilisateur',
+        component: creerRoleUtilisateur
+      },
+      {
         path: '/tableauBord',
         name: 'tableauBord',
         component: tableauBord
@@ -250,6 +256,25 @@ const router = new VueRouter({
   base: process.env.BASE_URL,
   routes
 })
+
+
+// Ajoutez une garde de navigation globale pour vérifier les autorisations
+/*router.beforeEach((to, from, next) => {
+  const isAuthenticated = localStorage.getItem('userIsAuthenticated');
+  const userRole = localStorage.getItem('userRole');
+
+  if (to.matched.some(record => record.meta.requiresAuth)) {
+    if (!isAuthenticated) {
+      next({ path: '/connexion' });
+    } else if (to.meta.role && to.meta.role !== userRole) {
+      next({ path: '/unauthorized' });
+    } else {
+      next();
+    }
+  } else {
+    next();
+  }
+});*/
 
 
 

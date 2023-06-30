@@ -73,3 +73,21 @@ export const API_CREER_DOCUMENT_TRANSPORT = `${BASE_URL}compagnieTransport/uploa
 
 
 export const API_CREER_FUNCTIONNALITY = `${BASE_URL}functionalities`
+export const API_GET_ALL_FUNCTIONNALITIES = `${BASE_URL}functionalities/getAll`
+
+
+// --------------------------------------- USER (CONNEXION , ACCOUNT , ETC) ------------------------------------------------------------------//
+
+export const API_LOGIN_USER = `${BASE_URL}users/login`
+export const API_ACTIVATE_USER = `${BASE_URL}users/activeUser`
+export const API_RESET_PASSWORD_USER = `${BASE_URL}users/resetPasswordUser`
+
+
+
+
+//---------------------------------------- ROLES UTILISATEURS -----------------------------------------------------------------------//
+
+export const API_CREATE_USER_ROLE = `${BASE_URL}roles`
+export const API_GET_ALL_ROLES = `${BASE_URL}roles/getAll`
+
+
