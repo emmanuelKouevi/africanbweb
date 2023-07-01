@@ -248,7 +248,7 @@ export default {
                 var userRole = {
                     libelle : null ,
                     code : null ,
-                    functionalitiesList : [] 
+                    datasFunctionalities : [] 
                 }
 
                 this.functionnalitiesChoosenList.forEach(element => {
@@ -256,23 +256,28 @@ export default {
                         code : null ,
                     }
                     codeObject.code = element;
-                    userRole.functionalitiesList.push(codeObject);
+                    userRole.datasFunctionalities.push(codeObject);
                 });
 
                 userRole.libelle = this.userRoleObject.libelle
                 userRole.code = this.userRoleObject.code
-                userRole.functionalitiesList =this.userRoleObject.datasFunctionalities
+                userRole.datasFunctionalities.forEach(element => {
+                    this.userRoleObject.datasFunctionalities.push(element)
+                });
                 
 
                 this.userRoleDataToSend.datas.push(userRole);
+                console.log(this.userRoleDataToSend)
 
                 this.userRoleObject.libelle = null;
                 this.userRoleObject.code = null;
+                this.functionnalitiesChoosenList = []
             }
         },
 
         //CREER UN ROLE UTILISATEUR
         async createUserRole(){
+            this.overlay = true;
             await axios.post(API_CREATE_USER_ROLE, this.userRoleDataToSend ).then((response) => {
                 if (response.status == 200) {
                     if (response.data.status.code == 800) {
