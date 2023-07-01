@@ -41,6 +41,7 @@ import associerBusCompagnieTransport from '../components/administration_compagni
 import creerFonctionnalite from '../components/administration_compagnie_transport/creerFonctionnalite'
 import creerRoleUtilisateur from '../components/administration_compagnie_transport/creerRoleUtilisateur'
 import creerUtilisateur from '../components/administration_compagnie_transport/creerUtilisateur'
+import gestionFunctionnalitesEtRoles from '../components/administration_compagnie_transport/gestionFonctionnalitesEtRoles'
 Vue.use(VueRouter)
 
 const routes = [
@@ -185,6 +186,11 @@ const routes = [
         component: creerUtilisateur
       },
       {
+        path: '/gestionFonctionnalitesEtRoles',
+        name: 'gestionFonctionnalitesEtRoles',
+        component: gestionFunctionnalitesEtRoles
+      },
+      {
         path: '/tableauBord',
         name: 'tableauBord',
         component: tableauBord
@@ -265,7 +271,7 @@ const router = new VueRouter({
 
 
 // Ajoutez une garde de navigation globale pour vérifier les autorisations
-router.beforeEach((to, from, next) => {
+/*router.beforeEach((to, from, next) => {
   const isAuthenticated = localStorage.getItem('userIsAuthenticated');
   const userRole = localStorage.getItem('userRole');
 
@@ -280,7 +286,7 @@ router.beforeEach((to, from, next) => {
   } else {
     next();
   }
-});
+});*/
 
 
 

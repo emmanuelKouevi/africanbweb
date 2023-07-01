@@ -195,6 +195,18 @@
       </v-list>
 
       <v-list dense nav>
+        <v-list-item link @click="$router.push({path:'/gestionFonctionnalitesEtRoles'}).catch(() => {})">
+          <v-list-item-icon>
+            <v-icon color="teal">mdi-account-key</v-icon>
+          </v-list-item-icon>
+  
+          <v-list-item-content>
+            <v-list-item-title>GESTION DES ROLES ET FONCTIONNALITÉS</v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
+      </v-list>
+
+      <v-list dense nav>
         <v-list-item link @click="$router.push({path:'/creerUtilisateur'}).catch(() => {})">
           <v-list-item-icon>
             <v-icon color="teal">mdi-account-plus</v-icon>
