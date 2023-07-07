@@ -117,7 +117,7 @@ export default {
                     this.$swal.fire('Activation','Error lors de la validation','error')
                 }
             }).catch((e) => {
-                this.$swal.fire('Activation' , e , 'error')
+                this.$swal.fire('Activation refusée' , e , 'error')
             })
         },
 

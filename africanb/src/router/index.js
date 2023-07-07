@@ -42,6 +42,8 @@ import creerFonctionnalite from '../components/administration_compagnie_transpor
 import creerRoleUtilisateur from '../components/administration_compagnie_transport/creerRoleUtilisateur'
 import creerUtilisateur from '../components/administration_compagnie_transport/creerUtilisateur'
 import gestionFunctionnalitesEtRoles from '../components/administration_compagnie_transport/gestionFonctionnalitesEtRoles'
+
+import { ROLE_ADMIN_COMPAGNIE_TRANSPORT , ROLE_ADMIN_SOCIETE_MERE } from '../components/globalConfig/constUsersRoles'
 Vue.use(VueRouter)
 
 const routes = [
@@ -63,7 +65,7 @@ const routes = [
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
     component: () => import(/* webpackChunkName: "about" */ '../views/EspaceCompagnieTransport.vue'),
-    meta: { requiresAuth: true, role: 'adminCompagnieTransport' },
+    meta: { requiresAuth: true, role: ROLE_ADMIN_COMPAGNIE_TRANSPORT },
     children:[
       {
         path: '/creerOffreVoyage',
@@ -205,6 +207,7 @@ const routes = [
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
     component: () => import(/* webpackChunkName: "about" */ '../views/EspaceAdminSociete'),
+    meta: { requiresAuth: true, role: ROLE_ADMIN_SOCIETE_MERE },
     children:[
       {
         path: '/creerPays',
@@ -271,22 +274,24 @@ const router = new VueRouter({
 
 
 // Ajoutez une garde de navigation globale pour vérifier les autorisations
-/*router.beforeEach((to, from, next) => {
-  const isAuthenticated = localStorage.getItem('userIsAuthenticated');
-  const userRole = localStorage.getItem('userRole');
-
+router.beforeEach((to, from, next) => {
+  var isAuthenticated ; 
+  var userRole ; 
   if (to.matched.some(record => record.meta.requiresAuth)) {
-    if (!isAuthenticated) {
-      next({ path: '/connexion' });
-    } else if (to.meta.role && to.meta.role !== userRole) {
-      next({ path: '/unauthorized' });
-    } else {
+    localStorage.getItem('userIsAuthenticated') ? isAuthenticated = true : isAuthenticated = false ;
+    userRole = localStorage.getItem('userRole'); 
+    if (isAuthenticated == false) {
+      next({name : 'connexion'})
+    }else if (to.meta.role && to.meta.role !== userRole) {
+      next({name : 'connexion'})
+    }
+     else {
       next();
     }
   } else {
     next();
   }
-});*/
+});
 
 
 
