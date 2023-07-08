@@ -79,6 +79,7 @@ export const API_GET_FUNCTIONNALITY_BY_ROLE = `${BASE_URL}functionalities/getFun
 // --------------------------------------- USER (CONNEXION , ACCOUNT , ETC) ------------------------------------------------------------------//
 
 export const API_LOGIN_USER = `${BASE_URL}users/login`
+export const API_UPDATE_USER = `${BASE_URL}users`
 export const API_ACTIVATE_USER = `${BASE_URL}users/activeUser`
 export const API_RESET_PASSWORD_USER = `${BASE_URL}users/resetPasswordUser`
 export const API_CREATE_USER = `${BASE_URL}users`

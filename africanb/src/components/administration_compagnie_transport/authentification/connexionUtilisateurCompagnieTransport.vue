@@ -115,8 +115,7 @@ export default {
 
         async login(){
             this.userLoginData.data.login = this.userLogin.login;
-            this.userLoginData.data.password = this.userLogin.password;
-            this.overlay = true ; 
+            this.userLoginData.data.password = this.userLogin.password; 
             await axios.post(API_LOGIN_USER, this.userLoginData ).then((response) => {
                 if (response.status == 200) {
                     if (response.data.status.code == 800) {
@@ -125,7 +124,9 @@ export default {
                             case ROLE_ADMIN_SOCIETE_MERE:
                                 localStorage.setItem('userIsAuthenticated', true);
                                 localStorage.setItem('userRole', ROLE_ADMIN_SOCIETE_MERE);
-                                this.overlay = true
+                                this.overlay = true;
+                                var parsedUserAuthenticated = JSON.stringify(response.data.item);
+                                localStorage.setItem('userLoggedSocieteMere',parsedUserAuthenticated)
                                 setTimeout(() => {
                                     this.$router.push({name:'EspaceAdminSociete'})
                                 }, 5000); 
@@ -134,6 +135,9 @@ export default {
                             case ROLE_ADMIN_COMPAGNIE_TRANSPORT:
                                 localStorage.setItem('userIsAuthenticated', 'true');
                                 localStorage.setItem('userRole', ROLE_ADMIN_COMPAGNIE_TRANSPORT);
+                                this.overlay = true;
+                                var parsedUserAdmin = JSON.stringify(response.data.item);
+                                localStorage.setItem('userLoggedCompagnieTransport',parsedUserAdmin)
                                 setTimeout(() => {
                                     this.$router.push({name:'EspaceCompagnieTransport'})
                                 }, 5000);
@@ -146,14 +150,11 @@ export default {
                     }else{
                         this.$swal.fire('Connexion échouée','Error lors de la connexion','error')
                     }  
-                    
                 }else{
                     this.$swal.fire('Connexion Impossible','Problème interne','error')
                 }
             }).catch((e) => {
                 this.$swal.fire('Connexion Impossible' , e , 'error')
-            }).finally(() => {
-                this.overlay = false;
             })
         },
     },

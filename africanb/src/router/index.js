@@ -11,6 +11,12 @@ import creerPays from '../components/administrateur_societe/CreerPays'
 import selectionnerPays from '../components/administrateur_societe/SelectionnerPays'
 import creerVille from '../components/administrateur_societe/CreerVille'
 import selectionnerVille from '../components/administrateur_societe/SelectionnerVille'
+import creerFonctionnalite from '../components/administrateur_societe/creerFonctionnalite'
+import creerRoleUtilisateur from '../components/administrateur_societe/creerRoleUtilisateur'
+import creerUtilisateur from '../components/administrateur_societe/creerUtilisateur'
+import gestionFunctionnalitesEtRoles from '../components/administrateur_societe/gestionFonctionnalitesEtRoles'
+import modifierCompteUtilisateur from '../components/administrateur_societe/userProfil'
+import resetPasswordUser from '../components/administrateur_societe/changerPassword'
 
 //import connexion from '../components/authentification/ConnexionUtilisateur.vue'
 import inscription from '../components/authentification/InscriptionUtilisateur.vue'
@@ -38,10 +44,9 @@ import selectionnerModeAbonnementEtPaiement from '../components/administration_c
 import modifierModePaiement from '../components/administration_compagnie_transport/ModifierModePaiement'
 import documentAttestationTransport from '../components/administration_compagnie_transport/DocumentAttestationTransport'
 import associerBusCompagnieTransport from '../components/administration_compagnie_transport/creerBusCompagnieTransport'
-import creerFonctionnalite from '../components/administration_compagnie_transport/creerFonctionnalite'
-import creerRoleUtilisateur from '../components/administration_compagnie_transport/creerRoleUtilisateur'
-import creerUtilisateur from '../components/administration_compagnie_transport/creerUtilisateur'
-import gestionFunctionnalitesEtRoles from '../components/administration_compagnie_transport/gestionFonctionnalitesEtRoles'
+import resetPasswordUserCompagnie from '../components/administration_compagnie_transport/changerPasswordCompagnieTransport.vue'
+import userProfilCompagnieTransport from '../components/administration_compagnie_transport/userProfilCompagnieTransport.vue'
+
 
 import { ROLE_ADMIN_COMPAGNIE_TRANSPORT , ROLE_ADMIN_SOCIETE_MERE } from '../components/globalConfig/constUsersRoles'
 Vue.use(VueRouter)
@@ -173,24 +178,14 @@ const routes = [
         component: associerBusCompagnieTransport
       },
       {
-        path: '/creerFonctionnalite',
-        name: 'creerFonctionnalite',
-        component: creerFonctionnalite
+        path: '/resetPasswordCompagnieTransport',
+        name: 'resetPasswordCompagnieTransport',
+        component: resetPasswordUserCompagnie
       },
       {
-        path: '/creerRoleUtilisateur',
-        name: 'creerRoleUtilisateur',
-        component: creerRoleUtilisateur
-      },
-      {
-        path: '/creerUtilisateur',
-        name: 'creerUtilisateur',
-        component: creerUtilisateur
-      },
-      {
-        path: '/gestionFonctionnalitesEtRoles',
-        name: 'gestionFonctionnalitesEtRoles',
-        component: gestionFunctionnalitesEtRoles
+        path: '/userProfilCompagnieTransport',
+        name: 'userProfilCompagnieTransport',
+        component: userProfilCompagnieTransport
       },
       {
         path: '/tableauBord',
@@ -249,6 +244,36 @@ const routes = [
         name: 'selectionnerDemandeAdhesionCompagnie',
         component: selectionnerDemandeAdhesionCompagnie
       },
+      {
+        path: '/creerFonctionnalite',
+        name: 'creerFonctionnalite',
+        component: creerFonctionnalite
+      },
+      {
+        path: '/creerRoleUtilisateur',
+        name: 'creerRoleUtilisateur',
+        component: creerRoleUtilisateur
+      },
+      {
+        path: '/creerUtilisateur',
+        name: 'creerUtilisateur',
+        component: creerUtilisateur
+      },
+      {
+        path: '/gestionFonctionnalitesEtRoles',
+        name: 'gestionFonctionnalitesEtRoles',
+        component: gestionFunctionnalitesEtRoles
+      },
+      {
+        path: '/monProfil',
+        name: 'monProfil',
+        component: modifierCompteUtilisateur
+      },
+      {
+        path: '/resetPassword',
+        name: 'resetPassword',
+        component: resetPasswordUser
+      }
     ]
   },
   

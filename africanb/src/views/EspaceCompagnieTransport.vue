@@ -170,54 +170,6 @@
         </v-list-item>
       </v-list>
 
-      <v-list dense nav>
-        <v-list-item link @click="$router.push({path:'/creerRoleUtilisateur'}).catch(() => {})">
-          <v-list-item-icon>
-            <v-icon color="teal">mdi-account-cog</v-icon>
-          </v-list-item-icon>
-  
-          <v-list-item-content>
-            <v-list-item-title>RÔLE UTILISATEUR</v-list-item-title>
-          </v-list-item-content>
-        </v-list-item>
-      </v-list>
-
-      <v-list dense nav>
-        <v-list-item link @click="$router.push({path:'/creerFonctionnalite'}).catch(() => {})">
-          <v-list-item-icon>
-            <v-icon color="teal">mdi-cog</v-icon>
-          </v-list-item-icon>
-  
-          <v-list-item-content>
-            <v-list-item-title>GESTION DES FONCTIONNALITÉS</v-list-item-title>
-          </v-list-item-content>
-        </v-list-item>
-      </v-list>
-
-      <v-list dense nav>
-        <v-list-item link @click="$router.push({path:'/gestionFonctionnalitesEtRoles'}).catch(() => {})">
-          <v-list-item-icon>
-            <v-icon color="teal">mdi-account-key</v-icon>
-          </v-list-item-icon>
-  
-          <v-list-item-content>
-            <v-list-item-title>GESTION DES ROLES ET FONCTIONNALITÉS</v-list-item-title>
-          </v-list-item-content>
-        </v-list-item>
-      </v-list>
-
-      <v-list dense nav>
-        <v-list-item link @click="$router.push({path:'/creerUtilisateur'}).catch(() => {})">
-          <v-list-item-icon>
-            <v-icon color="teal">mdi-account-plus</v-icon>
-          </v-list-item-icon>
-  
-          <v-list-item-content>
-            <v-list-item-title>UTILISATEURS</v-list-item-title>
-          </v-list-item-content>
-        </v-list-item>
-      </v-list>
-
     </v-navigation-drawer>
 
     <v-app-bar app color="white">
@@ -231,9 +183,51 @@
         <v-icon color="teal">mdi-bell-outline</v-icon>
       </v-btn>
 
-      <v-btn icon>
-        <v-icon color="teal">mdi-email</v-icon>
-      </v-btn>
+      <v-menu v-model="menuProfil" :close-on-content-click="false" :nudge-width="200" offset-x>
+        <template v-slot:activator="{ on, attrs }">
+          <v-btn rounded color="teal" dark v-bind="attrs" v-on="on"><v-avatar ><span class="white--text text-h5">A</span></v-avatar></v-btn>
+        </template>
+  
+        <v-card>
+          <v-list>
+            <v-list-item>
+              <v-list-item-avatar>
+                <img>
+              </v-list-item-avatar>
+  
+              <v-list-item-content>
+                <v-list-item-title></v-list-item-title>
+                <v-list-item-subtitle></v-list-item-subtitle>
+              </v-list-item-content>
+            </v-list-item>
+          </v-list>
+  
+          <v-divider></v-divider>
+  
+          <v-list>
+            <v-list-item link @click="$router.push({name:'userProfilCompagnieTransport'}).catch(() => {})">
+              <v-list-item-icon>
+                <v-icon>mdi-account-cog</v-icon>
+              </v-list-item-icon>
+              <v-list-item-title><span class="font-weight-thin">Mon profil</span></v-list-item-title>
+            </v-list-item>
+
+            <v-list-item link @click="$router.push({name:'resetPasswordCompagnieTransport'}).catch(() => {})">
+              <v-list-item-icon>
+                <v-icon>mdi-account-key</v-icon>
+              </v-list-item-icon>
+              <v-list-item-title><span class="font-weight-thin">Changer le mot de passe</span></v-list-item-title>
+            </v-list-item>
+  
+            <v-list-item link>
+              <v-list-item-icon>
+                <v-icon>mdi-logout</v-icon>
+              </v-list-item-icon>
+              <v-list-item-title class="font-weight-thin">Deconnexion</v-list-item-title>
+            </v-list-item>
+          </v-list>
+        </v-card>
+      </v-menu>
       
     </v-app-bar>
 
@@ -257,6 +251,8 @@
     name:"EspaceCompagnieTransport" ,
     data(){
       return{
+        menuProfil:false,
+
         mini:true,
         drawer: true,
         operationCompagnieTransport: [

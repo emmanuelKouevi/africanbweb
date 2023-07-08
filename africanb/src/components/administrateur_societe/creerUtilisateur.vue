@@ -126,14 +126,14 @@ export default {
                         setTimeout(function(){
                             $(".alert-success").fadeOut(); 
                         }, 4000)
-                        this.userDataToSend .datas = [];
+                        this.userDataToSend.datas = [];
                     }else{
                         this.errorMsg = response.data.status.message
                         $(".alert-error").fadeIn();
                         setTimeout(function(){
                             $(".alert-error").fadeOut(); 
                         }, 3000)
-                        this.userDataToSend .datas = [];
+                        this.userDataToSend.datas = [];
                     }  
                     
                 }
@@ -143,7 +143,7 @@ export default {
                     setTimeout(function(){
                         $(".alert-warning").fadeOut(); 
                     }, 3000)
-                    this.userDataToSend .datas = [];
+                    this.userDataToSend.datas = [];
                 }
                 else{
                     this.errorMsg = "Erreur , opération de création impossible";

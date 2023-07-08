@@ -2,10 +2,9 @@
   <v-app>
     <v-navigation-drawer app v-model="drawer" :mini-variant.sync="mini">
       <v-list-item>
-          <v-list-item-content>
-            <v-list-item-title class="text-h6">AFRICANB</v-list-item-title>
-            <v-list-item-subtitle>Société AFRICANB</v-list-item-subtitle>
-          </v-list-item-content>
+          <v-list-item-avatar size="60px">
+            <v-img src="../assets/logo_africanbus.jpg"></v-img>
+          </v-list-item-avatar>
       </v-list-item>
 
       <v-divider></v-divider>
@@ -39,7 +38,7 @@
             <v-list-item v-for="([title, icon , navigation], i) in administrationCompagnie" :key="i" link>
               <v-list-item-title @click="$router.push({path:navigation}).catch(() => {})"> {{ title }} </v-list-item-title>
               <v-list-item-icon>
-                <v-icon> {{ icon }} </v-icon>
+                <v-icon size="15px"> {{ icon }} </v-icon>
               </v-list-item-icon>
             </v-list-item>
           </v-list-group>
@@ -90,11 +89,47 @@
       <v-list dense nav>
         <v-list-item link @click="$router.push({path:'/selectionnerDemandeAdhesionCompagnie'}).catch(() => {})">
           <v-list-item-icon>
-            <v-icon>mdi-view-list-outline</v-icon>
+            <v-icon color="teal">mdi-view-list-outline</v-icon>
           </v-list-item-icon>
   
           <v-list-item-content>
             <v-list-item-title>DEMANDE DES ADHESIONS</v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
+      </v-list>
+
+      <v-list dense nav>
+        <v-list-item link @click="$router.push({path:'/creerFonctionnalite'}).catch(() => {})">
+          <v-list-item-icon>
+            <v-icon color="teal">mdi-cog</v-icon>
+          </v-list-item-icon>
+  
+          <v-list-item-content>
+            <v-list-item-title>GESTION DES FONCTIONNALITÉS</v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
+      </v-list>
+
+      <v-list dense nav>
+        <v-list-item link @click="$router.push({path:'/gestionFonctionnalitesEtRoles'}).catch(() => {})">
+          <v-list-item-icon>
+            <v-icon color="teal">mdi-account-key</v-icon>
+          </v-list-item-icon>
+  
+          <v-list-item-content>
+            <v-list-item-title>GESTION DES ROLES ET FONCTIONNALITÉS</v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
+      </v-list>
+
+      <v-list dense nav>
+        <v-list-item link @click="$router.push({path:'/creerUtilisateur'}).catch(() => {})">
+          <v-list-item-icon>
+            <v-icon color="teal">mdi-account-plus</v-icon>
+          </v-list-item-icon>
+  
+          <v-list-item-content>
+            <v-list-item-title>UTILISATEURS</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
       </v-list>
@@ -105,19 +140,51 @@
       <v-app-bar-nav-icon color="dark" @click="drawer = !drawer"></v-app-bar-nav-icon>
       <v-spacer></v-spacer>
 
-      <v-btn icon>
-        <v-icon color="black">mdi-bell-outline</v-icon>
-      </v-btn>
+      <v-menu v-model="menuProfil" :close-on-content-click="false" :nudge-width="200" offset-x>
+        <template v-slot:activator="{ on, attrs }">
+          <v-btn rounded color="teal" dark v-bind="attrs" v-on="on"><v-avatar ><span class="white--text text-h5">A</span></v-avatar></v-btn>
+        </template>
+  
+        <v-card>
+          <v-list>
+            <v-list-item>
+              <v-list-item-avatar>
+                <img>
+              </v-list-item-avatar>
+  
+              <v-list-item-content>
+                <v-list-item-title></v-list-item-title>
+                <v-list-item-subtitle></v-list-item-subtitle>
+              </v-list-item-content>
+            </v-list-item>
+          </v-list>
+  
+          <v-divider></v-divider>
+  
+          <v-list>
+            <v-list-item link @click="$router.push({name:'monProfil'}).catch(() => {})">
+              <v-list-item-icon>
+                <v-icon>mdi-account-cog</v-icon>
+              </v-list-item-icon>
+              <v-list-item-title><span class="font-weight-thin">Mon profil</span></v-list-item-title>
+            </v-list-item>
 
-      <v-btn icon>
-        <v-icon color="black">mdi-email</v-icon>
-      </v-btn>
-
-      <v-btn text>
-        <v-avatar size="30px">
-          <img src="">
-        </v-avatar>
-      </v-btn>
+            <v-list-item link @click="$router.push({name:'resetPassword'}).catch(() => {})">
+              <v-list-item-icon>
+                <v-icon>mdi-account-key</v-icon>
+              </v-list-item-icon>
+              <v-list-item-title><span class="font-weight-thin">Changer le mot de passe</span></v-list-item-title>
+            </v-list-item>
+  
+            <v-list-item link>
+              <v-list-item-icon>
+                <v-icon>mdi-logout</v-icon>
+              </v-list-item-icon>
+              <v-list-item-title class="font-weight-thin">Deconnexion</v-list-item-title>
+            </v-list-item>
+          </v-list>
+        </v-card>
+      </v-menu>
       
     </v-app-bar>
 
@@ -145,6 +212,8 @@ export default {
   data: () => ({
     mini:true,
     drawer: true,
+
+    menuProfil: false,
     tabs: [
       { title: 'TABLEAU DE BORD', icon: 'mdi-view-dashboard' },
     ],
