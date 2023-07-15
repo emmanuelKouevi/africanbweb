@@ -83,6 +83,7 @@ export const API_UPDATE_USER = `${BASE_URL}users`
 export const API_ACTIVATE_USER = `${BASE_URL}users/activeUser`
 export const API_RESET_PASSWORD_USER = `${BASE_URL}users/resetPasswordUser`
 export const API_CREATE_USER = `${BASE_URL}users`
+export const API_GET_ALL_USERS_CREATED = `${BASE_URL}users/getAll`
 
 
 

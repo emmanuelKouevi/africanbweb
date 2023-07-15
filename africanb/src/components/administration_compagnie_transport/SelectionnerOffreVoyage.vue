@@ -104,7 +104,6 @@ export default {
             offreActived.id = offreVoyage.id
             this.offreVoyageToActived.datas.push(offreActived)
             axios.post(API_ACTIVER_OFFRE_DE_VOYAGE ,this.offreVoyageToActived).then((response) => {
-                console.log(response)
                 if (response.status == 200) {
                     if (response.data.status.code != 800) {
                         this.$swal.fire('Activation',response.data.status.message,'error')

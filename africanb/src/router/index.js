@@ -17,6 +17,7 @@ import creerUtilisateur from '../components/administrateur_societe/creerUtilisat
 import gestionFunctionnalitesEtRoles from '../components/administrateur_societe/gestionFonctionnalitesEtRoles'
 import modifierCompteUtilisateur from '../components/administrateur_societe/userProfil'
 import resetPasswordUser from '../components/administrateur_societe/changerPassword'
+import selectionnerUtilisateur from '../components/administrateur_societe/selectionnerUtilisateur'
 
 //import connexion from '../components/authentification/ConnexionUtilisateur.vue'
 import inscription from '../components/authentification/InscriptionUtilisateur.vue'
@@ -273,6 +274,11 @@ const routes = [
         path: '/resetPassword',
         name: 'resetPassword',
         component: resetPasswordUser
+      },
+      {
+        path: '/selectionnerUtilisateur',
+        name: 'selectionnerUtilisateur',
+        component: selectionnerUtilisateur
       }
     ]
   },

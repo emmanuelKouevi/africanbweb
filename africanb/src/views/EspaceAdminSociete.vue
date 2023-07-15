@@ -134,6 +134,18 @@
         </v-list-item>
       </v-list>
 
+      <v-list dense nav>
+        <v-list-item link @click="$router.push({path:'/selectionnerUtilisateur'}).catch(() => {})">
+          <v-list-item-icon>
+            <v-icon color="teal">mdi-account-plus</v-icon>
+          </v-list-item-icon>
+  
+          <v-list-item-content>
+            <v-list-item-title>GESTION UTILISATEURS</v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
+      </v-list>
+
     </v-navigation-drawer>
 
     <v-app-bar app color="white">
