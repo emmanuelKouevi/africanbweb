@@ -135,9 +135,9 @@
       </v-list>
 
       <v-list dense nav>
-        <v-list-item link @click="$router.push({path:'/selectionnerUtilisateur'}).catch(() => {})">
+        <v-list-item link disabled @click="$router.push({path:'/selectionnerUtilisateur'}).catch(() => {})">
           <v-list-item-icon>
-            <v-icon color="teal">mdi-account-plus</v-icon>
+            <v-icon color="teal">mdi-account-group</v-icon>
           </v-list-item-icon>
   
           <v-list-item-content>
@@ -145,6 +145,7 @@
           </v-list-item-content>
         </v-list-item>
       </v-list>
+      
 
     </v-navigation-drawer>
 

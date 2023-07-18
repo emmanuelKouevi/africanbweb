@@ -116,7 +116,14 @@ export default {
         async login(){
             this.userLoginData.data.login = this.userLogin.login;
             this.userLoginData.data.password = this.userLogin.password; 
-            await axios.post(API_LOGIN_USER, this.userLoginData ).then((response) => {
+            const headers = {
+                'server_id' : 'backend@africanb',
+                'client_id' : 'frontend@africanb'
+            }
+            await axios.post(API_LOGIN_USER,this.userLoginData,{
+                headers : headers
+            }).then((response) => {
+                console.log(response)
                 if (response.status == 200) {
                     if (response.data.status.code == 800) {
                         var role = response.data.item.roleCode;

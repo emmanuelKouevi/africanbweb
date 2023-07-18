@@ -20,7 +20,6 @@ import resetPasswordUser from '../components/administrateur_societe/changerPassw
 import selectionnerUtilisateur from '../components/administrateur_societe/selectionnerUtilisateur'
 
 //import connexion from '../components/authentification/ConnexionUtilisateur.vue'
-import inscription from '../components/authentification/InscriptionUtilisateur.vue'
 import connexionUtilisateurCompagnieTransport from '../components/administration_compagnie_transport/authentification/connexionUtilisateurCompagnieTransport'
 
 import creerOffreVoyage from '../components/administration_compagnie_transport/CreerOffreVoyage'
@@ -288,12 +287,6 @@ const routes = [
     name: 'connexion',
     component: connexionUtilisateurCompagnieTransport
   },
-  {
-    path: '/inscription',
-    name: 'inscription',
-    component: inscription
-  },
-
   
 ]
 

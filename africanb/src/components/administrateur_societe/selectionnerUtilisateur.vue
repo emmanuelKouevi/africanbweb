@@ -72,7 +72,12 @@ export default {
         // ACTIVER UN UTILISATEUR
         async toActivedUser(userItem){
             this.toActive.data.login = userItem.login
-            await axios.post(API_ACTIVATE_USER, this.toActive ).then((response) => {
+            await axios.post(API_ACTIVATE_USER, this.toActive , {
+                headers : {
+                    'server_id' : 'backend@africanb',
+                    'client_id' : 'frontend@africanb'
+                }
+            } ).then((response) => {
                 if (response.status == 200) {
                     if (response.data.status.code != 800) {
                         this.$swal.fire('Activation',response.data.status.message,'error')
