@@ -2,6 +2,11 @@
 
 export const BASE_URL = "https://localhost:8443/";
 
+export const HEADERS = {
+    'server_id' : 'backend@africanb',
+    'client_id' : 'frontend@africanb'
+}
+
 
 // ------------------ OPERATION SUR LES COMPAGNIE DE TRANSPORT --------------------------- //
 

@@ -63,16 +63,13 @@
 
 <script>
 import axios from 'axios';
-//import $ from 'jquery';
-import { API_LOGIN_USER } from '../../globalConfig/globalConstConfig'
-import { ROLE_ADMIN_SOCIETE_MERE , ROLE_ADMIN_COMPAGNIE_TRANSPORT } from '../../globalConfig/constUsersRoles'
+import { API_LOGIN_USER  , HEADERS} from '../../globalConfig/globalConstConfig'
 import { required } from 'vuelidate/lib/validators'
 export default {
     name:"connexionUtilisateurCompagnieTransport.vue",
     data(){
         return{
             overlay : false ,
-
             passwordIsVisible : false ,
 
             userLoginData:{
@@ -87,8 +84,6 @@ export default {
                 password:null,
             },
 
-
-            
         }
     },
 
@@ -113,47 +108,18 @@ export default {
 
         },
 
+        // SERVICE WEB PERMETTANT DE SE CONNECTER ET D'ACCEDER À SON ESPACE PERSONNEL
         async login(){
             this.userLoginData.data.login = this.userLogin.login;
             this.userLoginData.data.password = this.userLogin.password; 
-            const headers = {
-                'server_id' : 'backend@africanb',
-                'client_id' : 'frontend@africanb'
-            }
             await axios.post(API_LOGIN_USER,this.userLoginData,{
-                headers : headers
+                headers : HEADERS
             }).then((response) => {
-                console.log(response)
                 if (response.status == 200) {
                     if (response.data.status.code == 800) {
-                        var role = response.data.item.roleCode;
-                        switch (role) {
-                            case ROLE_ADMIN_SOCIETE_MERE:
-                                localStorage.setItem('userIsAuthenticated', true);
-                                localStorage.setItem('userRole', ROLE_ADMIN_SOCIETE_MERE);
-                                this.overlay = true;
-                                var parsedUserAuthenticated = JSON.stringify(response.data.item);
-                                localStorage.setItem('userLoggedSocieteMere',parsedUserAuthenticated)
-                                setTimeout(() => {
-                                    this.$router.push({name:'EspaceAdminSociete'})
-                                }, 5000); 
-                                break;
-
-                            case ROLE_ADMIN_COMPAGNIE_TRANSPORT:
-                                localStorage.setItem('userIsAuthenticated', 'true');
-                                localStorage.setItem('userRole', ROLE_ADMIN_COMPAGNIE_TRANSPORT);
-                                this.overlay = true;
-                                var parsedUserAdmin = JSON.stringify(response.data.item);
-                                localStorage.setItem('userLoggedCompagnieTransport',parsedUserAdmin)
-                                setTimeout(() => {
-                                    this.$router.push({name:'EspaceCompagnieTransport'})
-                                }, 5000);
-                                break;
-                        
-                            default:
-                                console.log('Nothing')
-                                break;
-                        }
+                        this.$store.commit('LOGIN_USER');
+                        this.$store.commit('SET_USER_AUTHENTIFIED' , response.data.item);
+                        this.$router.push('/userHome')
                     }else{
                         this.$swal.fire('Connexion échouée','Error lors de la connexion','error')
                     }  
@@ -164,6 +130,16 @@ export default {
                 this.$swal.fire('Connexion Impossible' , e , 'error')
             })
         },
+
+
+        /**
+         * Cette methode permettra de détecter si nous sommes sur la page de connexion (/connexion).
+         * Si c'est le cas , l'utilisateur perd sa session et sera invité de saisir 
+         * à nouveau ses paramètres de connexion
+         */
+        initializeSession() {
+
+        }
     },
 
     computed:{
@@ -186,7 +162,9 @@ export default {
 
     },
 
-    mounted(){}
+    mounted(){
+
+    }
 }
 </script>
 

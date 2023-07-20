@@ -81,7 +81,7 @@
 import axios from 'axios'
 import $ from 'jquery'
 import { required } from 'vuelidate/lib/validators'
-import { API_RECUPERER_LISTE_OFFRE_VOYAGE , API_ASSOCIER_BUS_OFFRE_VOYAGE } from '../globalConfig/globalConstConfig'
+import { API_RECUPERER_LISTE_OFFRE_VOYAGE , API_ASSOCIER_BUS_OFFRE_VOYAGE , HEADERS } from '../globalConfig/globalConstConfig'
 export default {
     name:'creerBusCompagnieTransport',
     data(){
@@ -199,7 +199,7 @@ export default {
         // ASSOCIER DES BUS À UNE OFFRE DE VOYAGE
         async associerBusOffreVoyage(){
             this.overlay = true ;
-            await axios.post(API_ASSOCIER_BUS_OFFRE_VOYAGE, this.busObject).then((response) => {
+            await axios.post(API_ASSOCIER_BUS_OFFRE_VOYAGE, this.busObject , { headers : HEADERS }).then((response) => {
                 if (response.status == 200) {
                     if (response.data.status.code == 800) {
                         this.successMsg = response.data.status.message
@@ -248,7 +248,7 @@ export default {
 
         //RECUPERER LA LISTE DES OFFRES DE VOYAGES PAR COMPAGNIE DE TRANSPORT
         async obtenirOffreVoyageParCompagnieTransport(){
-            await axios.post(API_RECUPERER_LISTE_OFFRE_VOYAGE, this.offreVoyageObject ).then((response) => {
+            await axios.post(API_RECUPERER_LISTE_OFFRE_VOYAGE, this.offreVoyageObject , { headers : HEADERS } ).then((response) => {
                 if (response.status == 200) {
                     if (response.data.status.code != 800) {
                         this.errorMsg = response.data.status.message

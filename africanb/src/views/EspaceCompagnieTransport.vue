@@ -3,7 +3,7 @@
     <v-navigation-drawer app v-model="drawer" :mini-variant.sync="mini">
       <v-list-item>
           <v-list-item-content>
-            <v-list-item-title class="text-h6">Nom de la compagnie</v-list-item-title>
+            <v-list-item-title class="text-h6 font-weight-thin">{{ $store.state.userAuthentified.compagnieTransportRaisonSociale }}</v-list-item-title>
             <v-list-item-subtitle>Société AFRICANB</v-list-item-subtitle>
           </v-list-item-content>
       </v-list-item>
@@ -179,25 +179,17 @@
       </v-toolbar-title>
       <v-spacer></v-spacer>
 
-      <v-btn icon>
-        <v-icon color="teal">mdi-bell-outline</v-icon>
-      </v-btn>
-
       <v-menu v-model="menuProfil" :close-on-content-click="false" :nudge-width="200" offset-x>
         <template v-slot:activator="{ on, attrs }">
-          <v-btn rounded color="teal" dark v-bind="attrs" v-on="on"><v-avatar ><span class="white--text text-h5">A</span></v-avatar></v-btn>
+          <v-btn icon color="transparent" v-bind="attrs" v-on="on"><v-avatar size="30"><v-img src="../assets/undraw_profile.svg"></v-img></v-avatar></v-btn>
         </template>
   
         <v-card>
           <v-list>
-            <v-list-item>
-              <v-list-item-avatar>
-                <img>
-              </v-list-item-avatar>
-  
+            <v-list-item>  
               <v-list-item-content>
-                <v-list-item-title></v-list-item-title>
-                <v-list-item-subtitle></v-list-item-subtitle>
+                <v-list-item-title>{{ $store.state.userAuthentified.prenoms }}  {{ $store.state.userAuthentified.nom }}</v-list-item-title>
+                <v-list-item-subtitle>{{ $store.state.userAuthentified.email }}</v-list-item-subtitle>
               </v-list-item-content>
             </v-list-item>
           </v-list>

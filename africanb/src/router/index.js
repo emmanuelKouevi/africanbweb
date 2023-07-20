@@ -1,6 +1,9 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import HomeView from '../views/HomeView.vue'
+import $store from '@/store'
+
+import InterfaceAccordingUserRole from '../views/InterfaceAccordingUserRole'
 
 import creerCompagnieTransport from '../components/administrateur_societe/CreerCompagnieTransport'
 import modifierCompagnieTransport from '../components/administrateur_societe/ModifierCompagnieTransport'
@@ -51,11 +54,18 @@ import userProfilCompagnieTransport from '../components/administration_compagnie
 import { ROLE_ADMIN_COMPAGNIE_TRANSPORT , ROLE_ADMIN_SOCIETE_MERE } from '../components/globalConfig/constUsersRoles'
 Vue.use(VueRouter)
 
+
 const routes = [
   {
     path: '/',
     name: 'home',
     component: HomeView
+  },
+
+  {
+    path: '/userHome',
+    name: 'userHome',
+    component: InterfaceAccordingUserRole
   },
 
   {
@@ -299,17 +309,11 @@ const router = new VueRouter({
 
 // Ajoutez une garde de navigation globale pour vérifier les autorisations
 router.beforeEach((to, from, next) => {
-  var isAuthenticated ; 
-  var userRole ; 
   if (to.matched.some(record => record.meta.requiresAuth)) {
-    localStorage.getItem('userIsAuthenticated') ? isAuthenticated = true : isAuthenticated = false ;
-    userRole = localStorage.getItem('userRole'); 
-    if (isAuthenticated == false) {
+    if ($store.state.isAuthentified == false) {
+      console.log($store.state.isAuthentified)
       next({name : 'connexion'})
-    }else if (to.meta.role && to.meta.role !== userRole) {
-      next({name : 'connexion'})
-    }
-     else {
+    }else {
       next();
     }
   } else {

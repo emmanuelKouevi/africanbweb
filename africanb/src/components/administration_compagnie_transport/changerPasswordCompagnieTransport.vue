@@ -40,7 +40,7 @@
 </template>
 
 <script>
-import { API_RESET_PASSWORD_USER } from '../globalConfig/globalConstConfig';
+import { API_RESET_PASSWORD_USER , HEADERS } from '../globalConfig/globalConstConfig';
 import axios from 'axios';
 import { required } from 'vuelidate/lib/validators'
 export default {
@@ -85,12 +85,10 @@ export default {
 
         async retrieveUserInfo(){
             /**
-             * REFAIRE LA RECUPERATION DES DONNEES UTILISATEURS
+             * RECUPERER LES DONNEES UTILISATEURS
              */
-            if (localStorage.getItem('userLoggedCompagnieTransport')) {
-                const parsedUserLogged = JSON.parse(localStorage.getItem('userLoggedCompagnieTransport'));
-                console.log(parsedUserLogged.email)
-                this.userParams.email = parsedUserLogged.email;
+            if (this.$store.state.userAuthentified !== null) {
+                this.userParams.email = this.$store.state.userAuthentified.email;
             }
         },
 
@@ -108,7 +106,7 @@ export default {
             this.userReset.data.email = this.userParams.email;
             this.userReset.data.oldPassWord = this.userParams.oldPassWord;
             this.userReset.data.newPassWord = this.userParams.newPassWord;
-            await axios.post(API_RESET_PASSWORD_USER, this.userReset ).then((response) => {
+            await axios.post(API_RESET_PASSWORD_USER, this.userReset , { headers : HEADERS } ).then((response) => {
                 if (response.status == 200) {
                     if (response.data.status.code == 800) {
                         this.successMsg = response.data.status.message
