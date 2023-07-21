@@ -41,7 +41,7 @@
 import { required } from 'vuelidate/lib/validators'
 import axios from "axios";
 import $ from 'jquery'
-import { API_OBTENIR_REFERENCE_PAR_PAR_FAMILLE , API_CREER_BAGAGE } from '../globalConfig/globalConstConfig'
+import { API_OBTENIR_REFERENCE_PAR_PAR_FAMILLE , API_CREER_BAGAGE, HEADERS } from '../globalConfig/globalConstConfig'
 export default {
     name:"GestionBagageCompagnieTransport",
     data(){
@@ -102,7 +102,7 @@ export default {
         async creerBagage(){
             this.bagageToSend.datas.push(this.bagageModel)
             this.overlay = true ;
-            await axios.post(API_CREER_BAGAGE, this.bagageToSend).then((response) => {
+            await axios.post(API_CREER_BAGAGE, this.bagageToSend , { headers : HEADERS }).then((response) => {
                 if (response.status == 200) {
                     if (response.data.status.code == 800) {
                         this.successMsg = response.data.status.message
@@ -152,7 +152,7 @@ export default {
         //OBTENIR REFERENCE DESIGNATION BAGAGE
         async obtenirReferenceBagageList(){
             this.objectToSendReferenceBagage.datas.push(this.referenceBagage)
-            await axios.post(API_OBTENIR_REFERENCE_PAR_PAR_FAMILLE, this.objectToSendReferenceBagage).then((response) => {
+            await axios.post(API_OBTENIR_REFERENCE_PAR_PAR_FAMILLE, this.objectToSendReferenceBagage , { headers : HEADERS }).then((response) => {
                 this.referenceBagageList = response.data.items
             }).catch((e) => {
                 this.errorMsg = e ;

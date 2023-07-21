@@ -36,7 +36,7 @@
 import { required } from 'vuelidate/lib/validators';
 import axios from 'axios';
 import $ from 'jquery'
-import { API_OBTENIR_REFERENCE_PAR_PAR_FAMILLE , API_CREER_MODE_PAIEMENT } from '../globalConfig/globalConstConfig'
+import { API_OBTENIR_REFERENCE_PAR_PAR_FAMILLE , API_CREER_MODE_PAIEMENT, HEADERS } from '../globalConfig/globalConstConfig'
 
 export default {
     name:"CreerModePaiement",
@@ -106,7 +106,7 @@ export default {
         async creerModePaiement(){
             this.modePaiementObject.datas.push(this.modePaiementModel);
             this.overlay = true ;
-            await axios.post(API_CREER_MODE_PAIEMENT, this.modePaiementObject).then((response) => {
+            await axios.post(API_CREER_MODE_PAIEMENT, this.modePaiementObject , { headers : HEADERS }).then((response) => {
                 if (response.status == 200) {
                     if (response.data.status.code == 800) {
                         this.successMsg = response.data.status.message
@@ -156,7 +156,7 @@ export default {
         //OBTENIR REFERENCE DESIGNATION MODE DE PAIEMENT
         async obtenirReferenceModePaiementList(){
             this.objectToSendReferenceModePaiement.datas.push(this.referenceModePaiement)
-            await axios.post(API_OBTENIR_REFERENCE_PAR_PAR_FAMILLE, this.objectToSendReferenceModePaiement).then((response) => {
+            await axios.post(API_OBTENIR_REFERENCE_PAR_PAR_FAMILLE, this.objectToSendReferenceModePaiement , { headers : HEADERS }).then((response) => {
                 this.referenceTypePaiementList = response.data.items;
             }).catch((e) => {
                 this.errorMsg = e ;

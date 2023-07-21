@@ -35,7 +35,7 @@
 
 <script>
 import axios from 'axios';
-import { API_OBTENIR_LISTE_DES_VILLES_DISPONIBLE , API_OBTENIR_REFERENCE_PAR_PAR_FAMILLE , API_CREER_OFFRE_VOYAGE } from '../globalConfig/globalConstConfig'
+import { API_OBTENIR_LISTE_DES_VILLES_DISPONIBLE , API_OBTENIR_REFERENCE_PAR_PAR_FAMILLE , API_CREER_OFFRE_VOYAGE , HEADERS } from '../globalConfig/globalConstConfig'
 import { required , minLength } from 'vuelidate/lib/validators'
 import $ from 'jquery'
 
@@ -103,7 +103,7 @@ export default {
         //OBTENIR REFERENCE DESIGNATION TYPE OFFRE DE VOYAGE
         async obtenirReferenceTypeOffreVoyage(){
             this.objectToSend.datas.push(this.referenceTypeOffreVoyage)
-            await axios.post(API_OBTENIR_REFERENCE_PAR_PAR_FAMILLE, this.objectToSend).then((response) => {
+            await axios.post(API_OBTENIR_REFERENCE_PAR_PAR_FAMILLE, this.objectToSend , { headers : HEADERS }).then((response) => {
                 this.referenceTypeOffreVoyageList = response.data.items
             }).catch((e) => {
                 this.errorMsg = e ;
@@ -119,7 +119,7 @@ export default {
         async creerOffreVoyage(){
             this.offreVoyageToSend.datas.push(this.offreVoyage)
             this.overlay = true ;
-            await axios.post(API_CREER_OFFRE_VOYAGE, this.offreVoyageToSend).then((response) => {
+            await axios.post(API_CREER_OFFRE_VOYAGE, this.offreVoyageToSend , { headers : HEADERS }).then((response) => {
                 if (response.status == 200) {
                     if (response.data.status.code == 800) {
                         this.successMsg = response.data.status.message
@@ -171,7 +171,7 @@ export default {
         // RECUPERER LA LISTE DES VILLES ENREGISTRÉES
         async readAllVilleFromApi(){
             this.loading = false
-            await axios.post(API_OBTENIR_LISTE_DES_VILLES_DISPONIBLE, this.objectValue).then((response) => {
+            await axios.post(API_OBTENIR_LISTE_DES_VILLES_DISPONIBLE, this.objectValue , { headers : HEADERS }).then((response) => {
                 this.villesList = response.data.items
             }).catch((e) => {
                 this.errorMsg = e ;

@@ -261,7 +261,7 @@
 
 <script>
 import { required , minLength } from 'vuelidate/lib/validators';
-import { API_OBTENIR_REFERENCE_PAR_PAR_FAMILLE ,API_OBTENIR_LISTE_DES_VILLES_DISPONIBLE, API_CREER_OFFRE_VOYAGE } from '../globalConfig/globalConstConfig'
+import { API_OBTENIR_REFERENCE_PAR_PAR_FAMILLE ,API_OBTENIR_LISTE_DES_VILLES_DISPONIBLE, API_CREER_OFFRE_VOYAGE, HEADERS } from '../globalConfig/globalConstConfig'
 import { API_RECUPERER_PRIX_PAR_OFFRE_VOYAGE , API_RECUPERER_VILLE_ESCALE_PAR_OFFRE_VOYAGE } from '../globalConfig/globalConstConfig'
 import { API_OBENIR_JOUR_SEMAINE_PAR_OFFRE_VOYAGE , API_RECUPERER_PROPRIETE_PAR_OFFRE_VOYAGE , API_RECUPERER_LISTE_BUS_PAR_OFFRE_VOYAGE} from '../globalConfig/globalConstConfig'
 import axios from 'axios'
@@ -385,7 +385,7 @@ export default {
         async modifierOffreVoyageInfo(){
             this.offreVoyageToModify.datas.push(this.offreVoyage);
             this.overlay = true ;
-            await axios.put(API_CREER_OFFRE_VOYAGE , this.offreVoyageToModify).then((response) => {
+            await axios.put(API_CREER_OFFRE_VOYAGE , this.offreVoyageToModify , { headers : HEADERS }).then((response) => {
                 if (response.status == 200) {
                     if (response.data.status.code == 800) {
                         this.successMsg = response.data.status.message
@@ -489,7 +489,7 @@ export default {
         async obtenirJourSemaineParOffreVoyage(){
             this.loadingProgrammeOffreVoyage = true
             this.offreVoyageObject.data.designation = this.offreVoyage.designation;
-            await axios.post(API_OBENIR_JOUR_SEMAINE_PAR_OFFRE_VOYAGE , this.offreVoyageObject).then((response) => {
+            await axios.post(API_OBENIR_JOUR_SEMAINE_PAR_OFFRE_VOYAGE , this.offreVoyageObject , { headers : HEADERS }).then((response) => {
                 if (response.data.status.code == 800) {
                     this.jourSemainesParOffreVoyagesList = response.data.items
                 }else{
@@ -512,7 +512,7 @@ export default {
         async obtenirVilleEscaleParOffreVoyage(){
             this.loadingVilleEscale = true
             this.offreVoyageObject.data.designation = this.offreVoyage.designation;
-            await axios.post(API_RECUPERER_VILLE_ESCALE_PAR_OFFRE_VOYAGE, this.offreVoyageObject).then((response) => {
+            await axios.post(API_RECUPERER_VILLE_ESCALE_PAR_OFFRE_VOYAGE, this.offreVoyageObject , { headers : HEADERS }).then((response) => {
                 if (response.data.status.code == 800) {
                     this.villesEscalesParOffreVoyagesList = response.data.items;
                 }else{
@@ -534,7 +534,7 @@ export default {
         async obtenirProprietesOffreVoyage(){
             this.loadingProprieteOffreVoyage = true
             this.offreVoyageObject.data.designation = this.offreVoyage.designation;
-            await axios.post(API_RECUPERER_PROPRIETE_PAR_OFFRE_VOYAGE, this.offreVoyageObject).then((response) => {
+            await axios.post(API_RECUPERER_PROPRIETE_PAR_OFFRE_VOYAGE, this.offreVoyageObject , { headers : HEADERS }).then((response) => {
                 if (response.data.status.code == 800) {
                     this.proprieteParOffreVoyageList = response.data.items
                 }else{
@@ -555,7 +555,7 @@ export default {
         async obtenirBusOffreVoyage(){
             this.loadingBusOffreVoyage = true
             this.offreVoyageObject.data.designation = this.offreVoyage.designation;
-            await axios.post(API_RECUPERER_LISTE_BUS_PAR_OFFRE_VOYAGE, this.offreVoyageObject).then((response) => {
+            await axios.post(API_RECUPERER_LISTE_BUS_PAR_OFFRE_VOYAGE, this.offreVoyageObject , { headers : HEADERS }).then((response) => {
                 if (response.data.status.code == 800) {
                     this.busParOffreVoyageList = response.data.items
                 }else{
@@ -577,7 +577,7 @@ export default {
         //OBTENIR REFERENCE DESIGNATION TYPE OFFRE DE VOYAGE
         async obtenirTypeOffreVoyageList(){
             this.objectToSend.datas.push(this.referenceTypeOffreVoyage)
-            await axios.post(API_OBTENIR_REFERENCE_PAR_PAR_FAMILLE, this.objectToSend).then((response) => {
+            await axios.post(API_OBTENIR_REFERENCE_PAR_PAR_FAMILLE, this.objectToSend , { headers : HEADERS }).then((response) => {
                 this.referenceTypeOffreVoyageList = response.data.items
             }).catch((e) => {
                 this.errorMsg = e ;
@@ -611,7 +611,7 @@ export default {
 
         async obtenirListeDesVillesDisponible(){
             this.loading = false
-            await axios.post(API_OBTENIR_LISTE_DES_VILLES_DISPONIBLE, this.simpleObject).then((response) => {
+            await axios.post(API_OBTENIR_LISTE_DES_VILLES_DISPONIBLE, this.simpleObject , { headers : HEADERS }).then((response) => {
                 this.villesList = response.data.items
             }).catch((e) => {
                 this.errorMsg = e ;

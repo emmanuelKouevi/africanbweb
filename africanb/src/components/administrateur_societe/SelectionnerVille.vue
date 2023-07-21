@@ -26,7 +26,7 @@
 <script>
 import axios from "axios"
 import $ from "jquery"
-import { API_OBTENIR_LISTE_DES_VILLES_DISPONIBLE } from '../globalConfig/globalConstConfig'
+import { API_OBTENIR_LISTE_DES_VILLES_DISPONIBLE , HEADERS } from '../globalConfig/globalConstConfig'
 export default {
     name:'SelectionnerVille',
     data(){
@@ -61,7 +61,7 @@ export default {
         // RECUPERER LA LISTE DES VILLES ENREGISTRÉES
         async readAllVilleFromApi(){
             this.loading = false
-            await axios.post(API_OBTENIR_LISTE_DES_VILLES_DISPONIBLE, this.objectValue).then((response) => {
+            await axios.post(API_OBTENIR_LISTE_DES_VILLES_DISPONIBLE, this.objectValue , { headers : HEADERS }).then((response) => {
                 this.villesList = response.data.items
             }).catch((e) => {
                 this.errorMsg = e ;

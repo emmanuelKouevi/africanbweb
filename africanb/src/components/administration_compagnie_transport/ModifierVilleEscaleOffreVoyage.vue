@@ -27,7 +27,7 @@
 <script>
 import axios from "axios";
 import $ from 'jquery';
-import { API_OBTENIR_LISTE_DES_VILLES_DISPONIBLE , API_CREER_VILLES_ESCALES_OFFRE_VOYAGE } from '../globalConfig/globalConstConfig'
+import { API_OBTENIR_LISTE_DES_VILLES_DISPONIBLE , API_CREER_VILLES_ESCALES_OFFRE_VOYAGE, HEADERS } from '../globalConfig/globalConstConfig'
 export default {
     name:'ModifierVilleEscaleOffreVoyage',
     data(){
@@ -62,7 +62,7 @@ export default {
         async enregistrerModificationVilleEscale(){
             this.villeEscaleToModify.datas.push(this.villeEscaleModel);
             this.overlay = true ;
-            await axios.put(API_CREER_VILLES_ESCALES_OFFRE_VOYAGE , this.villeEscaleToModify).then((response) => {
+            await axios.put(API_CREER_VILLES_ESCALES_OFFRE_VOYAGE , this.villeEscaleToModify , { headers : HEADERS }).then((response) => {
                 if (response.status == 200) {
                     if (response.data.status.code == 800) {
                         this.successMsg = response.data.status.message
@@ -128,7 +128,7 @@ export default {
 
         //RECUPERER LA LISTE DES VILLES DISPONIBLES
         async obtenirVillesListApi(){
-            await axios.post(API_OBTENIR_LISTE_DES_VILLES_DISPONIBLE, this.objectValue).then((response) => {
+            await axios.post(API_OBTENIR_LISTE_DES_VILLES_DISPONIBLE, this.objectValue , { headers : HEADERS }).then((response) => {
                 this.villesList = response.data.items
             }).catch((e) => {
                 this.errorMsg = e ;

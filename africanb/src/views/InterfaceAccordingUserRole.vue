@@ -4,7 +4,7 @@
             <EspaceCompagnieTransportVue></EspaceCompagnieTransportVue>
         </div>
 
-        <div v-else>
+        <div v-if="$store.state.userAuthentified.roleCode == roleCodeSocieteMere">
             <EspaceAdminSocieteVue></EspaceAdminSocieteVue>
         </div>
     </v-app>

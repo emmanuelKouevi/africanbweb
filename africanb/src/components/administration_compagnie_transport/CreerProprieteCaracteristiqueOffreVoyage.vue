@@ -49,7 +49,7 @@
 import axios from 'axios'
 import $ from 'jquery'
 import { required } from 'vuelidate/lib/validators'
-import { API_RECUPERER_LISTE_OFFRE_VOYAGE , API_OBTENIR_LISTE_PROPRIETE_OFFRE_VOYAGE , API_CREER_CARACTERISTIQUES_OFFRE_VOYAGE} from '../globalConfig/globalConstConfig'
+import { API_RECUPERER_LISTE_OFFRE_VOYAGE , API_OBTENIR_LISTE_PROPRIETE_OFFRE_VOYAGE , API_CREER_CARACTERISTIQUES_OFFRE_VOYAGE , HEADERS} from '../globalConfig/globalConstConfig'
 export default {
     name:"CreerProprieteCarateristiqueOffreVoyage",
     data(){
@@ -120,7 +120,7 @@ export default {
             }else{
                 this.overlay = true
                 this.valeurCaracteristiqueObject.datas = this.valeurCaracteristiqueListToSend;
-                await axios.post(API_CREER_CARACTERISTIQUES_OFFRE_VOYAGE , this.valeurCaracteristiqueObject).then((response) => {
+                await axios.post(API_CREER_CARACTERISTIQUES_OFFRE_VOYAGE , this.valeurCaracteristiqueObject , { headers : HEADERS }).then((response) => {
                     if (response.status == 200) {
                         if (response.data.status.code == 800) {
                             this.successMsg = response.data.status.message
@@ -160,7 +160,7 @@ export default {
 
         //RECUPERER LA LISTE DES OFFRES DE VOYAGES PAR COMPAGNIE DE TRANSPORT
         async obtenirOffreVoyageParCompagnieTransport(){
-            await axios.post(API_RECUPERER_LISTE_OFFRE_VOYAGE, this.offreVoyageObject ).then((response) => {
+            await axios.post(API_RECUPERER_LISTE_OFFRE_VOYAGE, this.offreVoyageObject, { headers : HEADERS }).then((response) => {
                 if (response.status == 200) {
                     if (response.data.status.code != 800) {
                         this.errorMsg = response.data.status.message
@@ -186,7 +186,7 @@ export default {
 
         // OBTENIR LA LISTE DES PROPRIETES PORTANT SUR LES OFFRES DE VOYAGES
         async obtenirProprieteOffreVoyage(){
-            await axios.post(API_OBTENIR_LISTE_PROPRIETE_OFFRE_VOYAGE , this.simpleObject).then((response) => {
+            await axios.post(API_OBTENIR_LISTE_PROPRIETE_OFFRE_VOYAGE , this.simpleObject , { headers : HEADERS }).then((response) => {
                 if (response.status == 200) {
                     if (response.data.status.code != 800) {
                         this.errorMsg = response.data.status.message

@@ -27,7 +27,7 @@
 <script>
 import axios from 'axios';
 import $ from 'jquery'
-import { API_RECUPERER_LISTE_GARES_PAR_COMPAGNIE } from '../globalConfig/globalConstConfig'
+import { API_RECUPERER_LISTE_GARES_PAR_COMPAGNIE , HEADERS } from '../globalConfig/globalConstConfig'
 export default {
     name:'SelectionnerGareCompagnieTransport',
     data(){
@@ -58,7 +58,7 @@ export default {
         // RECUPERER LA LISTE DES GARES ENREGISTRÉS PAR COMPAGNIE DE TRANSPORT
         async obtenirGareListParCompagnieTransport(){
             this.loading = true;
-            axios.post(API_RECUPERER_LISTE_GARES_PAR_COMPAGNIE, this.gareListObject ).then((response) => {
+            axios.post(API_RECUPERER_LISTE_GARES_PAR_COMPAGNIE, this.gareListObject , { headers : HEADERS }).then((response) => {
                 if (response.status == 200) {
                     if (response.data.status.code != 800) {
                         this.errorMsg = response.data.status.message

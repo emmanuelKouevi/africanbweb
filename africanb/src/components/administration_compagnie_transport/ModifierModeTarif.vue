@@ -46,7 +46,7 @@
 import axios from 'axios'
 import $ from 'jquery'
 import { required } from 'vuelidate/lib/validators'
-import { API_OBTENIR_REFERENCE_PAR_PAR_FAMILLE , API_RECUPERER_LISTE_OFFRE_VOYAGE} from '../globalConfig/globalConstConfig'
+import { API_OBTENIR_REFERENCE_PAR_PAR_FAMILLE , API_RECUPERER_LISTE_OFFRE_VOYAGE , HEADERS} from '../globalConfig/globalConstConfig'
 import { API_RATTACHER_PRIX_OFFRE_VOYAGE } from '../globalConfig/globalConstConfig'
 export default {
     name:'ModifierModeTarif.vue',
@@ -133,7 +133,7 @@ export default {
         async modifierModePrixOffreVoyage(){
             this.prixModeOffreVoyageToModify.datas.push(this.prixOffreVoyageModel);
             this.overlay = true ;
-            await axios.put(API_RATTACHER_PRIX_OFFRE_VOYAGE , this.prixModeOffreVoyageToModify).then((response) => {
+            await axios.put(API_RATTACHER_PRIX_OFFRE_VOYAGE , this.prixModeOffreVoyageToModify , { headers : HEADERS }).then((response) => {
                 if (response.status == 200) {
                     if (response.data.status.code == 800) {
                         this.successMsg = response.data.status.message
@@ -202,7 +202,7 @@ export default {
         
         // RECUPERER LA LISTE DES OFFRES DE VOYAGES DISPONIBLES PAR COMPAGNIE DE TRANSPORT
         async obtenirOffreVoyageParCompagnieTransport(){
-            axios.post(API_RECUPERER_LISTE_OFFRE_VOYAGE, this.offreVoyageObject ).then((response) => {
+            axios.post(API_RECUPERER_LISTE_OFFRE_VOYAGE, this.offreVoyageObject , { headers : HEADERS }).then((response) => {
                 if (response.status == 200) {
                     if (response.data.status.code != 800) {
                         this.errorMsg = response.data.status.message
@@ -228,7 +228,7 @@ export default {
         //OBTENIR REFERENCE DESIGNATION TYPE OFFRE DE VOYAGE
         async obtenirReferenceModeOffreVoyage(){
             this.objectToSendReferenceModeOffre.datas.push(this.referenceModeOffreVoyage)
-            await axios.post(API_OBTENIR_REFERENCE_PAR_PAR_FAMILLE, this.objectToSendReferenceModeOffre).then((response) => {
+            await axios.post(API_OBTENIR_REFERENCE_PAR_PAR_FAMILLE, this.objectToSendReferenceModeOffre , { headers : HEADERS }).then((response) => {
                 this.referenceModeOffreVoyageList = response.data.items
             }).catch((e) => {
                 this.errorMsg = e ;
@@ -242,7 +242,7 @@ export default {
         //OBTENIR REFERENCE DESIGNATION CATEGORIE VOYAGEUR
         async obtenirReferenceModeCategorieVoyageur(){
             this.objectToSendReferenceModeCategorieVoyageur.datas.push(this.referenceCategorieVoyageur)
-            await axios.post(API_OBTENIR_REFERENCE_PAR_PAR_FAMILLE, this.objectToSendReferenceModeCategorieVoyageur).then((response) => {
+            await axios.post(API_OBTENIR_REFERENCE_PAR_PAR_FAMILLE, this.objectToSendReferenceModeCategorieVoyageur , { headers : HEADERS }).then((response) => {
                 this.referenceModeCategorieVoyageurList = response.data.items
             }).catch((e) => {
                 this.errorMsg = e ;

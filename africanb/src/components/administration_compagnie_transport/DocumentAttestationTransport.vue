@@ -91,7 +91,9 @@ export default {
 
             await axios.post(API_CREER_DOCUMENT_TRANSPORT , formData , {
                 headers:{
-                    'Content-Type': 'multipart/form-data'
+                    'Content-Type': 'multipart/form-data',
+                    'server_id' : 'backend@africanb',
+                    'client_id' : 'frontend@africanb'
                 }
             }).then((response) => {
                 if (response.status == 200) {

@@ -30,7 +30,7 @@
 <script>
 import axios from 'axios';
 import $ from 'jquery'
-import { API_OBTENIR_REFERENCE_PAR_PAR_FAMILLE , API_CREER_JOUR_SEMAINE_OFFRE_VOYAGE } from '../globalConfig/globalConstConfig'
+import { API_OBTENIR_REFERENCE_PAR_PAR_FAMILLE , API_CREER_JOUR_SEMAINE_OFFRE_VOYAGE, HEADERS } from '../globalConfig/globalConstConfig'
  
 export default {
     name:"ModifierJourOffreVoyage",
@@ -73,7 +73,7 @@ export default {
         async enregistrerModificationJourSemaines(){
             this.jourSemaineToModify.datas.push(this.villeEscaleModel);
             this.overlay = true ;
-            await axios.put(API_CREER_JOUR_SEMAINE_OFFRE_VOYAGE , this.jourSemaineToModify).then((response) => {
+            await axios.put(API_CREER_JOUR_SEMAINE_OFFRE_VOYAGE , this.jourSemaineToModify , { headers : HEADERS }).then((response) => {
                 if (response.status == 200) {
                     if (response.data.status.code == 800) {
                         this.successMsg = response.data.status.message
@@ -139,7 +139,7 @@ export default {
         //OBTENIR LISTE DES JOURS DE LA SEMAINE
         async obtenirJourSemaineList(){
             this.objectToSend.datas.push(this.referenceJourSemaine);
-            await axios.post(API_OBTENIR_REFERENCE_PAR_PAR_FAMILLE , this.objectToSend).then((response) => {
+            await axios.post(API_OBTENIR_REFERENCE_PAR_PAR_FAMILLE , this.objectToSend , { headers : HEADERS }).then((response) => {
                 this.jourSemaineList = response.data.items;
             }).catch((e) => {
                 this.errorMsg = e ;

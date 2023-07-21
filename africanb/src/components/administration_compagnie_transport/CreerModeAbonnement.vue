@@ -110,7 +110,7 @@
 import { required } from 'vuelidate/lib/validators';
 import axios from 'axios'
 import $ from 'jquery'
-import { API_CREER_MODE_ABONNEMENT, API_OBTENIR_REFERENCE_PAR_PAR_FAMILLE } from '../globalConfig/globalConstConfig'
+import { API_CREER_MODE_ABONNEMENT, API_OBTENIR_REFERENCE_PAR_PAR_FAMILLE , HEADERS } from '../globalConfig/globalConstConfig'
 
 export default {
     name:"CreerModeAbonnement",
@@ -236,7 +236,7 @@ export default {
                 this.abonnementObject.datas = [];
                 this.modeAbonnementPeriodiqueModel.typeModeAbonnementDesignation = this.typeAbonnement;
                 this.abonnementObject.datas.push(this.modeAbonnementPeriodiqueModel);
-                await axios.post(API_CREER_MODE_ABONNEMENT, this.abonnementObject).then((response) => {
+                await axios.post(API_CREER_MODE_ABONNEMENT, this.abonnementObject , { headers : HEADERS }).then((response) => {
                     if (response.status == 200) {
                         if (response.data.status.code == 800) {
                             this.successMsg = response.data.status.message
@@ -293,8 +293,8 @@ export default {
                 this.modeAbonnementPrelevementModel.dateFinAbonnement = new Date(this.dateFinAbonnementPrevelement).toLocaleDateString('en-GB');
                 this.abonnementObject.datas = [];
                 this.modeAbonnementPrelevementModel.typeModeAbonnementDesignation = this.typeAbonnement;
-                this.abonnementObject.datas.push(this.modeAbonnementPrelevementModel);
-                await axios.post(API_CREER_MODE_ABONNEMENT, this.abonnementObject).then((response) => {
+                this.abonnementObject.datas.push(this.modeAbonnementPrelevementModel); 
+                await axios.post(API_CREER_MODE_ABONNEMENT, this.abonnementObject , { headers : HEADERS }).then((response) => {
                     console.log(response)
                     if (response.status == 200) {
                         if (response.data.status.code == 800) {
@@ -353,7 +353,7 @@ export default {
         //OBTENIR REFERENCE DESIGNATION ABONNEMENT
         async obtenirReferenceAbonnementList(){
             this.objectToSendReferenceAbonnement.datas.push(this.referenceAbonnement)
-            await axios.post(API_OBTENIR_REFERENCE_PAR_PAR_FAMILLE, this.objectToSendReferenceAbonnement).then((response) => {
+            await axios.post(API_OBTENIR_REFERENCE_PAR_PAR_FAMILLE, this.objectToSendReferenceAbonnement , { headers : HEADERS }).then((response) => {
                 this.referenceAbonnementList = response.data.items;
             }).catch((e) => {
                 this.errorMsg = e ;
