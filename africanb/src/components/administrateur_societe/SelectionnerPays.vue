@@ -26,7 +26,7 @@
 <script>
 import axios from "axios"
 import $ from "jquery"
-import { API_OBTENIR_LISTE_DES_PAYS_DISPONIBLE } from '../globalConfig/globalConstConfig'
+import { API_OBTENIR_LISTE_DES_PAYS_DISPONIBLE , HEADERS } from '../globalConfig/globalConstConfig'
 export default {
     name:'SelectionnerPays',
     data(){
@@ -60,7 +60,7 @@ export default {
         // RECUPERER LA LISTE DES PAYS ENREGISTRÉS
         async readAllPaysFromApi(){
             this.loading = false
-            await axios.post(API_OBTENIR_LISTE_DES_PAYS_DISPONIBLE, this.objectValue).then((response) => {
+            await axios.post(API_OBTENIR_LISTE_DES_PAYS_DISPONIBLE, this.objectValue , { headers : HEADERS }).then((response) => {
                 this.paysList = response.data.items
             }).catch((e) => {
                 this.errorMsg = e ;

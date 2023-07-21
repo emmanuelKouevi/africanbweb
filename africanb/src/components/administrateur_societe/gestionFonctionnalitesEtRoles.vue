@@ -46,7 +46,7 @@
 <script>
 import axios from 'axios';
 import $ from 'jquery';
-import { API_GET_ALL_FUNCTIONNALITIES , API_GET_ALL_ROLES } from '../globalConfig/globalConstConfig'
+import { API_GET_ALL_FUNCTIONNALITIES , API_GET_ALL_ROLES , HEADERS} from '../globalConfig/globalConstConfig'
 export default {
     name:'gestionFonctionnalitesEtRoles',
     data(){
@@ -82,7 +82,7 @@ export default {
         //RECUPERER LA LISTE DES ROLES CRÉES
         async getAllUserRole(){
             this.loadingUserRole = true
-            await axios.post(API_GET_ALL_ROLES, {} ).then((response) => {
+            await axios.post(API_GET_ALL_ROLES, {} , { headers : HEADERS } ).then((response) => {
                 if (response.status == 200) {
                     if (response.data.status.code != 800) {
                         this.errorMsg = response.data.status.message
@@ -110,7 +110,7 @@ export default {
         // RECUPERER LA LISTE DES FONCTIONNALITÉS
         async getAllFunctionnalities(){
             this.loadingFunctionnality = true
-            await axios.post(API_GET_ALL_FUNCTIONNALITIES, {} ).then((response) => {
+            await axios.post(API_GET_ALL_FUNCTIONNALITIES, {}, { headers : HEADERS } ).then((response) => {
                 if (response.status == 200) {
                     if (response.data.status.code != 800) {
                         this.errorMsg = response.data.status.message

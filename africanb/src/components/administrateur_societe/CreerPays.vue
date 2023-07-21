@@ -54,7 +54,7 @@
 import { required } from 'vuelidate/lib/validators'
 import $ from 'jquery'
 import axios from 'axios'
-import { API_CREER_PAYS } from '../globalConfig/globalConstConfig'
+import { API_CREER_PAYS , HEADERS } from '../globalConfig/globalConstConfig'
 export default {
     name:"CreerPays",
     data(){
@@ -92,7 +92,7 @@ export default {
         // CREATION D'UN PAYS VIA UN SERVICE WEB
         async creerPays(){
             this.objectContainList.datas.push(this.pays);
-            await axios.post(API_CREER_PAYS, this.objectContainList).then((response) => {
+            await axios.post(API_CREER_PAYS, this.objectContainList , { headers : HEADERS }).then((response) => {
                 if (response.status == 200) {
                     if (response.data.status.code == 800) {
                         this.successMsg = response.data.status.message

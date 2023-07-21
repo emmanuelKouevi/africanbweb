@@ -39,7 +39,7 @@
 import axios from 'axios';
 import $ from 'jquery';
 import { required , email , minLength } from 'vuelidate/lib/validators' 
-import { API_GET_ALL_ROLES , API_CREATE_USER  } from '../globalConfig/globalConstConfig'
+import { API_GET_ALL_ROLES , API_CREATE_USER, HEADERS  } from '../globalConfig/globalConstConfig'
 export default {
     name:'creerUtilisateur',
     data(){
@@ -118,7 +118,7 @@ export default {
         async createUser(){
             this.overlay = true ;
             this.userDataToSend.datas.push(this.userObject)
-            await axios.post(API_CREATE_USER, this.userDataToSend ).then((response) => {
+            await axios.post(API_CREATE_USER, this.userDataToSend, { headers : HEADERS }).then((response) => {
                 if (response.status == 200) {
                     if (response.data.status.code == 800) {
                         this.successMsg = response.data.status.message
@@ -167,7 +167,7 @@ export default {
 
         // RECUPERER LA LISTE DES ROLES DÉFINIS
         async getAllUsersRoles(){
-            await axios.post(API_GET_ALL_ROLES, {} ).then((response) => {
+            await axios.post(API_GET_ALL_ROLES, {}, { headers : HEADERS } ).then((response) => {
                 if (response.status == 200) {
                     if (response.data.status.code != 800) {
                         this.errorMsg = response.data.status.message

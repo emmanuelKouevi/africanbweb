@@ -28,7 +28,7 @@
 
 <script>
 
-import { API_OBTENIR_LISTE_DES_DEMANDES_ADHESIONS_VALIDEES } from '../globalConfig/globalConstConfig'
+import { API_OBTENIR_LISTE_DES_DEMANDES_ADHESIONS_VALIDEES, HEADERS } from '../globalConfig/globalConstConfig'
 import axios from 'axios'
 import $ from 'jquery'
 export default {
@@ -61,7 +61,7 @@ export default {
         // OBTENIR LA LISTE DES DEMANDES D'ADHESIONS VALIDÉES
         async obtenirDemandeAdhesionValidees(){
             this.loading = false;
-            axios.post(API_OBTENIR_LISTE_DES_DEMANDES_ADHESIONS_VALIDEES , this.options ).then((response) => {
+            axios.post(API_OBTENIR_LISTE_DES_DEMANDES_ADHESIONS_VALIDEES , this.options, { headers : HEADERS }).then((response) => {
                 if (response.status == 200) {
                     if (response.data.status.code != 800) {
                         this.errorMsg = response.data.status.message

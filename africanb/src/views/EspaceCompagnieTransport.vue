@@ -215,7 +215,19 @@
               <v-list-item-icon>
                 <v-icon>mdi-logout</v-icon>
               </v-list-item-icon>
-              <v-list-item-title class="font-weight-thin">Deconnexion</v-list-item-title>
+                <v-dialog v-model="dialogLogout" persistent max-width="290">
+                  <template v-slot:activator="{ on, attrs }">
+                    <v-list-item-title v-on="on" v-bind="attrs" class="font-weight-thin">Déconnexion</v-list-item-title>
+                  </template>
+                  <v-card>
+                    <v-card-title class="text-h5">Voulez-vous vraiment vous déconnecter ?</v-card-title>
+                    <v-card-actions>
+                      <v-spacer></v-spacer>
+                      <v-btn color="primary" @click="dialogLogout = false" text>Annuler</v-btn>
+                      <v-btn color="primary" @click="logout" text>Accepter</v-btn>
+                    </v-card-actions>
+                </v-card>
+                </v-dialog>
             </v-list-item>
           </v-list>
         </v-card>
@@ -239,11 +251,14 @@
 </template>
 
 <script>
+import axios from 'axios'
+import { API_LOGOUT , HEADERS } from '../components/globalConfig/globalConstConfig'
   export default {
     name:"EspaceCompagnieTransport" ,
     data(){
       return{
         menuProfil:false,
+        dialogLogout : false,
 
         mini:true,
         drawer: true,
@@ -261,6 +276,25 @@
           ['ADMINISTRER LES ADHÉSIONS' , 'mdi-gesture-tap-button' , ''],
         ],
       }
+    },
+
+    methods:{
+
+      // TERMINER SA SESSION (SE DÉCONNECTER)
+      async logout() {
+        await axios.post( API_LOGOUT, { data : {} }, { Headers : HEADERS }).then((response) => {
+          console.log(response)
+          if (response.status == 200) {
+            if (response.data.status.code == 800) {
+              this.$store.commit('DESTROY_SESSION_USER');
+              window.location = 'localhost:8080/'
+            }        
+          }
+        }).catch((e) => {
+          console.log(e)
+        })
+      }
+
     }
   }
 </script>

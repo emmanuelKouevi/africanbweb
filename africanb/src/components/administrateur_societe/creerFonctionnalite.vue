@@ -79,7 +79,7 @@
 <script>
 import axios from 'axios'
 import $ from 'jquery'
-import { API_CREER_FUNCTIONNALITY } from '../globalConfig/globalConstConfig'
+import { API_CREER_FUNCTIONNALITY, HEADERS } from '../globalConfig/globalConstConfig'
 import { required } from 'vuelidate/lib/validators'
 export default {
     name:"creerFonctionnalite",
@@ -167,7 +167,7 @@ export default {
         // CREER UNE FONCTIONNALITÉ
         async enregistrerFunctionnality(){
             this.overlay = true ;
-            await axios.post(API_CREER_FUNCTIONNALITY, this.functionnalityToSend).then((response) => {
+            await axios.post(API_CREER_FUNCTIONNALITY, this.functionnalityToSend, { headers : HEADERS }).then((response) => {
                 if (response.status == 200) {
                     if (response.data.status.code == 800) {
                         this.successMsg = response.data.status.message

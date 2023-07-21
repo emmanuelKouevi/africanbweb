@@ -53,7 +53,7 @@
 import axios from 'axios';
 import $ from 'jquery';
 import { required } from 'vuelidate/lib/validators'
-import { API_CREER_VILLE , API_OBTENIR_LISTE_DES_PAYS_DISPONIBLE} from '../globalConfig/globalConstConfig'
+import { API_CREER_VILLE , API_OBTENIR_LISTE_DES_PAYS_DISPONIBLE , HEADERS} from '../globalConfig/globalConstConfig'
 export default {
     name: 'CreerVille',
     data(){
@@ -91,7 +91,7 @@ export default {
         // CREATION D'UNE VILLE VIA UN SERVICE WEB
         async creerVille(){
             this.objectContainList.datas.push(this.ville);
-            await axios.post(API_CREER_VILLE, this.objectContainList).then((response) => {
+            await axios.post(API_CREER_VILLE, this.objectContainList, { headers : HEADERS }).then((response) => {
                 if (response.status == 200) {
                     if (response.data.status.code == 800) {
                         this.successMsg = response.data.status.message
@@ -137,7 +137,7 @@ export default {
         // RECUPERER LA LISTE DES PAYS DISPONIBLES
         async obtenirListePaysDisponible(){
             var objectToSend = {};
-            await axios.post(API_OBTENIR_LISTE_DES_PAYS_DISPONIBLE , objectToSend).then((response) => {
+            await axios.post(API_OBTENIR_LISTE_DES_PAYS_DISPONIBLE , objectToSend, { headers : HEADERS }).then((response) => {
                 if (response.status == 200) {
                     if (response.data.status.code == 800) {
                         this.paysList = response.data.items
