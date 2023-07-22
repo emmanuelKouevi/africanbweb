@@ -29,6 +29,7 @@ export default new Vuex.Store({
 
     DESTROY_SESSION_USER(state) {
       state.isAuthentified = false ;
+      state.userAuthentified = {} ;
     },
 
 

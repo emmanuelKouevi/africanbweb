@@ -155,19 +155,15 @@
 
       <v-menu v-model="menuProfil" :close-on-content-click="false" :nudge-width="200" offset-x>
         <template v-slot:activator="{ on, attrs }">
-          <v-btn rounded color="teal" dark v-bind="attrs" v-on="on"><v-avatar ><span class="white--text text-h5">A</span></v-avatar></v-btn>
+          <v-btn icon color="transparent" v-bind="attrs" v-on="on"><v-avatar size="30"><v-img src="../assets/undraw_profile.svg"></v-img></v-avatar></v-btn>
         </template>
   
         <v-card>
           <v-list>
-            <v-list-item>
-              <v-list-item-avatar>
-                <img>
-              </v-list-item-avatar>
-  
+            <v-list-item>  
               <v-list-item-content>
-                <v-list-item-title></v-list-item-title>
-                <v-list-item-subtitle></v-list-item-subtitle>
+                <v-list-item-title>{{ $store.state.userAuthentified.prenoms }}  {{ $store.state.userAuthentified.nom }}</v-list-item-title>
+                <v-list-item-subtitle>{{ $store.state.userAuthentified.email }}</v-list-item-subtitle>
               </v-list-item-content>
             </v-list-item>
           </v-list>
@@ -193,7 +189,19 @@
               <v-list-item-icon>
                 <v-icon>mdi-logout</v-icon>
               </v-list-item-icon>
-              <v-list-item-title class="font-weight-thin">Deconnexion</v-list-item-title>
+                <v-dialog v-model="dialogLogout" persistent max-width="290">
+                  <template v-slot:activator="{ on, attrs }">
+                    <v-list-item-title v-on="on" v-bind="attrs" class="font-weight-thin">Déconnexion</v-list-item-title>
+                  </template>
+                  <v-card>
+                    <v-card-title class="text-h5">Voulez-vous vraiment vous déconnecter ?</v-card-title>
+                    <v-card-actions>
+                      <v-spacer></v-spacer>
+                      <v-btn color="primary" @click="dialogLogout = false" text>Annuler</v-btn>
+                      <v-btn color="primary" @click="logout" text>Accepter</v-btn>
+                    </v-card-actions>
+                </v-card>
+                </v-dialog>
             </v-list-item>
           </v-list>
         </v-card>
@@ -218,13 +226,15 @@
 </template>
 
 <script>
-
+//import axios from 'axios';
+//import { HEADERS , API_LOGOUT } from '../components/globalConfig/globalConstConfig'
 export default {
   name: 'EspaceAdminSociete',
 
   data: () => ({
     mini:true,
     drawer: true,
+    dialogLogout : false ,
 
     menuProfil: false,
     tabs: [
@@ -246,6 +256,30 @@ export default {
       ['GÉRER LES VILLES' , 'mdi-gesture-tap-button' , '/selectionnerVille'],
     ]
   }),
+
+  methods : {
+
+    // TERMINER SA SESSION (SE DÉCONNECTER)
+    /*async logout() {
+      await axios.post( API_LOGOUT, { data : {} }, { Headers : HEADERS }).then((response) => {
+        console.log(response)
+        if (response.status == 200) {
+          if (response.data.status.code == 800) {
+            this.$store.commit('DESTROY_SESSION_USER');
+            window.location = 'localhost:8080/'
+          }        
+        }
+      }).catch((e) => {
+          console.log(e)
+      })
+    }*/
+
+    logout() {
+      this.$store.commit('DESTROY_SESSION_USER');
+      this.$router.replace('/')
+    }
+
+  }
 };
 </script>
 

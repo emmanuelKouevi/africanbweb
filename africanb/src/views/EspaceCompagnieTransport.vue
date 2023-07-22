@@ -251,8 +251,8 @@
 </template>
 
 <script>
-import axios from 'axios'
-import { API_LOGOUT , HEADERS } from '../components/globalConfig/globalConstConfig'
+//import axios from 'axios'
+//import { API_LOGOUT , HEADERS } from '../components/globalConfig/globalConstConfig'
   export default {
     name:"EspaceCompagnieTransport" ,
     data(){
@@ -281,7 +281,7 @@ import { API_LOGOUT , HEADERS } from '../components/globalConfig/globalConstConf
     methods:{
 
       // TERMINER SA SESSION (SE DÉCONNECTER)
-      async logout() {
+      /*async logout() {
         await axios.post( API_LOGOUT, { data : {} }, { Headers : HEADERS }).then((response) => {
           console.log(response)
           if (response.status == 200) {
@@ -293,6 +293,11 @@ import { API_LOGOUT , HEADERS } from '../components/globalConfig/globalConstConf
         }).catch((e) => {
           console.log(e)
         })
+      }*/
+
+      logout() {
+        this.$store.commit('DESTROY_SESSION_USER');
+        this.$router.replace('/')
       }
 
     }

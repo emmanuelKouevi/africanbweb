@@ -85,15 +85,13 @@ export default {
 
         async retrieveUserInfo(){
             /**
-             * REFAIRE LA RECUPERATION DES DONNEES UTILISATEURS
+             * RECUPERER LES DONNEES UTILISATEURS
              */
-            if (localStorage.getItem('userLoggedSocieteMere')) {
-                const parsedUserLogged = JSON.parse(localStorage.getItem('userLoggedSocieteMere'));
-                console.log(parsedUserLogged.email)
-                this.userParams.email = parsedUserLogged.email;
+            if (this.$store.state.userAuthentified !== null) {
+                this.userParams.email = this.$store.state.userAuthentified.email;
             }
         },
-
+        
         // SOUMISSION DU FORMULAIRE
         submitForm(){
             this.$v.$touch();

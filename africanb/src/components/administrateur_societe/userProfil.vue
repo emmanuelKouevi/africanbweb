@@ -86,16 +86,14 @@ export default {
 
         async retrieveUserInfo(){
             /**
-             * REFAIRE LA RECUPERATION DES DONNEES UTILISATEURS
+             * RECUPERER LES DONNÉES UTILISATEURS
              */
-            if (localStorage.getItem('userLoggedSocieteMere')) {
-                const parsedUserLogged = JSON.parse(localStorage.getItem('userLoggedSocieteMere'));
-                console.log(parsedUserLogged)
-                this.userUpdating.id = parsedUserLogged.id;
-                this.userUpdating.nom = parsedUserLogged.nom;
-                this.userUpdating.prenoms = parsedUserLogged.prenoms;
-                this.userUpdating.login = parsedUserLogged.login;
-                this.userUpdatingMail = parsedUserLogged.email
+            if (this.$store.state.userAuthentified !== null) {
+                this.userUpdating.id = this.$store.state.userAuthentified.id;
+                this.userUpdating.nom = this.$store.state.userAuthentified.nom;
+                this.userUpdating.prenoms = this.$store.state.userAuthentified.prenoms;
+                this.userUpdating.login = this.$store.state.userAuthentified.login;
+                this.userUpdatingMail = this.$store.state.userAuthentified.email
             }
         },
 
@@ -109,6 +107,7 @@ export default {
                         this.successMsg = response.data.status.message
                         this.$swal.fire('Modification reussie' , this.successMsg , 'success')
                         this.userDataUpdating.datas = [];
+                        this.$store.commit('UPDATE_USER_PROFIL' , response.data.items[0])
                     }else{
                         this.errorMsg = response.data.status.message
                         this.$swal.fire('Operation Echoué' ,this.errorMsg, 'error')
