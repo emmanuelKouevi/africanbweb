@@ -2,43 +2,37 @@
     <v-app>
         <v-form @submit.prevent="submitForm">
             <v-card max-width="1200px" class="mx-auto">
-                <v-card-title class="title"><v-icon color="teal">mdi-plus</v-icon> AJOUTER UNE VILLE</v-card-title>
+                <v-card-title><h6 class="font-weight-bold">AJOUTER UNE VILLE</h6></v-card-title>
+                <v-card-subtitle>Définissez vos différents villes pour une administration classique</v-card-subtitle>
 
-                <v-divider></v-divider>
-                
-                <v-container>
-                    <v-row>
-                        <v-col cols="2">
-                            <v-label>Designation:</v-label>
-                        </v-col>
-                        <v-col>
-                            <v-text-field dense outlined color="teal" placeholder="Entrer une designation"
+                <v-card-text>
+                    <v-container fluid>
+                        <div class="form-group">
+                            <label for="inputAddress">Designation de la ville</label>
+                            <v-text-field dense outlined color="primary" placeholder="Entrer une designation"
                                 :error-messages="designationVilleErrors"
                                 v-model.trim="$v.ville.designation.$model"
                                 @input="$v.ville.designation.$touch()"
                                 @blur="$v.ville.designation.$touch()">
                             </v-text-field>
-                        </v-col>
-                    </v-row>
-                
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
+                                <label for="inputCity">Pays</label>
+                                <v-select :items="paysList" item-text="designation" 
+                                    item-value="id" dense outlined color="teal" 
+                                    v-model="ville.paysId">
+                                </v-select>
+                            </div>
+                        </div>
+                    </v-container>
+                </v-card-text>                
 
-                    <v-row>
-                        <v-col cols="2">
-                            <v-label>Pays:</v-label>
-                        </v-col>
-                        <v-col cols="5">
-                            <v-select :items="paysList" item-text="designation" item-value="id" dense outlined color="teal" v-model="ville.paysId"></v-select>
-                        </v-col>
-                    </v-row>
+                <v-card-actions>
+                    <v-btn small color="secondary"><v-icon>mdi-sync</v-icon> REINITIALISER</v-btn>
+                    <v-btn small type="submit" color="primary"><v-icon>mdi-check</v-icon> AJOUTER</v-btn>
+                </v-card-actions>
 
-                </v-container>
-
-                <v-container>
-                    <v-row class="mt-5" justify-lg="space-around">
-                        <v-col cols="5"><v-btn color="secondary"><v-icon>mdi-sync</v-icon> REINITIALISER</v-btn></v-col>
-                        <v-col cols="5"><v-btn type="submit" color="primary"><v-icon>mdi-check</v-icon> AJOUTER</v-btn></v-col>
-                    </v-row>
-                </v-container>
             </v-card>   
         </v-form>
 
@@ -53,7 +47,7 @@
 import axios from 'axios';
 import $ from 'jquery';
 import { required } from 'vuelidate/lib/validators'
-import { API_CREER_VILLE , API_OBTENIR_LISTE_DES_PAYS_DISPONIBLE , HEADERS} from '../globalConfig/globalConstConfig'
+import { API_CREER_VILLE , API_OBTENIR_LISTE_DES_PAYS_DISPONIBLE , HEADERS } from '../globalConfig/globalConstConfig'
 export default {
     name: 'CreerVille',
     data(){
@@ -99,12 +93,14 @@ export default {
                         setTimeout(function(){
                             $(".alert-success").fadeOut(); 
                         }, 4000)
+                        this.objectContainList.datas.push = [];
                     }else{
                         this.errorMsg = response.data.status.message
                         $(".alert-error").fadeIn();
                         setTimeout(function(){
                             $(".alert-error").fadeOut(); 
                         }, 3000)
+                        this.objectContainList.datas.push = [];
                     }  
                     
                 }
@@ -114,6 +110,7 @@ export default {
                     setTimeout(function(){
                         $(".alert-warning").fadeOut(); 
                     }, 3000)
+                    this.objectContainList.datas.push = [];
                 }
                 else{
                     this.errorMsg = "Erreur , opération de création impossible";
@@ -121,6 +118,7 @@ export default {
                     setTimeout(function(){
                         $(".alert-error").fadeOut(); 
                     }, 3000)
+                    this.objectContainList.datas.push = [];
                 }
             }).catch((e) => {
                 this.errorMsg = e;
@@ -128,6 +126,7 @@ export default {
                 setTimeout(function(){
                     $(".alert-error").fadeOut(); 
                 }, 3000)
+                this.objectContainList.datas.push = [];
             }).finally(() => {
                 this.overlay = false;
             })

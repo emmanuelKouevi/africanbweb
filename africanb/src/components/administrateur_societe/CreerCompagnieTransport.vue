@@ -2,126 +2,99 @@
     <v-app>
         <v-form @submit.prevent="submitForm">
             <v-card max-width="1200px" class="mx-auto">
-                <v-card-title class="title"><v-icon color="teal">mdi-domain</v-icon> CREER UNE COMPAGNIE</v-card-title>
-
-                <v-divider></v-divider>
+                <v-card-title><h6>CREER UNE COMPAGNIE</h6></v-card-title>
+                <v-card-subtitle>Créer une compagnie de transport à la demande</v-card-subtitle>
                 
-                <v-container>
-                    <v-row>
-                        <v-col cols="2">
-                            <v-label>Designation:</v-label>
-                        </v-col>
-                        <v-col>
-                            <v-text-field dense outlined color="teal" placeholder="Entrer une designation"
+                <v-card-text>
+                    <v-container fluid>
+                        <div class="form-group">
+                            <label for="inputAddress">Nom de la compagnie</label>
+                            <v-text-field dense outlined color="primary" placeholder="Entrer une designation"
                                 :error-messages="designationCompagnieErrors"
                                 v-model.trim="$v.compagnieTransport.designation.$model"
                                 @input="$v.compagnieTransport.designation.$touch()"
                                 @blur="$v.compagnieTransport.designation.$touch()">
                             </v-text-field>
-                        </v-col>
-                    </v-row>
-                    
-                    <v-row>
-                        <v-col cols="2">
-                            <v-label>Description:</v-label>
-                        </v-col>
-                        <v-col>
-                            <v-textarea dense outlined color="teal" aria-placeholder="entrer une description"
+                        </div>
+
+                        <div class="form-group">
+                            <label for="inputAddress">Description</label>
+                            <v-textarea dense outlined color="primary" aria-placeholder="entrer une description"
                                 :error-messages="descriptionCompagnieErrors"
                                 v-model.trim="$v.compagnieTransport.description.$model"
                                 @input="$v.compagnieTransport.description.$touch()"
                                 @blur="$v.compagnieTransport.description.$touch()"
                             ></v-textarea>
-                        </v-col>
-                    </v-row>
-                    <v-row>
-                        <v-col cols="2">
-                            <v-label>E-mail:</v-label>
-                        </v-col>
-                        <v-col>
-                            <v-text-field dense outlined color="teal" append-icon="mdi-email"
-                                placeholder="Adresse électronique de la compagnie"
-                                :error-messages="emailCompagnieErrors"
-                                v-model.trim="$v.compagnieTransport.email.$model"
-                                @input="$v.compagnieTransport.email.$touch()"
-                                @blur="$v.compagnieTransport.email.$touch()">
+                        </div>
 
-                            </v-text-field>
-                        </v-col>
-                    </v-row>
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
+                                <label for="inputEmail4">Ville</label>
+                                <v-select dense outlined :items="villesList" color="teal"
+                                    item-text="designation"
+                                    item-value="designation"
+                                    :error-messages="villeCompagnieErrors"
+                                    v-model.trim="$v.compagnieTransport.villeDesignation.$model"
+                                    @input="$v.compagnieTransport.villeDesignation.$touch()"
+                                    @blur="$v.compagnieTransport.villeDesignation.$touch()">
+                                </v-select>
+                            </div>
 
-                    <v-row>
-                        <v-col cols="2">
-                            <v-label>ville :</v-label>
-                        </v-col>
-                        <v-col cols="3">
-                            <v-select dense outlined :items="villesList" color="teal"
-                                item-text="designation"
-                                item-value="designation"
-                                :error-messages="villeCompagnieErrors"
-                                v-model.trim="$v.compagnieTransport.villeDesignation.$model"
-                                @input="$v.compagnieTransport.villeDesignation.$touch()"
-                                @blur="$v.compagnieTransport.villeDesignation.$touch()">
+                            <div class="form-group col-md-6">
+                                <label for="inputPassword4">N° Téléphone</label>
+                                <v-text-field dense outlined color="teal" prefix="+225" append-icon="mdi-phone"
+                                    placeholder="N° de Téléphone"
+                                    :error-messages="telephoneCompagnieErrors"
+                                    v-model.trim="$v.compagnieTransport.telephone.$model"
+                                    @input="$v.compagnieTransport.telephone.$touch()"
+                                    @blur="$v.compagnieTransport.telephone.$touch()">
+                                </v-text-field>
+                            </div>
+                        </div>
 
-                            </v-select>
-                        </v-col>
+                        <div class="form-row">
+                            <div class="form-group col-md-7">
+                                <label for="inputEmail4">E-mail</label>
+                                <v-text-field dense outlined color="teal" append-icon="mdi-email"
+                                    placeholder="Adresse électronique de la compagnie"
+                                    :error-messages="emailCompagnieErrors"
+                                    v-model.trim="$v.compagnieTransport.email.$model"
+                                    @input="$v.compagnieTransport.email.$touch()"
+                                    @blur="$v.compagnieTransport.email.$touch()">
+                                </v-text-field>
+                            </div>
+                        </div>
 
-                        <v-col cols="2">
-                            <v-label>N° Télephone :</v-label>
-                        </v-col>
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
+                                <label for="inputEmail4">Sigle</label>
+                                <v-text-field dense outlined color="teal"
+                                    placeholder="le sigle de la compagnie"
+                                    :error-messages="sigleCompagnieErrors"
+                                    v-model.trim="$v.compagnieTransport.sigle.$model"
+                                    @input="$v.compagnieTransport.sigle.$touch()"
+                                    @blur="$v.compagnieTransport.sigle.$touch()">
+                                </v-text-field>
+                            </div>
 
-                        <v-col cols="3">
-                            <v-text-field dense outlined color="teal" prefix="+225" append-icon="mdi-phone"
-                                placeholder="N° de Téléphone"
-                                :error-messages="telephoneCompagnieErrors"
-                                v-model.trim="$v.compagnieTransport.telephone.$model"
-                                @input="$v.compagnieTransport.telephone.$touch()"
-                                @blur="$v.compagnieTransport.telephone.$touch()">
-
-                            </v-text-field>
-                        </v-col>
-                    </v-row>
-
-                    <v-row>
-                        <v-col cols="2">
-                            <v-label>Sigle:</v-label>
-                        </v-col>
-                        <v-col cols="5">
-                            <v-text-field dense outlined color="teal"
-                                placeholder="le sigle de la compagnie"
-                                :error-messages="sigleCompagnieErrors"
-                                v-model.trim="$v.compagnieTransport.sigle.$model"
-                                @input="$v.compagnieTransport.sigle.$touch()"
-                                @blur="$v.compagnieTransport.sigle.$touch()">
-
-                            </v-text-field>
-                        </v-col>
-                    </v-row>
-
-                    <v-row>
-                        <v-col cols="2">
-                            <v-label>Raison sociale:</v-label>
-                        </v-col>
-                        <v-col>
-                            <v-text-field dense outlined color="teal"
-                                placeholder="La raison sociale de la compagnie"
-                                :error-messages="raisonSocialeCompagnieErrors"
-                                v-model.trim="$v.compagnieTransport.raisonSociale.$model"
-                                @input="$v.compagnieTransport.raisonSociale.$touch()"
-                                @blur="$v.compagnieTransport.raisonSociale.$touch()">
-
-                            </v-text-field>
-                        </v-col>
-                    </v-row>
-
-                </v-container>
-
-                <v-container>
-                    <v-row class="mt-5" justify-lg="space-around">
-                        <v-col cols="5"><v-btn rounded color="secondary"><v-icon>mdi-sync</v-icon> REINITIALISER</v-btn></v-col>
-                        <v-col cols="5"><v-btn rounded type="submit" color="primary"><v-icon>mdi-check</v-icon> CREER</v-btn></v-col>
-                    </v-row>
-                </v-container>
+                            <div class="form-group col-md-6">
+                                <label for="inputEmail4">Raison Sociale</label>
+                                <v-text-field dense outlined color="teal"
+                                    placeholder="La raison sociale de la compagnie"
+                                    :error-messages="raisonSocialeCompagnieErrors"
+                                    v-model.trim="$v.compagnieTransport.raisonSociale.$model"
+                                    @input="$v.compagnieTransport.raisonSociale.$touch()"
+                                    @blur="$v.compagnieTransport.raisonSociale.$touch()">
+                                </v-text-field>
+                            </div>
+                        </div>
+                    </v-container>
+                </v-card-text>
+                
+                <v-card-actions>
+                    <v-btn small rounded color="secondary">REINITIALISER</v-btn>
+                    <v-btn small rounded type="submit" color="primary">CREER</v-btn>
+                </v-card-actions>
             </v-card>   
         </v-form>
 
@@ -233,12 +206,14 @@ export default {
                         setTimeout(function(){
                             $(".alert-success").fadeOut(); 
                         }, 4000)
+                        this.objectContainList.datas = []
                     }else{
                         this.errorMsg = response.data.status.message
                         $(".alert-error").fadeIn();
                         setTimeout(function(){
                             $(".alert-error").fadeOut(); 
                         }, 3000)
+                        this.objectContainList.datas = []
                     }  
                     
                 }
@@ -248,6 +223,7 @@ export default {
                     setTimeout(function(){
                         $(".alert-warning").fadeOut(); 
                     }, 3000)
+                    this.objectContainList.datas = []
                 }
                 else{
                     this.errorMsg = "Erreur , opération de création impossible";
@@ -255,6 +231,7 @@ export default {
                     setTimeout(function(){
                         $(".alert-error").fadeOut(); 
                     }, 3000)
+                    this.objectContainList.datas = []
                 }
             }).catch((e) => {
                 this.errorMsg = e;
@@ -262,6 +239,7 @@ export default {
                 setTimeout(function(){
                     $(".alert-error").fadeOut(); 
                 }, 3000)
+                this.objectContainList.datas = []
             }).finally(() => {
                 this.overlay = false;
             })

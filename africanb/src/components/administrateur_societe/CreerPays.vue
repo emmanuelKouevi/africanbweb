@@ -1,45 +1,37 @@
 <template>
     <v-app>
         <v-form @submit.prevent="submitForm">
+            
             <v-card max-width="1200px" class="mx-auto">
-                <v-card-title class="title"><v-icon color="teal">mdi-plus</v-icon> AJOUTER UN PAYS</v-card-title>
-
-                <v-divider></v-divider>
+                <v-card-title><h6 class="font-weight-bold">AJOUTER UN PAYS</h6></v-card-title>
+                <v-card-subtitle>Définissez les differents pays pour une administration classique</v-card-subtitle>
                 
-                <v-container>
-                    <v-row>
-                        <v-col cols="2">
-                            <v-label>Designation:</v-label>
-                        </v-col>
-                        <v-col>
-                            <v-text-field outlined color="teal" placeholder="Entrer une designation"
+                <v-card-text>
+                    <v-container fluid>
+                        <div class="form-group">
+                            <label for="inputAddress">Designation</label>
+                            <v-text-field dense outlined color="primary" placeholder="Entrer une designation"
                                 :error-messages="designationPaysErrors"
                                 v-model.trim="$v.pays.designation.$model"
                                 @input="$v.pays.designation.$touch()"
                                 @blur="$v.pays.designation.$touch()">
                             </v-text-field>
-                        </v-col>
-                    </v-row>
-                    
-                    <v-row>
-                        <v-col cols="2">
-                            <v-label>Description:</v-label>
-                        </v-col>
-                        <v-col>
-                            <v-textarea outlined color="teal" aria-placeholder="entrer une description"
+                        </div>
+
+                        <div class="form-group">
+                            <label for="inputAddress">Description</label>
+                            <v-textarea outlined color="primary" dense 
+                                aria-placeholder="entrer une description"
                                 v-model="pays.description"
                             ></v-textarea>
-                        </v-col>
-                    </v-row>
-
-                </v-container>
-
-                <v-container>
-                    <v-row class="mt-5" justify-lg="space-around">
-                        <v-col cols="5"><v-btn color="secondary"><v-icon>mdi-sync</v-icon> REINITIALISER</v-btn></v-col>
-                        <v-col cols="5"><v-btn type="submit" color="primary"><v-icon>mdi-check</v-icon> AJOUTER</v-btn></v-col>
-                    </v-row>
-                </v-container>
+                        </div>
+                    </v-container>
+                </v-card-text>
+                
+                <v-card-actions>
+                    <v-btn small color="secondary"><v-icon>mdi-sync</v-icon> REINITIALISER</v-btn>
+                    <v-btn small type="submit" color="primary"><v-icon>mdi-check</v-icon> AJOUTER</v-btn>
+                </v-card-actions>
             </v-card>   
         </v-form>
 
@@ -100,12 +92,14 @@ export default {
                         setTimeout(function(){
                             $(".alert-success").fadeOut(); 
                         }, 4000)
+                        this.objectContainList.datas.push = [];
                     }else{
                         this.errorMsg = response.data.status.message
                         $(".alert-error").fadeIn();
                         setTimeout(function(){
                             $(".alert-error").fadeOut(); 
                         }, 3000)
+                        this.objectContainList.datas.push = [];
                     }  
                     
                 }
@@ -115,6 +109,7 @@ export default {
                     setTimeout(function(){
                         $(".alert-warning").fadeOut(); 
                     }, 3000)
+                    this.objectContainList.datas.push = [];
                 }
                 else{
                     this.errorMsg = "Erreur , opération de création impossible";
@@ -122,6 +117,7 @@ export default {
                     setTimeout(function(){
                         $(".alert-error").fadeOut(); 
                     }, 3000)
+                    this.objectContainList.datas.push = [];
                 }
             }).catch((e) => {
                 this.errorMsg = e;
@@ -129,6 +125,7 @@ export default {
                 setTimeout(function(){
                     $(".alert-error").fadeOut(); 
                 }, 3000)
+                this.objectContainList.datas.push = [];
             }).finally(() => {
                 this.overlay = false;
             })
