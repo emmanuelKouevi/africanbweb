@@ -3,7 +3,8 @@ import VueRouter from 'vue-router'
 import HomeView from '../views/HomeView.vue'
 import $store from '@/store'
 
-import InterfaceAccordingUserRole from '../views/InterfaceAccordingUserRole'
+//import InterfaceAccordingUserRole from '../views/InterfaceAccordingUserRole'
+import EspaceUserAdmin from '../views/EspaceUserAdmin'
 
 import creerCompagnieTransport from '../components/administrateur_societe/CreerCompagnieTransport'
 import modifierCompagnieTransport from '../components/administrateur_societe/ModifierCompagnieTransport'
@@ -65,7 +66,7 @@ const routes = [
   {
     path: '/userHome',
     name: 'userHome',
-    component: InterfaceAccordingUserRole
+    component: EspaceUserAdmin  
   },
 
   {

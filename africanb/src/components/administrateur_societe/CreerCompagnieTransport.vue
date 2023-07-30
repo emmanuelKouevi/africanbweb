@@ -30,7 +30,7 @@
                         <div class="form-row">
                             <div class="form-group col-md-6">
                                 <label for="inputEmail4">Ville</label>
-                                <v-select dense outlined :items="villesList" color="teal"
+                                <v-select dense outlined :items="villesList" color="primary"
                                     item-text="designation"
                                     item-value="designation"
                                     :error-messages="villeCompagnieErrors"
@@ -42,7 +42,7 @@
 
                             <div class="form-group col-md-6">
                                 <label for="inputPassword4">N° Téléphone</label>
-                                <v-text-field dense outlined color="teal" prefix="+225" append-icon="mdi-phone"
+                                <v-text-field dense outlined color="primary" prefix="+225" append-icon="mdi-phone"
                                     placeholder="N° de Téléphone"
                                     :error-messages="telephoneCompagnieErrors"
                                     v-model.trim="$v.compagnieTransport.telephone.$model"
@@ -55,7 +55,7 @@
                         <div class="form-row">
                             <div class="form-group col-md-7">
                                 <label for="inputEmail4">E-mail</label>
-                                <v-text-field dense outlined color="teal" append-icon="mdi-email"
+                                <v-text-field dense outlined color="primary" append-icon="mdi-email"
                                     placeholder="Adresse électronique de la compagnie"
                                     :error-messages="emailCompagnieErrors"
                                     v-model.trim="$v.compagnieTransport.email.$model"
@@ -68,7 +68,7 @@
                         <div class="form-row">
                             <div class="form-group col-md-6">
                                 <label for="inputEmail4">Sigle</label>
-                                <v-text-field dense outlined color="teal"
+                                <v-text-field dense outlined color="primary"
                                     placeholder="le sigle de la compagnie"
                                     :error-messages="sigleCompagnieErrors"
                                     v-model.trim="$v.compagnieTransport.sigle.$model"
@@ -79,7 +79,7 @@
 
                             <div class="form-group col-md-6">
                                 <label for="inputEmail4">Raison Sociale</label>
-                                <v-text-field dense outlined color="teal"
+                                <v-text-field dense outlined color="primary"
                                     placeholder="La raison sociale de la compagnie"
                                     :error-messages="raisonSocialeCompagnieErrors"
                                     v-model.trim="$v.compagnieTransport.raisonSociale.$model"

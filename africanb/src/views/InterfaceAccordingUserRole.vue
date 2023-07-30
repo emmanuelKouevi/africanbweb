@@ -32,9 +32,5 @@ export default {
             roleCodeSocieteMere : ROLE_ADMIN_SOCIETE_MERE
         }
     },
-
-    mounted(){
-        console.log(this.$store.state.userAuthentified.roleCode)
-    }
 }
 </script>

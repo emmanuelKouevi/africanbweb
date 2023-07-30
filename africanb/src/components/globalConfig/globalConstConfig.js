@@ -95,5 +95,6 @@ export const API_LOGOUT = `${BASE_URL}users/logout`
 
 export const API_CREATE_USER_ROLE = `${BASE_URL}roles`
 export const API_GET_ALL_ROLES = `${BASE_URL}roles/getAll`
+export const API_GET_FUNCTIONNALITY_BY_USER_ROLE = `${BASE_URL}functionalities/getFunctionalitiesByRole`
 
 
