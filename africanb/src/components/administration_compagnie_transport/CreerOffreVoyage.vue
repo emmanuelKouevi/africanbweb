@@ -2,22 +2,60 @@
     <v-app>
         <v-form @submit.prevent="creerOffreVoyage()">
             <v-container fluid>
-                <v-card max-width="900px" class="mx-auto" elevation="5">
-                    <v-card-title><h4>CREER UNE OFFRE DE VOYAGE</h4></v-card-title>
+                <v-card max-width="1200px" class="mx-auto" elevation="5">
+                    <v-card-title><h6 class="font-weight-bold">CREER UNE OFFRE DE VOYAGE</h6></v-card-title>
                     <v-card-subtitle>Mettre en ligne un nouvel offre de voyage</v-card-subtitle><br>
 
-                    <v-container fluid>
-                        <v-row><v-col><v-text-field class="my_input" :error-messages="designationOffreVoyageErrors" dense rounded outlined color="teal" label="Désignation de l'offre" v-model.trim="$v.offreVoyage.designation.$model"></v-text-field></v-col></v-row><br>
-                        <v-row><v-col><v-textarea class="my_input" :error-messages="descriptionOffreVoyageErrors" dense outlined rounded color="teal" label="Description de l'offre"></v-textarea></v-col></v-row><br>
-                        <v-row>
-                            <v-col cols="6"><v-select class="my_input" :error-messages="villeDepartErrors" v-model.trim="$v.offreVoyage.villeDepartDesignation.$model" dense rounded outlined :items="villesList" item-text="designation" item-value="designation" color="teal" prefix="De :" label="Ville de départ"></v-select></v-col>
-                            <v-col cols="6"><v-select class="my_input" :error-messages="villeDestinationErrors" v-model.trim="$v.offreVoyage.villeDestinationDesignation.$model" dense rounded outlined :items="villesList" item-text="designation" item-value="designation" color="teal" prefix="Vers :" label="ville d'arrivée"></v-select></v-col>
-                        </v-row><br>
-                        <v-row>
-                            <v-col cols="6"><v-select class="my_input" :items="referenceTypeOffreVoyageList" item-text="designation" item-value="designation" :error-messages="typeOffreVoyageErrors" v-model.trim="$v.offreVoyage.typeOffreVoyageDesignation.$model" dense outlined rounded color="teal" label="Type de voyage"></v-select></v-col>
-                        </v-row><br>
+                    <v-card-text>
+                        <v-container fluid>
+                            <div class="form-group">
+                                <label for="inputAddress">Désignation de l'offre</label>
+                                <v-text-field
+                                    :error-messages="designationOffreVoyageErrors" dense 
+                                    outlined color="primary" placeholder="Désignation de l'offre" 
+                                    v-model.trim="$v.offreVoyage.designation.$model">
+                                </v-text-field>
+                            </div>
 
-                    </v-container>
+                            <div class="form-group">
+                                <label for="inputAddress">Description de l'offre</label>
+                                <v-textarea :error-messages="descriptionOffreVoyageErrors"
+                                    dense outlined color="primary" placeholder="Description de l'offre">
+                                </v-textarea>
+                            </div>
+
+                            <div class="form-row">
+                                <div class="form-group col-md-6">
+                                    <label for="inputEmail4">Gare de départ</label>
+                                    <v-select :error-messages="villeDepartErrors" 
+                                        v-model.trim="$v.offreVoyage.villeDepartDesignation.$model" 
+                                        dense outlined :items="villesList" item-text="designation" 
+                                        item-value="designation" color="primary" prefix="De :" placeholder="Départ">
+                                    </v-select>
+                                </div>
+
+                                <div class="form-group col-md-6">
+                                    <label for="inputPassword4">Gare d'arrivée</label>
+                                    <v-select :error-messages="villeDestinationErrors" 
+                                        v-model.trim="$v.offreVoyage.villeDestinationDesignation.$model" 
+                                        dense outlined :items="villesList" item-text="designation" 
+                                        item-value="designation" color="primary" prefix="Vers :" placeholder="Arrivée">
+                                    </v-select>
+                                </div>
+                            </div>
+
+                            <div class="form-row">
+                                <div class="form-group col-md-6">
+                                    <label for="inputEmail4">Type de l'offre</label>
+                                    <v-select :items="referenceTypeOffreVoyageList" 
+                                        item-text="designation" item-value="designation" :error-messages="typeOffreVoyageErrors" 
+                                        v-model.trim="$v.offreVoyage.typeOffreVoyageDesignation.$model" dense outlined
+                                        color="primary" placeholder="Type de l'offre">
+                                    </v-select>
+                                </div>
+                            </div>
+                        </v-container>
+                    </v-card-text>
                     <v-card-actions>
                         <v-btn small rounded dark color="secondary"><v-icon>mdi-sync</v-icon> REINITIALISER</v-btn>
                         <v-btn small type="submit" rounded dark color="primary"><v-icon>mdi-check</v-icon> CRÉER L'OFFRE</v-btn>

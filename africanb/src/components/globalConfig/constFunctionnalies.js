@@ -86,3 +86,10 @@ export const FUNCTIONNALITY_CREATE_MODE_PAIEMENT = "FunctionnalityCreateModePaie
 export const FUNCTIONNALITY_UPDATE_MODE_PAIEMENT = "FunctionnalityUpdateModePaiement";
 export const FUNCTIONNALITY_DELETE_MODE_PAIEMENT = "FunctionnalityDeleteModePaiement";
 export const FUNCTIONNALITY_LISTING_MODE_PAIEMENT = "FunctionnalityListingModePaiement";
+
+export const FUNCTIONNALITY_CREATE_USER_FUNCTION = "FunctionnalityCreateUserFunction";
+export const FUNCTIONNALITY_CREATE_USER_ROLE = "FunctionnalityCreateUserRole"
+export const FUNCTIONNALITY_CREATE_USER_ACCOUNT = "FunctionnalityCreateUserAccount"
+export const FUNCTIONNALITY_MANAGING_ROLE_AND_FUNCTIONNALITY = "FunctionnalityManagingRoleAndFunctionUser";
+
+export const FUNCTIONNALITY_MANAGE_ALL_ACCOUNT_USER = "FunctionnalityListingUserAccount";

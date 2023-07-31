@@ -60,7 +60,7 @@
                                                     <v-card>
                                                         <v-card-title class="text font-weight-thin">FONCTIONNALITÉS DISPONIBLES</v-card-title>
                                                         <v-card-text>
-                                                            <v-select dense v-model="functionnalitiesChoosenList" :items="getFunctionalitiesList" item-text="code" item-value="code" :menu-props="{ maxHeight: '900' }" label="Vos fonctionnalités"
+                                                            <v-select dense v-model="functionnalitiesChoosenList" :items="getFunctionalitiesList" item-text="libelle" item-value="code" :menu-props="{ maxHeight: '400' }" label="Vos fonctionnalités"
                                                                 multiple hint="Sélectionnez vos fonctionnalités" persistent-hint
                                                             ></v-select>
                                                         </v-card-text>
@@ -278,7 +278,7 @@ export default {
         //CREER UN ROLE UTILISATEUR
         async createUserRole(){
             this.overlay = true;
-            await axios.post(API_CREATE_USER_ROLE, this.userRoleDataToSend ).then((response) => {
+            await axios.post(API_CREATE_USER_ROLE, this.userRoleDataToSend , { headers : HEADERS }).then((response) => {
                 if (response.status == 200) {
                     if (response.data.status.code == 800) {
                         this.successMsg = response.data.status.message
