@@ -52,7 +52,7 @@ import resetPasswordUserCompagnie from '../components/administration_compagnie_t
 import userProfilCompagnieTransport from '../components/administration_compagnie_transport/userProfilCompagnieTransport.vue'
 
 
-import { ROLE_ADMIN_COMPAGNIE_TRANSPORT , ROLE_ADMIN_SOCIETE_MERE } from '../components/globalConfig/constUsersRoles'
+//import { ROLE_ADMIN_COMPAGNIE_TRANSPORT , ROLE_ADMIN_SOCIETE_MERE } from '../components/globalConfig/constUsersRoles'
 Vue.use(VueRouter)
 
 
@@ -66,7 +66,204 @@ const routes = [
   {
     path: '/userHome',
     name: 'userHome',
-    component: EspaceUserAdmin  
+    component: EspaceUserAdmin,
+    children :[
+      {
+        path: '/creerOffreVoyage',
+        name: 'creerOffreVoyage',
+        component: creerOffreVoyage
+      },
+      {
+        path: '/creerVilleEscale',
+        name: 'creerVilleEscale',
+        component: creerVilleEscale
+      },
+      {
+        path: '/creerDemandeAdhesion',
+        name: 'creerDemandeAdhesion',
+        component: creerDemandeAdhesion
+      },
+      {
+        path: '/creerModeTarif',
+        name: 'creerModeTarif',
+        component: creerModeTarif
+      },
+      {
+        path: '/programmeOffreVoyage',
+        name: 'programmeOffreVoyage',
+        component: programmerOffreVoyage
+      },
+      {
+        path: '/selectionnerOffreVoyage',
+        name: 'selectionnerOffreVoyage',
+        component: selectionnerOffreVoyage
+      },
+      {
+        path: '/rattacherJourSemaineOffreVoyage',
+        name: 'rattacherJourSemaineOffreVoyage',
+        component: rattacherJourSemaineOffreVoyage
+      },
+      {
+        path: '/modifierOffreVoyage',
+        name: 'modifierOffreVoyage',
+        component: modifierOffreVoyage
+      },
+      {
+        path: '/creerProprieteCaracteristiqueOffreVoyage',
+        name: 'creerProprieteCaracteristiqueOffreVoyage',
+        component: creerProprieteCaracteristiqueOffreVoyage
+      },
+      {
+        path: '/modifierModeTarif',
+        name: 'modifierModeTarif',
+        component: modifierModeTarif
+      },
+      {
+        path: '/modifierVilleEscaleOffreVoyage',
+        name: 'modifierVilleEscaleOffreVoyage',
+        component: modifierVilleEscaleOffreVoyage
+      },
+      {
+        path: '/modifierJourOffreVoyage',
+        name: 'modifierJourOffreVoyage',
+        component: modifierJourOffreVoyage
+      },
+      {
+        path: '/gestionBagageCompagnieTransport',
+        name: 'gestionBagageCompagnieTransport',
+        component: gestionBagageCompagnieTransport
+      },
+      {
+        path: '/creerGareCompagnieTransport',
+        name: 'creerGareCompagnieTransport',
+        component: creerGareCompagnieTransport
+      },
+      {
+        path: '/selectionnerGareCompagnieTransport',
+        name: 'selectionnerGareCompagnieTransport',
+        component: selectionnerGareCompagnieTransport
+      },
+      {
+        path: '/creerModeAbonnement',
+        name: 'creerModeAbonnement',
+        component: creerModeAbonnement
+      },
+      {
+        path: '/creerModePaiement',
+        name: 'creerModePaiement',
+        component: creerModePaiement
+      },
+      {
+        path: '/selectionnerModeAbonnementEtPaiement',
+        name: 'selectionnerModeAbonnementEtPaiement',
+        component: selectionnerModeAbonnementEtPaiement
+      },
+      {
+        path: '/modifierModePaiement',
+        name: 'modifierModePaiement',
+        component: modifierModePaiement
+      },
+      {
+        path: '/documentAttestationTransport',
+        name: 'documentAttestationTransport',
+        component: documentAttestationTransport
+      },
+      {
+        path: '/associerBusCompagnieTransport',
+        name: 'associerBusCompagnieTransport',
+        component: associerBusCompagnieTransport
+      },
+      {
+        path: '/resetPasswordCompagnieTransport',
+        name: 'resetPasswordCompagnieTransport',
+        component: resetPasswordUserCompagnie
+      },
+      {
+        path: '/userProfilCompagnieTransport',
+        name: 'userProfilCompagnieTransport',
+        component: userProfilCompagnieTransport
+      },
+      {
+        path: '/tableauBord',
+        name: 'tableauBord',
+        component: tableauBord
+      },
+      {
+        path: '/creerPays',
+        name: 'creerPays',
+        component: creerPays
+      },
+      {
+        path: '/selectionnerPays',
+        name: 'selectionnerPays',
+        component: selectionnerPays
+      },
+      {
+        path: '/creerCompagnieTransport',
+        name: 'creerCompagnieTransport',
+        component: creerCompagnieTransport
+      },
+      { 
+        path:'/modifierCompagnieTransport',
+        name:'modifierCompagnieTransport',
+        component:modifierCompagnieTransport
+      },
+      {
+        path: '/selectionnerCompagnieTransport',
+        name: 'selectionnerCompagnieTransport',
+        component: selectionnerCompagnieTransport
+      },
+      {
+        path: '/creerVille',
+        name: 'creerVille',
+        component: creerVille
+      },
+      {
+        path: '/selectionnerVille',
+        name: 'selectionnerVille',
+        component: selectionnerVille
+      },
+      {
+        path: '/selectionnerDemandeAdhesionCompagnie',
+        name: 'selectionnerDemandeAdhesionCompagnie',
+        component: selectionnerDemandeAdhesionCompagnie
+      },
+      {
+        path: '/creerFonctionnalite',
+        name: 'creerFonctionnalite',
+        component: creerFonctionnalite
+      },
+      {
+        path: '/creerRoleUtilisateur',
+        name: 'creerRoleUtilisateur',
+        component: creerRoleUtilisateur
+      },
+      {
+        path: '/creerUtilisateur',
+        name: 'creerUtilisateur',
+        component: creerUtilisateur
+      },
+      {
+        path: '/gestionFonctionnalitesEtRoles',
+        name: 'gestionFonctionnalitesEtRoles',
+        component: gestionFunctionnalitesEtRoles
+      },
+      {
+        path: '/monProfil',
+        name: 'monProfil',
+        component: modifierCompteUtilisateur
+      },
+      {
+        path: '/resetPassword',
+        name: 'resetPassword',
+        component: resetPasswordUser
+      },
+      {
+        path: '/selectionnerUtilisateur',
+        name: 'selectionnerUtilisateur',
+        component: selectionnerUtilisateur
+      }
+    ]  
   },
 
   {
@@ -74,13 +271,13 @@ const routes = [
     name: 'connexionUtilisateurCompagnieTransport',
     component: connexionUtilisateurCompagnieTransport
   },
-  {
+  /*{
     path: '/EspaceCompagnieTransport',
     name: 'EspaceCompagnieTransport',
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/EspaceCompagnieTransport.vue'),
+    component: () => import(/* webpackChunkName: "about"  '../views/EspaceCompagnieTransport.vue'),
     meta: { requiresAuth: true, role: ROLE_ADMIN_COMPAGNIE_TRANSPORT },
     children:[
       {
@@ -204,15 +401,15 @@ const routes = [
         component: tableauBord
       },
     ]
-  },
+  },*/
 
-  {
+  /*{
     path: '/EspaceAdminSociete',
     name: 'EspaceAdminSociete',
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/EspaceAdminSociete'),
+    component: () => import(/* webpackChunkName: "about"  '../views/EspaceAdminSociete'),
     meta: { requiresAuth: true, role: ROLE_ADMIN_SOCIETE_MERE },
     children:[
       {
@@ -291,7 +488,7 @@ const routes = [
         component: selectionnerUtilisateur
       }
     ]
-  },
+  },*/
   
   {
     path: '/connexion',

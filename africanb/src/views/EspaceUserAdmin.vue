@@ -96,15 +96,24 @@
                 </v-card>
             </v-menu>
         </v-app-bar>
+
+        <v-main>
+        <!-- Provides the application the proper gutter -->
+            <v-container fluid>
+                <router-view></router-view>
+            </v-container>
+        </v-main>
     </v-app>
 </template>
 
 <script>
 import axios from 'axios';
 import { API_GET_FUNCTIONNALITY_BY_ROLE , HEADERS } from '../components/globalConfig/globalConstConfig'
-import { FUNCTIONNALITY_CREATE_OFFRE_VOYAGE , FUNCTIONNALITY_CREATE_VILLE , FUNCTIONNALITY_LISTING_VILLE , FUNCTIONNALITY_RATTACHE_ATTESTION_TRANSPORT } from '../components/globalConfig/constFunctionnalies'
-import { FUNCTIONNALITY_CREATE_USER_FUNCTION , FUNCTIONNALITY_CREATE_USER_ROLE , FUNCTIONNALITY_CREATE_USER_ACCOUNT , FUNCTIONNALITY_DEMANDE_ADHESION} from '../components/globalConfig/constFunctionnalies'
-import { FUNCTIONNALITY_CREATE_PAYS , FUNCTIONNALITY_LISTING_PAYS } from '../components/globalConfig/constFunctionnalies'
+import { FUNCTIONNALITY_CREATE_OFFRE_VOYAGE , FUNCTIONNALITY_CREATE_VILLE , FUNCTIONNALITY_LISTING_VILLE , FUNCTIONNALITY_RATTACHE_ATTESTION_TRANSPORT , FUNCTIONNALITY_CREATE_JOUR_OFFRE_VOYAGE , FUNCTIONNALITY_CREATE_PROGRAMME_OFFRE_VOYAGE } from '../components/globalConfig/constFunctionnalies'
+import { FUNCTIONNALITY_CREATE_USER_FUNCTION , FUNCTIONNALITY_CREATE_USER_ROLE , FUNCTIONNALITY_CREATE_USER_ACCOUNT , FUNCTIONNALITY_DEMANDE_ADHESION , FUNCTIONNALITY_CREATE_PAYS , FUNCTIONNALITY_LISTING_PAYS } from '../components/globalConfig/constFunctionnalies'
+import { FUNCTIONNALITY_CREATE_VILLE_ESCALE , FUNCTIONNALITY_CREATE_PRIX_OFFRE_VOYAGE , FUNCTIONNALITY_CREATE_BUS_OFFRE_VOYAGE  } from '../components/globalConfig/constFunctionnalies'
+import { FUNCTIONNALITY_CREATE_CARACTERISTIQUE_OFFRE_VOYAGE , FUNCTIONNALITY_CREATE_GARE_TRANSPORT , FUNCTIONNALITY_LISTING_GARE_TRANSPORT, FUNCTIONNALITY_CREATE_BAGAGE , } from '../components/globalConfig/constFunctionnalies'
+import { FUNCTIONNALITY_CREATE_MODE_ABONNEMENT , FUNCTIONNALITY_CREATE_MODE_PAIEMENT , FUNCTIONNALITY_LISTING_MODE_PAIEMENT } from '../components/globalConfig/constFunctionnalies'
 export default {
     name:'EspaceUI',
     data(){
@@ -152,11 +161,11 @@ export default {
                     globalFunctionnalities.push(createOffreVoyageFunction);
                 }
                 if (element.code == FUNCTIONNALITY_CREATE_VILLE) {
-                    var createTownFunction = { title : 'CREER UNE VILLE' , icon : 'mdi-town-hall' , navigation : '/creerVille' };
+                    var createTownFunction = { title : 'CREER UNE VILLE' , icon : 'mdi-domain' , navigation : '/creerVille' };
                     globalFunctionnalities.push(createTownFunction);
                 }
                 if (element.code == FUNCTIONNALITY_LISTING_VILLE) {
-                    var createTownSelected = { title : 'GESTION DES VILLES' , icon : 'mdi-town-hall' , navigation : '/selectionnerVille' };
+                    var createTownSelected = { title : 'GESTION DES VILLES' , icon : 'mdi-office-building-cog' , navigation : '/selectionnerVille' };
                     globalFunctionnalities.push(createTownSelected);
                 }
 
@@ -166,7 +175,7 @@ export default {
                 }
 
                 if (element.code == FUNCTIONNALITY_LISTING_PAYS) {
-                    var createCountrySelected = { title : 'GESTION DES PAYS' , icon : 'mdi-town-hall' , navigation : '/selectionnerPays' };
+                    var createCountrySelected = { title : 'GESTION DES PAYS' , icon : 'mdi-wrench-cog' , navigation : '/selectionnerPays' };
                     globalFunctionnalities.push(createCountrySelected);
                 }
 
@@ -189,6 +198,54 @@ export default {
                 if (element.code == FUNCTIONNALITY_DEMANDE_ADHESION) {
                     var demandAdhesionFunction = { title : 'DEMANDE D\'ADHESION' , icon : 'mdi-newspaper-check' , navigation : '/creerDemandeAdhesion' };
                     globalFunctionnalities.push(demandAdhesionFunction);
+                }
+                if (element.code == FUNCTIONNALITY_CREATE_JOUR_OFFRE_VOYAGE) {
+                    var daterOffreFunction = { title : 'DATER UNE OFFRE DE VOYAGE' , icon : 'mdi-calendar' , navigation : '/rattacherJourSemaineOffreVoyage' };
+                    globalFunctionnalities.push(daterOffreFunction);
+                }
+                if (element.code == FUNCTIONNALITY_CREATE_PROGRAMME_OFFRE_VOYAGE) {
+                    var programmeOffreFunction = { title : 'PROGRAMMER UNE OFFRE' , icon : 'mdi-clock-outline' , navigation : '/programmeOffreVoyage' };
+                    globalFunctionnalities.push(programmeOffreFunction);
+                }
+                if (element.code == FUNCTIONNALITY_CREATE_VILLE_ESCALE) {
+                    var creerVilleEscaleFunction = { title : 'CREER VILLE ESCALE' , icon : 'mdi-city-switch' , navigation : '/creerVilleEscale' };
+                    globalFunctionnalities.push(creerVilleEscaleFunction);
+                }
+                if (element.code == FUNCTIONNALITY_CREATE_PRIX_OFFRE_VOYAGE) {
+                    var tariferOffreFunction = { title : 'TARIFER UNE OFFRE' , icon : 'mdi-currency-usd' , navigation : '/creerModeTarif' };
+                    globalFunctionnalities.push(tariferOffreFunction);
+                }
+                if (element.code == FUNCTIONNALITY_CREATE_BUS_OFFRE_VOYAGE) {
+                    var creerBusOffreFunction = { title : 'DÉLIVRER UN BUS' , icon : 'mdi-bus' , navigation : '/associerBusCompagnieTransport' };
+                    globalFunctionnalities.push(creerBusOffreFunction);
+                }
+                if (element.code == FUNCTIONNALITY_CREATE_CARACTERISTIQUE_OFFRE_VOYAGE) {
+                    var createFeatureOffre = { title : 'PROPRIETE OFFRE DE VOYAGE' , icon : 'mdi-feature-search' , navigation : '/creerProprieteCaracteristiqueOffreVoyage' };
+                    globalFunctionnalities.push(createFeatureOffre);
+                }
+                if (element.code == FUNCTIONNALITY_CREATE_GARE_TRANSPORT) {
+                    var creerGareFunction = { title : 'CREER UNE GARE' , icon : 'mdi-subway' , navigation : '/creerGareCompagnieTransport' };
+                    globalFunctionnalities.push(creerGareFunction);
+                }
+                if (element.code == FUNCTIONNALITY_LISTING_GARE_TRANSPORT) {
+                    var gestionGareFunction = { title : 'GESTION DES GARES' , icon : 'mdi-store-cog' , navigation : '/selectionnerGareCompagnieTransport' };
+                    globalFunctionnalities.push(gestionGareFunction);
+                }
+                if (element.code == FUNCTIONNALITY_CREATE_BAGAGE) {
+                    var creerBagageFunction = { title : 'AFFECTER DES BAGAGES' , icon : 'mdi-bag-checked' , navigation : '/gestionBagageCompagnieTransport' };
+                    globalFunctionnalities.push(creerBagageFunction);
+                }
+                if (element.code == FUNCTIONNALITY_CREATE_MODE_ABONNEMENT) {
+                    var creerModeAbonnement = { title : 'CREER MODE ABONNEMENT' , icon : 'mdi-bank-transfer-out' , navigation : '/creerModeAbonnement' };
+                    globalFunctionnalities.push(creerModeAbonnement);
+                }
+                if (element.code == FUNCTIONNALITY_CREATE_MODE_PAIEMENT) {
+                    var creerModePaiement = { title : 'CREER MODE DE PAIEMENT' , icon : 'mdi-account-credit-card' , navigation : '/creerModePaiement' };
+                    globalFunctionnalities.push(creerModePaiement);
+                }
+                if (element.code == FUNCTIONNALITY_LISTING_MODE_PAIEMENT) {
+                    var gestionPaiementEtAbonnementFunction = { title : 'MODE ABONNEMENT ET PAIEMENT' , icon : 'mdi-cash-sync' , navigation : '/selectionnerModeAbonnementEtPaiement' };
+                    globalFunctionnalities.push(gestionPaiementEtAbonnementFunction);
                 }
             });
             return globalFunctionnalities ; 
