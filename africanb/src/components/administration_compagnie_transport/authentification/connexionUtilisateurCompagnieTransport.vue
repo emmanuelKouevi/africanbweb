@@ -8,30 +8,32 @@
                     </v-row><br><br>
 
                     <v-row justify="center">
-                        <v-card width="500px"  elevation="10" rounded="100px"><br><br>
-                            
+                        <v-card elevation="5" width="500px" rounded="100px">
+                            <div class="header_card"></div><br>
                             <div class="text_auth">
-                                <h2>AUTHENTIFIEZ-VOUS</h2>
-                                <small>Entrer vos paramètres de connexion pour accéder à votre espace de travail.</small>
+                                <h5 class="font-weight-bold">AUTHENTIFIEZ-VOUS</h5>
+                                <span class="card-subtitle">Entrer vos paramètres de connexion pour accéder à votre espace de travail.</span>
                             </div>
-                        
+
                             <v-container>
-                                <label class="label" for="">Pseudo ou E-mail</label>
-                                <v-row>
-                                    <v-col>
-                                        <v-text-field class="input_field" :error-messages="usernameError" v-model.trim="$v.userLogin.login.$model" dense outlined prepend-inner-icon="mdi-account" color="primary"></v-text-field>
-                                    </v-col>
-                                </v-row>
-                                
-                                <label class="label" for="">Mot de Passe</label>
-                                <v-row>
-                                    <v-col>
-                                        <v-text-field :error-messages="passwordError" v-model.trim="$v.userLogin.password.$model" :append-icon="passwordIsVisible ? 'mdi-eye' : 'mdi-eye-off'"  class="input_field" id="login_password" 
-                                            @click:append="passwordIsVisible = !passwordIsVisible"
-                                            dense outlined prepend-inner-icon="mdi-lock-check" color="primary" :type="passwordIsVisible ? 'text' : 'password'">
-                                        </v-text-field>
-                                    </v-col>
-                                </v-row>
+                                <div class="form-group">
+                                    <label for="pseudoOrEmail" class="myLabel">Pseudo ou E-mail</label>
+                                    <v-text-field class="input_field" id="pseudoOrEmail" :error-messages="usernameError" 
+                                        v-model.trim="$v.userLogin.login.$model" dense outlined 
+                                        prepend-inner-icon="mdi-account" 
+                                        color="#273c75">
+                                    </v-text-field>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="login_password" class="myLabel">Mot de Passe</label>
+                                    <v-text-field :error-messages="passwordError" v-model.trim="$v.userLogin.password.$model" :append-icon="passwordIsVisible ? 'mdi-eye' : 'mdi-eye-off'"  
+                                        class="input_field" id="login_password" 
+                                        @click:append="passwordIsVisible = !passwordIsVisible"
+                                        dense outlined prepend-inner-icon="mdi-lock-check" color="#273c75" :type="passwordIsVisible ? 'text' : 'password'">
+                                    </v-text-field>
+                                </div>
+
                                 <v-row justify="center">
                                     <small class="password_forget">Mot de passe oublié ?</small>
                                 </v-row>
@@ -39,7 +41,7 @@
 
                             <v-container>
                                 <v-row justify="center">
-                                    <v-btn type="submit" rounded color="primary"><span class="connexion_text">CONNEXION</span></v-btn>
+                                    <v-btn type="submit" rounded color="#192a56"><span class="connexion_text">CONNEXION</span></v-btn>
                                 </v-row>
                             </v-container><br>
                         </v-card>
@@ -63,7 +65,7 @@
 
 <script>
 import axios from 'axios';
-import { API_LOGIN_USER  , HEADERS} from '../../globalConfig/globalConstConfig'
+import { API_LOGIN_USER } from '../../globalConfig/globalConstConfig'
 import { required } from 'vuelidate/lib/validators'
 export default {
     name:"connexionUtilisateurCompagnieTransport.vue",
@@ -112,9 +114,7 @@ export default {
         async login(){
             this.userLoginData.data.login = this.userLogin.login;
             this.userLoginData.data.password = this.userLogin.password; 
-            await axios.post(API_LOGIN_USER,this.userLoginData,{
-                headers : HEADERS
-            }).then((response) => {
+            await axios.post(API_LOGIN_USER,this.userLoginData).then((response) => {
                 if (response.status == 200) {
                     if (response.data.status.code == 800) {
                         this.$store.commit('LOGIN_USER');
@@ -181,7 +181,11 @@ export default {
     }
 
     .password_forget{
-        color: grey;
+        font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+        font-size: 13px;
+        color: black;
+        opacity: 0.9;
+        font-weight: bolder;
     }
 
 
@@ -211,5 +215,24 @@ export default {
 
     .footer{
         color: white;
+    }
+
+    .myLabel{
+        font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+        font-size: 13px;
+        color: black;
+        opacity: 0.9;
+        font-weight: bolder;
+    }
+
+    .header_card{
+        height: 10px;
+        background: linear-gradient(to left top, black, #273c75);
+    }
+
+    .card-subtitle{
+        color:black;
+        font-size: 13px;
+        opacity: 0.7;
     }
 </style>

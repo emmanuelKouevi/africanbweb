@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import HomeView from '../views/HomeView.vue'
-import $store from '@/store'
+//import $store from '@/store'
 
 //import InterfaceAccordingUserRole from '../views/InterfaceAccordingUserRole'
 import EspaceUserAdmin from '../views/EspaceUserAdmin'
@@ -67,6 +67,7 @@ const routes = [
     path: '/userHome',
     name: 'userHome',
     component: EspaceUserAdmin,
+    meta: { requiresAuth: true },
     children :[
       {
         path: '/creerOffreVoyage',
@@ -506,10 +507,9 @@ const router = new VueRouter({
 
 
 // Ajoutez une garde de navigation globale pour vérifier les autorisations
-router.beforeEach((to, from, next) => {
+/*router.beforeEach((to, from, next) => {
   if (to.matched.some(record => record.meta.requiresAuth)) {
     if ($store.state.isAuthentified == false) {
-      console.log($store.state.isAuthentified)
       next({name : 'connexion'})
     }else {
       next();
@@ -517,7 +517,7 @@ router.beforeEach((to, from, next) => {
   } else {
     next();
   }
-});
+});*/
 
 
 

@@ -122,11 +122,14 @@ export default {
 
     .data{
         text-align: center;
+        font-family: 'Times New Roman', Times, serif;
+        font-weight: bold;
     }
 
     .data_number{
         color: #4b4b4b;
         font-size: 60px;
         text-align: center;
+        font-family: 'Times New Roman', Times, serif;
     }
 </style>

@@ -2,9 +2,12 @@
 
 export const BASE_URL = "https://localhost:8443/";
 
-export const HEADERS = {
-    'server_id' : 'backend@africanb',
-    'client_id' : 'frontend@africanb'
+export const HEADERS = (token) => {
+    return {
+        'server_id' : 'backend@africanb',
+        'client_id' : 'frontend@africanb',
+        'Authorization' : 'Bearer' + ' ' + token
+    }
 }
 
 

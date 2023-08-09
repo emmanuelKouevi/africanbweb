@@ -2,8 +2,8 @@
     <v-app>
         <v-form @submit.prevent="submitForm">
             <v-card class="mx-auto" max-width="1000">
-                <v-card-title><h4>CREER UN COMPTE (GESTION DE LA PLATEFORME)</h4></v-card-title>
-                <v-card-subtitle>Création d'utilisateurs pour la meilleur gestion de votre plateforme</v-card-subtitle>
+                <v-card-title><h6>CREER UN COMPTE (GESTION DE LA PLATEFORME)</h6></v-card-title>
+                <v-card-subtitle class="litle_title">Création d'utilisateurs pour la meilleur gestion de votre plateforme</v-card-subtitle>
 
                 <v-card-text>
                     <v-container>
@@ -24,8 +24,8 @@
                 </v-card-text>
 
                 <v-card-actions>
-                    <v-btn type="button" small outlined color="secondary">REINITIALISER</v-btn>
-                    <v-btn type="submit" text small outlined color="primary">CREER UTILISATEUR</v-btn>
+                    <v-btn type="button" small outlined color="secondary"><span>REINITIALISER</span></v-btn>
+                    <v-btn type="submit" text small outlined color="primary"><span>CREER UTILISATEUR</span></v-btn>
                 </v-card-actions>
             </v-card>
         </v-form>
@@ -118,7 +118,7 @@ export default {
         async createUser(){
             this.overlay = true ;
             this.userDataToSend.datas.push(this.userObject)
-            await axios.post(API_CREATE_USER, this.userDataToSend, { headers : HEADERS }).then((response) => {
+            await axios.post(API_CREATE_USER, this.userDataToSend, { headers : HEADERS(this.$store.state.userAuthentified.token) }).then((response) => {
                 if (response.status == 200) {
                     if (response.data.status.code == 800) {
                         this.successMsg = response.data.status.message
@@ -167,7 +167,7 @@ export default {
 
         // RECUPERER LA LISTE DES ROLES DÉFINIS
         async getAllUsersRoles(){
-            await axios.post(API_GET_ALL_ROLES, {}, { headers : HEADERS } ).then((response) => {
+            await axios.post(API_GET_ALL_ROLES, {}, { headers : HEADERS(this.$store.state.userAuthentified.token) } ).then((response) => {
                 if (response.status == 200) {
                     if (response.data.status.code != 800) {
                         this.errorMsg = response.data.status.message
@@ -275,8 +275,12 @@ export default {
     }
 
     .myInput{
-        font-weight: bolder;
+        font-family: 'Times New Roman', Times, serif;
         color: grey;
         font-size: 15px;
+    }
+
+    .litle_title{
+        font-family: 'Times New Roman', Times, serif;
     }
 </style>

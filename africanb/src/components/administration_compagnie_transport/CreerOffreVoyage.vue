@@ -1,6 +1,6 @@
 <template>
     <v-app>
-        <v-form @submit.prevent="creerOffreVoyage()">
+        <v-form @submit.prevent="submitForm">
             <v-container fluid>
                 <v-card max-width="1200px" class="mx-auto" elevation="5">
                     <v-card-title><h6 class="font-weight-bold">CREER UNE OFFRE DE VOYAGE</h6></v-card-title>
@@ -9,25 +9,29 @@
                     <v-card-text>
                         <v-container fluid>
                             <div class="form-group">
-                                <label for="inputAddress">Désignation de l'offre</label>
+                                <label for="designationOffre">Désignation de l'offre</label>
                                 <v-text-field
-                                    :error-messages="designationOffreVoyageErrors" dense 
+                                    id="designationOffre" data-cy="designationOffre"
+                                    :error-messages="designationOffreVoyageErrors" dense class="my_input"
                                     outlined color="primary" placeholder="Désignation de l'offre" 
                                     v-model.trim="$v.offreVoyage.designation.$model">
                                 </v-text-field>
                             </div>
 
                             <div class="form-group">
-                                <label for="inputAddress">Description de l'offre</label>
-                                <v-textarea :error-messages="descriptionOffreVoyageErrors"
+                                <label for="descriptionOffre">Description de l'offre</label>
+                                <v-textarea 
+                                    id="descriptionOffre" data-cy="descriptionOffre"
+                                    :error-messages="descriptionOffreVoyageErrors" class="my_input"
                                     dense outlined color="primary" placeholder="Description de l'offre">
                                 </v-textarea>
                             </div>
 
                             <div class="form-row">
                                 <div class="form-group col-md-6">
-                                    <label for="inputEmail4">Gare de départ</label>
+                                    <label for="gareDepart">Gare de départ</label>
                                     <v-select :error-messages="villeDepartErrors" 
+                                        id="gareDepart" data-cy="gareDepart" class="my_input"
                                         v-model.trim="$v.offreVoyage.villeDepartDesignation.$model" 
                                         dense outlined :items="villesList" item-text="designation" 
                                         item-value="designation" color="primary" prefix="De :" placeholder="Départ">
@@ -35,8 +39,9 @@
                                 </div>
 
                                 <div class="form-group col-md-6">
-                                    <label for="inputPassword4">Gare d'arrivée</label>
+                                    <label for="gareArrivee">Gare d'arrivée</label>
                                     <v-select :error-messages="villeDestinationErrors" 
+                                        id="gareArrivee" data-cy="gareArrivee" class="my_input"
                                         v-model.trim="$v.offreVoyage.villeDestinationDesignation.$model" 
                                         dense outlined :items="villesList" item-text="designation" 
                                         item-value="designation" color="primary" prefix="Vers :" placeholder="Arrivée">
@@ -46,8 +51,9 @@
 
                             <div class="form-row">
                                 <div class="form-group col-md-6">
-                                    <label for="inputEmail4">Type de l'offre</label>
+                                    <label for="referenceOffre">Type de l'offre</label>
                                     <v-select :items="referenceTypeOffreVoyageList" 
+                                        id="referenceOffre" data-cy="referenceOffre" class="my_input"
                                         item-text="designation" item-value="designation" :error-messages="typeOffreVoyageErrors" 
                                         v-model.trim="$v.offreVoyage.typeOffreVoyageDesignation.$model" dense outlined
                                         color="primary" placeholder="Type de l'offre">
@@ -57,8 +63,8 @@
                         </v-container>
                     </v-card-text>
                     <v-card-actions>
-                        <v-btn small rounded dark color="secondary"><v-icon>mdi-sync</v-icon> REINITIALISER</v-btn>
-                        <v-btn small type="submit" rounded dark color="primary"><v-icon>mdi-check</v-icon> CRÉER L'OFFRE</v-btn>
+                        <v-btn id="btnInitialize" small dark color="secondary" data-cy="btnInitialize"><v-icon>mdi-sync</v-icon> REINITIALISER</v-btn>
+                        <v-btn id="btnCreate" small type="submit" dark color="primary" data-cy="btnCreate"><v-icon>mdi-check</v-icon> CRÉER L'OFFRE</v-btn>
                 </v-card-actions>
                 </v-card>
             </v-container>
@@ -138,10 +144,17 @@ export default {
 
     methods:{
 
+        //SOUMISSION DU FORMULAIRE
+        submitForm(){
+            this.$v.touch()
+            if (this.$v.offreVoyage.$invalid)this.errorMsg = "Vous n'avez saisi les champs concernés"
+            else this.creerOffreVoyage();
+        },
+
         //OBTENIR REFERENCE DESIGNATION TYPE OFFRE DE VOYAGE
         async obtenirReferenceTypeOffreVoyage(){
             this.objectToSend.datas.push(this.referenceTypeOffreVoyage)
-            await axios.post(API_OBTENIR_REFERENCE_PAR_PAR_FAMILLE, this.objectToSend , { headers : HEADERS }).then((response) => {
+            await axios.post(API_OBTENIR_REFERENCE_PAR_PAR_FAMILLE, this.objectToSend , { headers : HEADERS(this.$store.state.userAuthentified.token) }).then((response) => {
                 this.referenceTypeOffreVoyageList = response.data.items
             }).catch((e) => {
                 this.errorMsg = e ;
@@ -157,7 +170,7 @@ export default {
         async creerOffreVoyage(){
             this.offreVoyageToSend.datas.push(this.offreVoyage)
             this.overlay = true ;
-            await axios.post(API_CREER_OFFRE_VOYAGE, this.offreVoyageToSend , { headers : HEADERS }).then((response) => {
+            await axios.post(API_CREER_OFFRE_VOYAGE, this.offreVoyageToSend , { headers : HEADERS(this.$store.state.userAuthentified.token) }).then((response) => {
                 if (response.status == 200) {
                     if (response.data.status.code == 800) {
                         this.successMsg = response.data.status.message
@@ -207,9 +220,9 @@ export default {
 
 
         // RECUPERER LA LISTE DES VILLES ENREGISTRÉES
-        async readAllVilleFromApi(){
+        async getAllCities(){
             this.loading = false
-            await axios.post(API_OBTENIR_LISTE_DES_VILLES_DISPONIBLE, this.objectValue , { headers : HEADERS }).then((response) => {
+            await axios.post(API_OBTENIR_LISTE_DES_VILLES_DISPONIBLE, this.objectValue , { headers : HEADERS(this.$store.state.userAuthentified.token) }).then((response) => {
                 this.villesList = response.data.items
             }).catch((e) => {
                 this.errorMsg = e ;
@@ -267,7 +280,7 @@ export default {
     },
 
     mounted(){
-        this.readAllVilleFromApi();
+        this.getAllCities();
         this.obtenirReferenceTypeOffreVoyage();
     }
 
@@ -306,8 +319,7 @@ export default {
     }
     
     .my_input{
-        font-family: Verdana, Geneva, Tahoma, sans-serif;
-        font-weight: bolder;
+        font-family: 'Times New Roman', Times, serif;
         font-size: 15px;
     }
 </style>

@@ -1,6 +1,6 @@
 <template>
-    <v-app>
-        <v-navigation-drawer app v-model="drawer" :mini-variant.sync="mini">
+    <v-app id="inspire">
+        <v-navigation-drawer app v-model="drawer" :mini-variant.sync="mini" >
             <v-list-item>
                 <v-list-item-content>
                     <v-list-item-title class="text-h6 font-weight-thin">{{ $store.state.userAuthentified.compagnieTransportRaisonSociale }}</v-list-item-title>
@@ -17,7 +17,7 @@
                 </v-list-item-icon>
         
                 <v-list-item-content>
-                    <v-list-item-title>TABLEAU DE BORD</v-list-item-title>
+                    <v-list-item-title class="list-item-title">TABLEAU DE BORD</v-list-item-title>
                 </v-list-item-content>
                 </v-list-item>
             </v-list>
@@ -29,11 +29,18 @@
                 </v-list-item-icon>
         
                 <v-list-item-content>
-                    <v-list-item-title>{{ menu.title.toUpperCase() }}</v-list-item-title>
+                    <v-list-item-title class="list-item-title">{{ menu.title.toUpperCase() }}</v-list-item-title>
                 </v-list-item-content>
                 </v-list-item>
             </v-list>
         </v-navigation-drawer>
+
+        <v-system-bar app color="teal">
+            <v-spacer></v-spacer>
+            <v-btn text><span class="lang">FR</span></v-btn>&nbsp;&nbsp;
+            <v-divider vertical></v-divider>&nbsp;&nbsp;
+            <v-btn text><span class="lang">EN</span></v-btn>&nbsp;&nbsp;
+        </v-system-bar>
 
         <v-app-bar app color="white">
             <v-app-bar-nav-icon color="dark" @click="drawer = !drawer"></v-app-bar-nav-icon>
@@ -51,8 +58,8 @@
                     <v-list>
                         <v-list-item>  
                         <v-list-item-content>
-                            <v-list-item-title>{{ $store.state.userAuthentified.prenoms }}  {{ $store.state.userAuthentified.nom }}</v-list-item-title>
-                            <v-list-item-subtitle>{{ $store.state.userAuthentified.email }}</v-list-item-subtitle>
+                            <v-list-item-title class="simple_title">{{ $store.state.userAuthentified.prenoms }}  {{ $store.state.userAuthentified.nom }}</v-list-item-title>
+                            <v-list-item-subtitle class="simple_title">{{ $store.state.userAuthentified.email }}</v-list-item-subtitle>
                         </v-list-item-content>
                         </v-list-item>
                     </v-list>
@@ -64,14 +71,14 @@
                             <v-list-item-icon>
                                 <v-icon>mdi-account-cog</v-icon>
                             </v-list-item-icon>
-                            <v-list-item-title><span class="font-weight-thin">Mon profil</span></v-list-item-title>
+                            <v-list-item-title><span class="simple_title">Mon profil</span></v-list-item-title>
                         </v-list-item>
 
                         <v-list-item link @click="$router.push({name:'resetPasswordCompagnieTransport'}).catch(() => {})">
                             <v-list-item-icon>
                                 <v-icon>mdi-account-key</v-icon>
                             </v-list-item-icon>
-                            <v-list-item-title><span class="font-weight-thin">Changer le mot de passe</span></v-list-item-title>
+                            <v-list-item-title><span class="simple_title">Changer le mot de passe</span></v-list-item-title>
                         </v-list-item>
             
                         <v-list-item link>
@@ -80,7 +87,7 @@
                             </v-list-item-icon>
                             <v-dialog v-model="dialogLogout" persistent max-width="290">
                                 <template v-slot:activator="{ on, attrs }">
-                                    <v-list-item-title v-on="on" v-bind="attrs" class="font-weight-thin">Déconnexion</v-list-item-title>
+                                    <v-list-item-title v-on="on" v-bind="attrs" class="simple_title">Déconnexion</v-list-item-title>
                                 </template>
                                 <v-card>
                                     <v-card-title class="text-h5">Voulez-vous vraiment vous déconnecter ?</v-card-title>
@@ -129,13 +136,13 @@ export default {
 
     methods :{
 
-        //RECUPERER LA LISTE DE TOUTES LES FONCTIONNALITÉS CREES
+        //RECUPERER LA LISTE DES FONCTIONNALITÉS PAR ROLE UTILISATEURS
         async getAllFunctionnalitiesByUserRole(){
-            await axios.post(API_GET_FUNCTIONNALITY_BY_ROLE, { data : { code : this.$store.state.userAuthentified.roleCode } }, { headers : HEADERS } ).then((response) => {
+            await axios.post(API_GET_FUNCTIONNALITY_BY_ROLE, { data : { code : this.$store.state.userAuthentified.roleCode } }
+            , { headers : HEADERS(this.$store.state.userAuthentified.token) }).then((response) => {
                 if (response.status == 200) {
                     if (response.data.status.code == 800) {
                         this.functionnalitiesListByUserRole = response.data.items;
-                        console.log(this.functionnalitiesListByUserRole)
                     }
                 }
             }).catch((e) => {
@@ -258,3 +265,19 @@ export default {
     }
 }
 </script>
+
+<style scoped>
+    .lang{
+        color: white;
+    }
+
+    .list-item-title{
+        font-family: 'Roboto';
+        font-size: 20px;
+        
+    }
+
+    .simple_title{
+        font-family: 'Times New Roman', Times, serif;
+    }
+</style>
