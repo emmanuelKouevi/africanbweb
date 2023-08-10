@@ -3,99 +3,146 @@
         <v-form @submit.prevent="submitForm">
             <v-container fluid>
                 <v-card width="1200" elevation="3">
-                    <v-card-title>MODE D'ABONNEMENTS</v-card-title>
+                    <v-card-title><h6 class="font-weight-bold">MODE D'ABONNEMENTS</h6></v-card-title>
                     <v-card-subtitle>Définissez vos modes d'abonnements</v-card-subtitle>
-                    <v-container>
-                        <v-row>
-                            <v-col cols="5">
-                                <v-select :items="referenceAbonnementList" item-text="designation" item-value="designation" :error-messages="typeAbonnementErrors" rounded dense outlined color="teal" label="Type d'abonnement" v-model="typeAbonnement"></v-select>
-                            </v-col>
-                        </v-row>
-                    </v-container>
-                    <v-container v-if="typeAbonnement == 'AbonnementPeriodique'">
-                        <v-row>
-                            <v-col>
-                                <v-text-field :error-messages="designationAbonnementErrors" rounded dense outlined label="Désignation de l'abonnement" v-model.trim="$v.modeAbonnementPeriodiqueModel.designation.$model"></v-text-field>
-                            </v-col>
-                            <v-col>
-                                <v-text-field :error-messages="redevanceAbonnementErrors" rounded dense outlined color="teal" label="redevance" suffix="FCFA" v-model.trim="$v.modeAbonnementPeriodiqueModel.redevance.$model"></v-text-field>
-                            </v-col>
-                        </v-row>
-                        <v-row>
-                            <v-col>
-                                <v-menu ref="menuDebutAbonnement" v-model="menuDebutAbonnement" :close-on-content-click="false" transition="scale-transition" offset-y max-width="290px" min-width="auto">
-                                    <template v-slot:activator="{ on, attrs }">
-                                        <v-text-field :error-messages="dateDebutAbonnementErrors" dense outlined rounded v-model="dateDebutAbonnementPeriodique" label="Debut de l'abonnement" prepend-icon="mdi-clock-time-four-outline"
-                                            readonly  v-bind="attrs" v-on="on">
-                                        </v-text-field>
-                                    </template>
-                                    <v-date-picker @input="menuDebutAbonnement = false" v-model="dateDebutAbonnementPeriodique" no-title></v-date-picker>
-                                </v-menu>
-                            </v-col>
 
-                            <v-col>
-                                <v-menu ref="menuFinAbonnement" v-model="menuFinAbonnement" :close-on-content-click="false" transition="scale-transition" offset-y max-width="290px" min-width="auto">
-                                    <template v-slot:activator="{ on, attrs }">
-                                        <v-text-field :error-messages="dateFinAbonnementErrors" dense outlined rounded v-model="dateFinAbonnementPeriodique" label="Fin de l'abonnement" prepend-icon="mdi-clock-time-four-outline"
-                                            readonly  v-bind="attrs" v-on="on">
-                                        </v-text-field>
-                                    </template>
-                                    <v-date-picker @input="menuFinAbonnement = false" v-model="dateFinAbonnementPeriodique" no-title></v-date-picker>
-                                </v-menu>
-                            </v-col>
+                    <v-card-text>
+                        <div class="form-group col-md-6">
+                            <label for="typeAbonnement">Type d'abonnement:</label>
+                            <v-select :error-messages="typeAbonnementErrors" 
+                                id="typeAbonnement" data-cy="typeAbonnement" class="my_input"
+                                v-model="typeAbonnement" :items="referenceAbonnementList"
+                                dense outlined  item-text="designation" color="primary"
+                                item-value="designation" placeholder="Sélectionnez">
+                            </v-select>
+                        </div>
+                        <v-divider></v-divider>
+                        <div v-if="typeAbonnement == 'AbonnementPeriodique'">
+                            <div class="form-row">
+                                <div class="form-group col-md-6">
+                                    <label for="designationAbonnement">Designation de l'abonnement:</label>
+                                    <v-text-field :error-messages="designationAbonnementErrors" id="designationAbonnement"
+                                        dense outlined placeholder="Designation de l'abonnement" data-cy="designationAbonnement"
+                                        v-model.trim="$v.modeAbonnementPeriodiqueModel.designation.$model">
+                                    </v-text-field>
+                                </div>
 
-                            
-                        </v-row>
-                        <v-row>
-                            <v-col>
-                                <v-text-field :error-messages="redevancePubAbonnementErrors" rounded dense outlined color="teal" label="redevance publicité" v-model.trim="$v.modeAbonnementPeriodiqueModel.redevancePublicite.$model" suffix="FCFA" ></v-text-field>
-                            </v-col>
-                            <v-col>
-                                <v-select :items="referencePeriodiciteList" item-value="designation" item-text="designation" :error-messages="periodiciteAbonnementErrors" rounded dense outlined color="teal" label="périodicité Abonnement" v-model.trim="$v.modeAbonnementPeriodiqueModel.periodiciteAbonnementDesignation.$model"></v-select>
-                            </v-col>
-                        </v-row>
-                    </v-container>
+                                <div class="form-group col-md-3">
+                                    <label for="redevance">Redevance</label>
+                                    <v-text-field :error-messages="redevanceAbonnementErrors" id="redevance"
+                                        dense outlined color="primary" placeholder="redevance" 
+                                        suffix="FCFA" v-model.trim="$v.modeAbonnementPeriodiqueModel.redevance.$model">
+                                    </v-text-field>
+                                </div>
 
-                    <v-container v-if="typeAbonnement == 'AbonnementPrelevement'">
-                        <v-row>
-                            <v-col>
-                                <v-text-field :error-messages="designationAbonnementErrors" rounded dense outlined label="Désignation de l'abonnement" v-model.trim="$v.modeAbonnementPrelevementModel.designation.$model"></v-text-field>
-                            </v-col>
-                            <v-col>
-                                <v-text-field :error-messages="redevanceAbonnementErrors" rounded dense outlined color="teal" label="taux" suffix="%" v-model.trim="$v.modeAbonnementPrelevementModel.taux.$model"></v-text-field>
-                            </v-col>
-                            <v-col>
-                                <v-select :items="referencePeriodiciteList" item-value="designation" item-text="designation" :error-messages="periodiciteAbonnementErrors" rounded dense outlined color="teal" label="périodicité Abonnement" v-model.trim="$v.modeAbonnementPrelevementModel.periodiciteAbonnementDesignation.$model"></v-select>
-                            </v-col>
-                        </v-row>
-                        <v-row>
-                            <v-col>
-                                <v-menu ref="menuDebutAbonnement" v-model="menuDebutAbonnement" :close-on-content-click="false" transition="scale-transition" offset-y max-width="290px" min-width="auto">
-                                    <template v-slot:activator="{ on, attrs }">
-                                        <v-text-field :error-messages="dateDebutAbonnementErrors" dense outlined rounded v-model="dateDebutAbonnementPrevelement"  label="Debut de l'abonnement" prepend-icon="mdi-calendar"
-                                            readonly  v-bind="attrs" v-on="on">
-                                        </v-text-field>
-                                    </template>
-                                    <v-date-picker @input="menuDebutAbonnement = false" v-model="dateDebutAbonnementPrevelement" no-title></v-date-picker>
-                                </v-menu>
-                            </v-col>
+                                <div class="form-group col-md-3">
+                                    <label for="redevancePublicite">Redevance publicité</label>
+                                    <v-text-field :error-messages="redevancePubAbonnementErrors" id="redevancePublicite"
+                                        dense outlined color="primary" placeholder="redevance publicité" data-cy="redevancePublicite"
+                                        v-model.trim="$v.modeAbonnementPeriodiqueModel.redevancePublicite.$model" suffix="FCFA" >
+                                    </v-text-field>
+                                </div>
+                            </div>
 
-                            <v-col>
-                                <v-menu ref="menuFinAbonnement" v-model="menuFinAbonnement" :close-on-content-click="false" transition="scale-transition" offset-y max-width="290px" min-width="auto">
-                                    <template v-slot:activator="{ on, attrs }">
-                                        <v-text-field :error-messages="dateFinAbonnementErrors"  dense outlined rounded v-model="dateFinAbonnementPrevelement" label="Fin de l'abonnement" prepend-icon="mdi-calendar"
-                                            readonly  v-bind="attrs" v-on="on">
-                                        </v-text-field>
-                                    </template>
-                                    <v-date-picker @input="menuFinAbonnement = false" v-model="dateFinAbonnementPrevelement" no-title></v-date-picker>
-                                </v-menu>
-                            </v-col> 
-                        </v-row>
-                    </v-container>
+                            <div class="form-row">
+                                <div class="form-group col-md-6">
+                                    <label for="periodiciteAbonnement">Periodicité:</label>
+                                    <v-select :items="referencePeriodiciteList" item-value="designation" id="periodiciteAbonnement"
+                                        item-text="designation" :error-messages="periodiciteAbonnementErrors" data-cy="periodiciteAbonnement"
+                                        dense outlined color="primary" placeholder="périodicité Abonnement" 
+                                        v-model.trim="$v.modeAbonnementPeriodiqueModel.periodiciteAbonnementDesignation.$model">
+                                    </v-select>
+                                </div>
+
+                                <div class="form-group col-md-3">
+                                    <label for="dateDebutAbonnement">Debut d'Abonnement:</label>
+                                    <v-menu ref="menuDebutAbonnement" v-model="menuDebutAbonnement" :close-on-content-click="false" transition="scale-transition" offset-y max-width="290px" min-width="auto">
+                                        <template v-slot:activator="{ on, attrs }">
+                                            <v-text-field id="dateDebutAbonnement" :error-messages="dateDebutAbonnementErrors" dense outlined 
+                                                v-model="dateDebutAbonnementPeriodique" placeholder="Debut de l'abonnement" append-icon="mdi-clock-time-four-outline"
+                                                readonly  v-bind="attrs" v-on="on" data-cy="dateDebutAbonnement">
+                                            </v-text-field>
+                                        </template>
+                                        <v-date-picker @input="menuDebutAbonnement = false" v-model="dateDebutAbonnementPeriodique" no-title></v-date-picker>
+                                    </v-menu>
+                                </div>
+
+                                <div class="form-group col-md-3">
+                                    <label for="dateFinAbonnement">Date de fin d'Abonnement</label>
+                                    <v-menu ref="menuFinAbonnement" v-model="menuFinAbonnement" :close-on-content-click="false" transition="scale-transition" offset-y max-width="290px" min-width="auto">
+                                        <template v-slot:activator="{ on, attrs }">
+                                            <v-text-field id="dateDebutAbonnement" :error-messages="dateFinAbonnementErrors" dense outlined v-model="dateFinAbonnementPeriodique" placeholder="Fin de l'abonnement" append-icon="mdi-clock-time-four-outline"
+                                                readonly  v-bind="attrs" v-on="on" data-cy="dateFinAbonnement">
+                                            </v-text-field>
+                                        </template>
+                                        <v-date-picker @input="menuFinAbonnement = false" v-model="dateFinAbonnementPeriodique" no-title></v-date-picker>
+                                    </v-menu>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div v-if="typeAbonnement == 'AbonnementPrelevement'">
+                            <div class="form-row">
+                                <div class="form-group col-md-6">
+                                    <label for="designationAbonnement">Designation de l'abonnement:</label>
+                                    <v-text-field :error-messages="designationAbonnementErrors" id="designationAbonnement"
+                                        dense outlined placeholder="Designation de l'abonnement" data-cy="designationAbonnement"
+                                        v-model.trim="$v.modeAbonnementPrelevementModel.designation.$model">
+                                    </v-text-field>
+                                </div>
+
+                                <div class="form-group col-md-6">
+                                    <label for="periodicite">Periodicité</label>
+                                    <v-select :items="referencePeriodiciteList" item-value="designation" id="periodicite"
+                                        item-text="designation" :error-messages="periodiciteAbonnementErrors" 
+                                        dense outlined color="teal" placeholder="périodicité Abonnement" data-cy="periodicite"
+                                        v-model.trim="$v.modeAbonnementPrelevementModel.periodiciteAbonnementDesignation.$model">
+                                    </v-select>
+                                </div>
+                            </div>
+
+                            <div class="form-row">
+                                <div class="form-group col-md-4">
+                                    <label for="taux">Taux:</label>
+                                    <v-text-field :error-messages="designationAbonnementErrors" id="taux"
+                                        dense outlined placeholder="Taux" data-cy="taux"
+                                        v-model.trim="$v.modeAbonnementPrelevementModel.taux.$model">
+                                    </v-text-field>
+                                </div>
+
+                                <div class="form-group col-md-4">
+                                    <label for="debutAbonnement">Debut Abonnement</label>
+                                    <v-menu ref="menuDebutAbonnement" v-model="menuDebutAbonnement" :close-on-content-click="false" transition="scale-transition" offset-y max-width="290px" min-width="auto">
+                                        <template v-slot:activator="{ on, attrs }">
+                                            <v-text-field id="debutAbonnement" :error-messages="dateDebutAbonnementErrors" 
+                                                dense outlined v-model="dateDebutAbonnementPrevelement"  
+                                                placeholder="Debut de l'abonnement" append-icon="mdi-calendar"
+                                                readonly  v-bind="attrs" v-on="on" data-cy="debutAbonnement">
+                                            </v-text-field>
+                                        </template>
+                                        <v-date-picker @input="menuDebutAbonnement = false" v-model="dateDebutAbonnementPrevelement" no-title></v-date-picker>
+                                    </v-menu>
+                                </div>
+
+                                <div class="form-group col-md-4">
+                                    <label for="finAbonnement">Fin Abonnement</label>
+                                    <v-menu ref="menuFinAbonnement" v-model="menuFinAbonnement" :close-on-content-click="false" transition="scale-transition" offset-y max-width="290px" min-width="auto">
+                                        <template v-slot:activator="{ on, attrs }">
+                                            <v-text-field id="finAbonnement" :error-messages="dateFinAbonnementErrors"  dense outlined v-model="dateFinAbonnementPrevelement" 
+                                                placeholder="Fin de l'abonnement" append-icon="mdi-calendar"
+                                                readonly  v-bind="attrs" v-on="on" data-cy="finAbonnement">
+                                            </v-text-field>
+                                        </template>
+                                        <v-date-picker @input="menuFinAbonnement = false" v-model="dateFinAbonnementPrevelement" no-title></v-date-picker>
+                                    </v-menu>
+                                </div>
+                            </div>
+                        </div>
+                    </v-card-text>
 
                     <v-card-actions>
-                        <v-btn small rounded outlined>REINITIALISER</v-btn>
-                        <v-btn small type="submit" rounded outlined color="primary">VALIDER</v-btn>
+                        <v-btn small outlined>REINITIALISER</v-btn>
+                        <v-btn small type="submit" outlined color="primary">VALIDER</v-btn>
                     </v-card-actions>
                 </v-card>
             </v-container>
@@ -236,7 +283,7 @@ export default {
                 this.abonnementObject.datas = [];
                 this.modeAbonnementPeriodiqueModel.typeModeAbonnementDesignation = this.typeAbonnement;
                 this.abonnementObject.datas.push(this.modeAbonnementPeriodiqueModel);
-                await axios.post(API_CREER_MODE_ABONNEMENT, this.abonnementObject , { headers : HEADERS }).then((response) => {
+                await axios.post(API_CREER_MODE_ABONNEMENT, this.abonnementObject , { headers : HEADERS(this.$store.state.userAuthentified.token) }).then((response) => {
                     if (response.status == 200) {
                         if (response.data.status.code == 800) {
                             this.successMsg = response.data.status.message
@@ -294,8 +341,7 @@ export default {
                 this.abonnementObject.datas = [];
                 this.modeAbonnementPrelevementModel.typeModeAbonnementDesignation = this.typeAbonnement;
                 this.abonnementObject.datas.push(this.modeAbonnementPrelevementModel); 
-                await axios.post(API_CREER_MODE_ABONNEMENT, this.abonnementObject , { headers : HEADERS }).then((response) => {
-                    console.log(response)
+                await axios.post(API_CREER_MODE_ABONNEMENT, this.abonnementObject , { headers : HEADERS(this.$store.state.userAuthentified.token) }).then((response) => {
                     if (response.status == 200) {
                         if (response.data.status.code == 800) {
                             this.successMsg = response.data.status.message
@@ -353,7 +399,7 @@ export default {
         //OBTENIR REFERENCE DESIGNATION ABONNEMENT
         async obtenirReferenceAbonnementList(){
             this.objectToSendReferenceAbonnement.datas.push(this.referenceAbonnement)
-            await axios.post(API_OBTENIR_REFERENCE_PAR_PAR_FAMILLE, this.objectToSendReferenceAbonnement , { headers : HEADERS }).then((response) => {
+            await axios.post(API_OBTENIR_REFERENCE_PAR_PAR_FAMILLE, this.objectToSendReferenceAbonnement , { headers : HEADERS(this.$store.state.userAuthentified.token) }).then((response) => {
                 this.referenceAbonnementList = response.data.items;
             }).catch((e) => {
                 this.errorMsg = e ;
@@ -367,7 +413,7 @@ export default {
         //OBTENIR REFERENCE DESIGNATION PERIODICITÉ
         async obtenirReferencePeriodicteAbonnementList(){
             this.objectToSendReferencePeriodicite.datas.push(this.referencePeriodiciteAbonnement)
-            await axios.post(API_OBTENIR_REFERENCE_PAR_PAR_FAMILLE, this.objectToSendReferencePeriodicite).then((response) => {
+            await axios.post(API_OBTENIR_REFERENCE_PAR_PAR_FAMILLE, this.objectToSendReferencePeriodicite , { headers : HEADERS(this.$store.state.userAuthentified.token) }).then((response) => {
                 this.referencePeriodiciteList = response.data.items;
             }).catch((e) => {
                 this.errorMsg = e ;

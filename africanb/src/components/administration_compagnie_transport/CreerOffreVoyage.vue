@@ -23,7 +23,8 @@
                                 <v-textarea 
                                     id="descriptionOffre" data-cy="descriptionOffre"
                                     :error-messages="descriptionOffreVoyageErrors" class="my_input"
-                                    dense outlined color="primary" placeholder="Description de l'offre">
+                                    dense outlined color="primary" placeholder="Description de l'offre"
+                                    v-model.trim="$v.offreVoyage.description.$model">
                                 </v-textarea>
                             </div>
 
