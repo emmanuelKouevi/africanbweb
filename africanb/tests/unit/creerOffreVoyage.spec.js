@@ -42,5 +42,5 @@ describe("Tester le composant CreerOffreVoyage.vue", () => {
         expect(wrapper.vm.offreVoyage.villeDepartDesignation).toBe(gareDepart);
         expect(wrapper.vm.offreVoyage.villeDestinationDesignation).toBe(gareArrivee);
     })
-})
+});
   

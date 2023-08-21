@@ -182,7 +182,7 @@ export default {
 
         // RECUPERER LA LISTE DES FONCTIONNALITÉS
         async getAllFunctionnalites(){
-            await axios.post(API_GET_ALL_FUNCTIONNALITIES, {}, { headers : HEADERS } ).then((response) => {
+            await axios.post(API_GET_ALL_FUNCTIONNALITIES, {}, { headers : HEADERS(this.$store.state.userAuthentified.token) } ).then((response) => {
                 if (response.status == 200) {
                     if (response.data.status.code != 800) {
                         this.errorMsg = response.data.status.message
@@ -278,7 +278,7 @@ export default {
         //CREER UN ROLE UTILISATEUR
         async createUserRole(){
             this.overlay = true;
-            await axios.post(API_CREATE_USER_ROLE, this.userRoleDataToSend , { headers : HEADERS }).then((response) => {
+            await axios.post(API_CREATE_USER_ROLE, this.userRoleDataToSend , { headers : HEADERS(this.$store.state.userAuthentified.token) }).then((response) => {
                 if (response.status == 200) {
                     if (response.data.status.code == 800) {
                         this.successMsg = response.data.status.message

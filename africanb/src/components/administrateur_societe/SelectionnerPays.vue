@@ -60,7 +60,7 @@ export default {
         // RECUPERER LA LISTE DES PAYS ENREGISTRÉS
         async readAllPaysFromApi(){
             this.loading = false
-            await axios.post(API_OBTENIR_LISTE_DES_PAYS_DISPONIBLE, this.objectValue , { headers : HEADERS }).then((response) => {
+            await axios.post(API_OBTENIR_LISTE_DES_PAYS_DISPONIBLE, this.objectValue , { headers : HEADERS(this.$store.state.userAuthentified.token) }).then((response) => {
                 this.paysList = response.data.items
             }).catch((e) => {
                 this.errorMsg = e ;

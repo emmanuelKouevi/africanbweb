@@ -38,7 +38,7 @@
 <script>
 import axios from "axios";
 import $ from 'jquery';
-import { API_CREER_DOCUMENT_TRANSPORT } from '../globalConfig/globalConstConfig'
+import { API_CREER_DOCUMENT_TRANSPORT , HEADERS } from '../globalConfig/globalConstConfig'
 
 export default {
     name:"DocumentAttestionTransport",
@@ -90,11 +90,7 @@ export default {
             formData.append('raisonSociale', this.compagnieTransportRaisonSociale);
 
             await axios.post(API_CREER_DOCUMENT_TRANSPORT , formData , {
-                headers:{
-                    'Content-Type': 'multipart/form-data',
-                    'server_id' : 'backend@africanb',
-                    'client_id' : 'frontend@africanb'
-                }
+                headers:HEADERS(this.$store.state.userAuthentified.token)
             }).then((response) => {
                 if (response.status == 200) {
                     if (response.data.status.code == 800) {

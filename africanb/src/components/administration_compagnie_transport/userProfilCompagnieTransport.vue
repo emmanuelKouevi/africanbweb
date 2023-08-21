@@ -101,7 +101,7 @@ export default {
         async updateUserProfil(){
             this.overlay = true;
             this.userDataUpdating.datas.push(this.userUpdating)
-            await axios.put(API_UPDATE_USER, this.userDataUpdating , { headers : HEADERS }).then((response) => {
+            await axios.put(API_UPDATE_USER, this.userDataUpdating , { headers : HEADERS(this.$store.state.userAuthentified.token) }).then((response) => {
                 if (response.status == 200) {
                     if (response.data.status.code == 800) {
                         this.successMsg = response.data.status.message

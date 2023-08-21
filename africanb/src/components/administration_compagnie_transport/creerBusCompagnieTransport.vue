@@ -199,7 +199,7 @@ export default {
         // ASSOCIER DES BUS À UNE OFFRE DE VOYAGE
         async associerBusOffreVoyage(){
             this.overlay = true ;
-            await axios.post(API_ASSOCIER_BUS_OFFRE_VOYAGE, this.busObject , { headers : HEADERS }).then((response) => {
+            await axios.post(API_ASSOCIER_BUS_OFFRE_VOYAGE, this.busObject , { headers : HEADERS(this.$store.state.userAuthentified.token) }).then((response) => {
                 if (response.status == 200) {
                     if (response.data.status.code == 800) {
                         this.successMsg = response.data.status.message
@@ -248,7 +248,7 @@ export default {
 
         //RECUPERER LA LISTE DES OFFRES DE VOYAGES PAR COMPAGNIE DE TRANSPORT
         async obtenirOffreVoyageParCompagnieTransport(){
-            await axios.post(API_RECUPERER_LISTE_OFFRE_VOYAGE, this.offreVoyageObject , { headers : HEADERS } ).then((response) => {
+            await axios.post(API_RECUPERER_LISTE_OFFRE_VOYAGE, this.offreVoyageObject , { headers : HEADERS(this.$store.state.userAuthentified.token) } ).then((response) => {
                 if (response.status == 200) {
                     if (response.data.status.code != 800) {
                         this.errorMsg = response.data.status.message

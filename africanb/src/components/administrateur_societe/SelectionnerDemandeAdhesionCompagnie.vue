@@ -61,7 +61,7 @@ export default {
         // OBTENIR LA LISTE DES DEMANDES D'ADHESIONS VALIDÉES
         async obtenirDemandeAdhesionValidees(){
             this.loading = false;
-            axios.post(API_OBTENIR_LISTE_DES_DEMANDES_ADHESIONS_VALIDEES , this.options, { headers : HEADERS }).then((response) => {
+            axios.post(API_OBTENIR_LISTE_DES_DEMANDES_ADHESIONS_VALIDEES , this.options, { headers : HEADERS(this.$store.state.userAuthentified.token) }).then((response) => {
                 if (response.status == 200) {
                     if (response.data.status.code != 800) {
                         this.errorMsg = response.data.status.message

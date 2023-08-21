@@ -71,7 +71,7 @@ export default {
         //OBTENIR LISTE DES OFFRES DE VOYAGES DISPONIBLES PAR COMPAGNIE
         async obtenirOffreVoyageListParCompagnie(){
             this.loading = true;
-            await axios.post(API_RECUPERER_LISTE_OFFRE_VOYAGE, this.offreVoyageObject , { headers : HEADERS }).then((response) => {
+            await axios.post(API_RECUPERER_LISTE_OFFRE_VOYAGE, this.offreVoyageObject , { headers : HEADERS(this.$store.state.userAuthentified.token) }).then((response) => {
                 if (response.status == 200) {
                     if (response.data.status.code != 800) {
                         this.errorMsg = response.data.status.message
@@ -103,7 +103,7 @@ export default {
             }
             offreActived.id = offreVoyage.id
             this.offreVoyageToActived.datas.push(offreActived)
-            axios.post(API_ACTIVER_OFFRE_DE_VOYAGE ,this.offreVoyageToActived , { headers : HEADERS }).then((response) => {
+            axios.post(API_ACTIVER_OFFRE_DE_VOYAGE ,this.offreVoyageToActived , { headers : HEADERS(this.$store.state.userAuthentified.token) }).then((response) => {
                 if (response.status == 200) {
                     if (response.data.status.code != 800) {
                         this.$swal.fire('Activation',response.data.status.message,'error')

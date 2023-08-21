@@ -184,7 +184,7 @@ export default {
         async enregistrerProgrammeOffreVoyage(){
             this.programmeObject.datas = this.programmeOffreVoyageList ;
             this.overlay = true ;
-            await axios.post(API_CREER_PROGRAMME_OFFRE_VOYAGE, this.programmeObject , { headers : HEADERS }).then((response) => {
+            await axios.post(API_CREER_PROGRAMME_OFFRE_VOYAGE, this.programmeObject , { headers : HEADERS(this.$store.state.userAuthentified.token) }).then((response) => {
                 if (response.status == 200) {
                     if (response.data.status.code == 800) {
                         this.successMsg = response.data.status.message
@@ -259,7 +259,7 @@ export default {
         // RECUPERER LA LISTE DES JOURS RATTACHÉS A UNE OFFRE DE VOYAGE (PAR OFFRE VOYAGE)
         async recupererJourSemaineParOfrreVoyage(){
             this.jourSemaineParOffreVoyage.data.designation = this.offreVoyageReference;
-            await axios.post(API_OBENIR_JOUR_SEMAINE_PAR_OFFRE_VOYAGE, this.jourSemaineParOffreVoyage , { headers : HEADERS }).then((response) => {
+            await axios.post(API_OBENIR_JOUR_SEMAINE_PAR_OFFRE_VOYAGE, this.jourSemaineParOffreVoyage , { headers : HEADERS(this.$store.state.userAuthentified.token) }).then((response) => {
                 if (response.status == 200) {
                     if (response.data.status.code != 800) {
                         this.errorMsg = response.data.status.message
@@ -278,7 +278,7 @@ export default {
 
         // RECUPERER LA LISTE DES OFFRES DE VOYAGES DISPONIBLES PAR COMPAGNIE DE TRANSPORT
         async obtenirOffreVoyageParCompagnieTransport(){
-            await axios.post(API_RECUPERER_LISTE_OFFRE_VOYAGE, this.offreVoyageObject , { headers : HEADERS }).then((response) => {
+            await axios.post(API_RECUPERER_LISTE_OFFRE_VOYAGE, this.offreVoyageObject , { headers : HEADERS(this.$store.state.userAuthentified.token) }).then((response) => {
                 if (response.status == 200) {
                     if (response.data.status.code != 800) {
                         this.errorMsg = response.data.status.message

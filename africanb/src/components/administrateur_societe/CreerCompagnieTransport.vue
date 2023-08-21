@@ -183,7 +183,7 @@ export default {
 
         // OBTENIR LA LISTE DES VILLES DISPONIBLES
         async obtenirListeVillesDispo(){
-            await axios.post(API_OBTENIR_LISTE_DES_VILLES_DISPONIBLE, this.defaultObject, { headers : HEADERS }).then((response) => {
+            await axios.post(API_OBTENIR_LISTE_DES_VILLES_DISPONIBLE, this.defaultObject, { headers : HEADERS(this.$store.state.userAuthentified.token) }).then((response) => {
                 this.villesList = response.data.items
             }).catch((e) => {
                 this.errorMsg = e ;
@@ -198,7 +198,7 @@ export default {
         async creerCompagnieTransport(){
             this.objectContainList.datas.push(this.compagnieTransport)
             this.overlay = true ;
-            await axios.post(API_CREER_COMPAGNIE_TRANSPORT, this.objectContainList, { headers : HEADERS }).then((response) => {
+            await axios.post(API_CREER_COMPAGNIE_TRANSPORT, this.objectContainList, { headers : HEADERS(this.$store.state.userAuthentified.token) }).then((response) => {
                 if (response.status == 200) {
                     if (response.data.status.code == 800) {
                         this.successMsg = response.data.status.message

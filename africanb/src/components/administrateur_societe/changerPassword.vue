@@ -106,7 +106,7 @@ export default {
             this.userReset.data.email = this.userParams.email;
             this.userReset.data.oldPassWord = this.userParams.oldPassWord;
             this.userReset.data.newPassWord = this.userParams.newPassWord;
-            await axios.post(API_RESET_PASSWORD_USER, this.userReset, { headers : HEADERS } ).then((response) => {
+            await axios.post(API_RESET_PASSWORD_USER, this.userReset, { headers : HEADERS(this.$store.state.userAuthentified.token) } ).then((response) => {
                 if (response.status == 200) {
                     if (response.data.status.code == 800) {
                         this.successMsg = response.data.status.message

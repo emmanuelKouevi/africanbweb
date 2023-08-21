@@ -385,7 +385,7 @@ export default {
         async modifierOffreVoyageInfo(){
             this.offreVoyageToModify.datas.push(this.offreVoyage);
             this.overlay = true ;
-            await axios.put(API_CREER_OFFRE_VOYAGE , this.offreVoyageToModify , { headers : HEADERS }).then((response) => {
+            await axios.put(API_CREER_OFFRE_VOYAGE , this.offreVoyageToModify , { headers : HEADERS(this.$store.state.userAuthentified.token) }).then((response) => {
                 if (response.status == 200) {
                     if (response.data.status.code == 800) {
                         this.successMsg = response.data.status.message
@@ -468,7 +468,7 @@ export default {
         async obtenirPrixEtModeParOffreVoyage(){
             this.loadingModePrix = true
             this.offreVoyageObject.data.designation = this.offreVoyage.designation;
-            await axios.post(API_RECUPERER_PRIX_PAR_OFFRE_VOYAGE, this.offreVoyageObject).then((response) => {
+            await axios.post(API_RECUPERER_PRIX_PAR_OFFRE_VOYAGE, this.offreVoyageObject , { headers : HEADERS(this.$store.state.userAuthentified.token) }).then((response) => {
                 if (response.data.status.code == 800) {
                     this.prixEtModeParOffreVoyageList = response.data.items
                 }else{
@@ -489,7 +489,7 @@ export default {
         async obtenirJourSemaineParOffreVoyage(){
             this.loadingProgrammeOffreVoyage = true
             this.offreVoyageObject.data.designation = this.offreVoyage.designation;
-            await axios.post(API_OBENIR_JOUR_SEMAINE_PAR_OFFRE_VOYAGE , this.offreVoyageObject , { headers : HEADERS }).then((response) => {
+            await axios.post(API_OBENIR_JOUR_SEMAINE_PAR_OFFRE_VOYAGE , this.offreVoyageObject , { headers : HEADERS(this.$store.state.userAuthentified.token) }).then((response) => {
                 if (response.data.status.code == 800) {
                     this.jourSemainesParOffreVoyagesList = response.data.items
                 }else{
@@ -512,7 +512,7 @@ export default {
         async obtenirVilleEscaleParOffreVoyage(){
             this.loadingVilleEscale = true
             this.offreVoyageObject.data.designation = this.offreVoyage.designation;
-            await axios.post(API_RECUPERER_VILLE_ESCALE_PAR_OFFRE_VOYAGE, this.offreVoyageObject , { headers : HEADERS }).then((response) => {
+            await axios.post(API_RECUPERER_VILLE_ESCALE_PAR_OFFRE_VOYAGE, this.offreVoyageObject , { headers : HEADERS(this.$store.state.userAuthentified.token) }).then((response) => {
                 if (response.data.status.code == 800) {
                     this.villesEscalesParOffreVoyagesList = response.data.items;
                 }else{
@@ -534,7 +534,7 @@ export default {
         async obtenirProprietesOffreVoyage(){
             this.loadingProprieteOffreVoyage = true
             this.offreVoyageObject.data.designation = this.offreVoyage.designation;
-            await axios.post(API_RECUPERER_PROPRIETE_PAR_OFFRE_VOYAGE, this.offreVoyageObject , { headers : HEADERS }).then((response) => {
+            await axios.post(API_RECUPERER_PROPRIETE_PAR_OFFRE_VOYAGE, this.offreVoyageObject , { headers : HEADERS(this.$store.state.userAuthentified.token) }).then((response) => {
                 if (response.data.status.code == 800) {
                     this.proprieteParOffreVoyageList = response.data.items
                 }else{
@@ -555,7 +555,7 @@ export default {
         async obtenirBusOffreVoyage(){
             this.loadingBusOffreVoyage = true
             this.offreVoyageObject.data.designation = this.offreVoyage.designation;
-            await axios.post(API_RECUPERER_LISTE_BUS_PAR_OFFRE_VOYAGE, this.offreVoyageObject , { headers : HEADERS }).then((response) => {
+            await axios.post(API_RECUPERER_LISTE_BUS_PAR_OFFRE_VOYAGE, this.offreVoyageObject , { headers : HEADERS(this.$store.state.userAuthentified.token) }).then((response) => {
                 if (response.data.status.code == 800) {
                     this.busParOffreVoyageList = response.data.items
                 }else{
@@ -577,7 +577,7 @@ export default {
         //OBTENIR REFERENCE DESIGNATION TYPE OFFRE DE VOYAGE
         async obtenirTypeOffreVoyageList(){
             this.objectToSend.datas.push(this.referenceTypeOffreVoyage)
-            await axios.post(API_OBTENIR_REFERENCE_PAR_PAR_FAMILLE, this.objectToSend , { headers : HEADERS }).then((response) => {
+            await axios.post(API_OBTENIR_REFERENCE_PAR_PAR_FAMILLE, this.objectToSend , { headers : HEADERS(this.$store.state.userAuthentified.token) }).then((response) => {
                 this.referenceTypeOffreVoyageList = response.data.items
             }).catch((e) => {
                 this.errorMsg = e ;

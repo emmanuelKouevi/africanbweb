@@ -84,7 +84,7 @@ export default {
         // CREATION D'UN PAYS VIA UN SERVICE WEB
         async creerPays(){
             this.objectContainList.datas.push(this.pays);
-            await axios.post(API_CREER_PAYS, this.objectContainList , { headers : HEADERS }).then((response) => {
+            await axios.post(API_CREER_PAYS, this.objectContainList , { headers : HEADERS(this.$store.state.userAuthentified.token) }).then((response) => {
                 if (response.status == 200) {
                     if (response.data.status.code == 800) {
                         this.successMsg = response.data.status.message

@@ -3,25 +3,41 @@
         <v-form @submit.prevent="submitForm">
             <v-container fluid>
                 <v-card width="1200" elevation="3">
-                    <v-card-title>MODE DE PAIEMENTS</v-card-title>
+                    <v-card-title><h5 class="font-weight-bold">MODE DE PAIEMENTS</h5></v-card-title>
                     <v-card-subtitle>Définissez vos modes de paiements</v-card-subtitle>
-                    <v-container>
-                        <v-row>
-                            <v-col>
-                                <v-text-field :error-messages="designationPaiementErrors" rounded dense outlined label="Désignation" v-model.trim="$v.modePaiementModel.designation.$model"></v-text-field>
-                            </v-col>
-                            <v-col>
-                                <v-text-field :error-messages="telephoneGeneriqueErrors" rounded dense outlined color="teal" label="Numéro de téléphone" v-model.trim="$v.modePaiementModel.telephoneGenerique.$model"></v-text-field>
-                            </v-col>
-                            <v-col>
-                                <v-select :items="referenceTypePaiementList" item-value="designation" item-text="designation" :error-messages="typePaiementErrors" rounded dense outlined color="teal" label="Type de paiement" v-model.trim="$v.modePaiementModel.typeModePaiementDesignation.$model"></v-select>
-                            </v-col>
-                        </v-row>
-                    </v-container>
+
+                    <v-card-text>
+                        <div class="form-row">
+                            <div class="form-group col-md-4">
+                                <label for="referencePaiement">Réference Paiement:</label>
+                                <v-text-field :error-messages="designationPaiementErrors" dense outlined 
+                                    placeholder="Désignation" v-model.trim="$v.modePaiementModel.designation.$model"
+                                    id="referencePaiement" data-cy="referencePaiement">
+                                </v-text-field>
+                            </div>
+
+                            <div class="form-group col-md-4">
+                                <label for="phoneNumber">N° de Téléphone:</label>
+                                <v-text-field :error-messages="telephoneGeneriqueErrors" id="phoneNumber"
+                                    dense outlined color="primary" placeholder="Numéro de téléphone" class="my"
+                                    v-model.trim="$v.modePaiementModel.telephoneGenerique.$model" data-cy="phoneNumber">
+                                </v-text-field>
+                            </div>
+
+                            <div class="form-group col-md-4">
+                                <label for="typePaiement">Type de paiement:</label>
+                                <v-select :items="referenceTypePaiementList" id="typePaiement"
+                                    item-value="designation" item-text="designation" data-cy="typePaiement"
+                                    :error-messages="typePaiementErrors" dense outlined color="teal" 
+                                    placeholder="Type de paiement" v-model.trim="$v.modePaiementModel.typeModePaiementDesignation.$model">
+                                </v-select>
+                            </div>
+                        </div>
+                    </v-card-text>
 
                     <v-card-actions>
-                        <v-btn small rounded outlined>REINITIALISER</v-btn>
-                        <v-btn small type="submit" rounded outlined color="primary">CREER</v-btn>
+                        <v-btn small outlined>REINITIALISER</v-btn>
+                        <v-btn small type="submit" outlined color="primary">VALIDER</v-btn>
                     </v-card-actions>
                 </v-card>
             </v-container>
@@ -106,7 +122,7 @@ export default {
         async creerModePaiement(){
             this.modePaiementObject.datas.push(this.modePaiementModel);
             this.overlay = true ;
-            await axios.post(API_CREER_MODE_PAIEMENT, this.modePaiementObject , { headers : HEADERS }).then((response) => {
+            await axios.post(API_CREER_MODE_PAIEMENT, this.modePaiementObject , { headers : HEADERS(this.$store.state.userAuthentified.token) }).then((response) => {
                 if (response.status == 200) {
                     if (response.data.status.code == 800) {
                         this.successMsg = response.data.status.message
@@ -156,7 +172,7 @@ export default {
         //OBTENIR REFERENCE DESIGNATION MODE DE PAIEMENT
         async obtenirReferenceModePaiementList(){
             this.objectToSendReferenceModePaiement.datas.push(this.referenceModePaiement)
-            await axios.post(API_OBTENIR_REFERENCE_PAR_PAR_FAMILLE, this.objectToSendReferenceModePaiement , { headers : HEADERS }).then((response) => {
+            await axios.post(API_OBTENIR_REFERENCE_PAR_PAR_FAMILLE, this.objectToSendReferenceModePaiement , { headers : HEADERS(this.$store.state.userAuthentified.token) }).then((response) => {
                 this.referenceTypePaiementList = response.data.items;
             }).catch((e) => {
                 this.errorMsg = e ;

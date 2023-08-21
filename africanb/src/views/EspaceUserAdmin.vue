@@ -272,12 +272,12 @@ export default {
     }
 
     .list-item-title{
-        font-family: 'Roboto';
+        font-family: 'Raleway';
         font-size: 20px;
         
     }
 
     .simple_title{
-        font-family: 'Times New Roman', Times, serif;
+        font-family: 'Raleway';
     }
 </style>

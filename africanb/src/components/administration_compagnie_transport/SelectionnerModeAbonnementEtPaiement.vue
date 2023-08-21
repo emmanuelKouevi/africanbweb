@@ -144,7 +144,7 @@ export default {
         // RECUPERER LA LISTE DES MODES D'ABONNEMENTS ENREGISTRÉS PAR COMPAGNIE DE TRANSPORT
         async obtenirAbondemmentListParCompagnieTransport(){
             this.loading = true;
-            axios.post(API_OBTENIR_MODE_ABONNEMENT_PAR_COMPAGNIE, this.abonnementListObject , { headers : HEADERS }).then((response) => {
+            axios.post(API_OBTENIR_MODE_ABONNEMENT_PAR_COMPAGNIE, this.abonnementListObject , { headers : HEADERS(this.$store.state.userAuthentified.token) }).then((response) => {
                 if (response.status == 200) {
                     if (response.data.status.code != 800) {
                         this.errorMsg = response.data.status.message
@@ -173,7 +173,7 @@ export default {
         // RECUPERER LA LISTE DES MODES DE PAIEMENT DISPONIBLE PAR COMPAGNIE DE TRANSPORT
         async obtenirPaiementListParCompagnieTransport(){
             this.loading = true;
-            axios.post(API_OBTENIR_MODE_PAIEMENT_PAR_COMPAGNIE, this.paiementListObject , { headers : HEADERS }).then((response) => {
+            axios.post(API_OBTENIR_MODE_PAIEMENT_PAR_COMPAGNIE, this.paiementListObject , { headers : HEADERS(this.$store.state.userAuthentified.token) }).then((response) => {
                 if (response.status == 200) {
                     if (response.data.status.code != 800) {
                         this.errorMsg = response.data.status.message

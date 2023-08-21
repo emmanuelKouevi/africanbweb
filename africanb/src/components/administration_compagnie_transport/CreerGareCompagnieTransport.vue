@@ -126,7 +126,7 @@ export default {
         async creerGareCompagnieTransport(){
             this.gareTransportToSend.datas.push(this.gareTransportModel)
             this.overlay = true ;
-            await axios.post(API_CREER_GARE_COMPAGNIE_TRANSPORT, this.gareTransportToSend , { headers : HEADERS }).then((response) => {
+            await axios.post(API_CREER_GARE_COMPAGNIE_TRANSPORT, this.gareTransportToSend , { headers : HEADERS(this.$store.state.userAuthentified.token) }).then((response) => {
                 if (response.status == 200) {
                     if (response.data.status.code == 800) {
                         this.successMsg = response.data.status.message

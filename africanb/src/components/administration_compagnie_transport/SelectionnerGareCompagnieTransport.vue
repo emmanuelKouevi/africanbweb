@@ -58,7 +58,7 @@ export default {
         // RECUPERER LA LISTE DES GARES ENREGISTRÉS PAR COMPAGNIE DE TRANSPORT
         async obtenirGareListParCompagnieTransport(){
             this.loading = true;
-            axios.post(API_RECUPERER_LISTE_GARES_PAR_COMPAGNIE, this.gareListObject , { headers : HEADERS }).then((response) => {
+            axios.post(API_RECUPERER_LISTE_GARES_PAR_COMPAGNIE, this.gareListObject , { headers : HEADERS(this.$store.state.userAuthentified.token) }).then((response) => {
                 if (response.status == 200) {
                     if (response.data.status.code != 800) {
                         this.errorMsg = response.data.status.message

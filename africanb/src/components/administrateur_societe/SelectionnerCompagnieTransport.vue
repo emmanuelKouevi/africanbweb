@@ -75,7 +75,7 @@ export default {
         // RECUPERER LA LISTE DE TOUTES LES COMPAGNIES EN ATTENTES
         readAllCompagniesTransportFromApi(){
             this.loading = false;
-            axios.post(API_RECUPERER_LISTE_COMPAGNIE_TRANSPORT , this.options, { headers : HEADERS } ).then((response) => {
+            axios.post(API_RECUPERER_LISTE_COMPAGNIE_TRANSPORT , this.options, { headers : HEADERS(this.$store.state.userAuthentified.token) } ).then((response) => {
                 if (response.status == 200) {
                     if (response.data.status.code != 800) {
                         this.errorMsg = response.data.status.message
@@ -101,7 +101,7 @@ export default {
         // VALIDER UNE COMPAGNIE DE TRANSPORT
         async validerCompagnieTransport(compagnie){
             this.compagnieToValidate.data.id = compagnie.id
-            axios.post(API_VALIDER_DEMANDE_ADHESION_COMPAGNIE ,this.compagnieToValidate , { headers : HEADERS }).then((response) => {
+            axios.post(API_VALIDER_DEMANDE_ADHESION_COMPAGNIE ,this.compagnieToValidate , { headers : HEADERS(this.$store.state.userAuthentified.token) }).then((response) => {
                 if (response.status == 200) {
                     if (response.data.status.code != 800) {
                         this.$swal.fire('Validation',response.data.status.message,'error')

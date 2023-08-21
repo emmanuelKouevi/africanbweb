@@ -72,7 +72,7 @@ export default {
         // ACTIVER UN UTILISATEUR
         async toActivedUser(userItem){
             this.toActive.data.login = userItem.login
-            await axios.post(API_ACTIVATE_USER, this.toActive , { headers : HEADERS }).then((response) => {
+            await axios.post(API_ACTIVATE_USER, this.toActive , { headers : HEADERS(this.$store.state.userAuthentified.token) }).then((response) => {
                 if (response.status == 200) {
                     if (response.data.status.code != 800) {
                         this.$swal.fire('Activation',response.data.status.message,'error')
@@ -96,7 +96,7 @@ export default {
         // RECUPERER LA LISTE DES UTILISATEURS CREES SUR LA PLATEFORME
         async toGetAllUsersCreated(){
             this.loading = true;
-            await axios.post(API_GET_ALL_USERS_CREATED, this.simpleObjectToSend, { headers : HEADERS }).then((response) => {
+            await axios.post(API_GET_ALL_USERS_CREATED, this.simpleObjectToSend, { headers : HEADERS(this.$store.state.userAuthentified.token) }).then((response) => {
                 if (response.status == 200) {
                     if (response.data.status.code != 800) {
                         this.errorMsg = response.data.status.message

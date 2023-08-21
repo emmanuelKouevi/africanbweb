@@ -102,7 +102,7 @@ export default {
         async creerBagage(){
             this.bagageToSend.datas.push(this.bagageModel)
             this.overlay = true ;
-            await axios.post(API_CREER_BAGAGE, this.bagageToSend , { headers : HEADERS }).then((response) => {
+            await axios.post(API_CREER_BAGAGE, this.bagageToSend , { headers : HEADERS(this.$store.state.userAuthentified.token) }).then((response) => {
                 if (response.status == 200) {
                     if (response.data.status.code == 800) {
                         this.successMsg = response.data.status.message
@@ -152,7 +152,7 @@ export default {
         //OBTENIR REFERENCE DESIGNATION BAGAGE
         async obtenirReferenceBagageList(){
             this.objectToSendReferenceBagage.datas.push(this.referenceBagage)
-            await axios.post(API_OBTENIR_REFERENCE_PAR_PAR_FAMILLE, this.objectToSendReferenceBagage , { headers : HEADERS }).then((response) => {
+            await axios.post(API_OBTENIR_REFERENCE_PAR_PAR_FAMILLE, this.objectToSendReferenceBagage , { headers : HEADERS(this.$store.state.userAuthentified.token) }).then((response) => {
                 this.referenceBagageList = response.data.items
             }).catch((e) => {
                 this.errorMsg = e ;

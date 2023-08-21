@@ -145,7 +145,7 @@ export default {
                 }, 4000)
             }else{
                 this.jourSemaineObject.datas = this.jourSemaineSelectionnesList;
-                await axios.post(API_CREER_JOUR_SEMAINE_OFFRE_VOYAGE, this.jourSemaineObject , { headers : HEADERS }).then((response) => {
+                await axios.post(API_CREER_JOUR_SEMAINE_OFFRE_VOYAGE, this.jourSemaineObject , { headers : HEADERS(this.$store.state.userAuthentified.token) }).then((response) => {
                     if (response.status == 200) {
                         if (response.data.status.code == 800) {
                             this.successMsg = response.data.status.message
@@ -197,7 +197,7 @@ export default {
         //OBTENIR LISTE DES JOURS DE LA SEMAINE
         async obtenirJourSemaineList(){
             this.objectToSend.datas.push(this.referenceJourSemaine);
-            await axios.post(API_OBTENIR_REFERENCE_PAR_PAR_FAMILLE , this.objectToSend , { headers : HEADERS }).then((response) => {
+            await axios.post(API_OBTENIR_REFERENCE_PAR_PAR_FAMILLE , this.objectToSend , { headers : HEADERS(this.$store.state.userAuthentified.token) }).then((response) => {
                 this.jourSemaineList = response.data.items;
             }).catch((e) => {
                 this.errorMsg = e ;
@@ -232,7 +232,7 @@ export default {
 
         // RECUPERER LA LISTE DES OFFRES DE VOYAGES DISPONIBLES PAR COMPAGNIE DE TRANSPORT
         async obtenirOffreVoyageParCompagnieTransport(){
-            await axios.post(API_RECUPERER_LISTE_OFFRE_VOYAGE, this.offreVoyageObject , { headers : HEADERS }).then((response) => {
+            await axios.post(API_RECUPERER_LISTE_OFFRE_VOYAGE, this.offreVoyageObject , { headers : HEADERS(this.$store.state.userAuthentified.token) }).then((response) => {
                 if (response.status == 200) {
                     if (response.data.status.code != 800) {
                         this.errorMsg = response.data.status.message
