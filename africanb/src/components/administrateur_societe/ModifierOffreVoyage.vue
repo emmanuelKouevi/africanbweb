@@ -611,7 +611,7 @@ export default {
 
         async obtenirListeDesVillesDisponible(){
             this.loading = false
-            await axios.post(API_OBTENIR_LISTE_DES_VILLES_DISPONIBLE, this.simpleObject , { headers : HEADERS(this.$store.state.userAuthentified.token)}).then((response) => {
+            await axios.post(API_OBTENIR_LISTE_DES_VILLES_DISPONIBLE, this.simpleObject , { headers : HEADERS }).then((response) => {
                 this.villesList = response.data.items
             }).catch((e) => {
                 this.errorMsg = e ;

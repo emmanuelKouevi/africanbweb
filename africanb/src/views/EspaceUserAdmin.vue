@@ -118,9 +118,9 @@ import axios from 'axios';
 import { API_GET_FUNCTIONNALITY_BY_ROLE , HEADERS } from '../components/globalConfig/globalConstConfig'
 import { FUNCTIONNALITY_CREATE_OFFRE_VOYAGE , FUNCTIONNALITY_CREATE_VILLE , FUNCTIONNALITY_LISTING_VILLE , FUNCTIONNALITY_RATTACHE_ATTESTION_TRANSPORT , FUNCTIONNALITY_CREATE_JOUR_OFFRE_VOYAGE , FUNCTIONNALITY_CREATE_PROGRAMME_OFFRE_VOYAGE } from '../components/globalConfig/constFunctionnalies'
 import { FUNCTIONNALITY_CREATE_USER_FUNCTION , FUNCTIONNALITY_CREATE_USER_ROLE , FUNCTIONNALITY_CREATE_USER_ACCOUNT , FUNCTIONNALITY_DEMANDE_ADHESION , FUNCTIONNALITY_CREATE_PAYS , FUNCTIONNALITY_LISTING_PAYS } from '../components/globalConfig/constFunctionnalies'
-import { FUNCTIONNALITY_CREATE_VILLE_ESCALE , FUNCTIONNALITY_CREATE_PRIX_OFFRE_VOYAGE , FUNCTIONNALITY_CREATE_BUS_OFFRE_VOYAGE  } from '../components/globalConfig/constFunctionnalies'
+import { FUNCTIONNALITY_CREATE_VILLE_ESCALE , FUNCTIONNALITY_CREATE_PRIX_OFFRE_VOYAGE , FUNCTIONNALITY_CREATE_BUS_OFFRE_VOYAGE } from '../components/globalConfig/constFunctionnalies'
 import { FUNCTIONNALITY_CREATE_CARACTERISTIQUE_OFFRE_VOYAGE , FUNCTIONNALITY_CREATE_GARE_TRANSPORT , FUNCTIONNALITY_LISTING_GARE_TRANSPORT, FUNCTIONNALITY_CREATE_BAGAGE , } from '../components/globalConfig/constFunctionnalies'
-import { FUNCTIONNALITY_CREATE_MODE_ABONNEMENT , FUNCTIONNALITY_CREATE_MODE_PAIEMENT , FUNCTIONNALITY_LISTING_MODE_PAIEMENT } from '../components/globalConfig/constFunctionnalies'
+import { FUNCTIONNALITY_CREATE_MODE_ABONNEMENT , FUNCTIONNALITY_CREATE_MODE_PAIEMENT , FUNCTIONNALITY_LISTING_MODE_PAIEMENT , FUNCTIONNALITY_LISTING_OFFRE_VOYAGE } from '../components/globalConfig/constFunctionnalies'
 export default {
     name:'EspaceUI',
     data(){
@@ -166,6 +166,10 @@ export default {
                 if (element.code == FUNCTIONNALITY_CREATE_OFFRE_VOYAGE) {
                     var createOffreVoyageFunction = { title : 'CREER UNE OFFRE DE VOYAGE' , icon : 'mdi-train-car' , navigation : '/creerOffreVoyage' };
                     globalFunctionnalities.push(createOffreVoyageFunction);
+                }
+                if (element.code == FUNCTIONNALITY_LISTING_OFFRE_VOYAGE) {
+                    var listingOffreVoyageFunction = { title : 'GESTION DES OFFRES' , icon : 'mdi-ticket' , navigation : '/selectionnerOffreVoyage' };
+                    globalFunctionnalities.push(listingOffreVoyageFunction);
                 }
                 if (element.code == FUNCTIONNALITY_CREATE_VILLE) {
                     var createTownFunction = { title : 'CREER UNE VILLE' , icon : 'mdi-domain' , navigation : '/creerVille' };
