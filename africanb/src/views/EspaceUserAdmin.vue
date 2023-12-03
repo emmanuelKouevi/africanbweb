@@ -121,6 +121,7 @@ import { FUNCTIONNALITY_CREATE_USER_FUNCTION , FUNCTIONNALITY_CREATE_USER_ROLE ,
 import { FUNCTIONNALITY_CREATE_VILLE_ESCALE , FUNCTIONNALITY_CREATE_PRIX_OFFRE_VOYAGE , FUNCTIONNALITY_CREATE_BUS_OFFRE_VOYAGE } from '../components/globalConfig/constFunctionnalies'
 import { FUNCTIONNALITY_CREATE_CARACTERISTIQUE_OFFRE_VOYAGE , FUNCTIONNALITY_CREATE_GARE_TRANSPORT , FUNCTIONNALITY_LISTING_GARE_TRANSPORT, FUNCTIONNALITY_CREATE_BAGAGE , } from '../components/globalConfig/constFunctionnalies'
 import { FUNCTIONNALITY_CREATE_MODE_ABONNEMENT , FUNCTIONNALITY_CREATE_MODE_PAIEMENT , FUNCTIONNALITY_LISTING_MODE_PAIEMENT , FUNCTIONNALITY_LISTING_OFFRE_VOYAGE } from '../components/globalConfig/constFunctionnalies'
+import { FUNCTIONNALITY_RESERVING_FROM_OFFRE_VOYAGE , FUNCTIONNALITY_SELECTION_RESERVATION_TICKET } from '../components/globalConfig/constFunctionnalies'
 export default {
     name:'EspaceUI',
     data(){
@@ -257,6 +258,14 @@ export default {
                 if (element.code == FUNCTIONNALITY_LISTING_MODE_PAIEMENT) {
                     var gestionPaiementEtAbonnementFunction = { title : 'MODE ABONNEMENT ET PAIEMENT' , icon : 'mdi-cash-sync' , navigation : '/selectionnerModeAbonnementEtPaiement' };
                     globalFunctionnalities.push(gestionPaiementEtAbonnementFunction);
+                }
+                if (element.code == FUNCTIONNALITY_RESERVING_FROM_OFFRE_VOYAGE) {
+                    var selectingFromTravel = { title : 'CONSULTER LES OFFRES' , icon : 'mdi-train-car' , navigation : '/selectionnerOffreVoyageReservation' };
+                    globalFunctionnalities.push(selectingFromTravel);
+                }
+                if (element.code == FUNCTIONNALITY_SELECTION_RESERVATION_TICKET) {
+                    var managingReservation = { title : 'GESTION DES RESERVATIONS' , icon : 'mdi-clipboard-list' , navigation : '/selectionnerReservationBillet' };
+                    globalFunctionnalities.push(managingReservation);
                 }
             });
             return globalFunctionnalities ; 

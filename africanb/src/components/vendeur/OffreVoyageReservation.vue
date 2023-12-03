@@ -1,0 +1,129 @@
+<template>
+    <v-app>
+        <v-container>
+            <v-card>
+                <v-card-title><span class="title_card">OFFRE DE VOYAGES DISPONIBLES</span></v-card-title>
+                <v-card-text>
+                    <v-data-table item-class="offreItem" :headers="headers" :loading="loading" :items="offreVoyageAvailableList">
+                        <template v-slot:[`item.actions`]="{ item }">
+                           <v-btn x-small color="teal"><small class="btn-label" @click="reserverTicket(item)">Réserver</small></v-btn>
+                        </template>
+                    </v-data-table>
+                </v-card-text>
+            </v-card>
+        </v-container>
+    </v-app>
+</template>
+
+<script>
+import { API_RECUPERER_LISTE_OFFRE_VOYAGE , HEADERS } from '../globalConfig/globalConstConfig'
+import axios from 'axios'
+import $ from 'jquery'
+    export default {
+        data(){
+            return{
+                loading:true,
+
+                errorMsg:false,
+                warningMsg:false,
+                successMsg:false,
+
+                search:'',
+                
+                headers:[
+                    {text : 'reference' , value : 'id'},
+                    {text : 'Designation' , value : 'designation'},
+                    {text : 'Type de l\'offre' , value : 'typeOffreVoyageDesignation'},
+                    {text : 'Ville de départ' , value : 'villeDepartDesignation'},
+                    {text : 'Ville d\'arrivée' , value : 'villeDestinationDesignation'},
+                    {text : 'Active' , value : 'isActived'},
+                    {text : 'Actions' , value : 'actions' , sortable : false}
+                ],
+
+                offreVoyageAvailableList:[],
+
+                offreVoyageObject:{
+                    data:{
+                        compagnieTransportRaisonSociale:"COMPAGNIE KOUEVI CT"
+                    }
+                },
+
+            }
+        }, 
+
+        methods:{
+            /*OBTENIR LA LISTE DES OFFRES DE VOYAGES DISPONIBLES POUR LES VENDEURS POUR 
+                QU'ILS PUISSENT PROCÉDER À LA RESERVATION DE BILLETS POUR LES CLIENTS
+            */  
+            async getOffreVoyageAvailables(){
+                this.loading = true;
+                await axios.post(API_RECUPERER_LISTE_OFFRE_VOYAGE, this.offreVoyageObject , { headers : HEADERS(this.$store.state.userAuthentified.token) }).then((response) => {
+                    if (response.status == 200) {
+                        if (response.data.status.code != 800) {
+                            this.errorMsg = response.data.status.message
+                            $(".alert-error").fadeIn();
+                            setTimeout(function(){
+                                $(".alert-error").fadeOut(); 
+                            }, 4000)
+                        }else{
+                            this.offreVoyageAvailableList = response.data.items;
+                        }
+                    }else{
+                        this.errorMsg = "Erreur";
+                        $(".alert-error").fadeIn();
+                        setTimeout(function(){
+                            $(".alert-error").fadeOut(); 
+                        }, 4000)
+                    }
+                }).catch((e) => {
+                    this.errorMsg = e
+                }).finally(() => {
+                    this.loading = false;   
+                })
+            },
+
+            storeOffreVoyageItem(item){
+                const parsedOffreSelected = JSON.stringify(item);
+                localStorage.setItem('offreVoyageSelected', parsedOffreSelected);
+            },
+
+            reserverTicket(offreVoyage){
+                this.storeOffreVoyageItem(offreVoyage);
+                this.$router.push({ path: "/reservationBillet"})
+            },
+
+            
+        },
+
+        mounted(){
+            this.getOffreVoyageAvailables()
+        }
+    }
+</script>
+
+<style scoped>
+    .myalert{
+        display: none;
+        z-index: 1900;
+    }
+
+    .alert-error{
+        position: fixed;
+        top: 25px;
+        right:2%;
+        width: 25%;
+    }
+
+    .title_card{
+        font-weight: bold;
+        font-size: 12px;
+    }
+
+    .offreItem{
+        font-size: 12px;
+    }
+
+    .btn-label{
+        color: white;
+    }
+</style>

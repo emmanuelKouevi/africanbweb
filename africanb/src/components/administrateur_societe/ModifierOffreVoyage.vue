@@ -591,7 +591,7 @@ export default {
         
 
         async editerOffreVoyage(){
-            if (localStorage.getItem("offreVoyage")) {
+            if (localStorage.getItem("offreVoyageSelected")) {
                 try {
                     const offreVoyageEditing = JSON.parse(localStorage.getItem("offreVoyage"));
                     this.offreVoyage.id = offreVoyageEditing.id;

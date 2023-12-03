@@ -51,7 +51,10 @@ import associerBusCompagnieTransport from '../components/administration_compagni
 import resetPasswordUserCompagnie from '../components/administration_compagnie_transport/changerPasswordCompagnieTransport.vue'
 import userProfilCompagnieTransport from '../components/administration_compagnie_transport/userProfilCompagnieTransport.vue'
 
-
+// IMPORT FOR ENTITY VENDEUR 
+import selectionnerReservationBillet from '../components/vendeur/SelectionnerReservationBillet'
+import selectionnerOffreVoyageReservation from '../components/vendeur/OffreVoyageReservation'
+import reservationBillet from '../components/vendeur/ReservationBillet'
 //import { ROLE_ADMIN_COMPAGNIE_TRANSPORT , ROLE_ADMIN_SOCIETE_MERE } from '../components/globalConfig/constUsersRoles'
 Vue.use(VueRouter)
 
@@ -263,7 +266,22 @@ const routes = [
         path: '/selectionnerUtilisateur',
         name: 'selectionnerUtilisateur',
         component: selectionnerUtilisateur
-      }
+      },
+      {
+        path: '/selectionnerReservationBillet',
+        name: 'selectionnerReservationBillet',
+        component: selectionnerReservationBillet
+      },
+      {
+        path: '/selectionnerOffreVoyageReservation',
+        name: 'selectionnerOffreVoyageReservation',
+        component: selectionnerOffreVoyageReservation
+      },
+      {
+        path: '/reservationBillet',
+        name: 'reservationBillet',
+        component: reservationBillet
+      },
     ]  
   },
 

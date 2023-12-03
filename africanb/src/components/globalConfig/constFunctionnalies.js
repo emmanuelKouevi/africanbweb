@@ -93,3 +93,8 @@ export const FUNCTIONNALITY_CREATE_USER_ACCOUNT = "FunctionnalityCreateUserAccou
 export const FUNCTIONNALITY_MANAGING_ROLE_AND_FUNCTIONNALITY = "FunctionnalityManagingRoleAndFunctionUser";
 
 export const FUNCTIONNALITY_MANAGE_ALL_ACCOUNT_USER = "FunctionnalityListingUserAccount";
+
+/* FONCTIONNALITÉS POUR L'ENTITÉ VENDEUR */
+export const FUNCTIONNALITY_RESERVE_TICKET = "reserverBilletVoyageur";
+export const FUNCTIONNALITY_RESERVING_FROM_OFFRE_VOYAGE = "selectionnerOffreVoyageReservation";
+export const FUNCTIONNALITY_SELECTION_RESERVATION_TICKET = "selectionnerReservationTicket";
