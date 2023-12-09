@@ -36,7 +36,6 @@ import $ from 'jquery'
                     {text : 'Type de l\'offre' , value : 'typeOffreVoyageDesignation'},
                     {text : 'Ville de départ' , value : 'villeDepartDesignation'},
                     {text : 'Ville d\'arrivée' , value : 'villeDestinationDesignation'},
-                    {text : 'Active' , value : 'isActived'},
                     {text : 'Actions' , value : 'actions' , sortable : false}
                 ],
 

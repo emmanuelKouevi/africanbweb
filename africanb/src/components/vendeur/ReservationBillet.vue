@@ -35,7 +35,7 @@
                                             <v-card-text>
                                                 <v-container>
                                                     <div class="form-group">
-                                                        <label for="inputEmail4">Choisissez le programme:</label>
+                                                        <label for="inputEmail4">Choisissez le jour du voyage:</label>
                                                         <v-select :items="jourSemainesParOffreVoyagesList" item-text="jourSemaineDesignation" dense outlined></v-select>
                                                     </div>
                                                 </v-container>
@@ -78,17 +78,17 @@
                                 <div class="form-row">
                                     <div class="form-group col-md-6">
                                         <label for="inputEmail4">Nom du voyageur:</label>
-                                        <input type="text" class="form-control" id="inputEmail4" placeholder="Nom">
+                                        <input type="text" class="form-control" id="inputEmail4">
                                     </div>
                                     <div class="form-group col-md-6">
                                         <label for="inputPassword4">Prenom du voyageur:</label>
-                                        <input type="prenom" class="form-control" id="inputPassword4" placeholder="Prenom">
+                                        <input type="prenom" class="form-control" id="inputPassword4">
                                     </div>
                                 </div>
                                 <div class="form-row">
                                     <div class="form-group col-md-6">
                                         <label for="inputEmail4">Numero de téléphone:</label>
-                                        <input type="text" class="form-control" id="inputEmail4" placeholder="Téléphone">
+                                        <input type="text" class="form-control" id="inputEmail4">
                                     </div>
                                 </div>
                             </form>
@@ -110,7 +110,7 @@
                 </v-container>  
                 <v-card-actions>
                     <v-btn x-small color="secondary">RETOUR</v-btn>
-                    <v-btn x-small color="teal"><span class="btn-title">RESERVER POUR CE PROGRAMME</span></v-btn>
+                    <v-btn x-small color="teal"><span class="btn-title">RESERVER POUR CE TRAJET</span></v-btn>
                 </v-card-actions>         
             </v-sheet>
             </v-container>
