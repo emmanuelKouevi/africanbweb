@@ -101,3 +101,8 @@ export const API_GET_ALL_ROLES = `${BASE_URL}roles/getAll`
 export const API_GET_FUNCTIONNALITY_BY_USER_ROLE = `${BASE_URL}functionalities/getFunctionalitiesByRole`
 
 
+// RESERVATION 
+
+export const API_RESERVER_PROGRAMME_OFFRE = `${BASE_URL}reservationBilletVoyages`
+
+

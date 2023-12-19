@@ -1,94 +1,104 @@
 <template>
     <v-app>
-        <v-form @submit.prevent="submitForm">
-            <v-container fluid>
-                <v-card>
-                    <v-card-title>PROGRAMMER UNE OFFRE DE VOYAGE
-                        <v-spacer></v-spacer>
-                        <v-dialog transition="dialog-top-transition" max-width="700">
-                            <template v-slot:activator="{ on, attrs }">
-                                <v-btn color="secondary" rounded small v-bind="attrs" v-on="on">Programmer l'offre &nbsp;<v-icon>mdi-plus-circle</v-icon></v-btn>
-                            </template>
-                            <template v-slot:default="dialog">
-                                <v-card>
-                                    <v-toolbar color="white" ><span class="font-weight-bold">PROGRAMMATION DE L'OFFRE</span></v-toolbar>
-                                    <v-card-text>
-                                        <v-container fluid>
-                                            <v-subheader>
-                                                <v-spacer></v-spacer>
-                                                <v-btn small outlined rounded color="secondary" @click="recupererJourSemaineParOfrreVoyage()" text><v-icon>mdi-cached</v-icon> RECUPERER LES JOURS</v-btn>
-                                                <v-btn small outlined rounded color="primary" text @click="validerProgrammeOffreVoyage(programmeOffreVoyage)"><v-icon>mdi-check</v-icon> VALIDER LE PROGRAMME</v-btn>
-                                            </v-subheader>
-                                            <v-divider></v-divider><br>
-                                            <v-row justify="space-between">
-                                                <v-col cols="5"><v-text-field :error-messages="programmeOffreDesignation" v-model.trim="$v.programmeOffreVoyage.designation.$model" label="Designation du programme" rounded dense outlined></v-text-field></v-col>
-                                                <v-col cols="5"><v-select :error-messages="programmeOffreJourSemaineDesignation" :items="jourSemaineList" item-text="jourSemaineDesignation" item-value="designation"  v-model.trim="$v.programmeOffreVoyage.jourSemaineDesignation.$model" label="Designation du programme" rounded dense outlined></v-select></v-col>
-                                            </v-row>
+        <v-container>
+            <div class="row">
+                <div class="col-lg-9">
+                    <v-sheet>
+                        <span class="font-weight-bold">PROGRAMMER VOTRE OFFRE DE VOYAGE SIMPLEMENT</span><br><br>
+                        <v-card :disabled="haveSelectedOffre==true">
+                            <v-card-title><span class="card-title font-weight-bold">CHOISISSEZ L'OFFRE À PROGRAMMER</span></v-card-title>
+                            <v-card-text>
+                                <v-form>
+                                    <div class="form-group">
+                                        <label for="exampleInputEmail1">Offre de voyage</label>
+                                        <v-select class="col-lg-5" :items="offreVoyageParCompagnieTransportList" item-text="designation" item-value="designation"  v-model="offreVoyageReference"  dense outlined color="teal"></v-select>
+                                    </div>
+                                </v-form>
+                            </v-card-text>
+                            <v-card-actions>
+                                <v-btn x-small color="teal" :disabled="offreVoyageReference == null" @click="programmerOffreBtn"><span class="btn-actions">Programmer ce trajet</span></v-btn>
+                            </v-card-actions>
+                        </v-card><br>
+                        <v-divider v-if="haveSelectedOffre==true"></v-divider>
+                        <v-card v-if="haveSelectedOffre == true" :disabled="haveChoosedNombrePlace== true">
+                            <v-card-title><span class="card-title font-weight-bold">AUTRES INFORMATIONS</span></v-card-title>
+                            <v-card-text>
+                                <div class="form-group">
+                                    <label for="exampleInputEmail1">Nombre de places</label>
+                                    <v-text-field class="col-lg-3" type="number" min="0" v-model.number="programmeOffreVoyage.nombrePlaceDisponible" dense outlined></v-text-field>
+                                </div>
+                            </v-card-text>
+                            <v-card-actions>
+                                <v-btn x-small color="secondary" @click="comeBackSelectOffre"><span>Retour</span></v-btn>
+                                <v-btn x-small color="teal" @click="validerNombrePlace"><span class="btn-actions">Suivant</span></v-btn>
+                            </v-card-actions>
+                        </v-card><br>
+                        <v-divider v-if="haveChoosedNombrePlace==true"></v-divider>
+                        <v-card v-if="haveChoosedNombrePlace==true">
+                            <v-card-title><span class="card-title font-weight-bold">PROGRAMMER L'OFFRE</span></v-card-title>
+                            <v-card-text>
+                                <v-form>
+                                    <div class="form-row">
+                                        <div class="form-group col-md-6">
+                                            <label for="inputEmail4">Référence du programme</label>
+                                            <v-text-field :error-messages="programmeOffreDesignation" v-model.trim="$v.programmeOffreVoyage.designation.$model" dense outlined></v-text-field>
+                                        </div>
+                                        <div class="form-group col-md-6">
+                                            <label for="inputPassword4">Jour du programme</label>
+                                            <v-select :error-messages="programmeOffreJourSemaineDesignation" :items="jourSemaineList" item-text="jourSemaineDesignation" item-value="designation"  v-model.trim="$v.programmeOffreVoyage.jourSemaineDesignation.$model" dense outlined></v-select>
+                                        </div>
+                                    </div>
+                                    <div class="form-row">
+                                        <div class="form-group col-md-6">
+                                            <label for="inputEmail4">Départ</label>
+                                            <v-text-field type="time"  v-model="programmeOffreVoyage.heureDepart" dense outlined></v-text-field>
+                                        </div>
+                                        <div class="form-group col-md-6">
+                                            <label for="inputPassword4">Arrivée</label>
+                                            <v-text-field type="time" v-model="programmeOffreVoyage.heureArrivee" dense outlined></v-text-field>
+                                        </div>
+                                    </div>
+                                </v-form>
+                            </v-card-text>
+                            <v-card-actions>
+                                <v-btn x-small color="secondary" @click="comeBackSelectPlace"><span class="btn-actions">Retour</span></v-btn>
+                                <v-btn x-small color="teal" @click="validerProgrammeOffreVoyage(programmeOffreVoyage)"><span class="btn-actions">Valider ce programme</span></v-btn>
+                            </v-card-actions>
+                        </v-card><br>
+                        <v-divider></v-divider>
+                        <v-card>
+                            <v-card-text>
+                                <v-container>
+                                    <v-row>
+                                        <v-col><small class="libelle-programme">Offre de Voyage</small></v-col>
+                                        <v-col><small class="libelle-programme">Programmer pour</small></v-col>
+                                        <v-col><small class="libelle-programme">Heure de départ</small></v-col>
+                                        <v-col><small class="libelle-programme">Heure d'arrivée</small></v-col>
+                                        <v-col><small class="libelle-programme">Nombre de places</small></v-col>
+                                    </v-row>
 
-                                            <v-row>
-                                                <v-col>
-                                                    <v-menu ref="menuHeureDepart" v-model="menuHeureDepart" :close-on-content-click="false" :nudge-right="40" :return-value.sync="programmeOffreVoyage.heureDepart"
-                                                        transition="scale-transition" offset-y max-width="290px" min-width="290px">
-                                                        <template v-slot:activator="{ on, attrs }">
-                                                            <v-text-field :error-messages="programmeOffreHeureDepart" dense outlined rounded v-model.trim="$v.programmeOffreVoyage.heureDepart.$model" label="Heure de départ" prepend-icon="mdi-clock-time-four-outline"
-                                                                readonly v-bind="attrs" v-on="on">
-                                                            </v-text-field>
-                                                        </template>
-                                                        <v-time-picker v-if="menuHeureDepart" v-model.trim="$v.programmeOffreVoyage.heureDepart.$model" full-width @click:minute="$refs.menuHeureDepart.save(programmeOffreVoyage.heureDepart)"></v-time-picker>
-                                                    </v-menu>
-                                                </v-col>
+                                    <v-row v-for="programme , index in programmeOffreVoyageList" :key="index">
+                                        <v-col><small class="libelle-programme">{{ offreVoyageReference }}</small></v-col>
+                                        <v-col><small class="libelle-programme">{{ programme.jourSemaineDesignation }}</small></v-col>
+                                        <v-col><small class="libelle-programme">{{ programme.heureDepart }}</small></v-col>
+                                        <v-col><small class="libelle-programme">{{ programme.heureArrivee }}</small></v-col>
+                                        <v-col><small class="libelle-programme">{{ programme.nombrePlaceDisponible }}</small></v-col>
+                                    </v-row>
+                                </v-container>
+                            </v-card-text>
+                            <v-card-actions>
+                                
+                            </v-card-actions>
+                        </v-card><br>
 
-                                                <v-col>
-                                                    <v-menu ref="menuHeureArrivee" v-model="menuHeureArrivee" :close-on-content-click="false" :nudge-right="40" :return-value.sync="programmeOffreVoyage.heureArrivee"
-                                                        transition="scale-transition" offset-y max-width="290px" min-width="290px">
-                                                        <template v-slot:activator="{ on, attrs }">
-                                                            <v-text-field :error-messages="programmeOffreHeureArrivee" dense rounded outlined v-model.trim="$v.programmeOffreVoyage.heureArrivee.$model" label="Heure d'arrivée" prepend-icon="mdi-clock-time-four-outline"
-                                                                readonly v-bind="attrs" v-on="on">
-                                                            </v-text-field>
-                                                        </template>
-                                                        <v-time-picker v-if="menuHeureArrivee" v-model.trim="$v.programmeOffreVoyage.heureArrivee.$model" full-width @click:minute="$refs.menuHeureArrivee.save(programmeOffreVoyage.heureArrivee)"></v-time-picker>
-                                                    </v-menu>
-                                                </v-col>
-                                            </v-row>
-                                            <v-divider></v-divider><br>
-                                        </v-container>
-                                    </v-card-text>
-                                    <v-card-actions class="justify-end">
-                                        <v-btn text @click="dialog.value = false">Effectuer</v-btn>
-                                    </v-card-actions>
-                                </v-card>
-                            </template>
-                        </v-dialog>
-                    </v-card-title>
-                    <v-card-subtitle>Programmez les trajets, les jours , les heures de vos offres</v-card-subtitle>
-                    <v-container>
-                        <v-row>
-                            <v-col cols="5">
-                                <v-select :items="offreVoyageParCompagnieTransportList" item-text="designation" item-value="designation" rounded  v-model="offreVoyageReference"  dense outlined color="teal" label="sélectionnez une offre"></v-select>
-                            </v-col>
-                        </v-row>
-
-                        <v-row>
-                            <v-col><small class="libelle-programme">Offre de Voyage</small></v-col>
-                            <v-col><small class="libelle-programme">Programmer pour</small></v-col>
-                            <v-col><small class="libelle-programme">Heure de départ</small></v-col>
-                            <v-col><small class="libelle-programme">Heure d'arrivée</small></v-col>
-                        </v-row>
-
-                        <v-row v-for="programme , index in programmeOffreVoyageList" :key="index">
-                            <v-col><small class="libelle-programme">{{ programme.designation }}</small></v-col>
-                            <v-col><small class="libelle-programme">{{ programme.jourSemaineDesignation }}</small></v-col>
-                            <v-col><small class="libelle-programme">{{ programme.heureDepart }}</small></v-col>
-                            <v-col><small class="libelle-programme">{{ programme.heureArrivee }}</small></v-col>
-                        </v-row>
-                    </v-container>
-                    <v-card-actions>
-                        <v-btn small shaped rounded outlined>REINITIALISER</v-btn>
-                        <v-btn type="submit" small shaped rounded outlined color="primary">APPLIQUER</v-btn>
-                    </v-card-actions>
-                </v-card>
-            </v-container>
-        </v-form>
+                        <v-card-actions>
+                            <v-btn x-small color="secondary">Annuler</v-btn>
+                            <v-btn x-small color="success" @click="enregistrerProgrammeOffreVoyage()">Enregistrer le programme</v-btn>
+                        </v-card-actions>
+                    </v-sheet>
+                </div>
+            </div>
+        </v-container>        
         <v-alert class="myalert alert-error" type="error" width="350px" dismissible>{{ errorMsg }}</v-alert>
         <v-alert class="myalert alert-success" type="success" width="350px" dismissible>{{ successMsg }}</v-alert>
         <v-overlay :value="overlay"><v-progress-circular indeterminate size="64"></v-progress-circular></v-overlay>
@@ -104,14 +114,13 @@ export default {
     name:"ProgrammerOffreVoyage",
     data(){
         return{
+            haveSelectedOffre:false,
+            haveChoosedNombrePlace : false,
+            haveCreateProgram : false,
+
             overlay: false,
             errorMsg:null,
             successMsg:null,
-
-            menuHeureDepart:false,
-            menuHeureArrivee:false,
-            time:null,
-            date: (new Date(Date.now() - (new Date()).getTimezoneOffset() * 60000)).toISOString().substr(0, 10),
 
             jourSemaineList : [],
 
@@ -131,6 +140,7 @@ export default {
 
             programmeOffreVoyage:{
                 designation:null,
+                nombrePlaceDisponible:null,
                 jourSemaineDesignation:null,
                 heureDepart:null,
                 heureArrivee:null
@@ -175,9 +185,16 @@ export default {
 
     methods:{
 
-        //SOUMISSION DU FORMULAIRE
-        submitForm(){
-            this.enregistrerProgrammeOffreVoyage();
+        //COME BACK TO SELECT OFFRE VOYAGE
+        comeBackSelectOffre(){
+            this.haveSelectedOffre = false;
+            this.haveChoosedNombrePlace = false;
+        },
+
+        // REVENIR A LA SELECTION DU NOMBRE DE PLACE
+        comeBackSelectPlace(){
+            this.haveChoosedNombrePlace = false;
+            this.haveCreateProgram = false;
         },
 
         //ENREGISTRER UN PROGRAMME POUR UNE OFFRE DE VOYAGE
@@ -243,11 +260,13 @@ export default {
             }else{
                 var unProgramme = {
                     designation : null,
+                    nombrePlaceDisponible :null,
                     jourSemaineDesignation : null,
                     heureDepart : null,
                     heureArrivee : null,
                 };
                 unProgramme.designation = programmeOffre.designation; 
+                unProgramme.nombrePlaceDisponible = programmeOffre.designation;
                 unProgramme.jourSemaineDesignation = programmeOffre.jourSemaineDesignation;
                 unProgramme.heureDepart = programmeOffre.heureDepart;
                 unProgramme.heureArrivee = programmeOffre.heureArrivee;
@@ -301,6 +320,34 @@ export default {
             })
         },
 
+
+        //AFFICHER LES INFORMATIONS NÉCESSAIRES PERMETTANT LA PROGRAMMATION D'UNE OFFRE SÉELECTIONNÉE
+        programmerOffreBtn(){
+            if (this.offreVoyageReference == null) {
+                this.$swal.fire('Erreur','Aucune offre sélectionnée','error')
+            } else {
+                this.recupererJourSemaineParOfrreVoyage();
+                this.haveSelectedOffre = true;
+            }
+        },
+
+        // VALIDER LE NOMBRE DE PLACE DU PROGRAMME
+        validerNombrePlace(){
+            if (this.programmeOffreVoyage.nombrePlaceDisponible == null) {
+                this.$swal.fire('Erreur','Champs nombre de place est requis','error')
+            } else if(typeof(this.programmeOffreVoyage.nombrePlaceDisponible) !== 'number') {
+                this.$swal.fire('Erreur','Information non cohérente','error')
+            }else if(this.programmeOffreVoyage.nombrePlaceDisponible < 0){
+                this.$swal.fire('Erreur','Champs Nombre de place doit être un nombre','error')
+            }
+            else if(this.programmeOffreVoyage.nombrePlaceDisponible == 0){
+                this.$swal.fire('Erreur','Champs Nombre de place doit être superieure à 0','error')
+            }
+            else{
+                this.haveChoosedNombrePlace = true;
+            }
+        },
+
     },
 
     computed:{
@@ -344,6 +391,17 @@ export default {
 </script>
 
 <style scoped>
+
+    .card-title{
+        color: #130f40;
+        font-size: 13px;
+    }
+
+    .btn-actions{
+        color: white;
+    }
+
+
     
     .libelle-programme{
         color: grey;

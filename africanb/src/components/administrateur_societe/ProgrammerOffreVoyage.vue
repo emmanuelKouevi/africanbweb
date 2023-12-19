@@ -2,6 +2,9 @@
     <v-app>
         <v-form @submit.prevent="submitForm">
             <v-container fluid>
+                <v-sheet color="#ecf0f1" height="500">
+                    
+                </v-sheet>
                 <v-card>
                     <v-card-title>PROGRAMMER UNE OFFRE DE VOYAGE
                         <v-spacer></v-spacer>
