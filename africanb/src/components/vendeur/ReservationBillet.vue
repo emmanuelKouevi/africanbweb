@@ -82,11 +82,11 @@
                             <form>
                                 <div class="form-row">
                                     <div class="form-group col-md-6">
-                                        <label for="inputEmail4">Nom du voyageur:</label>
+                                        <label for="inputEmail4">Nom:</label>
                                         <input type="text" v-model="user.nom" class="form-control" id="inputEmail4">
                                     </div>
                                     <div class="form-group col-md-6">
-                                        <label for="inputPassword4">Prenoms du voyageur:</label>
+                                        <label for="inputPassword4">Prenoms:</label>
                                         <input type="text" class="form-control" id="inputPassword4" v-model="user.prenoms">
                                     </div>
                                 </div>

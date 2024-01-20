@@ -275,6 +275,7 @@ export default {
 
     mounted(){
         this.getAllFunctionnalitiesByUserRole();
+        console.log(this.$store.state.userAuthentified)
     }
 }
 </script>

@@ -2,7 +2,6 @@
     <v-app>
         <v-main>
             <v-container fluid>
-
                 <div class="content pageNotFound" justify="center">
                     <span class="four">4</span><span class="zero">0</span><span class="four">4</span>
                 </div>
@@ -27,13 +26,10 @@
 <script>
 export default {
     name : "UnauthorizedPage",
-
     methods : {
-
         goToLoginPage() {
             this.$router.replace('/connexion')
         }
-
     }
 }
 </script>

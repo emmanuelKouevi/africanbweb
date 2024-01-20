@@ -1,9 +1,13 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import HomeView from '../views/HomeView.vue'
-//import $store from '@/store'
+import HomePage from '../views/HomePage.vue'
+import $store from '@/store'
 
+//AUTHENTIFICAITON
+import Login from '@/components/Auth/Login.vue'
 //import InterfaceAccordingUserRole from '../views/InterfaceAccordingUserRole'
+//SELLER
+//import DashboardSeller from "@/components/vendeur/Dashboard.vue"
 import EspaceUserAdmin from '../views/EspaceUserAdmin'
 
 import creerCompagnieTransport from '../components/administrateur_societe/CreerCompagnieTransport'
@@ -24,7 +28,7 @@ import resetPasswordUser from '../components/administrateur_societe/changerPassw
 import selectionnerUtilisateur from '../components/administrateur_societe/selectionnerUtilisateur'
 
 //import connexion from '../components/authentification/ConnexionUtilisateur.vue'
-import connexionUtilisateurCompagnieTransport from '../components/administration_compagnie_transport/authentification/connexionUtilisateurCompagnieTransport'
+//import connexionUtilisateurCompagnieTransport from '../components/administration_compagnie_transport/authentification/connexionUtilisateurCompagnieTransport'
 
 import creerOffreVoyage from '../components/administration_compagnie_transport/CreerOffreVoyage'
 import creerVilleEscale from '../components/administration_compagnie_transport/CreerVilleEscale'
@@ -41,7 +45,7 @@ import modifierJourOffreVoyage from '../components/administration_compagnie_tran
 import gestionBagageCompagnieTransport from '../components/administration_compagnie_transport/GestionBagageCompagnieTransport'
 import creerGareCompagnieTransport from '../components/administration_compagnie_transport/CreerGareCompagnieTransport'
 import selectionnerGareCompagnieTransport from '../components/administration_compagnie_transport/SelectionnerGareCompagnieTransport'
-import tableauBord from '../components/administration_compagnie_transport/TableauBord';
+import tableauBord from '../components/Dashboard/TableauBord';
 import creerModeAbonnement from '../components/administration_compagnie_transport/CreerModeAbonnement'
 import creerModePaiement from '../components/administration_compagnie_transport/CreerModePaiement'
 import selectionnerModeAbonnementEtPaiement from '../components/administration_compagnie_transport/SelectionnerModeAbonnementEtPaiement'
@@ -61,13 +65,18 @@ Vue.use(VueRouter)
 
 const routes = [
   {
+    path:'/Login',
+    name:'Login',
+    component: Login
+  },
+  {
     path: '/',
     name: 'home',
-    component: HomeView
+    component: HomePage
   },
 
   {
-    path: '/userHome',
+    path: '/Accueil',
     name: 'userHome',
     component: EspaceUserAdmin,
     meta: { requiresAuth: true },
@@ -285,11 +294,11 @@ const routes = [
     ]  
   },
 
-  {
+  /*{
     path: '/connexionUtilisateurCompagnieTransport',
     name: 'connexionUtilisateurCompagnieTransport',
     component: connexionUtilisateurCompagnieTransport
-  },
+  },*/
   /*{
     path: '/EspaceCompagnieTransport',
     name: 'EspaceCompagnieTransport',
@@ -509,11 +518,11 @@ const routes = [
     ]
   },*/
   
-  {
+  /*{
     path: '/connexion',
     name: 'connexion',
     component: connexionUtilisateurCompagnieTransport
-  },
+  },*/
   
 ]
 
@@ -525,18 +534,14 @@ const router = new VueRouter({
 
 
 // Ajoutez une garde de navigation globale pour vérifier les autorisations
-/*router.beforeEach((to, from, next) => {
-  if (to.matched.some(record => record.meta.requiresAuth)) {
-    if ($store.state.isAuthentified == false) {
-      next({name : 'connexion'})
-    }else {
-      next();
-    }
+router.beforeEach((to, from, next) => {
+  console.log($store.state.isAuthentified)
+  if (to.matched.some(record => record.meta.requiresAuth) && ($store.state.isAuthentified === false)) {
+    next({name : 'Login'});
   } else {
     next();
   }
-});*/
-
+});
 
 
 export default router

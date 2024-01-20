@@ -13,7 +13,7 @@
                                 <v-text-field
                                     id="designationOffre" data-cy="designationOffre"
                                     :error-messages="designationOffreVoyageErrors" dense class="my_input"
-                                    outlined color="primary" placeholder="Désignation de l'offre" 
+                                    outlined color="primary"
                                     v-model.trim="$v.offreVoyage.designation.$model">
                                 </v-text-field>
                             </div>
@@ -23,7 +23,7 @@
                                 <v-textarea 
                                     id="descriptionOffre" data-cy="descriptionOffre"
                                     :error-messages="descriptionOffreVoyageErrors" class="my_input"
-                                    dense outlined color="primary" placeholder="Description de l'offre"
+                                    dense outlined color="primary"
                                     v-model.trim="$v.offreVoyage.description.$model">
                                 </v-textarea>
                             </div>
@@ -57,15 +57,15 @@
                                         id="referenceOffre" data-cy="referenceOffre" class="my_input"
                                         item-text="designation" item-value="designation" :error-messages="typeOffreVoyageErrors" 
                                         v-model.trim="$v.offreVoyage.typeOffreVoyageDesignation.$model" dense outlined
-                                        color="primary" placeholder="Type de l'offre">
+                                        color="primary">
                                     </v-select>
                                 </div>
                             </div>
                         </v-container>
                     </v-card-text>
                     <v-card-actions>
-                        <v-btn id="btnInitialize" small dark color="secondary" data-cy="btnInitialize"><v-icon>mdi-sync</v-icon> REINITIALISER</v-btn>
-                        <v-btn id="btnCreate" small type="submit" dark color="primary" data-cy="btnCreate"><v-icon>mdi-check</v-icon> CRÉER L'OFFRE</v-btn>
+                        <v-btn x-small id="btnInitialize" dark color="secondary" data-cy="btnInitialize">REINITIALISER</v-btn>
+                        <v-btn x-small id="btnCreate" type="submit" dark color="success" data-cy="btnCreate"> CRÉER L'OFFRE</v-btn>
                 </v-card-actions>
                 </v-card>
             </v-container>
@@ -147,8 +147,14 @@ export default {
 
         //SOUMISSION DU FORMULAIRE
         submitForm(){
-            this.$v.touch()
-            if (this.$v.offreVoyage.$invalid)this.errorMsg = "Vous n'avez saisi les champs concernés"
+            this.$v.$touch()
+            if (this.$v.offreVoyage.$invalid){
+                this.errorMsg = "Vous n'avez saisi les champs concernés"
+                $(".alert-error").fadeIn();
+                setTimeout(function(){
+                    $(".alert-error").fadeOut(); 
+                }, 4000)
+            }
             else this.creerOffreVoyage();
         },
 
@@ -239,7 +245,6 @@ export default {
     computed: {
 
         // GESTION DES CONTRAINTES DE CHAMPS D'ENTREES POUR LA CREATION D'UNE OFFRE DE VOYAGE
-
         designationOffreVoyageErrors(){
            const errors = [];
             if (!this.$v.offreVoyage.designation.$dirty) return errors
@@ -289,6 +294,7 @@ export default {
 </script>
 
 <style scoped>
+
     .myalert{
         display: none;
         z-index: 1900;
