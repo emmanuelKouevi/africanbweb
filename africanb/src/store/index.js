@@ -5,7 +5,16 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-    userAuthentified : {}, 
+    userAuthentified : {
+      compagnieTransportId: null,
+      email: null,
+      login: null,
+      nom: null,
+      prenoms: null,
+      roleCode: null,
+      roleLibelle: null,
+      token:null,
+    }, 
     isAuthentified : false,
   },
 

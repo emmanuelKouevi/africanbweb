@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import HomePage from '../views/HomePage.vue'
-import $store from '@/store'
+//import $store from '@/store'
 
 //AUTHENTIFICAITON
 import Login from '@/components/Auth/Login.vue'
@@ -535,9 +535,13 @@ const router = new VueRouter({
 
 // Ajoutez une garde de navigation globale pour vérifier les autorisations
 router.beforeEach((to, from, next) => {
-  console.log($store.state.isAuthentified)
-  if (to.matched.some(record => record.meta.requiresAuth) && ($store.state.isAuthentified === false)) {
-    next({name : 'Login'});
+  const isAuth = localStorage.getItem("auth") === "true";
+  if (to.matched.some(record => record.meta.requiresAuth)) {
+    if (!isAuth) {
+      next({name : 'Login'})
+    }else {
+      next();
+    }
   } else {
     next();
   }

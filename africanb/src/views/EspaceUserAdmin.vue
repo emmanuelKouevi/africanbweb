@@ -137,8 +137,21 @@ export default {
 
     methods :{
 
+        // RECUPERER LES DONNNES DE L'UTILISATEUR CONNECTÉ POUR LA SAUVEGARDE DE SA SESSION
+        storeSessionUser(){
+            if(localStorage.getItem('token_user')){
+                const userConnected = JSON.parse(localStorage.getItem('token_user'));
+                this.$store.state.userAuthentified.roleCode = userConnected.roleCode;
+                this.$store.state.userAuthentified.token = userConnected.token;
+                this.$store.state.userAuthentified.roleCode = userConnected.roleCode;
+                console.log(this.$store.state.userAuthentified.token);
+            }
+        },
+
         //RECUPERER LA LISTE DES FONCTIONNALITÉS PAR ROLE UTILISATEURS
         async getAllFunctionnalitiesByUserRole(){
+            this.storeSessionUser();
+            console.log(JSON.parse(localStorage.getItem("token_user")))
             await axios.post(API_GET_FUNCTIONNALITY_BY_ROLE, { data : { code : this.$store.state.userAuthentified.roleCode } }
             , { headers : HEADERS(this.$store.state.userAuthentified.token) }).then((response) => {
                 if (response.status == 200) {
@@ -160,6 +173,7 @@ export default {
     },
 
     computed:{
+
 
         buildComponentFromFunctionnalities(){
             var globalFunctionnalities = [];
@@ -275,7 +289,7 @@ export default {
 
     mounted(){
         this.getAllFunctionnalitiesByUserRole();
-        console.log(this.$store.state.userAuthentified)
+        this.storeSessionUser();
     }
 }
 </script>

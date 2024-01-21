@@ -122,7 +122,11 @@ export default {
                     if (response.data.status.code == 800) {
                         this.$store.commit('LOGIN_USER');
                         this.$store.commit('SET_USER_AUTHENTIFIED' , response.data.item);
+                        this.$store.commit('STORE_TOKEN_USER' , response.data.item.token);
                         this.$router.push('/tableauBord')
+                        localStorage.setItem("auth", true);
+                        const user_info = JSON.stringify(response.data.item)
+                        localStorage.setItem("token_user", user_info);
                     }else{
                         this.$swal.fire('Connexion échouée','Error lors de la connexion','error')
                     }  
