@@ -141,17 +141,22 @@ export default {
         storeSessionUser(){
             if(localStorage.getItem('token_user')){
                 const userConnected = JSON.parse(localStorage.getItem('token_user'));
-                this.$store.state.userAuthentified.roleCode = userConnected.roleCode;
+                this.$store.state.userAuthentified = userConnected;
+                /*this.$store.state.userAuthentified.roleCode = userConnected.roleCode;
                 this.$store.state.userAuthentified.token = userConnected.token;
-                this.$store.state.userAuthentified.roleCode = userConnected.roleCode;
-                console.log(this.$store.state.userAuthentified.token);
+                this.$store.state.userAuthentified.login= userConnected.login;
+                this.$store.state.userAuthentified.roleLibelle = userConnected.roleLibelle;
+                this.$store.state.userAuthentified.nom = userConnected.nom;
+                this.$store.state.userAuthentified.prenom = userConnected.prenom;
+                this.$store.state.userAuthentified.email = userConnected.email;
+                this.$store.state.userAuthentified.compagnieTransportId = userConnected.compagnieTransportId;*/
+                //console.log(this.$store.state.userAuthentified.token);
             }
         },
 
         //RECUPERER LA LISTE DES FONCTIONNALITÉS PAR ROLE UTILISATEURS
         async getAllFunctionnalitiesByUserRole(){
             this.storeSessionUser();
-            console.log(JSON.parse(localStorage.getItem("token_user")))
             await axios.post(API_GET_FUNCTIONNALITY_BY_ROLE, { data : { code : this.$store.state.userAuthentified.roleCode } }
             , { headers : HEADERS(this.$store.state.userAuthentified.token) }).then((response) => {
                 if (response.status == 200) {
@@ -164,8 +169,16 @@ export default {
             })
         },
 
+        destroyLocalSession(){
+            if(localStorage.getItem("token_user")){
+                localStorage.removeItem("token_user");
+                localStorage.setItem("auth",false);
+            }
+        },
+
         // METHODE PERMETTANT À UN UTILISATEUR DE SE DECONNECTER
         logout() {
+            this.destroyLocalSession();
             this.$store.commit('DESTROY_SESSION_USER');
             this.$router.replace('/')
         },
@@ -289,7 +302,6 @@ export default {
 
     mounted(){
         this.getAllFunctionnalitiesByUserRole();
-        this.storeSessionUser();
     }
 }
 </script>

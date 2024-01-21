@@ -6,18 +6,20 @@
         <DashboardTransportAdmin/>
     </v-container>
     <v-container v-else>
-        Bonjour
+        <DashboardMainAdmin/>
     </v-container>
 </template>
 
 <script>
 import DashboardSeller from '../vendeur/Dashboard.vue'
 import DashboardTransportAdmin from '@/components/administration_compagnie_transport/Dashboard.vue'
+import DashboardMainAdmin from '@/components/administrateur_societe/Dashboard.vue'
 export default {
     name:'TableauBord',
     components:{
         DashboardSeller,
-        DashboardTransportAdmin
+        DashboardTransportAdmin,
+        DashboardMainAdmin
     },
     data(){
         return{

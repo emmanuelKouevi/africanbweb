@@ -536,12 +536,8 @@ const router = new VueRouter({
 // Ajoutez une garde de navigation globale pour vérifier les autorisations
 router.beforeEach((to, from, next) => {
   const isAuth = localStorage.getItem("auth") === "true";
-  if (to.matched.some(record => record.meta.requiresAuth)) {
-    if (!isAuth) {
-      next({name : 'Login'})
-    }else {
-      next();
-    }
+  if (to.matched.some(record => record.meta.requiresAuth && !isAuth)) {
+    next({name : 'Login'})
   } else {
     next();
   }

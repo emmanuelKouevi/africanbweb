@@ -29,7 +29,7 @@
                 </div>
 
                 <div class="col-lg-3">
-                    <v-card rounded="lg" color="#b33939">
+                    <v-card rounded="lg" color="#596275">
                         <v-card-title><span class="card-title-text">Offres Inactives</span></v-card-title>
                         <v-card-text>
                             <v-container>
@@ -47,7 +47,7 @@
                         <v-card-text>
                             <v-container>
                                 <v-row justify="center">
-                                    <span class="libelle font-weight-bold">147</span>
+                                    <span class="libelle font-weight-bold">350</span>
                                 </v-row>
                             </v-container>
                         </v-card-text>
@@ -55,6 +55,107 @@
                 </div>
             </div>
 
+            <div class="row">
+                <div class="col-lg-3">
+                    <v-card rounded="lg" color="#0be881" class="count-books">
+                        <v-card-title><span class="card-title-text">Total Réservation</span></v-card-title>
+                        <v-card-text>
+                            <v-container>
+                                <v-row justify="center">
+                                    <span class="libelle font-weight-bold">250</span>
+                                </v-row>
+                            </v-container>
+                        </v-card-text>
+                    </v-card>
+                </div>
+
+                <div class="col-lg-3">
+                    <v-card rounded="lg" color="#e056fd">
+                        <v-card-title><span class="card-title-text">Caisse actuelle</span></v-card-title>
+                        <v-card-text>
+                            <v-container>
+                                <v-row justify="center">
+                                    <span class="libelle font-weight-bold">10.589.145 </span>&nbsp;&nbsp;<span class="cfa">FCFA</span>
+                                </v-row>
+                            </v-container>
+                        </v-card-text>
+                    </v-card>
+                </div>
+
+                <div class="col-lg-3">
+                    <v-card rounded="lg" color="#c44569">
+                        <v-card-title><span class="card-title-text">Offres Disponibles</span></v-card-title>
+                        <v-card-text>
+                            <v-container>
+                                <v-row justify="center">
+                                    <span class="libelle font-weight-bold">231</span>
+                                </v-row>
+                            </v-container>
+                        </v-card-text>
+                    </v-card>
+                </div>
+
+                <div class="col-lg-3">
+                    <v-card rounded="lg" color="#f78fb3">
+                        <v-card-title><span class="card-title-text">Remboursement</span></v-card-title>
+                        <v-card-text>
+                            <v-container>
+                                <v-row justify="center">
+                                    <span class="libelle font-weight-bold">55.455</span>&nbsp;&nbsp;<span class="cfa">FCFA</span>
+                                </v-row>
+                            </v-container>
+                        </v-card-text>
+                    </v-card>
+                </div>
+            </div>
+
+            <div class="row">
+                <div  class="col-lg-12">
+                    <v-card hover rounded="lg">
+                        <v-card-title><span class="titre">Reservations par compagnies</span></v-card-title>
+                        <v-card-text>
+                            <v-list>
+                                <v-list-item>
+                                    <v-list-item>
+                                        <v-list-item-content>
+                                            <v-list-item-subtitle><v-icon dense color="#574b90">mdi-circle</v-icon>&nbsp;&nbsp;#1 STC Transport :</v-list-item-subtitle>
+                                        </v-list-item-content>
+                    
+                                        <v-list-item-content>
+                                            <v-list-item-subtitle><span class="font-weight-bold">100</span>&nbsp;&nbsp;<span >Réservations</span></v-list-item-subtitle>
+                                        </v-list-item-content>
+                                    </v-list-item>
+                                </v-list-item>
+
+                                <v-list-item>
+                                    <v-list-item>
+                                        <v-list-item-content>
+                                            <v-list-item-subtitle><v-icon dense color="#574b90">mdi-circle</v-icon>&nbsp;&nbsp;#2 UTB Transport:</v-list-item-subtitle>
+                                        </v-list-item-content>
+                    
+                                        <v-list-item-content>
+                                            <v-list-item-subtitle><span class="font-weight-bold">54</span>&nbsp;&nbsp;<span>Réservations</span></v-list-item-subtitle>
+                                        </v-list-item-content>
+                                    </v-list-item>
+                                </v-list-item>
+
+                                <v-list-item>
+                                    <v-list-item>
+                                        <v-list-item-content>
+                                            <v-list-item-subtitle><v-icon dense color="#574b90">mdi-circle</v-icon>&nbsp;&nbsp;#3 Masshalah Transport:</v-list-item-subtitle>
+                                        </v-list-item-content>
+                    
+                                        <v-list-item-content>
+                                            <v-list-item-subtitle><span class="font-weight-bold">110</span>&nbsp;&nbsp;<span>Réservations</span></v-list-item-subtitle>
+                                        </v-list-item-content>
+
+                                    </v-list-item>
+                                </v-list-item>
+                            </v-list>
+                        </v-card-text>
+                    </v-card>
+                </div>
+            </div>
 
             <div class="row">
                 <div class="col-lg-6">
@@ -63,7 +164,7 @@
                         <v-card-text>
                             <v-container>
                                 <v-row justify="center">
-                                    <span class="libelle font-weight-bold">1.650.145</span>&nbsp;<small class="font-weight-bold cfa">FCFA</small>
+                                    <span class="libelle font-weight-bold">7.456.248</span>&nbsp;<small class="font-weight-bold cfa">FCFA</small>
                                 </v-row>
                             </v-container>
                         </v-card-text>
@@ -101,7 +202,7 @@
                                         </v-list-item-content>
                     
                                         <v-list-item-content>
-                                            <v-list-item-subtitle><span class="font-weight-bold">3</span>&nbsp;&nbsp;<span >Propriétés</span></v-list-item-subtitle>
+                                            <v-list-item-subtitle><span class="font-weight-bold">19</span>&nbsp;&nbsp;<span >Propriétés</span></v-list-item-subtitle>
                                         </v-list-item-content>
                                     </v-list-item>
                                 </v-list-item>
@@ -113,7 +214,7 @@
                                         </v-list-item-content>
                     
                                         <v-list-item-content>
-                                            <v-list-item-subtitle><span class="font-weight-bold">2</span>&nbsp;&nbsp;<span>Mode de paiements définis</span></v-list-item-subtitle>
+                                            <v-list-item-subtitle><span class="font-weight-bold">6</span>&nbsp;&nbsp;<span>Mode de paiements définis</span></v-list-item-subtitle>
                                         </v-list-item-content>
                                     </v-list-item>
                                 </v-list-item>
@@ -125,7 +226,7 @@
                                         </v-list-item-content>
                     
                                         <v-list-item-content>
-                                            <v-list-item-subtitle><span class="font-weight-bold">2</span>&nbsp;&nbsp;</v-list-item-subtitle>
+                                            <v-list-item-subtitle><span class="font-weight-bold">54</span>&nbsp;&nbsp;</v-list-item-subtitle>
                                         </v-list-item-content>
 
                                     </v-list-item>
@@ -137,11 +238,11 @@
                 
                 <div class="col-lg-4">
                     <v-card rounded="lg" color="#2f3640">
-                        <v-card-title><span class="card-title-text">GARES DE VOYAGES</span></v-card-title>
+                        <v-card-title><span class="card-title-text">TOTAL DES GARES</span></v-card-title>
                         <v-card-text>
                             <v-container>
                                 <v-row justify="center">
-                                    <span class="libelle font-weight-bold">6</span>
+                                    <span class="libelle font-weight-bold">17</span>
                                 </v-row>
                             </v-container>
                         </v-card-text>
@@ -167,7 +268,7 @@
 
                 <div class="col-lg-4">
                     <v-card>
-                        <v-card-title><span class="titre">Vos vendeurs</span>
+                        <v-card-title><span class="titre">Vendeurs par compagnies</span>
                             <v-spacer></v-spacer>
                         </v-card-title>
                         <v-card-text>
@@ -201,36 +302,13 @@
                     </v-card>
                 </div>
             </div>
-
-            
         </v-container>
-
     </v-app>
 </template>
 
 <script>
-
 export default {
-
-    name:"DashboardAdminTransportCompanie",
-
-    data(){
-
-        return{
-
-            search:'',
-            loading:true,
-            headers : [
-                {text : 'Designation' , value:''},
-                {text : "Type ,de l'offre" , value:''},
-                {text : 'Départ' , value:''},
-                {text : 'Destination' , value:''}
-            ],
-
-
-            reservationList:[],
-        }
-    }
+    name:"DashboardMainAdmin"
 }
 </script>
 
