@@ -52,7 +52,7 @@ export default {
             filePreview: null,
             isImage: false,
 
-            compagnieTransportRaisonSociale : 'COMPAGNIE KOUEVI CT'
+            compagnieTransportRaisonSociale : 'Kouevi CT'
         };
     },
 

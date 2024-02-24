@@ -1,7 +1,7 @@
 <template>
     <v-app>
-        <v-form @submit.prevent="submitForm">
-            
+        <v-container fluid>
+            <v-form @submit.prevent="submitForm">
             <v-card max-width="1200px" class="mx-auto">
                 <v-card-title><h6 class="font-weight-bold">AJOUTER UN PAYS</h6></v-card-title>
                 <v-card-subtitle>Définissez les differents pays pour une administration classique</v-card-subtitle>
@@ -34,6 +34,8 @@
                 </v-card-actions>
             </v-card>   
         </v-form>
+        </v-container>
+        
 
         <v-alert class="myalert alert-success" type="success" width="350px" dismissible>{{ successMsg }}</v-alert> 
         <v-alert class="myalert alert-warning" type="warning" width="350px" dismissible>{{ warningMsg }}</v-alert>

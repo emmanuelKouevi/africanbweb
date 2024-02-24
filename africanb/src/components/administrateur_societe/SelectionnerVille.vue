@@ -1,25 +1,27 @@
 <template>
     <v-app>
-        <v-card>
-            <v-card-title class="title-card">LISTE DES VILLES
-                <v-spacer></v-spacer>
-                <v-text-field v-model="search" append-icon="mdi-magnify" label="Search" single-line hide-details></v-text-field>               
-            </v-card-title>
+        <v-container fluid>
+            <v-card>
+                <v-card-title class="title-card">LISTE DES VILLES
+                    <v-spacer></v-spacer>
+                    <v-text-field v-model="search" append-icon="mdi-magnify" label="Search" single-line hide-details></v-text-field>               
+                </v-card-title>
             
-            <v-data-table
-                :headers="headers"
-                :items="villesList"
-                :loading="loading"
-                :search="search">
+                <v-data-table
+                    :headers="headers"
+                    :items="villesList"
+                    :loading="loading"
+                    :search="search">
 
-                <template v-slot:[`item.actions`]="{ item }">
-                    <v-icon title="editer" color="blue" small class="mr-2" @click="editCompagnieTransport(item)">mdi-pencil</v-icon>                       
-                    <v-icon title="supprimer" color="red" small class="mr-2" @click="supprimerProduitLogement(item)">mdi-delete</v-icon>
-                </template>
+                    <template v-slot:[`item.actions`]="{ item }">
+                        <v-icon title="editer" color="blue" small class="mr-2" @click="editCompagnieTransport(item)">mdi-pencil</v-icon>                       
+                        <v-icon title="supprimer" color="red" small class="mr-2" @click="supprimerProduitLogement(item)">mdi-delete</v-icon>
+                    </template>
 
-            </v-data-table>
-            <v-alert class="myalert alert-error" type="error" width="350px" dismissible>{{ errorMsg }}</v-alert>
-        </v-card>
+                </v-data-table>
+                <v-alert class="myalert alert-error" type="error" width="350px" dismissible>{{ errorMsg }}</v-alert>
+            </v-card>
+        </v-container>
     </v-app>
 </template>
 

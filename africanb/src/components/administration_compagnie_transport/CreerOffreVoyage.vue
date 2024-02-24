@@ -2,7 +2,7 @@
     <v-app>
         <v-form @submit.prevent="submitForm">
             <v-container fluid>
-                <v-card max-width="1200px" class="mx-auto" elevation="5">
+                <v-card max-width="2000px" elevation="5">
                     <v-card-title><h6 class="font-weight-bold">CREER UNE OFFRE DE VOYAGE</h6></v-card-title>
                     <v-card-subtitle>Mettre en ligne un nouvel offre de voyage</v-card-subtitle><br>
 
@@ -109,7 +109,7 @@ export default {
             offreVoyage:{
                 designation : null ,
                 description: null,
-                compagnieTransportRaisonSociale : "COMPAGNIE KOUEVI CT",
+                compagnieTransportRaisonSociale : "Kouevi CT",
                 typeOffreVoyageDesignation : null,
                 villeDepartDesignation : null,
                 villeDestinationDesignation : null

@@ -2,7 +2,7 @@
     <v-app>
         <v-container fluid>
             <div class="row">
-                <div class="col-lg-3">
+                <div class="col-sm">
                     <v-card rounded="lg" color="#474787" class="count-books">
                         <v-card-title><span class="card-title-text">Offres de voyages</span></v-card-title>
                         <v-card-text>
@@ -15,7 +15,7 @@
                     </v-card>
                 </div>
 
-                <div class="col-lg-3">
+                <div class="col-sm">
                     <v-card rounded="lg" color="#218c74">
                         <v-card-title><span class="card-title-text">Offres actives</span></v-card-title>
                         <v-card-text>
@@ -28,7 +28,7 @@
                     </v-card>
                 </div>
 
-                <div class="col-lg-3">
+                <div class="col-sm">
                     <v-card rounded="lg" color="#596275">
                         <v-card-title><span class="card-title-text">Offres Inactives</span></v-card-title>
                         <v-card-text>
@@ -41,7 +41,7 @@
                     </v-card>
                 </div>
 
-                <div class="col-lg-3">
+                <div class="col-sm">
                     <v-card rounded="lg" color="#c23616">
                         <v-card-title><span class="card-title-text">Villes</span></v-card-title>
                         <v-card-text>
@@ -56,7 +56,7 @@
             </div>
 
             <div class="row">
-                <div class="col-lg-3">
+                <div class="col-sm">
                     <v-card rounded="lg" color="#0be881" class="count-books">
                         <v-card-title><span class="card-title-text">Total Réservation</span></v-card-title>
                         <v-card-text>
@@ -69,7 +69,7 @@
                     </v-card>
                 </div>
 
-                <div class="col-lg-3">
+                <div class="col-sm">
                     <v-card rounded="lg" color="#e056fd">
                         <v-card-title><span class="card-title-text">Caisse actuelle</span></v-card-title>
                         <v-card-text>
@@ -82,7 +82,7 @@
                     </v-card>
                 </div>
 
-                <div class="col-lg-3">
+                <div class="col-sm">
                     <v-card rounded="lg" color="#c44569">
                         <v-card-title><span class="card-title-text">Offres Disponibles</span></v-card-title>
                         <v-card-text>
@@ -95,7 +95,7 @@
                     </v-card>
                 </div>
 
-                <div class="col-lg-3">
+                <div class="col-sm">
                     <v-card rounded="lg" color="#f78fb3">
                         <v-card-title><span class="card-title-text">Remboursement</span></v-card-title>
                         <v-card-text>
@@ -110,7 +110,7 @@
             </div>
 
             <div class="row">
-                <div  class="col-lg-12">
+                <div  class="col-sm">
                     <v-card hover rounded="lg">
                         <v-card-title><span class="titre">Reservations par compagnies</span></v-card-title>
                         <v-card-text>
@@ -308,7 +308,13 @@
 
 <script>
 export default {
-    name:"DashboardMainAdmin"
+    name:"DashboardMainAdmin",
+
+    data(){
+        return{
+            headers:[],
+        }
+    }
 }
 </script>
 

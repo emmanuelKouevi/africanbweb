@@ -1,6 +1,7 @@
 <template>
     <v-app>
-        <v-card>
+        <v-container fluid>
+            <v-card max-width="1500">
             <v-card-title class="title-card">LISTE DES OFFRES DE VOYAGES
                 <v-spacer></v-spacer>
                 <v-text-field v-model="search" append-icon="mdi-magnify" label="Search" single-line hide-details></v-text-field>               
@@ -26,6 +27,8 @@
             </v-data-table>
             <v-alert class="myalert alert-error" type="error" width="350px" dismissible>{{ errorMsg }}</v-alert>
         </v-card>
+        </v-container>
+        
     </v-app>
 </template>
 
@@ -56,7 +59,7 @@ export default {
 
             offreVoyageObject:{
                 data:{
-                    compagnieTransportRaisonSociale:"COMPAGNIE KOUEVI CT"
+                    compagnieTransportRaisonSociale:"Kouevi CT"
                 }
             },
 

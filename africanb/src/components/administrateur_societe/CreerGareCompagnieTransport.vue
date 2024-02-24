@@ -69,7 +69,7 @@ export default {
                 telephone1:null,
                 telephone2:null,
                 adresseLocalisation:null,
-                compagnieTransportRaisonSociale:"COMPAGNIE KOUEVI CT",
+                compagnieTransportRaisonSociale:"Kouevi CT",
             }
         }
     },

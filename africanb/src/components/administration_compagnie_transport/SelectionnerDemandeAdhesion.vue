@@ -1,6 +1,7 @@
 <template>
     <v-app>
-        <v-card>
+        <v-container fluid>
+            <v-card>
             <v-card-title class="title-card">VOS DEMANDES D'ADHESIONS
                 <v-spacer></v-spacer>
                 <v-text-field v-model="search" append-icon="mdi-magnify" label="Rechercher" single-line hide-details></v-text-field>               
@@ -11,6 +12,7 @@
                 :search="search"
             ></v-data-table>
         </v-card>
+        </v-container>
     </v-app>
 </template>
 

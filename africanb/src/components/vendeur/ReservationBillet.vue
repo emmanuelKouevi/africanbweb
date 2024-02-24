@@ -221,6 +221,13 @@ export default {
                     nombrePlace : 5,
                     categorieVoyageur: null,
                     gareDesignation : null,
+                    isOtherPerson:true,
+                    clientDetails:{
+                        nom: "Kouevi",
+                        prenoms: "Ayite Emmanuel Herve",
+                        email: "emmanuel herve",
+                        telephone:"0565585746"
+                    },
                     offreVoyageDesignation:null,
                 }
             },
@@ -240,7 +247,7 @@ export default {
                 id:null,
                 designation : null ,
                 description: null,
-                compagnieTransportRaisonSociale : "COMPAGNIE KOUEVI CT",
+                compagnieTransportRaisonSociale : "Kouevi CT",
                 typeOffreVoyageDesignation : null,
                 villeDepartDesignation : null,
                 villeDestinationDesignation : null
@@ -268,11 +275,12 @@ export default {
         async reserverOffre(){
             this.dialog = false;
             this.overlay = true;
-            this.programmeReserved.data.programmeDesignation = "programme001"
-            this.programmeReserved.data.gareDesignation = "Gare Abidjan"
+            this.programmeReserved.data.programmeDesignation = "Prog 001"
+            this.programmeReserved.data.gareDesignation = "Gare Shalom Marcory"
             this.programmeReserved.data.categorieVoyageur = this.userCategory
             this.programmeReserved.data.offreVoyageDesignation = this.offreVoyage.designation
             await axios.post(API_RESERVER_PROGRAMME_OFFRE, this.programmeReserved, { headers : HEADERS(this.$store.state.userAuthentified.token) }).then((response) => {
+                console.log(response)
                 if (response.status == 200) {
                     if (response.data.status.code == 800) {
                         this.successMsg = response.data.status.message

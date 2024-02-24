@@ -1,6 +1,6 @@
 <template>
     <v-app id="inspire">
-        <v-navigation-drawer app v-model="drawer" :mini-variant.sync="mini" >
+        <v-navigation-drawer app v-model="drawer">
             <v-list-item>
                 <v-list-item-content>
                     <v-list-item-title class="text-h6 font-weight-thin">{{ $store.state.userAuthentified.compagnieTransportRaisonSociale }}</v-list-item-title>
@@ -105,10 +105,8 @@
         </v-app-bar>
 
         <v-main>
-        <!-- Provides the application the proper gutter -->
-            <v-container fluid>
-                <router-view></router-view>
-            </v-container>
+            <!-- Provides the application the proper gutter -->
+            <router-view></router-view> 
         </v-main>
     </v-app>
 </template>
@@ -142,15 +140,6 @@ export default {
             if(localStorage.getItem('token_user')){
                 const userConnected = JSON.parse(localStorage.getItem('token_user'));
                 this.$store.state.userAuthentified = userConnected;
-                /*this.$store.state.userAuthentified.roleCode = userConnected.roleCode;
-                this.$store.state.userAuthentified.token = userConnected.token;
-                this.$store.state.userAuthentified.login= userConnected.login;
-                this.$store.state.userAuthentified.roleLibelle = userConnected.roleLibelle;
-                this.$store.state.userAuthentified.nom = userConnected.nom;
-                this.$store.state.userAuthentified.prenom = userConnected.prenom;
-                this.$store.state.userAuthentified.email = userConnected.email;
-                this.$store.state.userAuthentified.compagnieTransportId = userConnected.compagnieTransportId;*/
-                //console.log(this.$store.state.userAuthentified.token);
             }
         },
 
@@ -169,6 +158,7 @@ export default {
             })
         },
 
+        // Bloquer la session de l'utilisateur
         destroyLocalSession(){
             if(localStorage.getItem("token_user")){
                 localStorage.removeItem("token_user");

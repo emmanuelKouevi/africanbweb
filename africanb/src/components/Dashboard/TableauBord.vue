@@ -1,11 +1,11 @@
 <template>
-    <v-container v-if="$store.state.userAuthentified.roleCode == 'vendeurGare'">
+    <v-container fluid v-if="$store.state.userAuthentified.roleCode == 'vendeurGare'">
         <DashboardSeller/>
     </v-container>
-    <v-container v-else-if="$store.state.userAuthentified.roleCode == 'RoleAdminCompagnieTransport'">
+    <v-container fluid v-else-if="$store.state.userAuthentified.roleCode == 'RoleAdminCompagnieTransport'">
         <DashboardTransportAdmin/>
     </v-container>
-    <v-container v-else>
+    <v-container fluid v-else>
         <DashboardMainAdmin/>
     </v-container>
 </template>

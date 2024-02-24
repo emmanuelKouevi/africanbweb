@@ -124,7 +124,7 @@ export default {
 
             abonnementListObject:{
                 data:{
-                    compagnieTransportRaisonSociale:"COMPAGNIE KOUEVI CT"
+                    compagnieTransportRaisonSociale:"Kouevi CT"
                 }
             },
 
@@ -133,7 +133,7 @@ export default {
 
             paiementListObject:{
                 data:{
-                    compagnieTransportRaisonSociale:"COMPAGNIE KOUEVI CT"
+                    compagnieTransportRaisonSociale:"Kouevi CT"
                 }
             },
         }

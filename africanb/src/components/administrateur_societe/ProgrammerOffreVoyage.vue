@@ -145,7 +145,7 @@ export default {
 
             offreVoyageObject:{
                 data:{
-                    compagnieTransportRaisonSociale:"COMPAGNIE KOUEVI CT"
+                    compagnieTransportRaisonSociale:"Kouevi CT"
                 }
             },
 

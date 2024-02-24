@@ -152,7 +152,7 @@ export default {
 
             offreVoyageObject:{
                 data:{
-                    compagnieTransportRaisonSociale:"COMPAGNIE KOUEVI CT"
+                    compagnieTransportRaisonSociale:"Kouevi CT"
                 }
             },
 
@@ -266,7 +266,7 @@ export default {
                     heureArrivee : null,
                 };
                 unProgramme.designation = programmeOffre.designation; 
-                unProgramme.nombrePlaceDisponible = programmeOffre.designation;
+                unProgramme.nombrePlaceDisponible = programmeOffre.nombrePlaceDisponible;
                 unProgramme.jourSemaineDesignation = programmeOffre.jourSemaineDesignation;
                 unProgramme.heureDepart = programmeOffre.heureDepart;
                 unProgramme.heureArrivee = programmeOffre.heureArrivee;

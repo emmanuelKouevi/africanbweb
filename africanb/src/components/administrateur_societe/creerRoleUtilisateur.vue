@@ -60,7 +60,7 @@
                                                     <v-card>
                                                         <v-card-title class="text font-weight-thin">FONCTIONNALITÉS DISPONIBLES</v-card-title>
                                                         <v-card-text>
-                                                            <v-select dense v-model="functionnalitiesChoosenList" :items="getFunctionalitiesList" item-text="libelle" item-value="code" :menu-props="{ maxHeight: '400' }" label="Vos fonctionnalités"
+                                                            <v-select dense v-model="functionnalitiesChoosenList" :items="getFunctionalitiesList" item-text="code" item-value="code" :menu-props="{ maxHeight: '400' }" label="Vos fonctionnalités"
                                                                 multiple hint="Sélectionnez vos fonctionnalités" persistent-hint
                                                             ></v-select>
                                                         </v-card-text>
@@ -192,6 +192,7 @@ export default {
                         }, 4000)
                     }else{
                         this.getFunctionalitiesList = response.data.items;
+                        console.log(this.getFunctionalitiesList);
                     }
                 }else{
                     this.errorMsg = "Erreur";
