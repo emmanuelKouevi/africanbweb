@@ -7,15 +7,11 @@
                     <v-text-field v-model="search" append-icon="mdi-magnify" label="Search" single-line hide-details></v-text-field>               
                 </v-card-title>
             
-                <v-data-table
-                    :headers="headers"
-                    :items="villesList"
-                    :loading="loading"
-                    :search="search">
+                <v-data-table :headers="headers" :items="villesList" :loading="loading" :search="search">
 
                     <template v-slot:[`item.actions`]="{ item }">
-                        <v-icon title="editer" color="blue" small class="mr-2" @click="editCompagnieTransport(item)">mdi-pencil</v-icon>                       
-                        <v-icon title="supprimer" color="red" small class="mr-2" @click="supprimerProduitLogement(item)">mdi-delete</v-icon>
+                        <v-icon title="editer" color="blue" small class="mr-2" @click="editVille(item)">mdi-pencil</v-icon>                       
+                        <!-- <v-icon title="supprimer" color="red" small class="mr-2" @click="supprimerProduitLogement(item)">mdi-delete</v-icon> --> 
                     </template>
 
                 </v-data-table>
@@ -54,9 +50,7 @@ export default {
 
     methods :{
         editVille(ville){
-            const parsedVille = JSON.stringify(ville);
-            localStorage.setItem('ville', parsedVille);
-            this.$router.push({path: "/modifierVille" });
+            this.$router.push({name: "modifierVille" , params:{designation:ville.designation} });
         },
 
 

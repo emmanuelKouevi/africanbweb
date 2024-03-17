@@ -2,38 +2,38 @@
     <v-app>
         <v-container fluid>
             <v-form @submit.prevent="submitForm">
-            <v-card max-width="1200px" class="mx-auto">
-                <v-card-title><h6 class="font-weight-bold">AJOUTER UN PAYS</h6></v-card-title>
-                <v-card-subtitle>Définissez les differents pays pour une administration classique</v-card-subtitle>
-                
-                <v-card-text>
-                    <v-container fluid>
-                        <div class="form-group">
-                            <label for="inputAddress">Designation</label>
-                            <v-text-field dense outlined color="primary" placeholder="Entrer une designation"
-                                :error-messages="designationPaysErrors"
-                                v-model.trim="$v.pays.designation.$model"
-                                @input="$v.pays.designation.$touch()"
-                                @blur="$v.pays.designation.$touch()">
-                            </v-text-field>
-                        </div>
+                <v-card max-width="1300px" class="">
+                    <v-card-title><h6 class="font-weight-bold">AJOUTER UN PAYS</h6></v-card-title>
+                    <v-card-subtitle>Définissez les differents pays pour une administration classique</v-card-subtitle>
+                    
+                    <v-card-text>
+                        <v-container fluid>
+                            <div class="form-group">
+                                <label for="inputAddress">Designation</label>
+                                <v-text-field dense outlined color="primary" placeholder="Entrer une designation"
+                                    :error-messages="designationPaysErrors"
+                                    v-model.trim="$v.pays.designation.$model"
+                                    @input="$v.pays.designation.$touch()"
+                                    @blur="$v.pays.designation.$touch()">
+                                </v-text-field>
+                            </div>
 
-                        <div class="form-group">
-                            <label for="inputAddress">Description</label>
-                            <v-textarea outlined color="primary" dense 
-                                aria-placeholder="entrer une description"
-                                v-model="pays.description"
-                            ></v-textarea>
-                        </div>
-                    </v-container>
-                </v-card-text>
-                
-                <v-card-actions>
-                    <v-btn small color="secondary"><v-icon>mdi-sync</v-icon> REINITIALISER</v-btn>
-                    <v-btn small type="submit" color="primary"><v-icon>mdi-check</v-icon> AJOUTER</v-btn>
-                </v-card-actions>
-            </v-card>   
-        </v-form>
+                            <div class="form-group">
+                                <label for="inputAddress">Description</label>
+                                <v-textarea outlined color="primary" dense 
+                                    aria-placeholder="entrer une description"
+                                    v-model="pays.description"
+                                ></v-textarea>
+                            </div>
+                        </v-container>
+                    </v-card-text>
+                    
+                    <v-card-actions>
+                        <v-btn x-small color="secondary">REINITIALISER</v-btn>
+                        <v-btn x-small type="submit" color="success">AJOUTER</v-btn>
+                    </v-card-actions>
+                </v-card>   
+            </v-form>
         </v-container>
         
 
@@ -94,6 +94,8 @@ export default {
                         setTimeout(function(){
                             $(".alert-success").fadeOut(); 
                         }, 4000)
+                        this.pays.description = null;
+                        this.pays.description = null; 
                         this.objectContainList.datas.push = [];
                     }else{
                         this.errorMsg = response.data.status.message
@@ -135,7 +137,6 @@ export default {
 
 
         // SOUMISSION DU FORMULAIRE
-
         submitForm(){
             this.$v.$touch();
             if (this.$v.pays.$invalid) {

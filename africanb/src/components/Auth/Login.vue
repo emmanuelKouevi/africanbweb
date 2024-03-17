@@ -6,7 +6,7 @@
                     <v-form @submit.prevent="login">
                         <v-card max-width="400" max-height="1000" elevation="5">
                             <v-row justify="center" align="center">
-                                <v-img max-height="60" max-width="60" src="../../assets/logo_africanbus.jpg"></v-img>
+                                <v-img max-height="60" max-width="60" src="../../assets/UB.jpg"></v-img>
                             </v-row>
                         
                             <v-card-text>

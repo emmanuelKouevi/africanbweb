@@ -1,9 +1,7 @@
 <template>
     <v-app>
-
-        <v-card>
-
-            <v-card>
+        <v-container fluid>
+            <v-card max-width="800px" class="mx-auto">
                 <v-card-title class="title-card">LISTE DES MODES D'ABONNEMENTS
                     <v-spacer></v-spacer>
                     <v-text-field v-model="search" append-icon="mdi-magnify" label="Search" single-line hide-details></v-text-field>               
@@ -96,7 +94,7 @@
                     </v-row>
                 </v-container>
             </v-card>
-        </v-card>
+        </v-container>
         
     </v-app>
 </template>

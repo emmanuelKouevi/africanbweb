@@ -45,7 +45,7 @@
         <v-app-bar app color="white">
             <v-app-bar-nav-icon color="dark" @click="drawer = !drawer"></v-app-bar-nav-icon>
             <v-toolbar-title>
-                <v-img max-height="50px" max-width="75px" src="../assets/logo_africanbus.jpg"></v-img>
+                <v-img max-height="50px" max-width="75px" src="../assets/UB.jpg"></v-img>
             </v-toolbar-title>
             <v-spacer></v-spacer>
 
@@ -116,10 +116,10 @@ import axios from 'axios';
 import { API_GET_FUNCTIONNALITY_BY_ROLE , HEADERS } from '../components/globalConfig/globalConstConfig'
 import { FUNCTIONNALITY_CREATE_OFFRE_VOYAGE , FUNCTIONNALITY_CREATE_VILLE , FUNCTIONNALITY_LISTING_VILLE , FUNCTIONNALITY_RATTACHE_ATTESTION_TRANSPORT , FUNCTIONNALITY_CREATE_JOUR_OFFRE_VOYAGE , FUNCTIONNALITY_CREATE_PROGRAMME_OFFRE_VOYAGE } from '../components/globalConfig/constFunctionnalies'
 import { FUNCTIONNALITY_CREATE_USER_FUNCTION , FUNCTIONNALITY_CREATE_USER_ROLE , FUNCTIONNALITY_CREATE_USER_ACCOUNT , FUNCTIONNALITY_DEMANDE_ADHESION , FUNCTIONNALITY_CREATE_PAYS , FUNCTIONNALITY_LISTING_PAYS } from '../components/globalConfig/constFunctionnalies'
-import { FUNCTIONNALITY_CREATE_VILLE_ESCALE , FUNCTIONNALITY_CREATE_PRIX_OFFRE_VOYAGE , FUNCTIONNALITY_CREATE_BUS_OFFRE_VOYAGE } from '../components/globalConfig/constFunctionnalies'
+import { FUNCTIONNALITY_CREATE_VILLE_ESCALE , FUNCTIONNALITY_CREATE_PRIX_OFFRE_VOYAGE , FUNCTIONNALITY_CREATE_BUS_OFFRE_VOYAGE , FUNCTIONNALITY_LIST_ADHESION } from '../components/globalConfig/constFunctionnalies'
 import { FUNCTIONNALITY_CREATE_CARACTERISTIQUE_OFFRE_VOYAGE , FUNCTIONNALITY_CREATE_GARE_TRANSPORT , FUNCTIONNALITY_LISTING_GARE_TRANSPORT, FUNCTIONNALITY_CREATE_BAGAGE , } from '../components/globalConfig/constFunctionnalies'
 import { FUNCTIONNALITY_CREATE_MODE_ABONNEMENT , FUNCTIONNALITY_CREATE_MODE_PAIEMENT , FUNCTIONNALITY_LISTING_MODE_PAIEMENT , FUNCTIONNALITY_LISTING_OFFRE_VOYAGE } from '../components/globalConfig/constFunctionnalies'
-import { FUNCTIONNALITY_RESERVING_FROM_OFFRE_VOYAGE , FUNCTIONNALITY_SELECTION_RESERVATION_TICKET } from '../components/globalConfig/constFunctionnalies'
+import { FUNCTIONNALITY_RESERVING_FROM_OFFRE_VOYAGE , FUNCTIONNALITY_SELECTION_RESERVATION_TICKET , FUNCTIONNALITY_MANAGE_ALL_ACCOUNT_USER , FUNCTIONNALITY_MANAGING_ROLE_AND_FUNCTIONNALITY } from '../components/globalConfig/constFunctionnalies'
 export default {
     name:'EspaceUI',
     data(){
@@ -271,6 +271,26 @@ export default {
                 if (element.code == FUNCTIONNALITY_CREATE_MODE_PAIEMENT) {
                     var creerModePaiement = { title : 'CREER MODE DE PAIEMENT' , icon : 'mdi-account-credit-card' , navigation : '/creerModePaiement' };
                     globalFunctionnalities.push(creerModePaiement);
+                }
+                if (element.code == FUNCTIONNALITY_LIST_ADHESION) {
+                    var listAdhesionDisponible = { title : 'LISTE DES DEMANDES D\'ADHESION' , icon : 'mdi-account-credit-card' , navigation : '/selectionnerDemandeAdhesionCompagnie' };
+                    globalFunctionnalities.push(listAdhesionDisponible);
+                }
+                if (element.code == FUNCTIONNALITY_CREATE_USER_FUNCTION) {
+                    var creerUserFunctionnality = { title : 'FONCTIONNALITÉ UTILISATEUR' , icon : 'mdi-account-credit-card' , navigation : '/creerFonctionnalite' };
+                    globalFunctionnalities.push(creerUserFunctionnality);
+                }
+                if (element.code == FUNCTIONNALITY_CREATE_USER_ROLE) {
+                    var creerUserRole = { title : 'ROLE UTILISATEUR' , icon : 'mdi-account-credit-card' , navigation : '/creerRoleUtilisateur' };
+                    globalFunctionnalities.push(creerUserRole);
+                }
+                if (element.code == FUNCTIONNALITY_MANAGING_ROLE_AND_FUNCTIONNALITY) {
+                    var manageRoleAndFunctionnality = { title : 'ROLE ET FONCTIONNALITÉ' , icon : 'mdi-account-credit-card' , navigation : '/gestionFonctionnalitesEtRoles'};
+                    globalFunctionnalities.push(manageRoleAndFunctionnality);
+                }
+                if (element.code == FUNCTIONNALITY_MANAGE_ALL_ACCOUNT_USER) {
+                    var manageAllUserAccount = { title : 'GERER LES COMPTES' , icon : 'mdi-account-credit-card' , navigation : '/selectionnerUtilisateur'};
+                    globalFunctionnalities.push(manageAllUserAccount);
                 }
                 if (element.code == FUNCTIONNALITY_LISTING_MODE_PAIEMENT) {
                     var gestionPaiementEtAbonnementFunction = { title : 'MODE ABONNEMENT ET PAIEMENT' , icon : 'mdi-cash-sync' , navigation : '/selectionnerModeAbonnementEtPaiement' };

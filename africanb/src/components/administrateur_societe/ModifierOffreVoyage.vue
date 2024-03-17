@@ -311,7 +311,7 @@ export default {
                 id:null,
                 designation : null ,
                 description: null,
-                compagnieTransportRaisonSociale : "Kouevi CT",
+                compagnieTransportRaisonSociale : "KOUEVI CT",
                 typeOffreVoyageDesignation : null,
                 villeDepartDesignation : null,
                 villeDestinationDesignation : null

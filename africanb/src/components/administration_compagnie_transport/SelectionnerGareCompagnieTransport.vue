@@ -46,7 +46,7 @@ export default {
 
             gareListObject:{
                 data:{
-                    compagnieTransportRaisonSociale:"Kouevi CT"
+                    compagnieTransportRaisonSociale:"KOUEVI CT"
                 }
             },
             gareDisponiblesList:[],

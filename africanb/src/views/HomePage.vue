@@ -1,13 +1,14 @@
 <template>
     <v-app>
-        <login-page></login-page>
+        <landing-page></landing-page>
     </v-app>
 </template>
 
 <script>
-import loginPage from '@/components/Auth/Login.vue'
+//import loginPage from '@/components/Auth/Login.vue'
+import landingPage from '@/components/LandingPage.vue'
 export default {
   name:'HomePage',
-  components:{ loginPage  }
+  components:{ landingPage }
 }
 </script>

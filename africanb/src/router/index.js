@@ -54,16 +54,25 @@ import documentAttestationTransport from '../components/administration_compagnie
 import associerBusCompagnieTransport from '../components/administration_compagnie_transport/creerBusCompagnieTransport'
 import resetPasswordUserCompagnie from '../components/administration_compagnie_transport/changerPasswordCompagnieTransport.vue'
 import userProfilCompagnieTransport from '../components/administration_compagnie_transport/userProfilCompagnieTransport.vue'
+import LandingPage from '../components/LandingPage'
 
 // IMPORT FOR ENTITY VENDEUR 
 import selectionnerReservationBillet from '../components/vendeur/SelectionnerReservationBillet'
 import selectionnerOffreVoyageReservation from '../components/vendeur/OffreVoyageReservation'
 import reservationBillet from '../components/vendeur/ReservationBillet'
+import modifierPays from '@/components/administrateur_societe/modifierPays.vue'
+import modifierVille from '@/components/administrateur_societe/modifierVille.vue'
+import UserInfo from '@/components/UserInfo.vue'
 //import { ROLE_ADMIN_COMPAGNIE_TRANSPORT , ROLE_ADMIN_SOCIETE_MERE } from '../components/globalConfig/constUsersRoles'
 Vue.use(VueRouter)
 
 
 const routes = [
+  {
+    path:'/LandingPage',
+    name:'LandingPage',
+    component:LandingPage
+  },
   {
     path:'/Login',
     name:'Login',
@@ -207,6 +216,16 @@ const routes = [
         component: creerPays
       },
       {
+        path: '/Pays/:designation',
+        name: 'modifierPays',
+        component: modifierPays
+      },
+      {
+        path: '/Ville/:designation',
+        name: 'modifierVille',
+        component: modifierVille
+      },
+      {
         path: '/selectionnerPays',
         name: 'selectionnerPays',
         component: selectionnerPays
@@ -290,6 +309,11 @@ const routes = [
         path: '/reservationBillet',
         name: 'reservationBillet',
         component: reservationBillet
+      },
+      {
+        path: '/userInfo/:nom',
+        name: 'userInfo',
+        component: UserInfo
       },
     ]  
   },

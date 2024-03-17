@@ -1,24 +1,22 @@
 <template>
     <v-app>
 
-        <v-card>
+        <v-container>
 
-            <v-card>
+            <v-card max-width="1900px" class="mx-auto">
                 <v-card-title class="title-card">LISTE DES MODES D'ABONNEMENTS
                     <v-spacer></v-spacer>
                     <v-text-field v-model="search" append-icon="mdi-magnify" label="Search" single-line hide-details></v-text-field>               
                 </v-card-title>
             
-                <v-data-table
-                    :headers="headers"
-                    :items="abonnementDisponibleList"
+                <v-data-table :headers="headers" :items="abonnementDisponibleList"
                     :loading="loading"
                     :search="search">
 
 
                     <template v-slot:[`item.actions`]="{ item }">
-                        <v-icon title="editer" color="blue" small class="mr-2" @click="editerOffreVoyage(item)">mdi-pencil</v-icon>
-                        <v-icon title="supprimer" color="red" small class="mr-2" @click="supprimerProduitLogement(item)">mdi-delete</v-icon>
+                        <v-icon title="editer" color="blue" small class="mr-2" @click="editerModePaiement(item)">mdi-pencil</v-icon>
+                        <!--<v-icon title="supprimer" color="red" small class="mr-2" @click="supprimerProduitLogement(item)">mdi-delete</v-icon>--> 
                     </template>
 
                 </v-data-table>
@@ -96,7 +94,7 @@
                     </v-row>
                 </v-container>
             </v-card>
-        </v-card>
+        </v-container>
         
     </v-app>
 </template>
@@ -124,7 +122,7 @@ export default {
 
             abonnementListObject:{
                 data:{
-                    compagnieTransportRaisonSociale:"Kouevi CT"
+                    compagnieTransportRaisonSociale:"KOUEVI CT"
                 }
             },
 
@@ -133,7 +131,7 @@ export default {
 
             paiementListObject:{
                 data:{
-                    compagnieTransportRaisonSociale:"Kouevi CT"
+                    compagnieTransportRaisonSociale:"KOUEVI CT"
                 }
             },
         }

@@ -5,11 +5,7 @@
                 <v-spacer></v-spacer>
                 <v-text-field v-model="search" append-icon="mdi-magnify" label="Search" single-line hide-details></v-text-field>
             </v-card-title>
-            <v-data-table
-                :headers="headers"
-                :items="demandeAdhesionValidesList"
-                :search="search"
-                :loading="loading">
+            <v-data-table :headers="headers" :items="demandeAdhesionValidesList" :search="search" :loading="loading">
 
                 <template v-slot:[`item.statusUtilActualDesignation`]="{ item }">
                     <v-chip small v-if="item.statusUtilActualDesignation == 'compagnieTransportValide'" color="teal" text-color="white" class="mr-2"><span class="etat font-weight-bold">Valide</span></v-chip>

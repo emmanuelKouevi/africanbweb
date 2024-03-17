@@ -55,7 +55,7 @@ export default {
                 coutBagageParTypeBagage:null,
                 nombreBagageGratuitParTypeBagage:null,
                 typeBagageDesignation:null,
-                compagnieTransportRaisonSociale:"Kouevi CT"
+                compagnieTransportRaisonSociale:"KOUEVI CT"
             },
 
             bagageToSend:{

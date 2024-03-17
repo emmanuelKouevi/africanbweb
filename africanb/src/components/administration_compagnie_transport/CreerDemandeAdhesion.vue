@@ -4,7 +4,6 @@
             <v-card max-width="1000px" class="mx-auto">
                 <v-card-title><h5 class="font-weight-bold">CREER UNE DEMANDE D'ADHESION</h5></v-card-title>
                 <v-card-subtitle>Faites une requête aupres de l'administrateur pour votre espace personnel</v-card-subtitle>
-
                 <v-card-text>
                     <v-container fluid>
                         <div class="form-group">

@@ -16,6 +16,7 @@ export const FUNCTIONNALITY_UPDATE_VILLE = "FunctionnalityUpdateVille";
 export const FUNCTIONNALITY_DELETE_VILLE = "FunctionnalityDeleteVille";
 
 export const FUNCTIONNALITY_DEMANDE_ADHESION = "FunctionnalityDemandeAdhesion";
+export const FUNCTIONNALITY_LIST_ADHESION = "FunctionnalitySelectAdhesion";
 export const FUNCTIONNALITY_CREATE_COMPAGNIE_TRANSPORT = "FunctionnalityCreateCompagnieTransport";
 export const FUNCTIONNALITY_UPDATE_COMPAGNIE_TRANSPORT = "FunctionnalityUpdateCompagnieTransport";
 export const FUNCTIONNALITY_DELETE_COMPAGNIE_TRANSPORT = "FunctionnalityDeleteCompagnieTransport";

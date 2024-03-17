@@ -60,7 +60,7 @@ export default {
                 designation: null,
                 telephoneGenerique: null,
                 typeModePaiementDesignation : null,
-                compagnieTransportRaisonSociale: "Kouevi CT",
+                compagnieTransportRaisonSociale: "KOUEVI CT",
             },
 
             modePaiementToModify:{

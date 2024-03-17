@@ -1,31 +1,27 @@
 <template>
     <v-app>
-        <v-card>
-            <v-card-title class="title-card">LISTE DES UTILISATEURS
-                <v-spacer></v-spacer>
-                <v-text-field v-model="search" append-icon="mdi-magnify" label="Search" single-line hide-details></v-text-field>               
-            </v-card-title>
-            
-            <v-data-table
-                :headers="headers"
-                :items="usersList"
-                :loading="loading"
-                :search="search">
+        <v-container fluid>
+            <v-card class="mx-auto" width="1800">
+                <v-card-title class="title-card">LISTE DES UTILISATEURS
+                    <v-spacer></v-spacer>
+                    <v-text-field v-model="search" append-icon="mdi-magnify" label="Search" single-line hide-details></v-text-field>               
+                </v-card-title>
 
-                <template v-slot:[`item.isActif`]="{ item }">
-                    <v-chip x-small v-if="item.isActived == true" color="success" text-color="white" class="mr-2"><span class="etat font-weight-bold">active</span></v-chip>
-                    <v-chip x-small v-else color="red" text-color="white" class="mr-2"><span class="etat">non-active</span></v-chip>
-                </template>
+                <v-data-table :headers="headers" :items="usersList" :loading="loading" :search="search">
 
-                <template v-slot:[`item.actions`]="{ item }">
-                    <v-icon title="editer" color="blue" small class="mr-2" @click="toEditUser(item)">mdi-pencil</v-icon>
-                    <v-icon title="activer" color="success" small class="mr-2" @click="toActivedUser(item)">mdi-broadcast</v-icon>                       
-                    <v-icon title="supprimer" color="red" small class="mr-2" @click="toDeleteUser(item)">mdi-delete</v-icon>
-                </template>
+                    <!--<template v-slot:[`item.isActif`]="{ item }">
+                        <v-chip x-small v-if="item.isActived == true" color="success" text-color="white" class="mr-2"><span class="etat font-weight-bold">active</span></v-chip>
+                        <v-chip x-small v-else color="red" text-color="white" class="mr-2"><span class="etat">non-active</span></v-chip>
+                    </template>-->
 
-            </v-data-table>
-            <v-alert class="myalert alert-error" type="error" width="350px" dismissible>{{ errorMsg }}</v-alert>
-        </v-card>
+                    <template v-slot:[`item.actions`]="{ item }">
+                        <v-btn text x-small color="primary" @click="navigateToUserInfo(item)">Voir détail</v-btn>
+                    </template>
+
+                </v-data-table>
+                <v-alert class="myalert alert-error" type="error" width="350px" dismissible>{{ errorMsg }}</v-alert>
+            </v-card>
+        </v-container>
     </v-app>
 </template>
 
@@ -41,12 +37,10 @@ export default {
 
             search : '',
             headers:[
-                {text : 'reference' , value : 'id'},
                 {text : 'Nom' , value : 'nom'},
                 {text : 'Prenoms' , value : 'prenoms'},
                 {text : 'E-mail' , value : 'email'},
                 {text : 'Login' , value : 'login'},
-                {text : 'Actif' , value : 'isActif'},
                 {text : 'Actions' , value : 'actions' , sortable : false}
             ],
             
@@ -68,6 +62,10 @@ export default {
     },
 
     methods:{
+
+        navigateToUserInfo(user){
+            this.$router.push({name:"userInfo" , params:{nom:user.nom} })
+        },
 
         // ACTIVER UN UTILISATEUR
         async toActivedUser(userItem){
@@ -106,6 +104,7 @@ export default {
                         }, 4000)
                     }else{
                         this.usersList = response.data.items;
+                        console.log(this.usersList);
                     }
                 }else{
                     this.errorMsg = "Erreur";

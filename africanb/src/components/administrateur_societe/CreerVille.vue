@@ -1,7 +1,7 @@
 <template>
     <v-app>
         <v-form @submit.prevent="submitForm">
-            <v-card max-width="1200px" class="mx-auto">
+            <v-card max-width="1300px" class="mx-auto">
                 <v-card-title><h6 class="font-weight-bold">AJOUTER UNE VILLE</h6></v-card-title>
                 <v-card-subtitle>Définissez vos différents villes pour une administration classique</v-card-subtitle>
 
@@ -9,7 +9,7 @@
                     <v-container fluid>
                         <div class="form-group">
                             <label for="inputAddress">Designation de la ville</label>
-                            <v-text-field dense outlined color="primary" placeholder="Entrer une designation"
+                            <v-text-field class="col-md-6" dense outlined color="primary" placeholder="Entrer une designation"
                                 :error-messages="designationVilleErrors"
                                 v-model.trim="$v.ville.designation.$model"
                                 @input="$v.ville.designation.$touch()"
@@ -29,8 +29,8 @@
                 </v-card-text>                
 
                 <v-card-actions>
-                    <v-btn small color="secondary"><v-icon>mdi-sync</v-icon> REINITIALISER</v-btn>
-                    <v-btn small type="submit" color="primary"><v-icon>mdi-check</v-icon> AJOUTER</v-btn>
+                    <v-btn x-small color="secondary">REINITIALISER</v-btn>
+                    <v-btn x-small type="submit" color="success">MODIFIER</v-btn>
                 </v-card-actions>
 
             </v-card>   

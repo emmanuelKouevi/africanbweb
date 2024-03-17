@@ -212,7 +212,7 @@ export default {
                 dateFinAbonnement: null,
                 taux:null,
                 periodiciteAbonnementDesignation: null,
-                compagnieTransportRaisonSociale: "Kouevi CT",
+                compagnieTransportRaisonSociale: "KOUEVI CT",
             },
 
             abonnementObject:{

@@ -23,8 +23,8 @@
                                                 <v-card-text v-if="functionnalitiesChoosenList.length > 0">
                                                     <v-list two-line>
                                                         <v-list-item-group multiple>
-                                                            <template v-for="(item, index) in functionnalitiesChoosenList">
-                                                                <v-list-item :key="item.title">
+                                                            <template >
+                                                                <v-list-item v-for="(item, index) in functionnalitiesChoosenList" :key="item.title">
                                                                     <template>
                                                                         <v-list-item-content>                                        
                                                                             <v-list-item-subtitle class="text--primary">

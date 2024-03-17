@@ -12,10 +12,10 @@
                 :loading="loadingFunctionnality"
                 :search="searchFunctionnality">
 
-                <template v-slot:[`item.actions`]="{ item }">
+                <!--<template v-slot:[`item.actions`]="{ item }">
                     <v-icon title="editer" color="blue" small class="mr-2" @click="editerOffreVoyage(item)">mdi-pencil</v-icon>                      
                     <v-icon title="supprimer" color="red" small class="mr-2" @click="supprimerProduitLogement(item)">mdi-delete</v-icon>
-                </template>
+                </template>-->
 
             </v-data-table>
         </v-card><br>
@@ -32,10 +32,10 @@
                 :loading="loadingUserRole"
                 :search="searchUserRole">
 
-                <template v-slot:[`item.actions`]="{ item }">
+                <!--<template v-slot:[`item.actions`]="{ item }">
                     <v-icon title="editer" color="blue" small class="mr-2" @click="editerOffreVoyage(item)">mdi-pencil</v-icon>
                     <v-icon title="supprimer" color="red" small class="mr-2" @click="supprimerProduitLogement(item)">mdi-delete</v-icon>
-                </template>
+                </template>-->
 
             </v-data-table>
         </v-card>
@@ -62,7 +62,7 @@ export default {
                 {text : 'reference' , value : 'id'},
                 {text : 'Libelle' , value : 'libelle'},
                 {text : 'Code' , value : 'code'},
-                {text : 'Actions' , value : 'actions' , sortable : false}
+                //{text : 'Actions' , value : 'actions' , sortable : false}
             ],
 
 
@@ -72,7 +72,7 @@ export default {
                 {text : 'reference' , value : 'id'},
                 {text : 'Libelle' , value : 'libelle'},
                 {text : 'Code' , value : 'code'},
-                {text : 'Actions' , value : 'actions' , sortable : false}
+                //{text : 'Actions' , value : 'actions' , sortable : false}
             ],
         }
     },
