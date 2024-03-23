@@ -21,7 +21,6 @@
                 <template v-slot:[`item.actions`]="{ item }">
                     <v-icon title="editer" color="blue" small class="mr-2" @click="editerOffreVoyage(item)">mdi-pencil</v-icon>
                     <v-icon title="activer" color="success" small class="mr-2" @click="activerOffreVoyage(item)">mdi-broadcast</v-icon>                       
-                    <v-icon title="supprimer" color="red" small class="mr-2" @click="supprimerProduitLogement(item)">mdi-delete</v-icon>
                 </template>
 
             </v-data-table>
@@ -59,7 +58,7 @@ export default {
 
             offreVoyageObject:{
                 data:{
-                    compagnieTransportRaisonSociale:"Kouevi CT"
+                    compagnieTransportRaisonSociale:"KOUEVI CT"
                 }
             },
 

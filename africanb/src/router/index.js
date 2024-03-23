@@ -63,6 +63,7 @@ import reservationBillet from '../components/vendeur/ReservationBillet'
 import modifierPays from '@/components/administrateur_societe/modifierPays.vue'
 import modifierVille from '@/components/administrateur_societe/modifierVille.vue'
 import UserInfo from '@/components/UserInfo.vue'
+import InfosAdhesion from '@/components/InfosAdhesion.vue'
 //import { ROLE_ADMIN_COMPAGNIE_TRANSPORT , ROLE_ADMIN_SOCIETE_MERE } from '../components/globalConfig/constUsersRoles'
 Vue.use(VueRouter)
 
@@ -314,6 +315,11 @@ const routes = [
         path: '/userInfo/:nom',
         name: 'userInfo',
         component: UserInfo
+      },
+      {
+        path: '/InfosAdhesion/:raisonSociale',
+        name: 'InfosAdhesion',
+        component:InfosAdhesion
       },
     ]  
   },

@@ -36,7 +36,7 @@ export const API_OBTENIR_REFERENCE_PAR_PAR_FAMILLE = `${BASE_URL}references/getR
 
 // ------------------------------- APIS ADMINISTRATEUR COMPAGNIE DE TRANSPORT ----------------------------------//
 export const API_OBTENIR_LISTE_DES_DEMANDES_ADHESIONS_VALIDEES = `${BASE_URL}compagnieTransport/getAllValidedCompagnies`
-
+export const API_OBTENIR_LISTE_DE_TOUTES_LES_DEMANDES_ADHESIONS = `${BASE_URL}compagnieTransport/getAllProcessingCompagnies`
 
 //-------------------------------- APIs OFFRE DE VOYAGE---------------------------------------------------------------------//
 
