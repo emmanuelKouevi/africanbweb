@@ -16,10 +16,10 @@
             <v-menu offset-y>
                 <template v-slot:activator="{ on, attrs }"><v-btn text dark v-bind="attrs" v-on="on">CONNEXION</v-btn></template>
                 <v-list>
-                    <v-list-item link @click="goToLoginPage">
+                    <v-list-item link @click="goToAdhesionPage">
                         <v-list-item-title><v-icon>mdi-login</v-icon>&nbsp;&nbsp;<small>Se connecter</small></v-list-item-title>
                     </v-list-item>
-                    <v-list-item link>
+                    <v-list-item link @click="goToAdhesionPage">
                         <v-list-item-title><v-icon>mdi-account</v-icon>&nbsp;&nbsp;<small>Demander une adhésion</small></v-list-item-title>
                     </v-list-item>
                 </v-list>
@@ -184,6 +184,11 @@ export default {
         // GO TO LOGIN PAGE TO GET INTEFACE USER
         goToLoginPage(){
             this.$router.push({path:"/Login"})
+        },
+
+        // GO TO LOGIN PAGE TO GET INTEFACE USER
+        goToAdhesionPage(){
+            this.$router.push({path:"/creerDemandeAdhesion"})
         }
     },
 

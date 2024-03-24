@@ -34,7 +34,6 @@ import creerOffreVoyage from '../components/administration_compagnie_transport/C
 import creerVilleEscale from '../components/administration_compagnie_transport/CreerVilleEscale'
 import programmerOffreVoyage from '../components/administration_compagnie_transport/ProgrammerOffreVoyage'
 import creerModeTarif from '../components/administration_compagnie_transport/CreerModeTarif'
-import creerDemandeAdhesion from '../components/administration_compagnie_transport/CreerDemandeAdhesion'
 import selectionnerOffreVoyage from '../components/administration_compagnie_transport/SelectionnerOffreVoyage'
 import modifierOffreVoyage from '../components/administration_compagnie_transport/ModifierOffreVoyage'
 import rattacherJourSemaineOffreVoyage from '../components/administration_compagnie_transport/RattacherJourSemaineOffreVoyage'
@@ -64,6 +63,7 @@ import modifierPays from '@/components/administrateur_societe/modifierPays.vue'
 import modifierVille from '@/components/administrateur_societe/modifierVille.vue'
 import UserInfo from '@/components/UserInfo.vue'
 import InfosAdhesion from '@/components/InfosAdhesion.vue'
+import creerDemandeAdhesion from '../components/CreerDemandeAdhesion'
 //import { ROLE_ADMIN_COMPAGNIE_TRANSPORT , ROLE_ADMIN_SOCIETE_MERE } from '../components/globalConfig/constUsersRoles'
 Vue.use(VueRouter)
 
@@ -84,6 +84,11 @@ const routes = [
     name: 'home',
     component: HomePage
   },
+  {
+    path: '/creerDemandeAdhesion',
+    name: 'creerDemandeAdhesion',
+    component: creerDemandeAdhesion
+  },
 
   {
     path: '/Accueil',
@@ -100,11 +105,6 @@ const routes = [
         path: '/creerVilleEscale',
         name: 'creerVilleEscale',
         component: creerVilleEscale
-      },
-      {
-        path: '/creerDemandeAdhesion',
-        name: 'creerDemandeAdhesion',
-        component: creerDemandeAdhesion
       },
       {
         path: '/creerModeTarif',
@@ -319,7 +319,7 @@ const routes = [
       {
         path: '/InfosAdhesion/:raisonSociale',
         name: 'InfosAdhesion',
-        component:InfosAdhesion
+        component: InfosAdhesion
       },
     ]  
   },

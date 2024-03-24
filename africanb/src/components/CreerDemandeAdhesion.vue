@@ -1,5 +1,5 @@
 <template>
-    <v-app>
+    <v-app class="my_template">
         <v-form @submit.prevent="submitForm">
             <v-card max-width="1000px" class="mx-auto">
                 <v-card-title><h5 class="font-weight-bold">CREER UNE DEMANDE D'ADHESION</h5></v-card-title>
@@ -86,8 +86,8 @@
                 </v-card-text>
 
                 <v-card-actions>
-                    <v-btn small rounded color="secondary"><v-icon>mdi-sync</v-icon> REINITIALISER</v-btn>
-                    <v-btn small rounded type="submit" color="primary"><v-icon>mdi-check</v-icon> FAIRE UNE DEMANDE</v-btn>
+                    <v-btn x-small rounded color="secondary">REINITIALISER</v-btn>
+                    <v-btn x-small rounded type="submit" color="success">FAIRE UNE DEMANDE</v-btn>
                 </v-card-actions>
             </v-card>   
         </v-form>
@@ -102,7 +102,7 @@
 <script>
 import axios from 'axios'
 import $ from 'jquery'
-import { API_CREER_COMPAGNIE_TRANSPORT , API_OBTENIR_LISTE_DES_VILLES_DISPONIBLE , HEADERS } from '../globalConfig/globalConstConfig'
+import { API_CREER_COMPAGNIE_TRANSPORT , API_OBTENIR_LISTE_DES_VILLES_DISPONIBLE , HEADERS_ADMIN  } from '@/components/globalConfig/globalConstConfig'
 import { required , minLength , maxLength , email } from 'vuelidate/lib/validators'
 export default {
     name:'CreerDemandeAdhesion',
@@ -176,7 +176,7 @@ export default {
 
         // OBTENIR LA LISTE DES VILLES DISPONIBLES
         async obtenirListeVillesDispo(){
-            await axios.post(API_OBTENIR_LISTE_DES_VILLES_DISPONIBLE, this.defaultObject , { headers : HEADERS(this.$store.state.userAuthentified.token) }).then((response) => {
+            await axios.post(API_OBTENIR_LISTE_DES_VILLES_DISPONIBLE, this.defaultObject , { headers : HEADERS_ADMIN }).then((response) => {
                 this.villesList = response.data.items
             }).catch((e) => {
                 this.errorMsg = e ;
@@ -192,7 +192,7 @@ export default {
         async creerDemandeAdhesion(){
             this.objectContainList.datas.push(this.compagnieTransport)
             this.overlay = true ;
-            await axios.post(API_CREER_COMPAGNIE_TRANSPORT, this.objectContainList , { headers : HEADERS(this.$store.state.userAuthentified.token) }).then((response) => {
+            await axios.post(API_CREER_COMPAGNIE_TRANSPORT, this.objectContainList , { headers : HEADERS_ADMIN  }).then((response) => {
                 if (response.status == 200) {
                     if (response.data.status.code == 800) {
                         this.successMsg = response.data.status.message
@@ -350,5 +350,10 @@ export default {
         top: 25px;
         right:2%;
         width: 25%;
-    }       
+    }
+    
+    .my_template{
+        padding-top: 75px;
+        background-color: teal;
+    }
 </style>
