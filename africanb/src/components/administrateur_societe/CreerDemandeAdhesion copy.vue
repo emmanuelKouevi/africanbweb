@@ -102,10 +102,10 @@
 <script>
 import axios from 'axios'
 import $ from 'jquery'
-import { API_CREER_COMPAGNIE_TRANSPORT , API_OBTENIR_LISTE_DES_VILLES_DISPONIBLE , } from '@/components/globalConfig/globalConstConfig'
+import { API_CREER_COMPAGNIE_TRANSPORT , API_OBTENIR_LISTE_DES_VILLES_DISPONIBLE , HEADERS } from '@/components/globalConfig/globalConstConfig'
 import { required , minLength , maxLength , email } from 'vuelidate/lib/validators'
 export default {
-    name:'CreerDemandeAdhesion',
+    name:'CreerDemandeAdhesionInterne',
     data(){
         return{
             successMsg : null, 
@@ -176,12 +176,8 @@ export default {
 
         // OBTENIR LA LISTE DES VILLES DISPONIBLES
         async obtenirListeVillesDispo(){
-            await axios.post(API_OBTENIR_LISTE_DES_VILLES_DISPONIBLE, this.defaultObject , { headers : {
-                'server_id' : 'backend@africanb',
-                'client_id' : 'frontend@africanb',
-                'is_admin'  : 'isAdmin'
-            } }).then((response) => {
-            console.log(response)
+            await axios.post(API_OBTENIR_LISTE_DES_VILLES_DISPONIBLE, this.defaultObject , { headers : HEADERS(this.$store.state.userAuthentified.token) }).then((response) => {
+            console.log(this.villesList)
                 this.villesList = response.data.items
             }).catch((e) => {
                 this.errorMsg = e ;
@@ -197,11 +193,7 @@ export default {
         async creerDemandeAdhesion(){
             this.objectContainList.datas.push(this.compagnieTransport)
             this.overlay = true ;
-            await axios.post(API_CREER_COMPAGNIE_TRANSPORT, this.objectContainList , { headers : {
-                'server_id': 'backend@africanb',
-                'client_id': 'frontend@africanb',
-                'is_admin' : 'isAdmin'
-            }}).then((response) => {
+            await axios.post(API_CREER_COMPAGNIE_TRANSPORT, this.objectContainList , { headers : HEADERS(this.$store.state.userAuthentified.token)  }).then((response) => {
                 if (response.status == 200) {
                     if (response.data.status.code == 800) {
                         this.successMsg = response.data.status.message

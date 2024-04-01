@@ -63,7 +63,9 @@ import modifierPays from '@/components/administrateur_societe/modifierPays.vue'
 import modifierVille from '@/components/administrateur_societe/modifierVille.vue'
 import UserInfo from '@/components/UserInfo.vue'
 import InfosAdhesion from '@/components/InfosAdhesion.vue'
+import InfosAdhesionValide from '@/components/InfosAdhesionValide.vue'
 import creerDemandeAdhesion from '../components/CreerDemandeAdhesion'
+import creerDemandeAdhesionInterne from '../components/administrateur_societe/CreerDemandeAdhesion copy.vue'
 //import { ROLE_ADMIN_COMPAGNIE_TRANSPORT , ROLE_ADMIN_SOCIETE_MERE } from '../components/globalConfig/constUsersRoles'
 Vue.use(VueRouter)
 
@@ -85,7 +87,7 @@ const routes = [
     component: HomePage
   },
   {
-    path: '/creerDemandeAdhesion',
+    path: '/Partenaires',
     name: 'creerDemandeAdhesion',
     component: creerDemandeAdhesion
   },
@@ -212,6 +214,11 @@ const routes = [
         component: tableauBord
       },
       {
+        path: '/creerDemandeAdhesion',
+        name: 'creerDemandeAdhesion',
+        component: creerDemandeAdhesionInterne
+      },
+      {
         path: '/creerPays',
         name: 'creerPays',
         component: creerPays
@@ -320,6 +327,11 @@ const routes = [
         path: '/InfosAdhesion/:raisonSociale',
         name: 'InfosAdhesion',
         component: InfosAdhesion
+      },
+      {
+        path: '/InfosAdhesionValide/:raisonSociale',
+        name: 'InfosAdhesionValide',
+        component: InfosAdhesionValide
       },
     ]  
   },

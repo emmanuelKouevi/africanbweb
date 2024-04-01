@@ -11,16 +11,20 @@
 
             <v-btn class="onglets" text><a href="#aboutMe" class="link">À PROPOS</a></v-btn>
             <v-btn class="onglets" text><a href="#skills" class="link">NOS SERVICES</a></v-btn>
-            <v-btn class="onglets" text><a href="#projects" class="link">PARTENARIAT</a></v-btn>
+            <v-menu offset-y>
+                <template v-slot:activator="{ on, attrs }"><v-btn text dark v-bind="attrs" v-on="on">PARTENAIRES</v-btn></template>
+                <v-list>
+                    <v-list-item link @click="goToAdhesionPage">
+                        <v-list-item-title><v-icon>mdi-account</v-icon>&nbsp;&nbsp;<small>Demander une adhésion</small></v-list-item-title>
+                    </v-list-item>
+                </v-list>
+            </v-menu> 
             <v-btn class="onglets" text><a href="#contact" class="link">NOUS CONTACTER</a></v-btn>
             <v-menu offset-y>
                 <template v-slot:activator="{ on, attrs }"><v-btn text dark v-bind="attrs" v-on="on">CONNEXION</v-btn></template>
                 <v-list>
-                    <v-list-item link @click="goToAdhesionPage">
+                    <v-list-item link @click="goToLoginPage">
                         <v-list-item-title><v-icon>mdi-login</v-icon>&nbsp;&nbsp;<small>Se connecter</small></v-list-item-title>
-                    </v-list-item>
-                    <v-list-item link @click="goToAdhesionPage">
-                        <v-list-item-title><v-icon>mdi-account</v-icon>&nbsp;&nbsp;<small>Demander une adhésion</small></v-list-item-title>
                     </v-list-item>
                 </v-list>
             </v-menu> 
@@ -30,7 +34,7 @@
         <v-parallax height="750" dark src='../assets/other_inside_bus.jpg'>
             <v-row align="center" justify="center">
                 <v-col class="text-center"  cols="12">
-                    <h1 class="text-h3 font-weight-bold mb-4"><span id="urban_text">URBAN</span> <span id="ticket_text">TICKET</span> <span id="bus_text">BUS</span></h1>
+                    <h1 class="text-h3 font-weight-bold mb-4"><span id="urban_text">URBAN</span> <span id="bus_text">BUS</span> <span id="ticket_text">TICKET'S</span></h1>
                     <h1 class="font-weight-thin mb-4">OFFREZ VOUS DES SERVICES DE QUALITÉS.</h1>
                 </v-col>
             </v-row>
@@ -188,7 +192,7 @@ export default {
 
         // GO TO LOGIN PAGE TO GET INTEFACE USER
         goToAdhesionPage(){
-            this.$router.push({path:"/creerDemandeAdhesion"})
+            this.$router.push({path:"/Partenaires"})
         }
     },
 

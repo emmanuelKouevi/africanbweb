@@ -49,8 +49,8 @@
                             <div class="row">
                                 <div class="col-lg-6"><span class="font-weight-bold">Statut d'activation</span></div>
                                 <div class="col-lg-6">
-                                    <v-chip v-if="demandeAdhesion.isActif === false" x-small color="red"><span class="font-weight-bold status">Inactive</span></v-chip>
-                                    <v-chip v-else-if="demandeAdhesion.isActif === null" x-small color="success"><span class="font-weight-bold status">Inactive</span></v-chip>
+                                    <v-chip v-if="demandeAdhesion.isValidate == false" x-small color="red"><span class="font-weight-bold status">Inactive</span></v-chip>
+                                    <v-chip v-else-if="demandeAdhesion.isValidate == null" x-small color="success"><span class="font-weight-bold status">Inactive</span></v-chip>
                                     <v-chip v-else x-small color="success"><span class="font-weight-bold status">Active</span></v-chip>
                                 </div>      
                             </div>
@@ -61,15 +61,14 @@
                         <v-card-text>
                             <div class="row">
                                 <div class="col-lg-6">
-                                    <span v-if="demandeAdhesion.isActif == false" class="font-weight-bold">Activé</span>
-                                    <span v-if="demandeAdhesion.isActif == null" class="font-weight-bold">Activé</span>
+                                    <span v-if="demandeAdhesion.isValidate == false" class="font-weight-bold">Activé</span>
                                 </div>
                                 <div class="col-lg-6">
-                                    <v-btn x-small v-if="demandeAdhesion.isActif == false" @click="validerDemandeAdhesion">Activer</v-btn>
+                                    <v-btn x-small color="secondary" v-if="demandeAdhesion.isValidate == false" @click="validerDemandeAdhesion">Activer</v-btn>
                                 </div>      
                             </div>
                         </v-card-text>
-                    </v-card><br>   
+                    </v-card><br>
                     
                 </v-tab-item>
 
@@ -81,7 +80,7 @@
 <script>
 import axios from "axios";
 import $ from "jquery"
-import { API_OBTENIR_LISTE_DE_TOUTES_LES_DEMANDES_ADHESIONS, API_VALIDER_DEMANDE_ADHESION_COMPAGNIE ,  HEADERS  } from "@/components/globalConfig/globalConstConfig"
+import { API_OBTENIR_LISTE_DE_TOUTES_LES_DEMANDES_ADHESIONS, API_VALIDER_DEMANDE_ADHESION_COMPAGNIE , API_OBTENIR_LISTE_DES_DEMANDES_ADHESIONS_VALIDEES,   HEADERS  } from "@/components/globalConfig/globalConstConfig"
 export default {
     name:"InfosAdhesion",
     data(){
@@ -129,7 +128,6 @@ export default {
                     else{
                         this.$swal.fire('Validation',response.data.status.message,'success')
                         this.toValid.data.id = null;
-                        this.demandeAdhesion.isActif = true
                     }
                 }
                 else{
@@ -139,6 +137,33 @@ export default {
             }).catch((e) => {
                 this.$swal.fire('Validation refusée' , e , 'error')
                 this.toValid.data.id = null;
+            })
+        },
+
+        // OBTENIR LA LISTE DES DEMANDES D'ADHESIONS VALIDÉES
+        async obtenirDemandeAdhesionValidees(){
+            this.loading = false;
+            axios.post(API_OBTENIR_LISTE_DES_DEMANDES_ADHESIONS_VALIDEES , this.options, { headers : HEADERS(this.$store.state.userAuthentified.token) }).then((response) => {
+                if (response.status == 200) {
+                    if (response.data.status.code != 800) {
+                        this.errorMsg = response.data.status.message
+                        $(".alert-error").fadeIn();
+                        setTimeout(function(){
+                            $(".alert-error").fadeOut(); 
+                        }, 4000)
+                    }else{
+                        this.demandeAdhesionList = response.data.items;
+                        this.demandeAdhesionList.forEach(element => {
+                            if (element.raisonSociale == this.$route.params.raisonSociale) {
+                                this.demandeAdhesion = element ;
+                            }
+                        });
+                    }
+                }else{
+                    this.errorMsg = "Erreur";
+                }
+            }).catch((e) => {
+                this.errorMsg = e
             })
         },
 
@@ -161,7 +186,6 @@ export default {
                                 this.demandeAdhesion = element ;
                             }
                         });
-                        console.log(this.demandeAdhesion)
                     }
                 }else{
                     this.errorMsg = "Erreur";
@@ -175,7 +199,7 @@ export default {
     },
 
     mounted(){
-        this.obtenirToutesLesDemandesAdhesion();
+        this.obtenirDemandeAdhesionValidees();
     }
 }
 </script>

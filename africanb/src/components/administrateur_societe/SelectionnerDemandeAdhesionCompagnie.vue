@@ -23,7 +23,7 @@
                             <v-card-text>
                                 <v-container>
                                     <v-row justify="center">
-                                        <span class="libelle font-weight-bold">{{ demandeAdhesionValides }}</span>
+                                        <span class="libelle font-weight-bold">{{ demandeAdhesionValidesList.length }}</span>
                                     </v-row>
                                 </v-container>
                             </v-card-text>
@@ -46,19 +46,39 @@
             </div>
 
             <v-card width="1800">
-                <v-card-title class="title-card">DEMANDE D'ADHÉSIONS
+                <v-card-title class="title-card">DEMANDE D'ADHÉSIONS SANS DECISIONS
                     <v-spacer></v-spacer>
                     <v-text-field v-model="search" append-icon="mdi-magnify" label="Search" single-line hide-details></v-text-field>
                 </v-card-title>
                 <v-data-table :headers="headers" :items="demandeAdhesionList" :search="search" :loading="loading">
 
-                    <template v-slot:[`item.statusUtilActualDesignation`]="{ item }">
-                        <v-chip x-small v-if="item.statusUtilActualDesignation == 'compagnieTransportValide'" color="teal" text-color="white" class="mr-2"><span class="etat font-weight-bold">Valide</span></v-chip>
+                    <template v-slot:[`item.isValidate`]="{ item }">
+                        <v-chip x-small v-if="item.isValidate == true" color="teal" text-color="white" class="mr-2"><span class="etat font-weight-bold">Valide</span></v-chip>
                         <v-chip x-small v-else color="secondary" text-color="white" class="mr-2"><span class="etat">Non validé</span></v-chip>
                     </template>
 
                     <template v-slot:[`item.actions`]="{ item }">
                         <v-btn x-small text @click="verifierInfosDemandeAdhesion(item)">voir détail</v-btn>
+                    </template>
+                
+                </v-data-table>
+                <v-alert class="myalert alert-error" type="error" width="350px" dismissible>{{ errorMsg }}</v-alert>
+            </v-card><br><br>
+
+            <v-card width="1800">
+                <v-card-title class="title-card">DEMANDE D'ADHÉSIONS VALIDÉES
+                    <v-spacer></v-spacer>
+                    <v-text-field v-model="search" append-icon="mdi-magnify" label="Search" single-line hide-details></v-text-field>
+                </v-card-title>
+                <v-data-table :headers="headers" :items="demandeAdhesionValidesList" :search="search" :loading="loading">
+
+                    <template v-slot:[`item.isValidate`]="{ item }">
+                        <v-chip x-small v-if="item.isValidate == true" color="teal" text-color="white" class="mr-2"><span class="etat font-weight-bold">Valide</span></v-chip>
+                        <v-chip x-small v-else color="secondary" text-color="white" class="mr-2"><span class="etat">Non validé</span></v-chip>
+                    </template>
+
+                    <template v-slot:[`item.actions`]="{ item }">
+                        <v-btn x-small text @click="verifierInfosDemandeAdhesionValide(item)">voir détail</v-btn>
                     </template>
                 
                 </v-data-table>
@@ -70,7 +90,7 @@
 
 <script>
 
-import { /*API_OBTENIR_LISTE_DES_DEMANDES_ADHESIONS_VALIDEES,*/ API_OBTENIR_LISTE_DE_TOUTES_LES_DEMANDES_ADHESIONS, HEADERS } from '../globalConfig/globalConstConfig'
+import { API_OBTENIR_LISTE_DES_DEMANDES_ADHESIONS_VALIDEES , API_OBTENIR_LISTE_DE_TOUTES_LES_DEMANDES_ADHESIONS, HEADERS } from '../globalConfig/globalConstConfig'
 import axios from 'axios'
 import $ from 'jquery'
 export default {
@@ -82,6 +102,7 @@ export default {
             warningMsg:null,
 
             demandeAdhesionList: [],
+            demandeAdhesionValidesList: [],
             demandeAdhesionNonValides:0,
             demandeAdhesionValides:0,
 
@@ -90,7 +111,7 @@ export default {
                 {text : 'Designation' , value : 'designation'},
                 {text : 'Compagnie' , value : 'raisonSociale'},
                 {text : 'E-mail' , value : 'email'},
-                {text : 'Status' , value : 'statusUtilActualDesignation'},
+                {text : 'Status' , value : 'isValidate'},
                 {text : 'Actions' , value : 'actions' , sortable : false}
             ],
             loading:true,
@@ -109,6 +130,12 @@ export default {
             this.$router.push({name:"InfosAdhesion" , params:{raisonSociale:demandeAdhesion.raisonSociale}} )
         },
 
+        verifierInfosDemandeAdhesionValide(demandeAdhesion){
+            console.log(demandeAdhesion)
+            this.$router.push({name:"InfosAdhesionValide" , params:{raisonSociale:demandeAdhesion.raisonSociale}} )
+        },
+        
+
         //OBTENIR LA LISTE DE TOUTES LES DEMANDE D'ADHESIONS EFFECTUÉS
         async obtenirToutesLesDemandesAdhesion(){
             this.loading = false;
@@ -122,6 +149,7 @@ export default {
                         }, 4000)
                     }else{
                         this.demandeAdhesionList = response.data.items;
+                        console.log(this.demandeAdhesionList)
                         this.demandeAdhesionList.forEach(element => {
                             if (element.isValidate == true) {
                                 this.demandeAdhesionValides += 1;
@@ -139,7 +167,7 @@ export default {
         },
 
         // OBTENIR LA LISTE DES DEMANDES D'ADHESIONS VALIDÉES
-        /*async obtenirDemandeAdhesionValidees(){
+        async obtenirDemandeAdhesionValidees(){
             this.loading = false;
             axios.post(API_OBTENIR_LISTE_DES_DEMANDES_ADHESIONS_VALIDEES , this.options, { headers : HEADERS(this.$store.state.userAuthentified.token) }).then((response) => {
                 if (response.status == 200) {
@@ -150,6 +178,7 @@ export default {
                             $(".alert-error").fadeOut(); 
                         }, 4000)
                     }else{
+                        console.log(response.data.items)
                         this.demandeAdhesionValidesList = response.data.items;
                     }
                 }else{
@@ -158,13 +187,13 @@ export default {
             }).catch((e) => {
                 this.errorMsg = e
             })
-        },*/
+        },
 
     },
 
     mounted(){
         this.obtenirToutesLesDemandesAdhesion();
-        //this.obtenirDemandeAdhesionValidees();
+        this.obtenirDemandeAdhesionValidees();
     }
 }
 </script>
