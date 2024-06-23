@@ -2,36 +2,67 @@
     <v-app>
         <v-form @submit.prevent="submitForm">
             <v-container fluid>
-                <v-card width="1200" elevation="3">
+                <v-card width="1400" elevation="3">
                     <v-card-title>GESTION DES MODES ET DU TARIF</v-card-title>
-                    <v-card-subtitle>Gérer le mode et les tarifs de l'offre</v-card-subtitle>
-                    <v-container>
-                        <v-row>
-                            <v-col cols="5">
-                                <v-select :error-messages="offreVoyagePrixOffreVoyageErrors" :items="offreVoyageParCompagnieTransportList" item-text="designation" item-value="designation" rounded dense outlined color="teal" label="sélectionnez une offre" v-model.trim="$v.prixOffreVoyageModel.offreVoyageDesignation.$model"></v-select>
-                            </v-col>
-                        </v-row>
-                        <v-row>
-                            <v-col cols="5">
-                                <v-text-field :error-messages="designationPrixOffreVoyageErrors" rounded dense outlined label="Réference" v-model.trim="$v.prixOffreVoyageModel.designation.$model"></v-text-field>
-                            </v-col>
-                            <v-col cols="5">
-                                <v-select :error-messages="categoriePrixOffreVoyageErrors" :items="referenceModeCategorieVoyageurList" item-text="designation" item-value="designation" rounded dense outlined color="teal" label="sélectionnez une categorie" v-model.trim="$v.prixOffreVoyageModel.categorieVoyageurDesignation.$model"></v-select>
-                            </v-col>
-                        </v-row>
-                        <v-row>
-                            <v-col cols="5">
-                                <v-select :error-messages="modePrixOffreVoyageErrors" :items="referenceModeOffreVoyageList" item-text="designation" item-value="designation" rounded dense outlined color="teal" label="Mode de l'offre" v-model.trim="$v.prixOffreVoyageModel.modeDesignation.$model"></v-select>
-                            </v-col>
-                            <v-col cols="5">
-                                <v-text-field :error-messages="pricePrixOffreVoyageErrors" rounded dense outlined color="teal" label="Tarif de l'offre" suffix="FCFA" v-model.number="$v.prixOffreVoyageModel.prix.$model"></v-text-field>
-                            </v-col>
-                        </v-row>
-                    </v-container>
+                    <v-divider></v-divider>
+                    <v-card-text>
+                        <div><h6>Étape 1: Sélectionner une opération pour continuer votre opération.</h6></div>
+
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
+                                <label for="inputEmail4">Sélectionner un offre de voyage:</label>
+                                <v-select :error-messages="offreVoyagePrixOffreVoyageErrors" :items="offreVoyageParCompagnieTransportList" item-text="designation" 
+                                    item-value="designation" dense outlined v-model.trim="$v.prixOffreVoyageModel.offreVoyageDesignation.$model" 
+                                    color="primary">
+                                </v-select>
+                            </div>
+                        </div>
+
+                        <v-divider></v-divider>
+
+                        <div><h6>Étape 2: Remplir les informations complémentaire pour la finalisation.</h6></div>
+
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
+                                <label for="inputEmail4">Réference du mode:</label>
+                                <v-text-field :error-messages="designationPrixOffreVoyageErrors" dense 
+                                    outlined v-model.trim="$v.prixOffreVoyageModel.designation.$model">
+                                </v-text-field>
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
+                                <label for="inputEmail4">Catégorie de l'offre:</label>
+                                <v-select :error-messages="categoriePrixOffreVoyageErrors" :items="referenceModeCategorieVoyageurList" 
+                                    item-text="designation" item-value="designation" dense outlined color="primary" 
+                                    v-model.trim="$v.prixOffreVoyageModel.categorieVoyageurDesignation.$model">
+                                </v-select>
+                            </div>
+
+                            <div class="form-group col-md-6">
+                                <label for="inputEmail4">Mode de l'offre:</label>
+                                <v-select :error-messages="modePrixOffreVoyageErrors" :items="referenceModeOffreVoyageList" 
+                                    item-text="designation" item-value="designation" dense outlined color="primary" 
+                                    v-model.trim="$v.prixOffreVoyageModel.modeDesignation.$model">
+                                </v-select>
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group col-md-5">
+                                <label for="inputEmail4">Prix:</label>
+                                <v-text-field :error-messages="pricePrixOffreVoyageErrors" dense outlined color="primary" 
+                                    suffix="FCFA" v-model.number="$v.prixOffreVoyageModel.prix.$model">
+                                </v-text-field>
+                            </div>
+                        </div>
+
+                    </v-card-text>
 
                     <v-card-actions>
-                        <v-btn small rounded outlined>REINITIALISER</v-btn>
-                        <v-btn small type="submit" rounded outlined color="primary">VALIDER</v-btn>
+                        <v-btn small outlined>REINITIALISER</v-btn>
+                        <v-btn small type="submit" outlined color="success">VALIDER</v-btn>
                     </v-card-actions>
                 </v-card>
             </v-container>

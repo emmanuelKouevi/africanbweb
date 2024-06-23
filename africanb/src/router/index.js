@@ -57,6 +57,7 @@ import LandingPage from '../components/LandingPage'
 
 // IMPORT FOR ENTITY VENDEUR 
 import selectionnerReservationBillet from '../components/vendeur/SelectionnerReservationBillet'
+import DetailReservation from '../components/vendeur/DetailReservation'
 import selectionnerOffreVoyageReservation from '../components/vendeur/OffreVoyageReservation'
 import reservationBillet from '../components/vendeur/ReservationBillet'
 import modifierPays from '@/components/administrateur_societe/modifierPays.vue'
@@ -332,6 +333,11 @@ const routes = [
         path: '/InfosAdhesionValide/:raisonSociale',
         name: 'InfosAdhesionValide',
         component: InfosAdhesionValide
+      },
+      {
+        path: '/detail_reservation',
+        name: 'InfosAdhesionValide',
+        component: DetailReservation
       },
     ]  
   },

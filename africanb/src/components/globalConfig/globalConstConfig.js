@@ -111,7 +111,8 @@ export const API_GET_FUNCTIONNALITY_BY_USER_ROLE = `${BASE_URL}functionalities/g
 
 
 // RESERVATION 
-
 export const API_RESERVER_PROGRAMME_OFFRE = `${BASE_URL}reservationBilletVoyages`
+export const API_GET_RESERVATIONS_BY_SELLER = `${BASE_URL}reservationBilletVoyages/getReservationByUserGare`
+export const API_GET_RESERVATIONS_BY_ADMIN_TP = `${BASE_URL}reservationBilletVoyages/getReservationByAdminCompagnieTransport`
 
 

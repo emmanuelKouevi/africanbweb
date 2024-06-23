@@ -6,21 +6,116 @@
                 <v-card-subtitle class="litle_title">Création d'utilisateurs pour la meilleur gestion de votre plateforme</v-card-subtitle>
 
                 <v-card-text>
+
                     <v-container>
-                        <v-row>
-                            <v-col><v-text-field class="myInput" :error-messages="usernameError" v-model.trim="$v.userObject.nom.$model" label="Nom" outlined dense></v-text-field></v-col>
-                            <v-col><v-text-field class="myInput" :error-messages="surnameError" v-model.trim="$v.userObject.prenoms.$model" label="Prénom" outlined dense></v-text-field></v-col>
-                        </v-row>
-
-                        <v-row>
-                            <v-col><v-text-field class="myInput" :error-messages="loginError" v-model.trim="$v.userObject.login.$model" label="Login ou Pseudo" outlined dense></v-text-field></v-col>
-                            <v-col><v-text-field class="myInput" :error-messages="emailError" v-model.trim="$v.userObject.email.$model" label="E-mail" outlined dense></v-text-field></v-col>
-                        </v-row>
-
-                        <v-row>
-                            <v-col cols="6"><v-select class="myInput" :items="userRoleList" item-text="code" item-value="code" :error-messages="roleCodeError" v-model.trim="$v.userObject.roleCode.$model" label="Rôle utilisateur" outlined dense></v-select></v-col>
-                        </v-row>
+                        <div class="form-group col-lg-6">
+                            <label class="font-weight-bold" for="inputAddress">Sélectionner le role de l'utilisateur :</label>
+                            <v-select class="myInput" :items="userRoleList" item-text="code" item-value="code" :error-messages="roleCodeError" v-model.trim="$v.userObject.roleCode.$model" outlined dense></v-select>
+                        </div>
                     </v-container>
+
+                    <v-divider></v-divider>
+
+                    <v-container v-if="userObject.roleCode == 'Administrateur de Compagnie'">
+
+                        <h5><span class="font-weight-bold">Informations personnelles de l'utilisateur</span></h5>
+
+                        <div class="form-row">
+
+                            <div class="form-group col-lg-6">
+                                <label class="font-weight-bold" for="inputAddress">Nom :</label>
+                                <v-text-field class="myInput" :error-messages="usernameError" 
+                                    v-model.trim="$v.userObject.nom.$model" outlined dense>
+                                </v-text-field>
+                            </div>
+
+                            <div class="form-group col-lg-6">
+                                <label class="font-weight-bold" for="inputAddress">Prénom(s) :</label>
+                                <v-text-field class="myInput" :error-messages="surnameError" 
+                                    v-model.trim="$v.userObject.prenoms.$model"  
+                                    outlined dense>
+                                </v-text-field>
+                            </div>
+
+                        </div>
+
+                        <div class="form-row">
+
+                            <div class="form-group col-lg-6">
+                                <label class="font-weight-bold" for="inputAddress">Login :</label>
+                                <v-text-field class="myInput" :error-messages="loginError" 
+                                    v-model.trim="$v.userObject.login.$model" 
+                                    outlined dense>
+                                </v-text-field>
+                            </div>
+
+                            <div class="form-group col-lg-6">
+                                <label class="font-weight-bold" for="inputAddress">E-mail:</label>
+                                <v-text-field class="myInput" :error-messages="emailError" 
+                                    v-model.trim="$v.userObject.email.$model" outlined dense>
+                                </v-text-field>
+                            </div>
+
+                        </div>
+
+                        <div class="form-row">
+
+                            <div class="form-group col-lg-6">
+                                <label class="font-weight-bold" for="inputAddress">Compagnie de transport :</label>
+                                <v-text-field class="myInput" :error-messages="loginError" 
+                                    v-model.trim="$v.userObject.login.$model" 
+                                    outlined dense>
+                                </v-text-field>
+                            </div>
+
+                        </div>
+
+                    </v-container>
+
+                    <v-container v-else>
+
+                        <h5><span class="font-weight-bold">Informations personnelles de l'utilisateur</span></h5>
+
+                        <div class="form-row">
+
+                            <div class="form-group col-lg-6">
+                                <label class="font-weight-bold" for="inputAddress">Nom :</label>
+                                <v-text-field class="myInput" :error-messages="usernameError" 
+                                    v-model.trim="$v.userObject.nom.$model" outlined dense>
+                                </v-text-field>
+                            </div>
+
+                            <div class="form-group col-lg-6">
+                                <label class="font-weight-bold" for="inputAddress">Prénom(s) :</label>
+                                <v-text-field class="myInput" :error-messages="surnameError" 
+                                    v-model.trim="$v.userObject.prenoms.$model"  
+                                    outlined dense>
+                                </v-text-field>
+                            </div>
+
+                        </div>
+
+                        <div class="form-row">
+
+                            <div class="form-group col-lg-6">
+                                <label class="font-weight-bold" for="inputAddress">Login :</label>
+                                <v-text-field class="myInput" :error-messages="loginError" 
+                                    v-model.trim="$v.userObject.login.$model" 
+                                    outlined dense>
+                                </v-text-field>
+                            </div>
+
+                            <div class="form-group col-lg-6">
+                                <label class="font-weight-bold" for="inputAddress">E-mail:</label>
+                                <v-text-field class="myInput" :error-messages="emailError" 
+                                    v-model.trim="$v.userObject.email.$model" outlined dense>
+                                </v-text-field>
+                            </div>
+
+                        </div>
+
+                    </v-container>
+
                 </v-card-text>
 
                 <v-card-actions>

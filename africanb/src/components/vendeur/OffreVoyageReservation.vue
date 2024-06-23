@@ -6,7 +6,7 @@
                 <v-card-text>
                     <v-data-table item-class="offreItem" :headers="headers" :loading="loading" :items="offreVoyageAvailableList">
                         <template v-slot:[`item.actions`]="{ item }">
-                           <v-btn x-small color="teal"><small class="btn-label" @click="reserverTicket(item)">Réserver</small></v-btn>
+                           <v-btn @click="reserverTicket(item)" x-small color="teal"><small class="btn-label">Réserver</small></v-btn>
                         </template>
                     </v-data-table>
                 </v-card-text>
@@ -40,10 +40,10 @@ import $ from 'jquery'
                 ],
 
                 offreVoyageAvailableList:[],
-
+                offreVoyageList:[],
                 offreVoyageObject:{
                     data:{
-                        compagnieTransportRaisonSociale:"Kouevi CT"
+                        compagnieTransportRaisonSociale:"KOUEVI CT"
                     }
                 },
 
@@ -65,7 +65,12 @@ import $ from 'jquery'
                                 $(".alert-error").fadeOut(); 
                             }, 4000)
                         }else{
-                            this.offreVoyageAvailableList = response.data.items;
+                            this.offreVoyageList = response.data.items;
+                            this.offreVoyageList.forEach(element => {
+                                if(element.isActif == true){
+                                    this.offreVoyageAvailableList.push(element)
+                                }
+                            });
                         }
                     }else{
                         this.errorMsg = "Erreur";

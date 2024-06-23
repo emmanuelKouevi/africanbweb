@@ -38,6 +38,7 @@
                             <v-card-title><span class="card-title font-weight-bold">PROGRAMMER L'OFFRE</span></v-card-title>
                             <v-card-text>
                                 <v-form>
+
                                     <div class="form-row">
                                         <div class="form-group col-md-6">
                                             <label for="inputEmail4">Référence du programme</label>
@@ -48,6 +49,18 @@
                                             <v-select :error-messages="programmeOffreJourSemaineDesignation" :items="jourSemaineList" item-text="jourSemaineDesignation" item-value="designation"  v-model.trim="$v.programmeOffreVoyage.jourSemaineDesignation.$model" dense outlined></v-select>
                                         </div>
                                     </div>
+
+                                    <div class="form-row">
+                                        <div class="form-group col-md-6">
+                                            <label for="inputEmail4">Date de départ</label>
+                                            <v-text-field type="date"  v-model="programmeOffreVoyage.dateDepart" dense outlined></v-text-field>
+                                        </div>
+                                        <div class="form-group col-md-6">
+                                            <label for="inputPassword4">Date d'arrivée (Estimation)</label>
+                                            <v-text-field type="date" v-model="programmeOffreVoyage.dateArrivee" dense outlined></v-text-field>
+                                        </div>
+                                    </div>
+
                                     <div class="form-row">
                                         <div class="form-group col-md-6">
                                             <label for="inputEmail4">Départ</label>
@@ -58,6 +71,7 @@
                                             <v-text-field type="time" v-model="programmeOffreVoyage.heureArrivee" dense outlined></v-text-field>
                                         </div>
                                     </div>
+
                                 </v-form>
                             </v-card-text>
                             <v-card-actions>
@@ -142,6 +156,8 @@ export default {
                 designation:null,
                 nombrePlaceDisponible:null,
                 jourSemaineDesignation:null,
+                dateDepart:null,
+                dateArrivee:null,
                 heureDepart:null,
                 heureArrivee:null
             },
@@ -184,6 +200,18 @@ export default {
 
 
     methods:{
+
+        // RETOURNER LA DATE SOUS FORME JJ-MM-AAAA
+        returnDateFormatted(dateFormatted){
+            let date = new Date(dateFormatted);
+            let jour = date.getDate();
+            let mois = date.getMonth() + 1 ;
+            let annee = date.getFullYear();
+            jour = String(jour).padStart(2 , '0');
+            mois = String(mois).padStart(2 , '0');
+            let dateFormat = `${jour}/${mois}/${annee}`;
+            return dateFormat;
+        },
 
         //COME BACK TO SELECT OFFRE VOYAGE
         comeBackSelectOffre(){
@@ -259,15 +287,19 @@ export default {
                 }, 2000);
             }else{
                 var unProgramme = {
-                    designation : null,
-                    nombrePlaceDisponible :null,
-                    jourSemaineDesignation : null,
-                    heureDepart : null,
-                    heureArrivee : null,
+                    designation: null,
+                    nombrePlaceDisponible:null,
+                    jourSemaineDesignation:null,
+                    dateDepart: null,
+                    dateArrivee: null,
+                    heureDepart: null, 
+                    heureArrivee: null,
                 };
                 unProgramme.designation = programmeOffre.designation; 
                 unProgramme.nombrePlaceDisponible = programmeOffre.nombrePlaceDisponible;
                 unProgramme.jourSemaineDesignation = programmeOffre.jourSemaineDesignation;
+                unProgramme.dateDepart = this.returnDateFormatted(programmeOffre.dateDepart);
+                unProgramme.dateArrivee = this.returnDateFormatted(programmeOffre.dateArrivee);
                 unProgramme.heureDepart = programmeOffre.heureDepart;
                 unProgramme.heureArrivee = programmeOffre.heureArrivee;
                 this.programmeOffreVoyageList.push(unProgramme);

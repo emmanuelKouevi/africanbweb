@@ -132,10 +132,12 @@ export default {
                     if (response.data.status.code != 800) {
                         this.$swal.fire('Activation',response.data.status.message,'error')
                         this.toActive.data.login = null;
+                        this.user.isActif = true;
                     }
                     else{
                         this.$swal.fire('Activation',response.data.status.message,'success')
                         this.toActive.data.login = null;
+                        this.user.isActif = true;
                     }
                 }
                 else{

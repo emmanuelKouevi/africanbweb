@@ -30,6 +30,8 @@
     </v-app>
 </template>
 
+
+
 <script>
 import axios from 'axios';
 import { API_UPDATE_USER , HEADERS} from '../globalConfig/globalConstConfig';

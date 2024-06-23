@@ -179,7 +179,7 @@ export default {
             await axios.post(API_OBTENIR_LISTE_DES_VILLES_DISPONIBLE, this.defaultObject , { headers : {
                 'server_id' : 'backend@africanb',
                 'client_id' : 'frontend@africanb',
-                'is_admin'  : 'isAdmin'
+                //'is_admin'  : 'isAdmin'
             } }).then((response) => {
             console.log(response)
                 this.villesList = response.data.items

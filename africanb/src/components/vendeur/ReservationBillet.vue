@@ -1,10 +1,17 @@
 <template>
+
     <v-app>
+        
         <v-container fluid>
+
             <v-sheet color="#b2bec3">
+
                 <v-container>
+
                     <v-card elevation="5">
+
                         <v-card-title><span class="title-card">DÉTAIL SUR L'OFFRE:</span></v-card-title>
+
                         <v-card-text>
                             <div class="row">
                                 <div class="col-sm-6">
@@ -36,12 +43,13 @@
                                                 <v-container>
                                                     <div class="form-group">
                                                         <label>Choisissez le jour du voyage:</label>
-                                                        <v-select :items="jourSemainesParOffreVoyagesList" item-text="jourSemaineDesignation" item-value="jourSemaineDesignation" v-model="jourVoyageSelected" dense outlined></v-select>
+                                                        <v-select :items="jourSemainesParOffreVoyagesList" item-text="jourSemaineDesignation" item-value="jourSemaineDesignation" v-model="jourDepart" dense outlined></v-select>
+
                                                     </div>
 
                                                     <div class="form-group" v-if="jourVoyageSelected">
                                                         <label>Choisissez l'heure de départ:</label>
-                                                        <v-select :items="getProgrammeFromDaySelected" item-text="heureDepart" dense outlined></v-select>
+                                                        <v-select v-model="jourVoyageSelected" :items="getProgrammeFromDaySelected" item-text="heureDepart" item-value="designation" dense outlined></v-select>
                                                     </div>
                                                 </v-container>
                                             </v-card-text>
@@ -76,6 +84,7 @@
                             </div>
                         </v-card-text>
                     </v-card><br>
+
                     <v-card elevation="5">
                         <v-card-title><span class="title-card">INFORMATION DU CLIENT:</span></v-card-title>
                         <v-card-text>
@@ -95,37 +104,42 @@
                                         <label for="inputEmail4">Numero de téléphone:</label>
                                         <input type="text" class="form-control" v-model="user.telephone" id="inputEmail4">
                                     </div>
+                                    <div class="form-group col-md-6">
+                                        <label for="inputEmail4">Nombre de place:</label>
+                                        <input type="number" min="0" class="form-control" v-model="programmeReserved.data.nombrePlace" id="inputEmail4">
+                                    </div>
+                                </div>
+                                <div class="form-row">
+                                    <div class="form-group col-md-8">
+                                        <label for="inputEmail4">email:</label>
+                                        <input suffix="225" type="text" class="form-control" v-model="user.email" id="inputEmail4">
+                                    </div>
                                 </div>
                             </form>
                         </v-card-text>
                     </v-card><br>
 
-                    <v-card elevation="5">
-                        <v-card-title><span class="title-card">CHOIX DU MODE DE PAIEMENT:</span></v-card-title>
-                        <v-card-text>
-                            <v-container>
-                                <v-radio-group row>
-                                    <v-radio label="En espèces" value="radio-1"></v-radio>
-                                </v-radio-group>
-                            </v-container>
-                        </v-card-text>
-                    </v-card><br>
                 </v-container>  
+
                 <v-card-actions>
                     <v-btn x-small color="secondary">RETOUR</v-btn>
                     <v-btn x-small color="teal" @click="chooseCategorieVoyageur"><span class="btn-title">RESERVER POUR CE TRAJET</span></v-btn>
-                </v-card-actions>         
+                </v-card-actions>  
+
             </v-sheet>
+
         </v-container>
 
         <v-dialog v-model="dialog">
+
             <v-sheet>
-                <v-toolbar>
-                    <v-toolbar-title><span class="font-weight-bold">CONFIRMATION DE RESERVATION</span></v-toolbar-title>
-                </v-toolbar><br>
+
+                <v-toolbar><v-toolbar-title><span class="font-weight-bold">CONFIRMATION DE RESERVATION</span></v-toolbar-title></v-toolbar><br>
+
                 <v-card>
                     <v-card-text>
                         <v-container>
+
                             <v-card>
                                 <v-card-title><span class="designation-offre">{{ offreVoyage.designation }}</span></v-card-title>
                                 <v-card-text>
@@ -144,7 +158,9 @@
                                     <v-divider></v-divider>
                                 </v-card-text>
                             </v-card>
+                            
                             <v-divider></v-divider>
+
                             <v-card>
                                 <v-card-title><span class="designation-offre">Information du client</span></v-card-title>
                                 <v-card-text>
@@ -165,14 +181,16 @@
                                     <v-divider></v-divider>
                                 </v-card-text>
                             </v-card>
+
                             <v-divider></v-divider>
+
                             <v-card>
                                 <v-card-title><span class="designation-offre">Catégorie du client</span></v-card-title>
                                 <v-card-text>
                                     <v-container>
                                         <div class="form-group">
                                             <label>Selectionnez la categorie:</label>
-                                            <v-select class="col-sm-6" :items="prixEtModeParOffreVoyageList" item-text="categorieVoyageurDesignation" item-value="categorieVoyageurDesignation" v-model="userCategory" dense outlined></v-select>
+                                            <v-select class="col-sm-6" :items="prixEtModeParOffreVoyageList" item-text="categorieVoyageurDesignation" item-value="categorieVoyageurDesignation" v-model="programmeReserved.data.categorieVoyageur" dense outlined></v-select>
                                         </div>
                                         <div>
                                             <span class="font-weight-bold">Mode :</span> <span class="data-label">{{ getModeByOffre }}</span><br><br>
@@ -185,21 +203,35 @@
                                     <v-divider></v-divider>
                                 </v-card-text>
                             </v-card>
+
                         </v-container>
+
                     </v-card-text>  
+
                     <v-card-actions>
+
                         <v-btn x-small color="secondary">Annuler</v-btn>
+
                         <v-btn x-small color="success" @click="reserverOffre()">confirmer</v-btn>
-                    </v-card-actions>             
+
+                    </v-card-actions>  
+
                 </v-card>
+
             </v-sheet>
                                 
             <v-divider vertical></v-divider>
+
         </v-dialog>
+
         <v-alert class="myalert alert-success" type="success" width="350px" dismissible>{{ successMsg }}</v-alert> 
+
         <v-alert class="myalert alert-error" type="error" width="350px" dismissible>{{ errorMsg }}</v-alert>
+
         <v-overlay :value="overlay"><v-progress-circular indeterminate size="64"></v-progress-circular></v-overlay>
+
     </v-app>
+
 </template>
 
 <script>
@@ -217,16 +249,16 @@ export default {
 
             programmeReserved:{
                 data:{
-                    programmeDesignation : null,
-                    nombrePlace : 5,
+                    programmeDesignation : "Prog Abj-Dan",
+                    nombrePlace : null,
                     categorieVoyageur: null,
-                    gareDesignation : null,
+                    gareDesignation : "Gare de Marcory",
                     isOtherPerson:true,
                     clientDetails:{
-                        nom: "Kouevi",
-                        prenoms: "Ayite Emmanuel Herve",
-                        email: "emmanuel herve",
-                        telephone:"0565585746"
+                        nom: null,
+                        prenoms: null,
+                        email: null,
+                        telephone:null
                     },
                     offreVoyageDesignation:null,
                 }
@@ -235,6 +267,7 @@ export default {
             user:{
                 nom : null,
                 prenoms : null,
+                email:null,
                 telephone : null
             },
 
@@ -247,7 +280,7 @@ export default {
                 id:null,
                 designation : null ,
                 description: null,
-                compagnieTransportRaisonSociale : "Kouevi CT",
+                compagnieTransportRaisonSociale : "KOUEVI CT",
                 typeOffreVoyageDesignation : null,
                 villeDepartDesignation : null,
                 villeDestinationDesignation : null
@@ -264,7 +297,14 @@ export default {
                 }
             },
 
-            jourVoyageSelected: null
+            jourVoyageSelected: {
+                id:null,
+                designation:null,
+                jourSemaineDesignation:null,
+                nombrePlaceDisponible:null,
+            },
+
+            jourDepart:null,
 
         }
     },
@@ -275,10 +315,10 @@ export default {
         async reserverOffre(){
             this.dialog = false;
             this.overlay = true;
-            this.programmeReserved.data.programmeDesignation = "Prog 001"
-            this.programmeReserved.data.gareDesignation = "Gare Shalom Marcory"
-            this.programmeReserved.data.categorieVoyageur = this.userCategory
+            this.programmeReserved.data.programmeDesignation = "Prog Abj-Dan"
+            this.programmeReserved.data.gareDesignation = "Gare de Marcory"
             this.programmeReserved.data.offreVoyageDesignation = this.offreVoyage.designation
+            this.programmeReserved.data.clientDetails = this.user;
             await axios.post(API_RESERVER_PROGRAMME_OFFRE, this.programmeReserved, { headers : HEADERS(this.$store.state.userAuthentified.token) }).then((response) => {
                 console.log(response)
                 if (response.status == 200) {
@@ -384,7 +424,7 @@ export default {
         getProgrammeFromDaySelected(){
             let programmeDTOList = [];
             this.jourSemainesParOffreVoyagesList.forEach(element => {
-                if (this.jourVoyageSelected == element.jourSemaineDesignation) {
+                if (this.jourDepart == element.jourSemaineDesignation) {
                     if(element.programmeDTOList != null || element.programmeDTOList != undefined){
                         element.programmeDTOList.forEach(item => {
                             programmeDTOList.push(item)
@@ -399,7 +439,7 @@ export default {
         getModeByOffre(){
             let mode ;
             this.prixEtModeParOffreVoyageList.forEach(element => {
-                if (this.userCategory == element.categorieVoyageurDesignation) {
+                if (this.programmeReserved.data.categorieVoyageur == element.categorieVoyageurDesignation) {
                     mode = element.modeDesignation
                 }
             });
@@ -409,7 +449,7 @@ export default {
         getPrixByOffre(){
             let price ;
             this.prixEtModeParOffreVoyageList.forEach(element => {
-                if (this.userCategory == element.categorieVoyageurDesignation) {
+                if (this.programmeReserved.data.categorieVoyageur == element.categorieVoyageurDesignation) {
                     price = element.prix
                 }
             });

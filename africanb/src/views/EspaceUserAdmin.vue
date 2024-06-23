@@ -1,6 +1,6 @@
 <template>
     <v-app id="inspire">
-        <v-navigation-drawer app v-model="drawer">
+        <v-navigation-drawer app v-model="drawer" width="350">
             <v-list-item>
                 <v-list-item-content>
                     <v-list-item-title class="text-h6 font-weight-thin">{{ $store.state.userAuthentified.compagnieTransportRaisonSociale }}</v-list-item-title>
@@ -21,6 +21,27 @@
                 </v-list-item-content>
                 </v-list-item>
             </v-list>
+
+            <!--
+            <v-list>
+
+                <v-list-group v-for="item in items" :key="item.title" v-model="item.active" :prepend-icon="item.icon" no-action>
+
+                    <template v-slot:activator>
+                        <v-list-item-content><v-list-item-title v-text="item.title"></v-list-item-title></v-list-item-content>
+                    </template>
+  
+                    <v-list-item link v-for="child in item.items" :key="child.title">
+                        <v-list-item-content>
+                            <v-list-item-title @click="$router.push({path:child.navigation}).catch(() => {})" v-text="child.title"></v-list-item-title>
+                        </v-list-item-content>
+                    </v-list-item>
+
+                </v-list-group>
+
+            </v-list> -->
+
+            
             
             <v-list dense nav v-for="menu in buildComponentFromFunctionnalities" :key="menu.title">
                 <v-list-item link @click="$router.push({path:menu.navigation}).catch(() => {})">
@@ -129,7 +150,101 @@ export default {
             mini:true,
             drawer: true,
             functionnalitiesListByUserRole : [],
-            functionnalitiesListComponents : []
+            functionnalitiesListComponents : [],
+
+            items: [
+
+                {
+                    icon: 'mdi-ticket',
+                    items: [
+                        { title : 'CREER UNE OFFRE DE VOYAGE' , icon : 'mdi-train-car' , navigation : '/creerOffreVoyage', funct: "FUNCTIONNALITY_CREATE_OFFRE_VOYAGE" },
+                        { title : 'VOIR MES OFFRES ENREGISTRÉS' , icon : 'mdi-ticket' , navigation : '/selectionnerOffreVoyage' },
+                        { title : 'PROPRIETE OFFRE DE VOYAGE' , icon : 'mdi-feature-search' , navigation : '/creerProprieteCaracteristiqueOffreVoyage' }
+                    ],
+                    title: 'OFFRES DE VOYAGES',
+                },
+
+                {
+                    icon: 'mdi-silverware-fork-knife',
+                    active: true,
+                    items: [
+                        { title : 'CREER UNE VILLE' , icon : 'mdi-domain' , navigation : '/creerVille' },
+                        { title : 'TARIFER UNE OFFRE' , icon : 'mdi-currency-usd' , navigation : '/creerModeTarif' },
+                        { title : 'CREER UNE GARE' , icon : 'mdi-subway' , navigation : '/creerGareCompagnieTransport' },
+                        { title : 'GESTION DES GARES' , icon : 'mdi-store-cog' , navigation : '/selectionnerGareCompagnieTransport' }
+                    ],
+                    title: 'LOCALITÉ',
+                },
+
+                {
+                    icon: 'mdi-silverware-fork-knife',
+                    active: true,
+                    items: [
+                        { title : 'DATER UNE OFFRE DE VOYAGE' , icon : 'mdi-calendar' , navigation : '/rattacherJourSemaineOffreVoyage' },
+                        { title : 'TARIFER UNE OFFRE' , icon : 'mdi-currency-usd' , navigation : '/creerModeTarif' },
+                        { title : 'PROGRAMMER UNE OFFRE' , icon : 'mdi-clock-outline' , navigation : '/programmeOffreVoyage' },
+                    ],
+                    title: 'PLANIFICATIONS DES OFFRES',
+                },
+
+                {
+                    action: 'mdi-school',
+                    items: [
+                        { title : 'DÉLIVRER UN BUS' , icon : 'mdi-bus' , navigation : '/associerBusCompagnieTransport' },
+                    ],
+                    title: 'GESTIONS DES BUS',
+                },
+
+                {
+                    action: 'mdi-human-male-female-child',
+                    items: [
+                        { title : 'ROLE UTILISATEUR' , icon : 'mdi-account-credit-card' , navigation : '/creerRoleUtilisateur' },
+                        { title : 'GERER LES COMPTES' , icon : 'mdi-account-credit-card' , navigation : '/selectionnerUtilisateur'},
+                        { title : 'AJOUTER UN MEMBRE' , icon : 'mdi-account-plus' , navigation : '/creerUtilisateur' }
+
+                    ],
+                    title: 'GESTIONS DES UTILISATEURS',
+                },
+
+                {
+                    action: 'mdi-bottle-tonic-plus',
+                    items: [
+                        { title : 'AJOUTER DES FONCTIONNALITÉS' , icon : 'mdi-cog' , navigation : '/creerFonctionnalite' },
+                        { title : 'ROLE ET FONCTIONNALITÉ' , icon : 'mdi-account-credit-card' , navigation : '/gestionFonctionnalitesEtRoles'}
+                    ],
+                    title: 'PARAMÈTRES',
+                },
+
+                {
+                    action: 'mdi-briefcase',
+                    items: [
+                        { title : 'CREER MODE ABONNEMENT' , icon : 'mdi-bank-transfer-out' , navigation : '/creerModeAbonnement' },
+                        { title : 'CREER MODE DE PAIEMENT' , icon : 'mdi-account-credit-card' , navigation : '/creerModePaiement' },
+                        { title : 'MODE ABONNEMENT ET PAIEMENT' , icon : 'mdi-cash-sync' , navigation : '/selectionnerModeAbonnementEtPaiement' }
+                    ],
+                    title: 'ABONNEMENT ET PAIEMENT',
+                },
+
+                {
+                    action: 'mdi-briefcase',
+                    items: [
+                        { title : 'DEMANDE D\'ADHESION' , icon : 'mdi-newspaper-check' , navigation : '/creerDemandeAdhesion' },
+                        { title : 'LISTE DES DEMANDES D\'ADHESION' , icon : 'mdi-account-credit-card' , navigation : '/selectionnerDemandeAdhesionCompagnie' },
+                        { title : 'DOCUMENT DE TRANSPORT' , icon : 'mdi-file-chart-check' , navigation : '/documentAttestationTransport' }
+                    ],
+                    title: 'AUTRES OPÉRATIONS',
+                },
+
+                {
+                    action: 'mdi-tag',
+                    items: [
+                        { title : 'CONSULTER LES OFFRES' , icon : 'mdi-train-car' , navigation : '/selectionnerOffreVoyageReservation' },
+                        { title : 'GESTION DES RESERVATIONS' , icon : 'mdi-clipboard-list' , navigation : '/selectionnerReservationBillet'},
+
+                    ],
+                    title: 'ESPACE VENDEUR',
+                },
+            ],
         }
     },
 
@@ -173,6 +288,16 @@ export default {
             this.$router.replace('/')
         },
 
+        checkIfFunctionnalityExist(functionnality){
+            var exist = false;
+            this.functionnalitiesListByUserRole.forEach(element => {
+                if (element.funct == functionnality) {
+                    exist = true
+                }
+            });
+            return exist;
+        },
+
     },
 
     computed:{
@@ -186,7 +311,7 @@ export default {
                     globalFunctionnalities.push(createOffreVoyageFunction);
                 }
                 if (element.code == FUNCTIONNALITY_LISTING_OFFRE_VOYAGE) {
-                    var listingOffreVoyageFunction = { title : 'GESTION DES OFFRES' , icon : 'mdi-ticket' , navigation : '/selectionnerOffreVoyage' };
+                    var listingOffreVoyageFunction = { title : 'VOIR MES OFFRES ENREGISTRÉS' , icon : 'mdi-ticket' , navigation : '/selectionnerOffreVoyage' };
                     globalFunctionnalities.push(listingOffreVoyageFunction);
                 }
                 if (element.code == FUNCTIONNALITY_CREATE_VILLE) {
@@ -306,7 +431,8 @@ export default {
                 }
             });
             return globalFunctionnalities ; 
-        }
+        },
+
 
     },
 

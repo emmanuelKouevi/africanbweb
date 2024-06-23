@@ -3,14 +3,15 @@
         <v-container fluid>
             <v-form @submit.prevent="submitForm">
                 <v-card max-width="1300px" class="">
-                    <v-card-title><h6 class="font-weight-bold">AJOUTER UN PAYS</h6></v-card-title>
+                    <v-card-title><h6 class="font-weight-bold"><span class="title-card">AJOUTER UN PAYS</span></h6></v-card-title>
                     <v-card-subtitle>Définissez les differents pays pour une administration classique</v-card-subtitle>
                     
                     <v-card-text>
-                        <v-container fluid>
-                            <div class="form-group">
-                                <label for="inputAddress">Designation</label>
-                                <v-text-field dense outlined color="primary" placeholder="Entrer une designation"
+                        <div class="form-row">
+
+                            <div class="form-group col-lg-6">
+                                <label class="font-weight-bold" for="inputAddress">Designation</label>
+                                <v-text-field dense outlined color="primary"
                                     :error-messages="designationPaysErrors"
                                     v-model.trim="$v.pays.designation.$model"
                                     @input="$v.pays.designation.$touch()"
@@ -18,19 +19,21 @@
                                 </v-text-field>
                             </div>
 
-                            <div class="form-group">
-                                <label for="inputAddress">Description</label>
-                                <v-textarea outlined color="primary" dense 
+                            <div class="form-group col-lg-6">
+                                <label class="font-weight-bold" for="inputAddress">Description</label>
+                                <v-text-field outlined color="primary" dense 
                                     aria-placeholder="entrer une description"
                                     v-model="pays.description"
-                                ></v-textarea>
+                                ></v-text-field>
                             </div>
-                        </v-container>
+
+                        </div>
+                            
                     </v-card-text>
                     
                     <v-card-actions>
-                        <v-btn x-small color="secondary">REINITIALISER</v-btn>
-                        <v-btn x-small type="submit" color="success">AJOUTER</v-btn>
+                        <v-btn x-small color="secondary" outlined>REINITIALISER</v-btn>
+                        <v-btn x-small type="submit" outlined color="teal">ENREGISTRER</v-btn>
                     </v-card-actions>
                 </v-card>   
             </v-form>
@@ -166,6 +169,12 @@ export default {
 </script>
 
 <style scoped>
+
+   .title-card{
+        font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+        font-size: 16px;
+    }
+
     .title{
         color: teal;
         font-weight: bold;

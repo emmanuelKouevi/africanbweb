@@ -1,32 +1,37 @@
 <template>
     <v-app>
-        <v-container fluid>
-            <v-card max-width="1500">
-            <v-card-title class="title-card">LISTE DES OFFRES DE VOYAGES
-                <v-spacer></v-spacer>
-                <v-text-field v-model="search" append-icon="mdi-magnify" label="Search" single-line hide-details></v-text-field>               
-            </v-card-title>
+        <div class="row">
+            <div class="col-lg-10">
+                <v-container fluid>
+                    <v-card>
+                        <v-card-title class="title-card">LISTE DES OFFRES DE VOYAGES
+                            <v-spacer></v-spacer>
+                            <v-text-field v-model="search" append-icon="mdi-magnify" label="Search" single-line hide-details></v-text-field>               
+                        </v-card-title>
             
-            <v-data-table
-                :headers="headers"
-                :items="offreVoyageDisponibleList"
-                :loading="loading"
-                :search="search">
+                        <v-data-table
+                            :headers="headers"
+                            :items="offreVoyageDisponibleList"
+                            :loading="loading"
+                            :search="search">
 
-                <template v-slot:[`item.isActived`]="{ item }">
-                    <v-chip x-small v-if="item.isActived == true" color="success" text-color="white" class="mr-2"><span class="etat font-weight-bold">active</span></v-chip>
-                    <v-chip x-small v-else color="red" text-color="white" class="mr-2"><span class="etat">non-active</span></v-chip>
-                </template>
+                            <template v-slot:[`item.isActif`]="{ item }">
+                                <v-chip x-small v-if="item.isActif == true" color="success" text-color="white" class="mr-2"><span class="etat font-weight-bold">active</span></v-chip>
+                                <v-chip x-small v-else color="red" text-color="white" class="mr-2"><span class="etat">non-active</span></v-chip>
+                            </template>
 
-                <template v-slot:[`item.actions`]="{ item }">
-                    <v-icon title="editer" color="blue" small class="mr-2" @click="editerOffreVoyage(item)">mdi-pencil</v-icon>
-                    <v-icon title="activer" color="success" small class="mr-2" @click="activerOffreVoyage(item)">mdi-broadcast</v-icon>                       
-                </template>
+                            <template v-slot:[`item.actions`]="{ item }">
+                                <v-icon title="editer" color="blue" small class="mr-2" @click="editerOffreVoyage(item)">mdi-pencil</v-icon>
+                                <v-icon title="activer" color="success" small class="mr-2" @click="activerOffreVoyage(item)">mdi-broadcast</v-icon>                       
+                            </template>
 
-            </v-data-table>
-            <v-alert class="myalert alert-error" type="error" width="350px" dismissible>{{ errorMsg }}</v-alert>
-        </v-card>
-        </v-container>
+                        </v-data-table>
+                        <v-alert class="myalert alert-error" type="error" width="350px" dismissible>{{ errorMsg }}</v-alert>
+                    </v-card>
+                </v-container>
+            </div>
+        </div>
+        
         
     </v-app>
 </template>
@@ -50,7 +55,7 @@ export default {
                 {text : 'Type de l\'offre' , value : 'typeOffreVoyageDesignation'},
                 {text : 'Ville de départ' , value : 'villeDepartDesignation'},
                 {text : 'Ville d\'arrivée' , value : 'villeDestinationDesignation'},
-                {text : 'Active' , value : 'isActived'},
+                {text : 'Active' , value : 'isActif'},
                 {text : 'Actions' , value : 'actions' , sortable : false}
             ],
 
@@ -83,6 +88,7 @@ export default {
                         }, 4000)
                     }else{
                         this.offreVoyageDisponibleList = response.data.items;
+                        console.log(this.offreVoyageDisponibleList);
                     }
                 }else{
                     this.errorMsg = "Erreur";
@@ -100,25 +106,24 @@ export default {
 
         //ACTIVER L'OFFRE DE VOYAGE
         async activerOffreVoyage(offreVoyage){
-            var offreActived = {
-                id : null
-            }
+            var offreActived = { id : null } ; 
             offreActived.id = offreVoyage.id
             this.offreVoyageToActived.datas.push(offreActived)
             axios.post(API_ACTIVER_OFFRE_DE_VOYAGE ,this.offreVoyageToActived , { headers : HEADERS(this.$store.state.userAuthentified.token) }).then((response) => {
+                console.log(response)
                 if (response.status == 200) {
                     if (response.data.status.code != 800) {
-                        this.$swal.fire('Activation',response.data.status.message,'error')
+                        this.$swal.fire('Activation',response.data.status.message,'error');
                     }
                     else{
-                        this.$swal.fire('Activation',response.data.status.message,'success')
+                        this.$swal.fire('Activation',response.data.status.message,'success');
                     }
                 }
                 else{
-                    this.$swal.fire('Activation','Error lors de la validation','error')
+                    this.$swal.fire('Activation','Error lors de la validation','error');
                 }
             }).catch((e) => {
-                this.$swal.fire('Activation refusée' , e , 'error')
+                this.$swal.fire('Activation refusée', e , 'error');
             })
         },
 
