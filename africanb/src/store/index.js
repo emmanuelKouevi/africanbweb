@@ -7,6 +7,8 @@ export default new Vuex.Store({
   state: {
     userAuthentified : {
       compagnieTransportId: null,
+      compagnieTransportRaisonSociale:null,
+      gareDesignation:null,
       email: null,
       login: null,
       nom: null,

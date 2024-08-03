@@ -137,8 +137,8 @@ import axios from 'axios';
 import { API_GET_FUNCTIONNALITY_BY_ROLE , HEADERS } from '../components/globalConfig/globalConstConfig'
 import { FUNCTIONNALITY_CREATE_OFFRE_VOYAGE , FUNCTIONNALITY_CREATE_VILLE , FUNCTIONNALITY_LISTING_VILLE , FUNCTIONNALITY_RATTACHE_ATTESTION_TRANSPORT , FUNCTIONNALITY_CREATE_JOUR_OFFRE_VOYAGE , FUNCTIONNALITY_CREATE_PROGRAMME_OFFRE_VOYAGE } from '../components/globalConfig/constFunctionnalies'
 import { FUNCTIONNALITY_CREATE_USER_FUNCTION , FUNCTIONNALITY_CREATE_USER_ROLE , FUNCTIONNALITY_CREATE_USER_ACCOUNT , FUNCTIONNALITY_DEMANDE_ADHESION , FUNCTIONNALITY_CREATE_PAYS , FUNCTIONNALITY_LISTING_PAYS } from '../components/globalConfig/constFunctionnalies'
-import { FUNCTIONNALITY_CREATE_VILLE_ESCALE , FUNCTIONNALITY_CREATE_PRIX_OFFRE_VOYAGE , FUNCTIONNALITY_CREATE_BUS_OFFRE_VOYAGE , FUNCTIONNALITY_LIST_ADHESION } from '../components/globalConfig/constFunctionnalies'
-import { FUNCTIONNALITY_CREATE_CARACTERISTIQUE_OFFRE_VOYAGE , FUNCTIONNALITY_CREATE_GARE_TRANSPORT , FUNCTIONNALITY_LISTING_GARE_TRANSPORT, FUNCTIONNALITY_CREATE_BAGAGE , } from '../components/globalConfig/constFunctionnalies'
+import { /*UNCTIONNALITY_CREATE_VILLE_ESCALE ,*/ FUNCTIONNALITY_CREATE_PRIX_OFFRE_VOYAGE , FUNCTIONNALITY_CREATE_BUS_OFFRE_VOYAGE , FUNCTIONNALITY_LIST_ADHESION } from '../components/globalConfig/constFunctionnalies'
+import { FUNCTIONNALITY_CREATE_CARACTERISTIQUE_OFFRE_VOYAGE , FUNCTIONNALITY_CREATE_GARE_TRANSPORT , FUNCTIONNALITY_LISTING_GARE_TRANSPORT, /*FUNCTIONNALITY_CREATE_BAGAGE*/ } from '../components/globalConfig/constFunctionnalies'
 import { FUNCTIONNALITY_CREATE_MODE_ABONNEMENT , FUNCTIONNALITY_CREATE_MODE_PAIEMENT , FUNCTIONNALITY_LISTING_MODE_PAIEMENT , FUNCTIONNALITY_LISTING_OFFRE_VOYAGE } from '../components/globalConfig/constFunctionnalies'
 import { FUNCTIONNALITY_RESERVING_FROM_OFFRE_VOYAGE , FUNCTIONNALITY_SELECTION_RESERVATION_TICKET , FUNCTIONNALITY_MANAGE_ALL_ACCOUNT_USER , FUNCTIONNALITY_MANAGING_ROLE_AND_FUNCTIONNALITY } from '../components/globalConfig/constFunctionnalies'
 export default {
@@ -361,10 +361,10 @@ export default {
                     var programmeOffreFunction = { title : 'PROGRAMMER UNE OFFRE' , icon : 'mdi-clock-outline' , navigation : '/programmeOffreVoyage' };
                     globalFunctionnalities.push(programmeOffreFunction);
                 }
-                if (element.code == FUNCTIONNALITY_CREATE_VILLE_ESCALE) {
+                /*if (element.code == FUNCTIONNALITY_CREATE_VILLE_ESCALE) {
                     var creerVilleEscaleFunction = { title : 'CREER VILLE ESCALE' , icon : 'mdi-city-switch' , navigation : '/creerVilleEscale' };
                     globalFunctionnalities.push(creerVilleEscaleFunction);
-                }
+                }*/
                 if (element.code == FUNCTIONNALITY_CREATE_PRIX_OFFRE_VOYAGE) {
                     var tariferOffreFunction = { title : 'TARIFER UNE OFFRE' , icon : 'mdi-currency-usd' , navigation : '/creerModeTarif' };
                     globalFunctionnalities.push(tariferOffreFunction);
@@ -385,10 +385,10 @@ export default {
                     var gestionGareFunction = { title : 'GESTION DES GARES' , icon : 'mdi-store-cog' , navigation : '/selectionnerGareCompagnieTransport' };
                     globalFunctionnalities.push(gestionGareFunction);
                 }
-                if (element.code == FUNCTIONNALITY_CREATE_BAGAGE) {
+                /*if (element.code == FUNCTIONNALITY_CREATE_BAGAGE) {
                     var creerBagageFunction = { title : 'AFFECTER DES BAGAGES' , icon : 'mdi-bag-checked' , navigation : '/gestionBagageCompagnieTransport' };
                     globalFunctionnalities.push(creerBagageFunction);
-                }
+                }*/
                 if (element.code == FUNCTIONNALITY_CREATE_MODE_ABONNEMENT) {
                     var creerModeAbonnement = { title : 'CREER MODE ABONNEMENT' , icon : 'mdi-bank-transfer-out' , navigation : '/creerModeAbonnement' };
                     globalFunctionnalities.push(creerModeAbonnement);

@@ -7,33 +7,58 @@
                     <v-card-title>CREER UNE GARE DE TRANSPORT</v-card-title>
                     <v-card-subtitle>Gérer vos gares pour les demandes de reservations ou autres</v-card-subtitle>
                     <v-container>
-                        <v-row>
-                            <v-col cols="5">
-                                <v-text-field :error-messages="designationGareErrors" rounded dense outlined label="Désignation de la gare" v-model.trim="$v.gareTransportModel.designation.$model"></v-text-field>
-                            </v-col>
-                            <v-col cols="5">
-                                <v-text-field :error-messages="emailGareErrors" rounded dense outlined label="E-mail" v-model.trim="$v.gareTransportModel.email.$model"></v-text-field>
-                            </v-col>
-                        </v-row>
-                        <v-row>
-                            <v-col cols="5">
-                                <v-text-field type="tel" :error-messages="premierTelephoneGareErrors" rounded dense outlined label="Téléphone N°1" v-model.trim="$v.gareTransportModel.telephone1.$model"></v-text-field>
-                            </v-col>
-                            <v-col cols="5">
-                                <v-text-field rounded dense outlined label="Téléphone N°2" v-model.trim="$v.gareTransportModel.telephone2.$model"></v-text-field>
-                            </v-col>
-                        </v-row>
 
-                        <v-row>
-                            <v-col cols="5">
-                                <v-text-field :error-messages="addresseLocalisationGareError" rounded dense outlined label="Addresse de la gare" v-model.trim="$v.gareTransportModel.adresseLocalisation.$model"></v-text-field>
-                            </v-col>
-                        </v-row>
+                        <div class="form-row">
+
+                            <div class="form-group col-lg-6">
+                                <label for="inputAddress">Désignation de la gare :</label>
+                                <v-text-field class="myInput" :error-messages="designationGareErrors" outlined dense
+                                    v-model.trim="$v.gareTransportModel.designation.$model">
+                                </v-text-field>
+                            </div>
+
+                            <div class="form-group col-lg-6">
+                                <label for="inputAddress">E-mail du vendeur:</label>
+                                <v-text-field class="myInput" :error-messages="emailGareErrors"
+                                    v-model.trim="$v.gareTransportModel.email.$model"  
+                                    outlined dense>
+                                </v-text-field>
+                            </div>
+
+                        </div>
+
+                        <div class="form-row">
+
+                            <div class="form-group col-lg-6">
+                                <label for="inputAddress">Numéro de télephone n° 1 :</label>
+                                <v-text-field class="myInput" :error-messages="premierTelephoneGareErrors" outlined dense
+                                    v-model.trim="$v.gareTransportModel.telephone1.$model">
+                                </v-text-field>
+                            </div>
+
+                            <div class="form-group col-lg-6">
+                                <label for="inputAddress">Numéro de télephone n° 2:</label>
+                                <v-text-field class="myInput" v-model.trim="$v.gareTransportModel.telephone2.$model"  
+                                    outlined dense>
+                                </v-text-field>
+                            </div>
+
+                        </div>
+
+                        <div class="form-row">
+
+                            <div class="form-group col-lg-6">
+                                <label for="inputAddress">Addresse:</label>
+                                <v-text-field :error-messages="addresseLocalisationGareError" dense outlined v-model.trim="$v.gareTransportModel.adresseLocalisation.$model"></v-text-field>
+                            </div>
+
+                        </div>
+                    
                     </v-container>
 
                     <v-card-actions>
-                        <v-btn small rounded outlined>REINITIALISER</v-btn>
-                        <v-btn small type="submit" rounded outlined color="primary">CREER LA GARE</v-btn>
+                        <v-btn x-small btn color="secondary">REINITIALISER</v-btn>
+                        <v-btn type="submit" x-small  dark color="success" btn>CREER LA GARE</v-btn>
                     </v-card-actions>
                 </v-card>
             </v-container>

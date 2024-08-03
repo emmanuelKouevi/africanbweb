@@ -15,6 +15,10 @@
                             <v-col><v-text-field class="myInput" :error-messages="loginError" v-model.trim="$v.userUpdating.login.$model" label="Login ou Pseudo" outlined dense></v-text-field></v-col>
                             <v-col><v-text-field disabled class="myInput" v-model="userUpdatingMail" label="E-mail" outlined dense></v-text-field></v-col>
                         </v-row>
+
+                        <v-row>
+                            <v-col><v-text-field disabled class="myInput" v-model="userUpdating.roleCode" label="E-mail" outlined dense></v-text-field></v-col>
+                        </v-row>
                     </v-container>
                 </v-card-text>
 
@@ -51,7 +55,8 @@ export default {
                 id:null,
                 nom : null,
                 prenoms : null,
-                login : null
+                login : null,
+                roleCode:null,
             },
 
             userUpdatingMail:null
@@ -93,7 +98,8 @@ export default {
                 this.userUpdating.nom = this.$store.state.userAuthentified.nom;
                 this.userUpdating.prenoms = this.$store.state.userAuthentified.prenoms;
                 this.userUpdating.login = this.$store.state.userAuthentified.login;
-                this.userUpdatingMail = this.$store.state.userAuthentified.email
+                this.userUpdatingMail = this.$store.state.userAuthentified.email;
+                this.userUpdating.roleCode = this.$store.state.userAuthentified.roleCode
             }
         },
 

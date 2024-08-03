@@ -20,13 +20,16 @@
                                             <v-card-title><span class="designation-offre">{{ offreVoyage.designation }}</span></v-card-title>
                                             <v-card-text>
                                                 <v-container>
+
                                                     <v-row>
                                                         <span>Type de l'offre :</span>&nbsp;&nbsp;
                                                         <span>{{ offreVoyage.typeOffreVoyageDesignation }}</span>
                                                     </v-row><br><br>
+
                                                     <v-row>
                                                         <v-icon dense color="teal">mdi-circle</v-icon>&nbsp;&nbsp; Gare départ : <span class="gareDepart">{{ offreVoyage.villeDepartDesignation }}</span>  
                                                     </v-row><br><br>
+                                                    
                                                     <v-row>
                                                         <v-icon dense color="#2C3A47">mdi-circle</v-icon>&nbsp;&nbsp; Gare destination : <span class="gareDestination">{{ offreVoyage.villeDestinationDesignation }} </span>  
                                                     </v-row>        
@@ -49,7 +52,7 @@
 
                                                     <div class="form-group" v-if="jourVoyageSelected">
                                                         <label>Choisissez l'heure de départ:</label>
-                                                        <v-select v-model="jourVoyageSelected" :items="getProgrammeFromDaySelected" item-text="heureDepart" item-value="designation" dense outlined></v-select>
+                                                        <v-select v-model="jourVoyageSelected.designation" :items="getProgrammeFromDaySelected" item-text="heureDepart" item-value="designation" dense outlined></v-select>
                                                     </div>
                                                 </v-container>
                                             </v-card-text>
@@ -249,10 +252,10 @@ export default {
 
             programmeReserved:{
                 data:{
-                    programmeDesignation : "Prog Abj-Dan",
+                    programmeDesignation : null,
                     nombrePlace : null,
                     categorieVoyageur: null,
-                    gareDesignation : "Gare de Marcory",
+                    gareDesignation : null,
                     isOtherPerson:true,
                     clientDetails:{
                         nom: null,
@@ -289,6 +292,7 @@ export default {
             
 
             jourSemainesParOffreVoyagesList : [],
+
             prixEtModeParOffreVoyageList:[],
 
             offreVoyageObject:{
@@ -315,12 +319,12 @@ export default {
         async reserverOffre(){
             this.dialog = false;
             this.overlay = true;
-            this.programmeReserved.data.programmeDesignation = "Prog Abj-Dan"
-            this.programmeReserved.data.gareDesignation = "Gare de Marcory"
+            this.programmeReserved.data.programmeDesignation = this.jourVoyageSelected.designation
+            this.programmeReserved.data.gareDesignation = this.$store.state.userAuthentified.gareDesignation;
             this.programmeReserved.data.offreVoyageDesignation = this.offreVoyage.designation
             this.programmeReserved.data.clientDetails = this.user;
             await axios.post(API_RESERVER_PROGRAMME_OFFRE, this.programmeReserved, { headers : HEADERS(this.$store.state.userAuthentified.token) }).then((response) => {
-                console.log(response)
+                console.log(this.programmeReserved)
                 if (response.status == 200) {
                     if (response.data.status.code == 800) {
                         this.successMsg = response.data.status.message

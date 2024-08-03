@@ -2,6 +2,107 @@
 
     <v-app id="inspire">
 
+        <nav class="navbar navbar-light bg-light fixed-top">
+            <div class="container-fluid">
+                <a class="navbar-brand"><h2>URBAN BUS TICKET</h2></a>
+
+                <ul class="nav nav-pills justify-content-end">
+                    <li class="nav-item">
+                        <a class="nav-link" aria-current="page" href="#">A PROPOS</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">NOS SERVICES</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">NOS PARTENAIRES</a>
+                    </li>  
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">NOUS CONTACTER</a>
+                    </li>&nbsp;&nbsp;
+                    <li class="nav-item">
+                        <button type="button" class="btn"><small></small>SE CONNECTER&nbsp;&nbsp;<v-icon color="white">mdi-login</v-icon></button>
+                    </li> 
+                </ul>
+
+            </div>
+        </nav>
+
+        <v-container>
+            <div class="container-fluid">
+                <div class="row header">
+                    <div class="col-lg-7 text_header">
+                        <h1 class="font-weight-bold enough">Voulez-vous passer un cap dans l'administration de votre compagnie de transport?</h1><br>
+
+                        <div class="content_text">
+                            <p><span id="african_bt">URBAN BUS TICKET </span>
+                                est votre plateforme vous permettant de pouvoir administrer , gérer de maniere efficiente votre compagnie de transport. Vos bénéfices ne pourront qu'augmenter.
+                            </p>
+                            <v-btn class="offres" small><span class="content_offre_text">Voir les offres</span>&nbsp;&nbsp;<v-icon color="white">mdi-menu-right</v-icon></v-btn>
+                        </div>
+                        
+                    </div>
+
+                    <div class="col-lg-5" id="img_header">
+                        <img src="../assets/ap-1.png" height="400" alt="">
+                    </div>
+                </div>
+            </div>
+        </v-container>
+
+        <div class="container-fluid aboutUs">
+            <div class="row justify-center">
+                <h1 class="section_title">A PROPOS</h1>
+            </div><br>
+            <v-container-fluid>
+                <span id="aboutUs_text">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</span>
+            </v-container-fluid>
+        </div><br>
+
+        <div class="container ourServices"><br><br><br><br><br><br><br>
+            <div class="row justify-content-center">
+                <h1 class="section_title">NOS SERVICES</h1>
+            </div><br>
+            <v-container-fluid><br>
+                <div class="row ">
+                    <div class="col-lg-6">
+                        <img src="../assets/growth.svg" height="400" width="400" alt="">
+                    </div>
+                    <div class="col-lg-6">
+                        <span class="text_service">
+                            Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
+                        </span>
+                    </div>
+                </div><br>
+
+                <div class="row">
+                    <div class="col-lg-6">
+                        <span class="text_service">
+                            Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
+                        </span>
+                    </div>
+                    <div class="col-lg-6">
+                        <img src="../assets/managing.svg" height="400" width="400" alt="">
+                    </div>
+                </div><br>
+
+                <div class="row">
+                    <div class="col-lg-6">
+                        <img src="../assets/otp-security.svg" height="400" width="400" alt="">
+                    </div>
+                    <div class="col-lg-6">
+                        <span class="text_service">
+                            Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
+                        </span>
+                    </div>
+                </div><br>
+
+            </v-container-fluid>
+        </div>
+         
+    </v-app>
+
+    <!--<v-app id="inspire">
+
         <v-app-bar app color="teal">
             <v-toolbar-title class="icon_owner">
                 <v-img lazy-src="https://picsum.photos/id/11/10/6" max-height="60" max-width="100" src="../assets/UB.jpg"></v-img>
@@ -42,7 +143,7 @@
 
         <v-btn class="button_to_top"  rounded color="#3c6382" bottom ><v-icon size="25" color="white">mdi-arrow-up</v-icon></v-btn>
 
-        <!-- Sizes your content based upon application components -->
+         Sizes your content based upon application components
         <v-main>
             <v-container fluid>
                 <v-sheet>
@@ -176,11 +277,11 @@
 
             </v-footer>
 
-    </v-app>
+    </v-app>-->
 </template>
 
 <script>
-
+import $ from 'jquery'
 export default {
     name:"LandingVue",
 
@@ -216,252 +317,233 @@ export default {
     },
 
     mounted(){
-
+        setTimeout(function(){
+            $('.enough').toggle("slide:left");
+        }, 1500)
+        
+        setTimeout(function(){
+            $('.content_text').slideDown();
+        }, 2100)
     }
 }
 </script>
 
 <style lang="scss" scoped>
 
+    .aboutUs{
+        background-color: #dfe4ea;
+        margin: auto;
+        padding-top: 50px;
+        height: 20%;
+    }
+
+    .header{
+        padding-top: 150px;
+        padding-bottom: 150px;
+    }
+
+    .btn{
+        background: linear-gradient(#0c2461, #079992);
+    }
+
+    .content_text{
+        display: none;
+        font-size: 25px;
+        font-weight: 300;
+        font-family: sans-serif;
+        word-spacing: 4px;
+    }
+
+    .enough{
+        color: #2C3A47;
+        display: none;
+    }
+
+    #african_bt{
+        background: linear-gradient(to right, #079992, #0c2461);
+        font-size: 20px;
+        font-weight: bold;
+        background-clip: text;
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+    }
+
+    .text_header{
+        padding-top: 100px;
+    }
+
+    .navbar-brand{
+        background: linear-gradient(to right, #079992, #0c2461);
+        background-clip: text;
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+    }
+
+    .nav-link{
+        color: #2C3A47;
+    }
+
+    .nav-item button{
+        color: white;
+    }
+
+    .nav-item button:hover{
+        font-weight: bold;
+    }
+
+
+    .nav-item:hover{
+        font-weight: bold;
+        font-size: 16px;
+    }
+
     .section{
-
         color: #192a56;
-
         font-size: 35px;
-
         font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif
     }
 
     .avatar{
-
         color: black;
-
         font-weight: bold;
-
         font-size: 25px;
-
     }
 
     .onglets{
-
         font-size: 12px;
-
         font-weight: bold;
-
     }
 
     .onglets :hover{
-
         font-size: 16px;
-
         cursor: pointer;
-
     }
 
     .aboutMe_content{
-
         color: black;
-
         font-size: 20px;
-
     }
 
     .icon_owner{
-
         font-size: 40px;
-
         font-weight: bold;
-
     }
 
 
     .v-card--reveal {
-
         align-items: center;
-
         bottom: 0;
-
         justify-content: center;
-
         opacity: .8;
-
         position: absolute;
-
         width: 100%;
-
     }
 
     .agence{
-
         font-weight: bold;
-
         color: #303952;
     }
 
     .libelle_application{
-
         font-size: 12px; 
-
     }
 
     #odc{
-
         color: orange;
-
         font-weight: bold;
-
     }
 
     .competences{
-
         text-align: center;
-
         color: black;
-
     }
 
     .skill_libelle{
-
         text-align: center;
-
         font-weight: 600;
-
         color: black;
-
     }
 
     .card_skill :hover{
-
         cursor: pointer;
-
         background: #273c75;
-
         .icon_skill{
-
             color:white
-
         };
         .skill_libelle{
-
             color: white;
-
         }
     }
 
     .text-h5{
-
         color: white;
-
         font-weight: 400;
-
         font-style: italic;
-
         font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
-
     }
 
 
     .author{
-
         color: #636e72;
-
         font-weight: thin;
-
         font-style: italic;
-
         font-size: 25px;
-
     }
 
     .section_contact{
-
         text-align: center;
-
         margin-top: 75px;
-
     }
 
     .contact_form{
-
         opacity: 0.9;
-
         border-radius: 2%;
-
         margin-top: 50px;
-
     }
 
     .btn_form{
-
         background: #192a56;
-
         color: white;
-
         font-weight: bold;
-
     }
 
     .my_input{
-
         font-weight: bolder;
-
         font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
     }
 
     .agreement {
-
         color: white;
-
     }
 
     .checkbox{
-
         color: white;
-
     }
 
     .form-check-label{
-
         color: white;
-
     }
 
     .copyright{
-
         color: white;
-
         font-size: 18px;
-
         font-family: Georgia, 'Times New Roman', Times, serif;
-
     }
 
     .link{
-
         color: white;
-
         text-decoration: none;
-
     }
 
     .button_to_top{
-
         border-radius: 50px;
-
         height: 100%;
-
         top: 75%;
-
         right: 0;
-
         margin-right: 15px;
-
         position: fixed;
-
         z-index: 2500;
-
         visibility: hidden;
-
     }
 
     #urban_text{
@@ -470,5 +552,30 @@ export default {
 
     #ticket_text{
         color: teal;
+    }
+
+    .offres{
+        background: linear-gradient(#0c2461, #079992);
+    }
+
+    .content_offre_text{
+        color: white;
+    }
+
+    .content_offre_text:hover{
+        color: white;
+        font-weight: bold;
+    }
+
+    #aboutUs_text{
+        text-align: center;
+    }
+
+    .section_title{
+        color: #2C3A47;
+    }
+
+    .text_service{
+        padding-top: 900px;
     }
 </style>

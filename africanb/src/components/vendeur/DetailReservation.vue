@@ -31,18 +31,6 @@
                             <div class="row">
 
                                 <div class="col-lg-6">
-                                    <span>Réservation faite par le gérant de gare :</span>
-                                </div>
-
-                                <div class="col-lg-6">
-                                    <span class="font-weight-bold">Kouevi Ayite Emmanuel Hervé</span>
-                                </div>
-
-                            </div>
-
-                            <div class="row">
-
-                                <div class="col-lg-6">
                                     <span>Gare de voyage :</span>
                                 </div>
 
@@ -91,6 +79,18 @@
                             </div>
 
                             <v-divider></v-divider>
+
+                            <div class="row">
+
+                                <div class="col-lg-6">
+                                    <span>Offre de voyage:</span>
+                                </div>
+
+                                <div class="col-lg-6">
+                                    <span class="font-weight-bold">{{ reservationItem.offreVoyageDesignation }}</span>
+                                </div>
+
+                            </div>
 
                             <div class="row">
 

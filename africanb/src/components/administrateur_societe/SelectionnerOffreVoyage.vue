@@ -113,6 +113,7 @@ export default {
                     }
                     else{
                         this.$swal.fire('Activation',response.data.status.message,'success')
+                        offreVoyage.isActived = true ;
                     }
                 }
                 else{

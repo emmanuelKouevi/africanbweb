@@ -2,9 +2,12 @@
     <v-app>
         <v-container>
             <v-card>
-                <v-card-title><span class="title_card">OFFRE DE VOYAGES DISPONIBLES</span></v-card-title>
+                <v-card-title><span class="title_card">OFFRE DE VOYAGES DISPONIBLES</span>
+                    <v-spacer></v-spacer>
+                    <v-text-field v-model="search" dense placeholder="Rechercher ..."></v-text-field>
+                </v-card-title>
                 <v-card-text>
-                    <v-data-table item-class="offreItem" :headers="headers" :loading="loading" :items="offreVoyageAvailableList">
+                    <v-data-table :search="search"  item-class="offreItem" :headers="headers" :loading="loading" :items="offreVoyageAvailableList">
                         <template v-slot:[`item.actions`]="{ item }">
                            <v-btn @click="reserverTicket(item)" x-small color="teal"><small class="btn-label">Réserver</small></v-btn>
                         </template>

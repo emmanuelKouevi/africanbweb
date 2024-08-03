@@ -10,13 +10,13 @@
                     <v-container>
                         <div class="form-group col-lg-6">
                             <label class="font-weight-bold" for="inputAddress">Sélectionner le role de l'utilisateur :</label>
-                            <v-select class="myInput" :items="userRoleList" item-text="code" item-value="code" :error-messages="roleCodeError" v-model.trim="$v.userObject.roleCode.$model" outlined dense></v-select>
+                            <v-select class="myInput" :items="userRoleList" item-text="code" item-value="code"  v-model="userRoleCode" outlined dense></v-select>
                         </div>
                     </v-container>
 
                     <v-divider></v-divider>
 
-                    <v-container v-if="userObject.roleCode == 'Administrateur de Compagnie'">
+                    <v-container v-if="userRoleCode == 'Administrateur de Compagnie'">
 
                         <h5><span class="font-weight-bold">Informations personnelles de l'utilisateur</span></h5>
 
@@ -72,7 +72,7 @@
 
                     </v-container>
 
-                    <v-container v-else>
+                    <v-container v-else-if="userRoleCode == 'RoleUtiGareCompagnieTransport'">
 
                         <h5><span class="font-weight-bold">Informations personnelles de l'utilisateur</span></h5>
 
@@ -80,13 +80,69 @@
 
                             <div class="form-group col-lg-6">
                                 <label class="font-weight-bold" for="inputAddress">Nom :</label>
+                                <v-text-field class="myInput" :error-messages="usernameSellerError" 
+                                    v-model.trim="$v.userSeller.nom.$model" outlined dense>
+                                </v-text-field>
+                            </div>
+
+                            <div class="form-group col-lg-6">
+                                <label class="font-weight-bold" for="inputAddress">Prénom(s) :</label>
+                                <v-text-field class="myInput" :error-messages="surnameSellerError" 
+                                    v-model.trim="$v.userSeller.prenoms.$model"  
+                                    outlined dense>
+                                </v-text-field>
+                            </div>
+
+                        </div>
+
+                        <div class="form-row">
+
+                            <div class="form-group col-lg-6">
+                                <label class="font-weight-bold" for="inputAddress">Login :</label>
+                                <v-text-field class="myInput" :error-messages="loginSellerError" 
+                                    v-model.trim="$v.userSeller.login.$model" 
+                                    outlined dense>
+                                </v-text-field>
+                            </div>
+
+                            <div class="form-group col-lg-6">
+                                <label class="font-weight-bold" for="inputAddress">E-mail:</label>
+                                <v-text-field class="myInput" :error-messages="emailSellerError" 
+                                    v-model.trim="$v.userSeller.email.$model" outlined dense>
+                                </v-text-field>
+                            </div>
+
+                        </div>
+
+                        <div class="form-row">
+
+                            <div class="form-group col-lg-6">
+                                <label class="font-weight-bold" for="inputAddress">Gare: </label>
+                                <v-select class="myInput" :items="stations" 
+                                    item-text="designation" item-value="designation" :error-messages="gareDesignationSellerError" 
+                                    v-model.trim="$v.userSeller.gareDesignation.$model" outlined dense>
+                                </v-select>
+                            </div>
+  
+                        </div>
+
+                    </v-container>
+
+                    <v-container v-else>
+
+                        <h5><span class="font-weight-bold">Informations personnelles de l'utilisateur</span></h5>
+
+                        <div class="form-row">
+
+                            <div class="form-group col-lg-6">
+                                <label class="font-weight-bold" for="inputAddress">Nom:</label>
                                 <v-text-field class="myInput" :error-messages="usernameError" 
                                     v-model.trim="$v.userObject.nom.$model" outlined dense>
                                 </v-text-field>
                             </div>
 
                             <div class="form-group col-lg-6">
-                                <label class="font-weight-bold" for="inputAddress">Prénom(s) :</label>
+                                <label class="font-weight-bold" for="inputAddress">Prénom(s):</label>
                                 <v-text-field class="myInput" :error-messages="surnameError" 
                                     v-model.trim="$v.userObject.prenoms.$model"  
                                     outlined dense>
@@ -98,10 +154,9 @@
                         <div class="form-row">
 
                             <div class="form-group col-lg-6">
-                                <label class="font-weight-bold" for="inputAddress">Login :</label>
+                                <label class="font-weight-bold" for="inputAddress">Login:</label>
                                 <v-text-field class="myInput" :error-messages="loginError" 
-                                    v-model.trim="$v.userObject.login.$model" 
-                                    outlined dense>
+                                    v-model.trim ="$v.userObject.login.$model" outlined dense>
                                 </v-text-field>
                             </div>
 
@@ -134,7 +189,7 @@
 import axios from 'axios';
 import $ from 'jquery';
 import { required , email , minLength } from 'vuelidate/lib/validators' 
-import { API_GET_ALL_ROLES , API_CREATE_USER, HEADERS  } from '../globalConfig/globalConstConfig'
+import { API_GET_ALL_ROLES , API_CREATE_USER, HEADERS, API_RECUPERER_LISTE_GARES_PAR_COMPAGNIE  } from '../globalConfig/globalConstConfig'
 export default {
     name:'creerUtilisateur',
     data(){
@@ -146,10 +201,14 @@ export default {
 
             userRoleList:[],
 
+            stations:[],
+
 
             userDataToSend:{
                 datas:[]
             },
+
+            userRoleCode:'',
 
             userObject:{
                 nom: null,
@@ -157,6 +216,15 @@ export default {
                 login:null,
                 email:null,
                 roleCode:null,
+            },
+
+            userSeller:{
+                nom: null,
+                prenoms:null,
+                login:null,
+                email:null,
+                roleCode:null,
+                gareDesignation:null,
             },
         }
     },
@@ -183,8 +251,30 @@ export default {
                 required,
                 email
             },
+        },
 
-            roleCode:{
+        userSeller:{
+            nom:{
+                required,
+                minLength : minLength(2)
+            },
+
+            prenoms:{
+                required,
+                minLength : minLength(2)
+            },
+
+            login:{
+                required,
+                minLength : minLength(2)
+            },
+
+            email:{
+                required,
+                email
+            },
+
+            gareDesignation:{
                 required
             }
         }
@@ -196,23 +286,41 @@ export default {
         //SOUMISSION DU FORMULAIRE
         submitForm(){
             this.$v.$touch();
-            if (this.$v.userObject.$invalid) {
-              this.errorMsg = "Certaines informations requises n'ont pas été renseigné" ;
-              $(".alert-error").fadeIn();
-              setTimeout(function(){
-                $(".alert-error").fadeOut(); 
-              }, 2000);
-            } 
-            else {
-                this.createUser();
+            if(this.userRoleCode == 'RoleUtiGareCompagnieTransport'){
+                if (this.$v.userSeller.$invalid) {
+                    this.errorMsg = "Certaines informations requises n'ont pas été renseigné" ;
+                    $(".alert-error").fadeIn();
+                    setTimeout(function(){
+                        $(".alert-error").fadeOut(); 
+                    }, 2000);
+                }else{
+                    this.createUser();
+                } 
+            }else{
+                if (this.$v.userObject.$invalid) {
+                    this.errorMsg = "Certaines informations requises n'ont pas été renseigné" ;
+                    $(".alert-error").fadeIn();
+                    setTimeout(function(){
+                        $(".alert-error").fadeOut(); 
+                    }, 2000);
+                }else{
+                    this.createUser();
+                } 
             }
+
         },
 
         // CREER UN UTILISATEUR
 
         async createUser(){
             this.overlay = true ;
-            this.userDataToSend.datas.push(this.userObject)
+            if(this.userRoleCode == 'RoleUtiGareCompagnieTransport'){
+                this.userSeller.roleCode = this.userRoleCode
+                this.userDataToSend.datas.push(this.userSeller)
+            }else{
+                this.userObject.roleCode = this.userRoleCode
+                this.userDataToSend.datas.push(this.userObject)
+            }
             await axios.post(API_CREATE_USER, this.userDataToSend, { headers : HEADERS(this.$store.state.userAuthentified.token) }).then((response) => {
                 if (response.status == 200) {
                     if (response.data.status.code == 800) {
@@ -283,6 +391,36 @@ export default {
             }).catch((e) => {
                 this.errorMsg = e
             })
+        },
+
+
+        // RECUPERER LA LISTE DES ROLES DÉFINIS
+        async getAllStationByCompany(){
+            await axios.post(API_RECUPERER_LISTE_GARES_PAR_COMPAGNIE, {
+                data:{
+                    compagnieTransportRaisonSociale: this.$store.state.userAuthentified.compagnieTransportRaisonSociale
+                }
+            }, { headers : HEADERS(this.$store.state.userAuthentified.token) } ).then((response) => {
+                if (response.status == 200) {
+                    if (response.data.status.code != 800) {
+                        this.errorMsg = response.data.status.message
+                        $(".alert-error").fadeIn();
+                        setTimeout(function(){
+                            $(".alert-error").fadeOut(); 
+                        }, 4000)
+                    }else{
+                        this.stations = response.data.items;
+                    }
+                }else{
+                    this.errorMsg = "Erreur";
+                    $(".alert-error").fadeIn();
+                    setTimeout(function(){
+                        $(".alert-error").fadeOut(); 
+                    }, 4000)
+                }
+            }).catch((e) => {
+                this.errorMsg = e
+            })
         }
 
     },
@@ -331,12 +469,63 @@ export default {
             if (!this.$v.userObject.roleCode.$dirty) return errors
             !this.$v.userObject.roleCode.required && errors.push('Veuillez selectionner un rôle.')
             return errors 
-        }
+        },
+
+        // CONTRAINTE DE L ENTITE VENDEUR DE COMPAGNIE TRANSPORT
+
+        usernameSellerError(){
+            const errors = [];
+            if (!this.$v.userSeller.nom.$dirty) return errors
+            !this.$v.userSeller.nom.required && errors.push('Le nom de l\'utilsateur est obligatoire.')
+            !this.$v.userSeller.nom.minLength && errors.push('Au moins 2 caractères.')
+            return errors 
+        },
+
+
+        surnameSellerError(){
+            const errors = [];
+            if (!this.$v.userSeller.prenoms.$dirty) return errors
+            !this.$v.userSeller.prenoms.required && errors.push('Le prenom de l\'utilsateur est obligatoire.')
+            !this.$v.userSeller.prenoms.minLength && errors.push('Au moins 2 caractères.')
+            return errors 
+        },
+
+        loginSellerError(){
+            const errors = [];
+            if (!this.$v.userSeller.login.$dirty) return errors
+            !this.$v.userSeller.login.required && errors.push('Le login de l\'utilsateur est obligatoire.')
+            !this.$v.userSeller.login.minLength && errors.push('Au moins 2 caractères.')
+            return errors 
+        },
+
+
+        emailSellerError(){
+            const errors = [];
+            if (!this.$v.userSeller.email.$dirty) return errors
+            !this.$v.userSeller.email.required && errors.push('L\'email de l\'utilsateur est obligatoire.')
+            !this.$v.userSeller.email.email && errors.push('Format adresse e-mail incorrect.')
+            return errors 
+        },
+
+        roleCodeSellerError(){
+            const errors = [];
+            if (!this.$v.userSeller.roleCode.$dirty) return errors
+            !this.$v.userSeller.roleCode.required && errors.push('Veuillez selectionner un rôle.')
+            return errors 
+        },
+
+        gareDesignationSellerError(){
+            const errors = [];
+            if (!this.$v.userSeller.gareDesignation.$dirty) return errors
+            !this.$v.userSeller.gareDesignation.required && errors.push('Veuillez selectionner un rôle.')
+            return errors 
+        },
 
     },
 
     mounted(){
         this.getAllUsersRoles();
+        this.getAllStationByCompany();
     }
 
 }
