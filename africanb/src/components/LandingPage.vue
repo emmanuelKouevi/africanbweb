@@ -20,7 +20,7 @@
                         <a class="nav-link" href="#">NOUS CONTACTER</a>
                     </li>&nbsp;&nbsp;
                     <li class="nav-item">
-                        <button type="button" class="btn"><small></small>SE CONNECTER&nbsp;&nbsp;<v-icon color="white">mdi-login</v-icon></button>
+                        <button type="button" class="btn" @click="goToLoginPage"><small></small>SE CONNECTER&nbsp;&nbsp;<v-icon color="white">mdi-login</v-icon></button>
                     </li> 
                 </ul>
 

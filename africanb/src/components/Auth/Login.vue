@@ -1,6 +1,70 @@
 <template>
-    <v-app class="body">  
-        <v-main class="my-container">
+    <v-app class="body">
+        <nav class="navbar navbar-light">
+            <div class="container-fluid">
+                <a class="navbar-brand"><h2>URBAN BUS TICKET</h2></a>
+            </div>
+        </nav>
+        
+        <div class="container body_login">
+
+            <div class="row">
+
+                <div class="col-lg-7 img_auth">
+                    <img src="../../assets/authentication.svg" height="400" width="400" alt="">
+                </div>
+
+                <div class="col-lg-5 login_box">
+                    <v-form @submit.prevent="login">
+                            <v-row justify="center" align="center">
+                                <v-img max-height="120" max-width="120" src="../../assets/UB.jpg"></v-img>
+                            </v-row>
+                        
+                            <v-card-text>
+                                <v-container>
+                                    <v-row justify="center">
+                                        <div class="text_auth">
+                                            <h5 class="font-weight-bold">BIENVENUE</h5>
+                                            <small>Entrer vos paramètres de connexion pour accéder à votre espace de travail.</small>
+                                        </div>
+
+                                        <v-container>
+                                            <div class="form-group">
+                                                <label for="pseudoOrEmail" class="myLabel">Identifiant ou E-mail</label>
+                                                <v-text-field class="input_field" id="pseudoOrEmail" :error-messages="usernameError" 
+                                                    v-model.trim="$v.userLogin.login.$model" dense outlined 
+                                                    prepend-inner-icon="mdi-account" 
+                                                    color="#273c75">
+                                                </v-text-field>
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label for="login_password" class="myLabel">Mot de Passe</label>
+                                                <v-text-field :error-messages="passwordError" v-model.trim="$v.userLogin.password.$model" :append-icon="passwordIsVisible ? 'mdi-eye' : 'mdi-eye-off'"  
+                                                    class="input_field" id="login_password" 
+                                                    @click:append="passwordIsVisible = !passwordIsVisible"
+                                                    dense outlined prepend-inner-icon="mdi-lock-check" color="#273c75" :type="passwordIsVisible ? 'text' : 'password'">
+                                                </v-text-field>
+                                            </div>
+
+                                            <span>Vous avez oublié votre mot de passe ? <small class="password_forget">Cliquez-ici</small></span><br><br><br>
+
+                                            <v-row justify="center">
+                                                <div class="text-xs-center">
+                                                    <v-btn class="btn" small type="submit" rounded color="#192a56"><span class="connexion_text">CONNEXION</span></v-btn>
+                                                </div>
+                                            </v-row>
+                                        </v-container><br>                        
+                                    </v-row>
+                                </v-container>
+                            </v-card-text>    
+                    </v-form><br><br>
+                </div>
+
+            </div>
+
+        </div>
+        <!--<v-main class="my-container">
             <div>
                 <v-container>
                     <v-form @submit.prevent="login">
@@ -51,9 +115,9 @@
                     </v-form><br><br>
                 </v-container>
             </div>
-        </v-main><br>
+        </v-main><br>-->
 
-        <v-footer class="footer" dark>
+        <!--<v-footer class="footer" dark>
             <v-container fluid>
                 <v-row>
                     <v-col class="text-center">
@@ -61,7 +125,7 @@
                     </v-col>
                 </v-row>
             </v-container>
-        </v-footer>
+        </v-footer>-->
         <v-overlay :value="overlay"><v-progress-circular  indeterminate size="64"></v-progress-circular></v-overlay>
     </v-app>
 </template>
@@ -70,6 +134,7 @@
 import axios from 'axios';
 import { API_LOGIN_USER } from '../globalConfig/globalConstConfig'
 import { required } from 'vuelidate/lib/validators'
+import $ from 'jquery';
 export default {
     name:"LoginVue",
     data(){
@@ -169,13 +234,37 @@ export default {
 
     mounted(){
 
+        setTimeout(function(){
+            $('.img_auth').slideDown();
+        }, 600)
+
+        setTimeout(function(){
+            $('.login_box').toggle("slide:left");
+        }, 1000)
     }
 }
 </script>
 
 <style scoped>
-    .body{
-        background: teal;
+
+    .body_login{
+        padding-top: 90px;
+    }
+
+    .login_box{
+        display: none;
+    }
+
+    .img_auth{
+        padding-top: 100px;
+        display:none;
+    }
+
+    .navbar-brand{
+        background: linear-gradient(to right, #079992, #0c2461);
+        background-clip: text;
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
     }
 
     .my-container{
@@ -251,5 +340,9 @@ export default {
         color:black;
         font-size: 13px;
         opacity: 0.7;
+    }
+
+    .btn{
+        background: linear-gradient(#0c2461, #079992);
     }
 </style>
