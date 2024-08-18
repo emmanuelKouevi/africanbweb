@@ -8,10 +8,10 @@
 
                 <ul class="nav nav-pills justify-content-end">
                     <li class="nav-item">
-                        <a class="nav-link" aria-current="page" href="#">A PROPOS</a>
+                        <a class="nav-link" href="#aboutUs-section" aria-current="page">A PROPOS</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">NOS SERVICES</a>
+                        <a class="nav-link" href="#our-services">NOS SERVICES</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#">NOS PARTENAIRES</a>
@@ -27,8 +27,8 @@
             </div>
         </nav>
 
-        <v-container>
-            <div class="container-fluid">
+        <v-container class="container-fluid" id="top-header">
+            <div class="container-fluid" id="top-header">
                 <div class="row header">
                     <div class="col-lg-7 text_header">
                         <h1 class="font-weight-bold enough">Voulez-vous passer un cap dans l'administration de votre compagnie de transport?</h1><br>
@@ -48,56 +48,130 @@
                 </div>
             </div>
         </v-container>
-
-        <div class="container-fluid aboutUs">
-            <div class="row justify-center">
-                <h1 class="section_title">A PROPOS</h1>
+        
+        <div class="container">
+            <div class="row justify-content-center">
+                <h1 class="section_title" id="aboutUs-section"><v-icon color="#2C3A47" size="64">mdi-menu-right</v-icon>A PROPOS</h1>
             </div><br>
-            <v-container-fluid>
-                <span id="aboutUs_text">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</span>
-            </v-container-fluid>
+            <div class="container" data-aos="flip-right" data-aos-delay="1000" data-aos-duration="800">
+                <span id="aboutUs_text">
+                    Urban Bus Ticket’s est une entreprise spécialisée dans la vente de billets d'autocar en ligne, offrant un moyen pratique et efficace de réserver des voyages en autocar à travers la Côte d’Ivoire.
+                    Notre mission est de simplifier le processus de réservation de voyage en autocar en offrant aux utilisateurs une expérience transparente, sécurisée et conviviale. Nous croyons fermement que voyager en autocar devrait être aussi simple que quelques clics sur un écran, et c'est précisément ce que nous nous efforçons d'offrir à nos clients.
+                    Sur notre plateforme, les voyageurs peuvent parcourir une large sélection d'itinéraires proposés par différents transporteurs, comparer les horaires, les tarifs et les options de siège, puis réserver leur billet en quelques étapes simples. Que ce soit pour un voyage d'affaires, des vacances en famille ou une escapade entre amis, nous sommes là pour rendre le processus de réservation aussi fluide que possible.
+                    Nous travaillons en étroite collaboration avec un réseau de partenaires de transport de confiance pour offrir à nos clients un accès à une variété d'options de voyage, garantissant ainsi une flexibilité maximale et une expérience de voyage agréable.
+                    Chez Urban Bus Ticket’s, nous nous engageons à fournir un service clientèle exceptionnel, répondant aux questions et aux préoccupations de nos clients avec rapidité et efficacité. Nous sommes là pour accompagner nos clients à chaque étape de leur voyage, de la réservation initiale à l'arrivée à destination.
+                    Nous sommes fiers de jouer un rôle dans la facilitation des voyages en autocar, en offrant aux voyageurs une alternative pratique et abordable aux autres modes de transport. Chez Urban Bus Ticket’s, nous sommes déterminés à rendre chaque voyage aussi agréable que possible, en offrant la commodité, la fiabilité et le service de qualité que nos clients méritent.
+                    Merci de nous faire confiance pour vos besoins de voyage en autocar. Nous sommes impatients de vous accueillir à bord !
+                </span>
+            </div>
         </div><br>
 
+        
+
         <div class="container ourServices"><br><br><br><br><br><br><br>
-            <div class="row justify-content-center">
-                <h1 class="section_title">NOS SERVICES</h1>
+            <div class="row justify-content-center" id="our-services">
+                <h1 class="section_title"><v-icon color="#2C3A47" size="64">mdi-menu-right</v-icon>NOS SERVICES</h1>
             </div><br>
-            <v-container-fluid><br>
+            <div class="container"><br>
                 <div class="row ">
-                    <div class="col-lg-6">
+                    <div data-aos="fade-right" data-aos-offset="300" data-aos-easing="ease-in-sine" class="col-lg-6"
+                        data-aos-delay="500">
                         <img src="../assets/growth.svg" height="400" width="400" alt="">
                     </div>
-                    <div class="col-lg-6">
+                    <div data-aos="fade-left" data-aos-offset="300" data-aos-easing="ease-in-sine" class="col-lg-6"
+                    data-aos-delay="1000">
                         <span class="text_service">
-                            Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
+                            Notre mission est de simplifier le processus de réservation de voyage en autocar en offrant aux utilisateurs une expérience transparente, sécurisée et conviviale. Nous croyons fermement que voyager en autocar devrait être aussi simple que quelques clics sur un écran, et c'est précisément ce que nous nous efforçons d'offrir à nos clients.
                         </span>
                     </div>
                 </div><br>
 
                 <div class="row">
-                    <div class="col-lg-6">
+                    <div data-aos="fade-right" data-aos-offset="300" data-aos-easing="ease-in-sine" class="col-lg-6"
+                        data-aos-delay="500">
                         <span class="text_service">
-                            Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
+                            Sur notre plateforme, les voyageurs peuvent parcourir une large sélection d'itinéraires proposés par différents transporteurs, comparer les horaires, les tarifs et les options de siège, puis réserver leur billet en quelques étapes simples. Que ce soit pour un voyage d'affaires, des vacances en famille ou une escapade entre amis, nous sommes là pour rendre le processus de réservation aussi fluide que possible.
+                            Nous travaillons en étroite collaboration avec un réseau de partenaires de transport de confiance pour offrir à nos clients un accès à une variété d'options de voyage, garantissant ainsi une flexibilité maximale et une expérience de voyage agréable.
                         </span>
                     </div>
-                    <div class="col-lg-6">
+                    <div data-aos="fade-left" data-aos-offset="300" data-aos-easing="ease-in-sine" class="col-lg-6"
+                    data-aos-delay="1000">
                         <img src="../assets/managing.svg" height="400" width="400" alt="">
                     </div>
                 </div><br>
 
                 <div class="row">
-                    <div class="col-lg-6">
+                    <div data-aos="fade-right" data-aos-offset="300" data-aos-easing="ease-in-sine" class="col-lg-6"
+                        data-aos-delay="500">
                         <img src="../assets/otp-security.svg" height="400" width="400" alt="">
                     </div>
-                    <div class="col-lg-6">
+                    <div data-aos="fade-left" data-aos-offset="300" data-aos-easing="ease-in-sine" class="col-lg-6"
+                    data-aos-delay="1000">
                         <span class="text_service">
-                            Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
+                            Chez Urban Bus Ticket’s, nous nous engageons à fournir un service clientèle exceptionnel, répondant aux questions et aux préoccupations de nos clients avec rapidité et efficacité. Nous sommes là pour accompagner nos clients à chaque étape de leur voyage, de la réservation initiale à l'arrivée à destination.
+                            Nous sommes fiers de jouer un rôle dans la facilitation des voyages en autocar, en offrant aux voyageurs une alternative pratique et abordable aux autres modes de transport. Chez Urban Bus Ticket’s, nous sommes déterminés à rendre chaque voyage aussi agréable que possible, en offrant la commodité, la fiabilité et le service de qualité que nos clients méritent.
+                            Merci de nous faire confiance pour vos besoins de voyage en autocar. Nous sommes impatients de vous accueillir à bord !
                         </span>
                     </div>
                 </div><br>
 
-            </v-container-fluid>
+            </div>
         </div>
+
+        <div class="bg-secondary container">
+            <div class="row justify-center">
+                <h1 class="section_title" id="aboutUs-section"><v-icon color="#2C3A47" size="64">mdi-menu-right</v-icon>NOUS CONTACTER</h1>
+            </div><br>
+            <div class="container-fluid">
+                <v-card>
+                    <v-card-text>
+                        <form class="row g-3">
+                            <div class="col-md-6">
+                                <label for="inputEmail4" class="form-label">Nom</label>
+                                <input type="text" class="form-control" id="inputEmail4">
+                            </div>
+                            <div class="col-md-6">
+                                <label for="inputPassword4" class="form-label">Prenom</label>
+                                <input type="text" class="form-control" id="inputPassword4">
+                            </div>
+                            <div class="col-12">
+                                <label for="inputAddress" class="form-label">Address</label>
+                                <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+                            </div>
+                            <div class="col-12">
+                                <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="gridCheck">
+                                <label class="form-check-label" for="gridCheck">
+                                    Check me out
+                                </label>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <button type="submit" class="btn btn-primary">Sign in</button>
+                            </div>
+                        </form>
+                    </v-card-text>
+                </v-card>
+            </div>
+        </div><br><br><br>
+
+        <v-footer color="secondary">
+           
+           <v-container fluid>
+
+               <v-row>
+
+                   <v-col class="text-center">
+
+                    <span class="copyright">© copyright 2023 - Urban Bus Ticket. Tous droits réservés</span>
+
+                   </v-col>
+
+               </v-row>
+
+           </v-container>
+
+       </v-footer>
          
     </v-app>
 
@@ -294,6 +368,10 @@ export default {
         // GO TO LOGIN PAGE TO GET INTEFACE USER
         goToAdhesionPage(){
             this.$router.push({path:"/Partenaires"})
+        },
+
+        scrollToForm() {
+            document.querySelector('#aboutUs_text').scrollIntoView({behavior: 'smooth'});
         }
     },
 
@@ -569,6 +647,8 @@ export default {
 
     #aboutUs_text{
         text-align: center;
+        font-size: 25px;
+        font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
     }
 
     .section_title{
@@ -577,5 +657,14 @@ export default {
 
     .text_service{
         padding-top: 900px;
+    }
+
+    .text_service{
+        font-size: 19px;
+        font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    }
+
+    #top-header{
+        padding-bottom: 100px;
     }
 </style>

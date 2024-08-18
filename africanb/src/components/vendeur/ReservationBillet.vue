@@ -241,7 +241,7 @@
 import axios from "axios"
 import $ from 'jquery'
 import { API_OBENIR_JOUR_SEMAINE_PAR_OFFRE_VOYAGE , API_RECUPERER_PRIX_PAR_OFFRE_VOYAGE , HEADERS } from '../globalConfig/globalConstConfig'
-import { API_RESERVER_PROGRAMME_OFFRE } from '../globalConfig/globalConstConfig'
+import { API_RESERVER_PROGRAMME_OFFRE , API_CREATE_HISTORIQUE_PAIEMENT} from '../globalConfig/globalConstConfig'
 export default {
     name:"ReservationBillet",
     data(){
@@ -264,6 +264,14 @@ export default {
                         telephone:null
                     },
                     offreVoyageDesignation:null,
+                }
+            },
+
+            historyPaiement:{
+                data:{
+                    dateTimePayment:"",
+                    modePaiementDesignation:"",
+                    reservationBilletVoyageDesignation: "",
                 }
             },
 
@@ -327,6 +335,8 @@ export default {
                 console.log(this.programmeReserved)
                 if (response.status == 200) {
                     if (response.data.status.code == 800) {
+                        console.log(response)
+                        this.creerHistoriquePaiement(response.data.items[0].designation);
                         this.successMsg = response.data.status.message
                         $(".alert-success").fadeIn();
                         setTimeout(function(){
@@ -368,6 +378,53 @@ export default {
                 //this.objectContainList.datas = []
             }).finally(() => {
                 this.overlay = false;
+            })
+        },
+
+        // CREER HISTORIQUE DE PAIEMENT
+        async creerHistoriquePaiement(designationReservation){
+            let date = new Date();
+            let year = date.getFullYear();
+            let month = String(date.getMonth() + 1).padStart(2, '0');
+            let day = String(date.getDate()).padStart(2, '0'); 
+            let hours = String(date.getHours()).padStart(2, '0'); 
+            let minutes = String(date.getMinutes()).padStart(2, '0'); 
+            let seconds = String(date.getSeconds()).padStart(2, '0'); 
+            let formattedDate = `${year}-${month}-${day}T${hours}:${minutes}:${seconds}`;
+            this.historyPaiement.data.reservationBilletVoyageDesignation = designationReservation
+            this.historyPaiement.data.dateTimePayment = formattedDate;
+            this.historyPaiement.data.modePaiementDesignation = "Mode espece"
+            console.log(this.historyPaiement);
+            await axios.post(API_CREATE_HISTORIQUE_PAIEMENT, this.historyPaiement, { headers : HEADERS(this.$store.state.userAuthentified.token) }).then((response) => {
+
+                if (response.status == 200) {
+                    if (response.data.status.code == 800) {
+                        this.successMsg = response.data.status.message
+                        $(".alert-success").fadeIn();
+                        setTimeout(function(){
+                            $(".alert-success").fadeOut(); 
+                        }, 4000)
+                    }else{
+                        this.errorMsg = response.data.status.message
+                        $(".alert-error").fadeIn();
+                        setTimeout(function(){
+                            $(".alert-error").fadeOut(); 
+                        }, 3000)
+                    }  
+                    
+                }else{
+                    this.errorMsg = "Erreur , lors la création de l'historique";
+                    $(".alert-error").fadeIn();
+                    setTimeout(function(){
+                        $(".alert-error").fadeOut(); 
+                    }, 3000)
+                }
+            }).catch((e) => {
+                this.errorMsg = e;
+                $(".alert-error").fadeIn();
+                setTimeout(function(){
+                    $(".alert-error").fadeOut(); 
+                }, 3000)
             })
         },
         

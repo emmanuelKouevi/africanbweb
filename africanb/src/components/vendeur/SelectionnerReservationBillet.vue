@@ -30,6 +30,7 @@
                 </div>
             </div> <br>
 
+            <v-btn x-small btn color="success" @click="toExportReport">Exporter le rapport</v-btn><br><br>
             <v-card>
                 <v-card-title><small class="title_card">TOUS LES BILLETS RÉSERVÉS</small>
                 <v-spacer></v-spacer>
@@ -40,7 +41,7 @@
                     <v-data-table :headers="headers" :search="search" :loading="loading" :items="reservationTicketList">
                         <template v-slot:[`item.actions`]="{ item }">
                             <v-icon title="editer" color="blue" small class="mr-2" @click="checkBooking(item)">mdi-pencil</v-icon>&nbsp;
-                            <v-icon title="imprimer" color="blue" small class="mr-2" @click="imprimerBillet(item)">mdi-printer</v-icon>
+                            <v-icon title="imprimer" color="blue" small class="mr-2" @click="imprimerBillet(item.designation)">mdi-printer</v-icon>
                         </template>
                     </v-data-table>
                 </v-card-text>
@@ -57,7 +58,7 @@
 
 import axios from 'axios';
 //import $ from 'jquery';
-import { API_GET_RESERVATIONS_BY_SELLER , API_GET_RESERVATIONS_BY_ADMIN_TP , HEADERS } from '../globalConfig/globalConstConfig';
+import { API_GET_RESERVATIONS_BY_SELLER , API_GET_RESERVATIONS_BY_ADMIN_TP , API_GENERATE_TICKET,  HEADERS, API_GENERATE_REPORT } from '../globalConfig/globalConstConfig';
 export default {
     name:"SelectionnerReservationBillet",
     data(){
@@ -66,9 +67,21 @@ export default {
             successMsg: null,
             warningMsg: null,
 
+            ticketGenerated:{
+                data: {
+                    designation: null,
+                }
+            },
+
+            reportGenerated:{
+                data: {
+                    designation: null,
+                }
+            },
+
             objectToSend:{
                 "data": {
-
+                    
                 }
             },
 
@@ -92,6 +105,35 @@ export default {
     },
 
     methods:{
+
+        async convertToBase64(byte){
+            console.log(byte)
+            window.open("data:application/pdf;base64,"+byte, '_blank', 'fullscreen=yes')
+        },
+
+
+        //Exporter le rapport en PDF
+        async toExportReport(){
+            await axios.post(API_GENERATE_REPORT, this.ticketGenerated, { headers : HEADERS(this.$store.state.userAuthentified.token) }).then((response) => {  
+                console.log(response)            
+            }).catch((e) => {
+                this.errorMsg = e
+            })
+        },
+
+        //Generer le billet de voyage
+        async imprimerBillet(designationBillet){
+            this.ticketGenerated.data.designation = designationBillet;
+            await axios.post(API_GENERATE_TICKET, this.ticketGenerated, { headers : HEADERS(this.$store.state.userAuthentified.token) }).then((response) => {  
+                if (designationBillet == null) {
+                    this.$swal.fire('Erreur','Impossible d\'imprimer ce billet','error');
+                }else{
+                    this.convertToBase64(response.data.item.contentBase64)
+                }              
+            }).catch((e) => {
+                this.errorMsg = e
+            })
+        },
 
         //OBTENIR LA LISTE DES RESERVATIONS EFFECTUÉ PAR LES UTILISATEUR À LA GARE
         async getAllReservationTicketAvailable(){
@@ -132,11 +174,6 @@ export default {
                     this.loading = false;   
                 })
             }
-        },
-
-        imprimerBillet(item){
-            print()
-            console.log(item)
         },
 
         //CONSULTER UNE RESERVATION

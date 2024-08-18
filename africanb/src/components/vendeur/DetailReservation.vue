@@ -119,7 +119,7 @@
                         </v-card-text><br>
 
                         <v-card-actions class="float-right">
-                            <v-btn x-small color="success">Imprimer le billet</v-btn>
+                            <v-btn x-small color="success" @click="imprimerBillet(reservationItem.designation)">Imprimer le billet</v-btn>
                         </v-card-actions>
 
                     </v-card>
@@ -137,6 +137,8 @@
 </template>
 
 <script>
+import { API_GENERATE_TICKET , HEADERS} from '../globalConfig/globalConstConfig'
+import axios from 'axios'
 export default {
     name:"ReservationDetail",
     data(){
@@ -148,11 +150,18 @@ export default {
                     prenoms:null,
                     email: null,
                 },
+                designation:null,
                 gareDesignation:null,
                 montantTotalReservation: null,
                 nombrePlace: null,
                 statusActualDesignation: null,
-            }
+            },
+
+            ticketGenerated:{
+                data: {
+                    designation: null,
+                }
+            },
         }
     },
 
@@ -172,6 +181,25 @@ export default {
             }else{
                 this.$router.replace({path:'/selectionnerReservationBillet'})
             }
+        },
+
+        async convertToBase64(byte){
+            window.open("data:application/pdf;base64,"+byte, '_blank', 'fullscreen=yes')
+        },
+
+
+        //Generer le billet de voyage
+        async imprimerBillet(designationBillet){
+            this.ticketGenerated.data.designation = designationBillet;
+            await axios.post(API_GENERATE_TICKET, this.ticketGenerated, { headers : HEADERS(this.$store.state.userAuthentified.token) }).then((response) => {  
+                if (designationBillet == null) {
+                    this.$swal.fire('Erreur','Impossible d\'imprimer ce billet','error');
+                }else{
+                    this.convertToBase64(response.data.item.contentBase64)
+                }              
+            }).catch((e) => {
+                this.errorMsg = e
+            })
         },
 
     },

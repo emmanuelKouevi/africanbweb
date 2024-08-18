@@ -236,11 +236,11 @@ export default {
 
         setTimeout(function(){
             $('.img_auth').slideDown();
-        }, 600)
+        },600)
 
         setTimeout(function(){
             $('.login_box').toggle("slide:left");
-        }, 1000)
+        },1000)
     }
 }
 </script>

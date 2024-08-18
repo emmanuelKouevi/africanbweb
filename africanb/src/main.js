@@ -8,6 +8,8 @@ import vuetify from './plugins/vuetify'
 import Vuelidate from 'vuelidate'
 import VueSweetalert2 from 'vue-sweetalert2';
 import 'sweetalert2/dist/sweetalert2.min.css';
+import AOS from 'aos'
+import 'aos/dist/aos.css'
 
 Vue.config.productionTip = false
 Vue.use(Vuelidate)
@@ -17,5 +19,8 @@ new Vue({
   router,
   store,
   vuetify,
+  mounted(){
+    AOS.init()
+  },
   render: h => h(App)
 }).$mount('#app')
