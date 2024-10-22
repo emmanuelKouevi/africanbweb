@@ -1,358 +1,456 @@
 <template>
-    <v-app>
-        <v-form @submit.prevent="submitForm">
-            <v-container fluid>
-                <v-card width="1400" elevation="3">
-                    <v-card-title>GESTION DES MODES ET DU TARIF</v-card-title>
-                    <v-divider></v-divider>
-                    <v-card-text>
-                        <div><h6>Étape 1: Sélectionner une opération pour continuer votre opération.</h6></div>
+  <v-app>
+    <v-form @submit.prevent="submitForm">
+      <v-container fluid>
+        <v-card width="1400" elevation="3">
+          <v-card-title>GESTION DES MODES ET DU TARIF</v-card-title>
+          <v-divider></v-divider>
+          <v-card-text>
+            <div>
+              <h6>
+                Étape 1: Sélectionner une opération pour continuer votre
+                opération.
+              </h6>
+            </div>
+            <br />
 
-                        <div class="form-row">
-                            <div class="form-group col-md-6">
-                                <label for="inputEmail4">Sélectionner un offre de voyage:</label>
-                                <v-select :error-messages="offreVoyagePrixOffreVoyageErrors" :items="offreVoyageParCompagnieTransportList" item-text="designation" 
-                                    item-value="designation" dense outlined v-model.trim="$v.prixOffreVoyageModel.offreVoyageDesignation.$model" 
-                                    color="primary">
-                                </v-select>
-                            </div>
-                        </div>
+            <form>
+              <div class="mb-3">
+                <label for="exampleInputPassword1" class="form-label"
+                  >Sélectionner une offre de voyage</label
+                >
+                <select
+                  class="form-select col-lg-5"
+                  aria-label="Default select example"
+                  v-model="prixOffreVoyageModel.offreVoyageDesignation"
+                >
+                  <option
+                    v-for="(offre, o) in offreVoyageParCompagnieTransportList"
+                    :key="o"
+                    :value="offre.designation"
+                  >
+                    {{ offre.designation }}
+                  </option>
+                </select>
+              </div>
+            </form>
 
-                        <v-divider></v-divider>
+            <v-divider></v-divider><br />
 
-                        <div><h6>Étape 2: Remplir les informations complémentaire pour la finalisation.</h6></div>
+            <div>
+              <h6>
+                Étape 2: Remplir les informations complémentaire pour la
+                finalisation.
+              </h6>
+            </div>
+            <br />
 
-                        <div class="form-row">
-                            <div class="form-group col-md-6">
-                                <label for="inputEmail4">Réference du mode:</label>
-                                <v-text-field :error-messages="designationPrixOffreVoyageErrors" dense 
-                                    outlined v-model.trim="$v.prixOffreVoyageModel.designation.$model">
-                                </v-text-field>
-                            </div>
-                        </div>
+            <div class="row">
+              <div class="col-lg-5">
+                <label for="exampleInputEmail1" class="form-label"
+                  >Réference du mode:</label
+                >
+                <input
+                  type="text"
+                  class="form-control"
+                  id="exampleInputEmail1"
+                  v-model="$v.prixOffreVoyageModel.designation.$model"
+                />
+              </div>
+              <div class="col-lg-5">
+                <label for="exampleInputEmail1" class="form-label"
+                  >Catégorie de l'offre:</label
+                >
+                <select
+                  class="form-select"
+                  aria-label="Default select example"
+                  v-model="prixOffreVoyageModel.categorieVoyageurDesignation"
+                >
+                  <option
+                    v-for="(
+                      categorie, cat
+                    ) in referenceModeCategorieVoyageurList"
+                    :key="cat"
+                  >
+                    {{ categorie.designation }}
+                  </option>
+                </select>
+              </div>
+            </div>
 
-                        <div class="form-row">
-                            <div class="form-group col-md-6">
-                                <label for="inputEmail4">Catégorie de l'offre:</label>
-                                <v-select :error-messages="categoriePrixOffreVoyageErrors" :items="referenceModeCategorieVoyageurList" 
-                                    item-text="designation" item-value="designation" dense outlined color="primary" 
-                                    v-model.trim="$v.prixOffreVoyageModel.categorieVoyageurDesignation.$model">
-                                </v-select>
-                            </div>
+            <div class="row">
+              <div class="col-lg-5">
+                <label for="exampleInputEmail1" class="form-label"
+                  >Mode de l'offre:</label
+                >
+                <select
+                  class="form-select"
+                  aria-label="Default select example"
+                  v-model="prixOffreVoyageModel.modeDesignation"
+                >
+                  <option
+                    v-for="(mode, mod) in referenceModeOffreVoyageList"
+                    :key="mod"
+                  >
+                    {{ mode.designation }}
+                  </option>
+                </select>
+              </div>
 
-                            <div class="form-group col-md-6">
-                                <label for="inputEmail4">Mode de l'offre:</label>
-                                <v-select :error-messages="modePrixOffreVoyageErrors" :items="referenceModeOffreVoyageList" 
-                                    item-text="designation" item-value="designation" dense outlined color="primary" 
-                                    v-model.trim="$v.prixOffreVoyageModel.modeDesignation.$model">
-                                </v-select>
-                            </div>
-                        </div>
+              <div class="col-lg-5">
+                <label for="exampleInputEmail1" class="form-label">Prix:</label>
+                <div class="input-group mb-3">
+                  <input
+                    type="text"
+                    class="form-control"
+                    v-model.number="$v.prixOffreVoyageModel.prix.$model"
+                    aria-describedby="basic-addon1"
+                  />
+                  <span class="input-group-text" id="basic-addon1">FCFA</span>
+                </div>
+              </div>
+            </div>
+          </v-card-text>
 
-                        <div class="form-row">
-                            <div class="form-group col-md-5">
-                                <label for="inputEmail4">Prix:</label>
-                                <v-text-field :error-messages="pricePrixOffreVoyageErrors" dense outlined color="primary" 
-                                    suffix="FCFA" v-model.number="$v.prixOffreVoyageModel.prix.$model">
-                                </v-text-field>
-                            </div>
-                        </div>
-
-                    </v-card-text>
-
-                    <v-card-actions>
-                        <v-btn small outlined>REINITIALISER</v-btn>
-                        <v-btn small type="submit" outlined color="success">VALIDER</v-btn>
-                    </v-card-actions>
-                </v-card>
-            </v-container>
-        </v-form>
-        <v-alert class="myalert alert-error" type="error" width="350px" dismissible>{{ errorMsg }}</v-alert>
-        <v-alert class="myalert alert-success" type="success" width="350px" dismissible>{{ successMsg }}</v-alert>
-        <v-overlay :value="overlay"><v-progress-circular indeterminate size="64"></v-progress-circular></v-overlay>
-    </v-app>
+          <v-card-actions>
+            <v-btn small color="secondary">REINITIALISER</v-btn>
+            <v-btn small type="submit" color="success">VALIDER</v-btn>
+          </v-card-actions>
+        </v-card>
+      </v-container>
+    </v-form>
+    <v-alert
+      class="myalert alert-error"
+      type="error"
+      width="350px"
+      dismissible
+      >{{ errorMsg }}</v-alert
+    >
+    <v-alert
+      class="myalert alert-success"
+      type="success"
+      width="350px"
+      dismissible
+      >{{ successMsg }}</v-alert
+    >
+    <v-overlay :value="overlay"
+      ><v-progress-circular indeterminate size="64"></v-progress-circular
+    ></v-overlay>
+  </v-app>
 </template>
 
 <script>
-import axios from 'axios'
-import $ from 'jquery'
-import { required } from 'vuelidate/lib/validators'
-import { API_OBTENIR_REFERENCE_PAR_PAR_FAMILLE , API_RECUPERER_LISTE_OFFRE_VOYAGE, HEADERS} from '../globalConfig/globalConstConfig'
-import { API_RATTACHER_PRIX_OFFRE_VOYAGE } from '../globalConfig/globalConstConfig'
+import axios from "axios";
+import $ from "jquery";
+import { required } from "vuelidate/lib/validators";
+import {
+  API_OBTENIR_REFERENCE_PAR_PAR_FAMILLE,
+  API_RECUPERER_LISTE_OFFRE_VOYAGE,
+  HEADERS,
+} from "../globalConfig/globalConstConfig";
+import { API_RATTACHER_PRIX_OFFRE_VOYAGE } from "../globalConfig/globalConstConfig";
 
 export default {
-    name:"CreerModeTarif",
-    data(){
-        return{
-            errorMsg : null,
-            successMsg : null,
-            overlay : false,
+  name: "CreerModeTarif",
+  data() {
+    return {
+      errorMsg: null,
+      successMsg: null,
+      overlay: false,
 
-            prixOffreVoyageToSend:{
-                datas:[],
-            },
+      prixOffreVoyageToSend: {
+        datas: [],
+      },
 
-            prixOffreVoyageModel:{
-                designation : null, 
-                prix: null,
-                modeDesignation:null,
-                categorieVoyageurDesignation:null, 
-                offreVoyageDesignation: null
-            },
+      prixOffreVoyageModel: {
+        designation: null,
+        prix: null,
+        modeDesignation: null,
+        categorieVoyageurDesignation: null,
+        offreVoyageDesignation: null,
+      },
 
-            referenceModeOffreVoyageList : [],
-            referenceModeCategorieVoyageurList : [],
+      referenceModeOffreVoyageList: [],
+      referenceModeCategorieVoyageurList: [],
 
-            objectToSendReferenceModeOffre:{
-                datas:[],
-            },
+      objectToSendReferenceModeOffre: {
+        datas: [],
+      },
 
-            objectToSendReferenceModeCategorieVoyageur:{
-                datas:[],
-            },
+      objectToSendReferenceModeCategorieVoyageur: {
+        datas: [],
+      },
 
-            referenceModeOffreVoyage:{
-                referenceFamilleDesignation: "referenceFamilleMode"
-            },
+      referenceModeOffreVoyage: {
+        referenceFamilleDesignation: "referenceFamilleMode",
+      },
 
-            referenceCategorieVoyageur:{
-                referenceFamilleDesignation: "referenceFamilleCategorieVoyaeur"
-            },
-            
-            offreVoyageParCompagnieTransportList:[],
+      referenceCategorieVoyageur: {
+        referenceFamilleDesignation: "referenceFamilleCategorieVoyaeur",
+      },
 
-            offreVoyageObject:{
-                data:{
-                    compagnieTransportRaisonSociale:"KOUEVI CT"
-                }
-            }
-        }
-    }, 
+      offreVoyageParCompagnieTransportList: [],
 
-    validations :{
+      offreVoyageObject: {
+        data: {
+          compagnieTransportRaisonSociale: "KOUEVI CT",
+        },
+      },
+    };
+  },
 
-        prixOffreVoyageModel:{
-            designation:{
-                required
-            },
-            prix:{
-                required,
-            },
-            modeDesignation:{
-                required
-            },
-            offreVoyageDesignation:{
-                required
-            },
-            categorieVoyageurDesignation:{
-                required
-            }
-        }
+  validations: {
+    prixOffreVoyageModel: {
+      designation: {
+        required,
+      },
+      prix: {
+        required,
+      },
+      modeDesignation: {
+        required,
+      },
+      offreVoyageDesignation: {
+        required,
+      },
+      categorieVoyageurDesignation: {
+        required,
+      },
+    },
+  },
 
+  methods: {
+    //SOUMETTRE LE FORMULAIRE DE CREATION D'UN PRIX POUR UNE OFFRE
+    submitForm() {
+      this.$v.$touch();
+      if (this.$v.prixOffreVoyageModel.$invalid) {
+        this.errorMsg = "Toutes les informations sont requises";
+        $(".alert-error").fadeIn();
+        setTimeout(function () {
+          $(".alert-error").fadeOut();
+        }, 2000);
+      } else {
+        this.creerPrixPourOffreDeVoyage();
+      }
     },
 
-    methods:{
-        
-        //SOUMETTRE LE FORMULAIRE DE CREATION D'UN PRIX POUR UNE OFFRE
-        submitForm(){
-            this.$v.$touch();
-            if (this.$v.prixOffreVoyageModel.$invalid) {
-              this.errorMsg = "Toutes les informations sont requises" ;
+    // CREER UN PRIX POUR UNE OFFRE DE VOYAGE
+    async creerPrixPourOffreDeVoyage() {
+      this.prixOffreVoyageToSend.datas.push(this.prixOffreVoyageModel);
+      this.overlay = true;
+      await axios
+        .post(API_RATTACHER_PRIX_OFFRE_VOYAGE, this.prixOffreVoyageToSend, {
+          headers: HEADERS(this.$store.state.userAuthentified.token),
+        })
+        .then((response) => {
+          if (response.status == 200) {
+            if (response.data.status.code == 800) {
+              this.successMsg = response.data.status.message;
+              $(".alert-success").fadeIn();
+              setTimeout(function () {
+                $(".alert-success").fadeOut();
+              }, 4000);
+              this.prixOffreVoyageToSend.datas = [];
+            } else {
+              this.errorMsg = response.data.status.message;
               $(".alert-error").fadeIn();
-              setTimeout(function(){
-                $(".alert-error").fadeOut(); 
-              }, 2000);
-            } 
-            else {
-                this.creerPrixPourOffreDeVoyage();
+              setTimeout(function () {
+                $(".alert-error").fadeOut();
+              }, 3000);
+              this.prixOffreVoyageToSend.datas = [];
             }
-        },
-
-        // CREER UN PRIX POUR UNE OFFRE DE VOYAGE
-        async creerPrixPourOffreDeVoyage(){
-            this.prixOffreVoyageToSend.datas.push(this.prixOffreVoyageModel)
-            this.overlay = true ;
-            await axios.post(API_RATTACHER_PRIX_OFFRE_VOYAGE, this.prixOffreVoyageToSend , { headers : HEADERS(this.$store.state.userAuthentified.token) }).then((response) => {
-                if (response.status == 200) {
-                    if (response.data.status.code == 800) {
-                        this.successMsg = response.data.status.message
-                        $(".alert-success").fadeIn();
-                        setTimeout(function(){
-                            $(".alert-success").fadeOut(); 
-                        }, 4000)
-                        this.prixOffreVoyageToSend.datas = [] ;
-                    }else{
-                        this.errorMsg = response.data.status.message
-                        $(".alert-error").fadeIn();
-                        setTimeout(function(){
-                            $(".alert-error").fadeOut(); 
-                        }, 3000)
-                        this.prixOffreVoyageToSend.datas = [] ;
-                    }  
-                    
-                }
-                else if (response.status == 204) {
-                    this.warningMsg = "Erreur , lors de la création de l'offre de voyage";
-                    $(".alert-warning").fadeIn();
-                    setTimeout(function(){
-                        $(".alert-warning").fadeOut(); 
-                    }, 3000)
-                    this.prixOffreVoyageToSend.datas = [] ;
-                }
-                else{
-                    this.errorMsg = "Erreur , opération de création impossible";
-                    $(".alert-error").fadeIn();
-                    setTimeout(function(){
-                        $(".alert-error").fadeOut(); 
-                    }, 3000)
-                    this.prixOffreVoyageToSend.datas = [] ;
-                }
-            }).catch((e) => {
-                this.errorMsg = e ;
-                $(".alert-error").fadeIn();
-                setTimeout(function(){
-                    $(".alert-error").fadeOut(); 
-                }, 4000)
-                this.prixOffreVoyageToSend.datas = [] ;
-            }).finally(() => {
-                this.overlay = false;
-            })
-        },
-
-        // RECUPERER LA LISTE DES OFFRES DE VOYAGES DISPONIBLES PAR COMPAGNIE DE TRANSPORT
-        async obtenirOffreVoyageParCompagnieTransport(){
-            axios.post(API_RECUPERER_LISTE_OFFRE_VOYAGE, this.offreVoyageObject , { headers : HEADERS(this.$store.state.userAuthentified.token) } ).then((response) => {
-                if (response.status == 200) {
-                    if (response.data.status.code != 800) {
-                        this.errorMsg = response.data.status.message
-                        $(".alert-error").fadeIn();
-                        setTimeout(function(){
-                            $(".alert-error").fadeOut(); 
-                        }, 4000)
-                    }else{
-                        this.offreVoyageParCompagnieTransportList = response.data.items
-                    }
-                }else{
-                    this.errorMsg = "Erreur";
-                    $(".alert-error").fadeIn();
-                    setTimeout(function(){
-                        $(".alert-error").fadeOut(); 
-                    }, 4000)
-                }
-            }).catch((e) => {
-                this.errorMsg = e
-            })
-        },
-
-        //OBTENIR REFERENCE DESIGNATION TYPE OFFRE DE VOYAGE
-        async obtenirReferenceModeOffreVoyage(){
-            this.objectToSendReferenceModeOffre.datas.push(this.referenceModeOffreVoyage)
-            await axios.post(API_OBTENIR_REFERENCE_PAR_PAR_FAMILLE, this.objectToSendReferenceModeOffre , { headers : HEADERS(this.$store.state.userAuthentified.token) }).then((response) => {
-                this.referenceModeOffreVoyageList = response.data.items
-            }).catch((e) => {
-                this.errorMsg = e ;
-                $(".alert-error").fadeIn();
-                setTimeout(function(){
-                    $(".alert-error").fadeOut(); 
-                }, 4000)
-            })
-        },
-
-        //OBTENIR REFERENCE DESIGNATION CATEGORIE VOYAGEUR
-        async obtenirReferenceModeCategorieVoyageur(){
-            this.objectToSendReferenceModeCategorieVoyageur.datas.push(this.referenceCategorieVoyageur)
-            await axios.post(API_OBTENIR_REFERENCE_PAR_PAR_FAMILLE, this.objectToSendReferenceModeCategorieVoyageur , { headers : HEADERS(this.$store.state.userAuthentified.token) }).then((response) => {
-                this.referenceModeCategorieVoyageurList = response.data.items
-            }).catch((e) => {
-                this.errorMsg = e ;
-                $(".alert-error").fadeIn();
-                setTimeout(function(){
-                    $(".alert-error").fadeOut(); 
-                }, 4000)
-            })
-        },
-
-        //VERIFIE SI CEST UN NOMBRE POSITIF
-        isNumber(item){
-          return  item  > 0
-        },
-
+          } else if (response.status == 204) {
+            this.warningMsg =
+              "Erreur , lors de la création de l'offre de voyage";
+            $(".alert-warning").fadeIn();
+            setTimeout(function () {
+              $(".alert-warning").fadeOut();
+            }, 3000);
+            this.prixOffreVoyageToSend.datas = [];
+          } else {
+            this.errorMsg = "Erreur , opération de création impossible";
+            $(".alert-error").fadeIn();
+            setTimeout(function () {
+              $(".alert-error").fadeOut();
+            }, 3000);
+            this.prixOffreVoyageToSend.datas = [];
+          }
+        })
+        .catch((e) => {
+          this.errorMsg = e;
+          $(".alert-error").fadeIn();
+          setTimeout(function () {
+            $(".alert-error").fadeOut();
+          }, 4000);
+          this.prixOffreVoyageToSend.datas = [];
+        })
+        .finally(() => {
+          this.overlay = false;
+        });
     },
 
-    computed:{
-
-        // GESTION DES CONTRAINTES DE CHAMPS D'ENTREES POUR LA CREATION DU MODE D'UNE OFFRE
-
-        designationPrixOffreVoyageErrors(){
-           const errors = [];
-            if (!this.$v.prixOffreVoyageModel.designation.$dirty) return errors
-            !this.$v.prixOffreVoyageModel.designation.required && errors.push('La désignation est obligatoire.')
-            return errors 
-        },
-
-        pricePrixOffreVoyageErrors(){
-           const errors = [];
-            if (!this.$v.prixOffreVoyageModel.prix.$dirty) return errors
-            !this.isNumber(this.prixOffreVoyageModel.prix) && errors.push('Saisissez un prix correct.')
-            !this.$v.prixOffreVoyageModel.prix.required && errors.push('Le prix est obligatoire.')
-            return errors 
-        },
-
-        modePrixOffreVoyageErrors(){
-           const errors = [];
-            if (!this.$v.prixOffreVoyageModel.modeDesignation.$dirty) return errors
-            !this.$v.prixOffreVoyageModel.modeDesignation.required && errors.push('La selection du mode de l\'offre est obligatoire.')
-            return errors 
-        },
-
-        offreVoyagePrixOffreVoyageErrors(){
-           const errors = [];
-            if (!this.$v.prixOffreVoyageModel.offreVoyageDesignation.$dirty) return errors
-            !this.$v.prixOffreVoyageModel.offreVoyageDesignation.required && errors.push('Sélectionnez une offre de voyage.')
-            return errors 
-        },
-
-        categoriePrixOffreVoyageErrors(){
-           const errors = [];
-            if (!this.$v.prixOffreVoyageModel.categorieVoyageurDesignation.$dirty) return errors
-            !this.$v.prixOffreVoyageModel.categorieVoyageurDesignation.required && errors.push('Veuillez selectionner une catégorie.')
-            return errors 
-        },
-
+    // RECUPERER LA LISTE DES OFFRES DE VOYAGES DISPONIBLES PAR COMPAGNIE DE TRANSPORT
+    async obtenirOffreVoyageParCompagnieTransport() {
+      axios
+        .post(API_RECUPERER_LISTE_OFFRE_VOYAGE, this.offreVoyageObject, {
+          headers: HEADERS(this.$store.state.userAuthentified.token),
+        })
+        .then((response) => {
+          if (response.status == 200) {
+            if (response.data.status.code != 800) {
+              this.errorMsg = response.data.status.message;
+              $(".alert-error").fadeIn();
+              setTimeout(function () {
+                $(".alert-error").fadeOut();
+              }, 4000);
+            } else {
+              this.offreVoyageParCompagnieTransportList = response.data.items;
+            }
+          } else {
+            this.errorMsg = "Erreur";
+            $(".alert-error").fadeIn();
+            setTimeout(function () {
+              $(".alert-error").fadeOut();
+            }, 4000);
+          }
+        })
+        .catch((e) => {
+          this.errorMsg = e;
+        });
     },
 
-    mounted(){
-        this.obtenirReferenceModeOffreVoyage();
-        this.obtenirReferenceModeCategorieVoyageur();
-        this.obtenirOffreVoyageParCompagnieTransport();
-    }
-}
+    //OBTENIR REFERENCE DESIGNATION TYPE OFFRE DE VOYAGE
+    async obtenirReferenceModeOffreVoyage() {
+      this.objectToSendReferenceModeOffre.datas.push(
+        this.referenceModeOffreVoyage
+      );
+      await axios
+        .post(
+          API_OBTENIR_REFERENCE_PAR_PAR_FAMILLE,
+          this.objectToSendReferenceModeOffre,
+          { headers: HEADERS(this.$store.state.userAuthentified.token) }
+        )
+        .then((response) => {
+          this.referenceModeOffreVoyageList = response.data.items;
+        })
+        .catch((e) => {
+          this.errorMsg = e;
+          $(".alert-error").fadeIn();
+          setTimeout(function () {
+            $(".alert-error").fadeOut();
+          }, 4000);
+        });
+    },
+
+    //OBTENIR REFERENCE DESIGNATION CATEGORIE VOYAGEUR
+    async obtenirReferenceModeCategorieVoyageur() {
+      this.objectToSendReferenceModeCategorieVoyageur.datas.push(
+        this.referenceCategorieVoyageur
+      );
+      await axios
+        .post(
+          API_OBTENIR_REFERENCE_PAR_PAR_FAMILLE,
+          this.objectToSendReferenceModeCategorieVoyageur,
+          { headers: HEADERS(this.$store.state.userAuthentified.token) }
+        )
+        .then((response) => {
+          this.referenceModeCategorieVoyageurList = response.data.items;
+        })
+        .catch((e) => {
+          this.errorMsg = e;
+          $(".alert-error").fadeIn();
+          setTimeout(function () {
+            $(".alert-error").fadeOut();
+          }, 4000);
+        });
+    },
+
+    //VERIFIE SI CEST UN NOMBRE POSITIF
+    isNumber(item) {
+      return item > 0;
+    },
+  },
+
+  computed: {
+    // GESTION DES CONTRAINTES DE CHAMPS D'ENTREES POUR LA CREATION DU MODE D'UNE OFFRE
+
+    designationPrixOffreVoyageErrors() {
+      const errors = [];
+      if (!this.$v.prixOffreVoyageModel.designation.$dirty) return errors;
+      !this.$v.prixOffreVoyageModel.designation.required &&
+        errors.push("La désignation est obligatoire.");
+      return errors;
+    },
+
+    pricePrixOffreVoyageErrors() {
+      const errors = [];
+      if (!this.$v.prixOffreVoyageModel.prix.$dirty) return errors;
+      !this.isNumber(this.prixOffreVoyageModel.prix) &&
+        errors.push("Saisissez un prix correct.");
+      !this.$v.prixOffreVoyageModel.prix.required &&
+        errors.push("Le prix est obligatoire.");
+      return errors;
+    },
+
+    modePrixOffreVoyageErrors() {
+      const errors = [];
+      if (!this.$v.prixOffreVoyageModel.modeDesignation.$dirty) return errors;
+      !this.$v.prixOffreVoyageModel.modeDesignation.required &&
+        errors.push("La selection du mode de l'offre est obligatoire.");
+      return errors;
+    },
+
+    offreVoyagePrixOffreVoyageErrors() {
+      const errors = [];
+      if (!this.$v.prixOffreVoyageModel.offreVoyageDesignation.$dirty)
+        return errors;
+      !this.$v.prixOffreVoyageModel.offreVoyageDesignation.required &&
+        errors.push("Sélectionnez une offre de voyage.");
+      return errors;
+    },
+
+    categoriePrixOffreVoyageErrors() {
+      const errors = [];
+      if (!this.$v.prixOffreVoyageModel.categorieVoyageurDesignation.$dirty)
+        return errors;
+      !this.$v.prixOffreVoyageModel.categorieVoyageurDesignation.required &&
+        errors.push("Veuillez selectionner une catégorie.");
+      return errors;
+    },
+  },
+
+  mounted() {
+    this.obtenirReferenceModeOffreVoyage();
+    this.obtenirReferenceModeCategorieVoyageur();
+    this.obtenirOffreVoyageParCompagnieTransport();
+  },
+};
 </script>
 
 <style scoped>
-    .myalert{
-        display: none;
-        z-index: 1900;
-    }
+.myalert {
+  display: none;
+  z-index: 1900;
+}
 
-    .alert-success{
-        position: fixed;
-        top: 25px;
-        right:2%;
-        width: 25%;
-    }
+.alert-success {
+  position: fixed;
+  top: 25px;
+  right: 2%;
+  width: 25%;
+}
 
-    .alert-error{
-        position: fixed;
-        top: 25px;
-        right:2%;
-        width: 25%;
-    }
+.alert-error {
+  position: fixed;
+  top: 25px;
+  right: 2%;
+  width: 25%;
+}
 
-    .alert-warning{
-        position: fixed;
-        top: 25px;
-        right:2%;
-        width: 25%;
-    } 
+.alert-warning {
+  position: fixed;
+  top: 25px;
+  right: 2%;
+  width: 25%;
+}
 </style>

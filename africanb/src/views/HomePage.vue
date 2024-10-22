@@ -1,6 +1,6 @@
 <template>
     <v-app>
-        <landing-page></landing-page>
+      <landing-page></landing-page>
     </v-app>
 </template>
 

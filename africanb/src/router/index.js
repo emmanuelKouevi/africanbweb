@@ -67,6 +67,7 @@ import InfosAdhesion from '@/components/InfosAdhesion.vue'
 import InfosAdhesionValide from '@/components/InfosAdhesionValide.vue'
 import creerDemandeAdhesion from '../components/CreerDemandeAdhesion'
 import creerDemandeAdhesionInterne from '../components/administrateur_societe/CreerDemandeAdhesion copy.vue'
+import SelectionnerProgrammeOffreVoyageList from '../components/vendeur/ProgrammeOffreVoyageList.vue'
 //import { ROLE_ADMIN_COMPAGNIE_TRANSPORT , ROLE_ADMIN_SOCIETE_MERE } from '../components/globalConfig/constUsersRoles'
 Vue.use(VueRouter)
 
@@ -338,6 +339,11 @@ const routes = [
         path: '/detail_reservation',
         name: 'InfosAdhesionValide',
         component: DetailReservation
+      },
+      {
+        path: '/offre_voyage_details',
+        name: 'SelectionnerProgrammeOffreVoyageList',
+        component: SelectionnerProgrammeOffreVoyageList
       },
     ]  
   },

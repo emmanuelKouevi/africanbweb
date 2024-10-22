@@ -31,6 +31,7 @@
             </div> <br>
 
             <v-btn x-small btn color="success" @click="toExportReport">Exporter le rapport</v-btn><br><br>
+
             <v-card>
                 <v-card-title><small class="title_card">TOUS LES BILLETS RÉSERVÉS</small>
                 <v-spacer></v-spacer>
@@ -46,6 +47,7 @@
                     </v-data-table>
                 </v-card-text>
             </v-card>
+            
         </v-container>
 
         <v-alert class="myalert alert-success" type="success" width="350px" dismissible>{{ successMsg }}</v-alert> 

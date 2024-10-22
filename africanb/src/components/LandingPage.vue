@@ -1,181 +1,280 @@
 <template>
+  <v-app id="inspire">
+    <nav class="navbar navbar-light bg-light fixed-top">
+      <div class="container-fluid">
+        <a class="navbar-brand"><h2>URBAN BUS TICKET</h2></a>
+        <ul class="nav nav-pills justify-content-end">
+          <li class="nav-item">
+            <a class="nav-link" href="#aboutUs-section" aria-current="page"
+              >A PROPOS</a
+            >
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#our-services">NOS SERVICES</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">NOS PARTENAIRES</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">NOUS CONTACTER</a>
+          </li>
+          &nbsp;&nbsp;
+          <li class="nav-item">
+            <button type="button" class="btn" @click="goToLoginPage">
+              <small></small>SE CONNECTER&nbsp;&nbsp;<v-icon color="white"
+                >mdi-login</v-icon
+              >
+            </button>
+          </li>
+        </ul>
+      </div>
+    </nav>
 
-    <v-app id="inspire">
-
-        <nav class="navbar navbar-light bg-light fixed-top">
-            <div class="container-fluid">
-                <a class="navbar-brand"><h2>URBAN BUS TICKET</h2></a>
-
-                <ul class="nav nav-pills justify-content-end">
-                    <li class="nav-item">
-                        <a class="nav-link" href="#aboutUs-section" aria-current="page">A PROPOS</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#our-services">NOS SERVICES</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">NOS PARTENAIRES</a>
-                    </li>  
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">NOUS CONTACTER</a>
-                    </li>&nbsp;&nbsp;
-                    <li class="nav-item">
-                        <button type="button" class="btn" @click="goToLoginPage"><small></small>SE CONNECTER&nbsp;&nbsp;<v-icon color="white">mdi-login</v-icon></button>
-                    </li> 
-                </ul>
-
+    <div class="container" id="top-header">
+      <div class="container-fluid" id="top-header">
+        <div class="row header">
+          <div class="col-lg-7 text_header">
+            <h1 class="font-weight-bold enough">
+              Voulez-vous passer un cap dans l'administration de votre compagnie
+              de transport?
+            </h1>
+            <br />
+            <div class="content_text">
+              <p>
+                <span id="african_bt">URBAN BUS TICKET </span>
+                est votre plateforme vous permettant de pouvoir administrer ,
+                gérer de maniere efficiente votre compagnie de transport. Vos
+                bénéfices ne pourront qu'augmenter.
+              </p>
+              <v-btn class="offres" small
+                ><span class="content_offre_text">Voir les offres</span
+                >&nbsp;&nbsp;<v-icon color="white"
+                  >mdi-menu-right</v-icon
+                ></v-btn
+              >
             </div>
-        </nav>
+          </div>
 
-        <v-container class="container-fluid" id="top-header">
-            <div class="container-fluid" id="top-header">
-                <div class="row header">
-                    <div class="col-lg-7 text_header">
-                        <h1 class="font-weight-bold enough">Voulez-vous passer un cap dans l'administration de votre compagnie de transport?</h1><br>
-
-                        <div class="content_text">
-                            <p><span id="african_bt">URBAN BUS TICKET </span>
-                                est votre plateforme vous permettant de pouvoir administrer , gérer de maniere efficiente votre compagnie de transport. Vos bénéfices ne pourront qu'augmenter.
-                            </p>
-                            <v-btn class="offres" small><span class="content_offre_text">Voir les offres</span>&nbsp;&nbsp;<v-icon color="white">mdi-menu-right</v-icon></v-btn>
-                        </div>
-                        
-                    </div>
-
-                    <div class="col-lg-5" id="img_header">
-                        <img src="../assets/ap-1.png" height="400" alt="">
-                    </div>
-                </div>
-            </div>
-        </v-container>
-        
-        <div class="container">
-            <div class="row justify-content-center">
-                <h1 class="section_title" id="aboutUs-section"><v-icon color="#2C3A47" size="64">mdi-menu-right</v-icon>A PROPOS</h1>
-            </div><br>
-            <div class="container" data-aos="flip-right" data-aos-delay="1000" data-aos-duration="800">
-                <span id="aboutUs_text">
-                    Urban Bus Ticket’s est une entreprise spécialisée dans la vente de billets d'autocar en ligne, offrant un moyen pratique et efficace de réserver des voyages en autocar à travers la Côte d’Ivoire.
-                    Notre mission est de simplifier le processus de réservation de voyage en autocar en offrant aux utilisateurs une expérience transparente, sécurisée et conviviale. Nous croyons fermement que voyager en autocar devrait être aussi simple que quelques clics sur un écran, et c'est précisément ce que nous nous efforçons d'offrir à nos clients.
-                    Sur notre plateforme, les voyageurs peuvent parcourir une large sélection d'itinéraires proposés par différents transporteurs, comparer les horaires, les tarifs et les options de siège, puis réserver leur billet en quelques étapes simples. Que ce soit pour un voyage d'affaires, des vacances en famille ou une escapade entre amis, nous sommes là pour rendre le processus de réservation aussi fluide que possible.
-                    Nous travaillons en étroite collaboration avec un réseau de partenaires de transport de confiance pour offrir à nos clients un accès à une variété d'options de voyage, garantissant ainsi une flexibilité maximale et une expérience de voyage agréable.
-                    Chez Urban Bus Ticket’s, nous nous engageons à fournir un service clientèle exceptionnel, répondant aux questions et aux préoccupations de nos clients avec rapidité et efficacité. Nous sommes là pour accompagner nos clients à chaque étape de leur voyage, de la réservation initiale à l'arrivée à destination.
-                    Nous sommes fiers de jouer un rôle dans la facilitation des voyages en autocar, en offrant aux voyageurs une alternative pratique et abordable aux autres modes de transport. Chez Urban Bus Ticket’s, nous sommes déterminés à rendre chaque voyage aussi agréable que possible, en offrant la commodité, la fiabilité et le service de qualité que nos clients méritent.
-                    Merci de nous faire confiance pour vos besoins de voyage en autocar. Nous sommes impatients de vous accueillir à bord !
-                </span>
-            </div>
-        </div><br>
-
-        
-
-        <div class="container ourServices"><br><br><br><br><br><br><br>
-            <div class="row justify-content-center" id="our-services">
-                <h1 class="section_title"><v-icon color="#2C3A47" size="64">mdi-menu-right</v-icon>NOS SERVICES</h1>
-            </div><br>
-            <div class="container"><br>
-                <div class="row ">
-                    <div data-aos="fade-right" data-aos-offset="300" data-aos-easing="ease-in-sine" class="col-lg-6"
-                        data-aos-delay="500">
-                        <img src="../assets/growth.svg" height="400" width="400" alt="">
-                    </div>
-                    <div data-aos="fade-left" data-aos-offset="300" data-aos-easing="ease-in-sine" class="col-lg-6"
-                    data-aos-delay="1000">
-                        <span class="text_service">
-                            Notre mission est de simplifier le processus de réservation de voyage en autocar en offrant aux utilisateurs une expérience transparente, sécurisée et conviviale. Nous croyons fermement que voyager en autocar devrait être aussi simple que quelques clics sur un écran, et c'est précisément ce que nous nous efforçons d'offrir à nos clients.
-                        </span>
-                    </div>
-                </div><br>
-
-                <div class="row">
-                    <div data-aos="fade-right" data-aos-offset="300" data-aos-easing="ease-in-sine" class="col-lg-6"
-                        data-aos-delay="500">
-                        <span class="text_service">
-                            Sur notre plateforme, les voyageurs peuvent parcourir une large sélection d'itinéraires proposés par différents transporteurs, comparer les horaires, les tarifs et les options de siège, puis réserver leur billet en quelques étapes simples. Que ce soit pour un voyage d'affaires, des vacances en famille ou une escapade entre amis, nous sommes là pour rendre le processus de réservation aussi fluide que possible.
-                            Nous travaillons en étroite collaboration avec un réseau de partenaires de transport de confiance pour offrir à nos clients un accès à une variété d'options de voyage, garantissant ainsi une flexibilité maximale et une expérience de voyage agréable.
-                        </span>
-                    </div>
-                    <div data-aos="fade-left" data-aos-offset="300" data-aos-easing="ease-in-sine" class="col-lg-6"
-                    data-aos-delay="1000">
-                        <img src="../assets/managing.svg" height="400" width="400" alt="">
-                    </div>
-                </div><br>
-
-                <div class="row">
-                    <div data-aos="fade-right" data-aos-offset="300" data-aos-easing="ease-in-sine" class="col-lg-6"
-                        data-aos-delay="500">
-                        <img src="../assets/otp-security.svg" height="400" width="400" alt="">
-                    </div>
-                    <div data-aos="fade-left" data-aos-offset="300" data-aos-easing="ease-in-sine" class="col-lg-6"
-                    data-aos-delay="1000">
-                        <span class="text_service">
-                            Chez Urban Bus Ticket’s, nous nous engageons à fournir un service clientèle exceptionnel, répondant aux questions et aux préoccupations de nos clients avec rapidité et efficacité. Nous sommes là pour accompagner nos clients à chaque étape de leur voyage, de la réservation initiale à l'arrivée à destination.
-                            Nous sommes fiers de jouer un rôle dans la facilitation des voyages en autocar, en offrant aux voyageurs une alternative pratique et abordable aux autres modes de transport. Chez Urban Bus Ticket’s, nous sommes déterminés à rendre chaque voyage aussi agréable que possible, en offrant la commodité, la fiabilité et le service de qualité que nos clients méritent.
-                            Merci de nous faire confiance pour vos besoins de voyage en autocar. Nous sommes impatients de vous accueillir à bord !
-                        </span>
-                    </div>
-                </div><br>
-
-            </div>
+          <div class="col-lg-5" id="img_header">
+            <img src="" height="400" alt="" />
+          </div>
         </div>
+      </div>
+    </div>
 
-        <div class="bg-secondary container">
-            <div class="row justify-center">
-                <h1 class="section_title" id="aboutUs-section"><v-icon color="#2C3A47" size="64">mdi-menu-right</v-icon>NOUS CONTACTER</h1>
-            </div><br>
-            <div class="container-fluid">
-                <v-card>
-                    <v-card-text>
-                        <form class="row g-3">
-                            <div class="col-md-6">
-                                <label for="inputEmail4" class="form-label">Nom</label>
-                                <input type="text" class="form-control" id="inputEmail4">
-                            </div>
-                            <div class="col-md-6">
-                                <label for="inputPassword4" class="form-label">Prenom</label>
-                                <input type="text" class="form-control" id="inputPassword4">
-                            </div>
-                            <div class="col-12">
-                                <label for="inputAddress" class="form-label">Address</label>
-                                <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
-                            </div>
-                            <div class="col-12">
-                                <div class="form-check">
-                                <input class="form-check-input" type="checkbox" id="gridCheck">
-                                <label class="form-check-label" for="gridCheck">
-                                    Check me out
-                                </label>
-                                </div>
-                            </div>
-                            <div class="col-12">
-                                <button type="submit" class="btn btn-primary">Sign in</button>
-                            </div>
-                        </form>
-                    </v-card-text>
-                </v-card>
+    <div class="container-fluid aboutUs_background">
+      <div class="container">
+        <div class="row justify-content-center">
+          <h1 class="section_title" id="aboutUs-section">
+            <v-icon color="#2C3A47" size="64">mdi-menu-right</v-icon>A PROPOS
+          </h1>
+        </div>
+        <br />
+
+        <div
+          class="container"
+          data-aos="flip-right"
+          data-aos-delay="1000"
+          data-aos-duration="800"
+        >
+          <span id="aboutUs_text">
+            Urban Bus Ticket’s est une entreprise spécialisée dans la vente de
+            billets d'autocar en ligne, offrant un moyen pratique et efficace de
+            réserver des voyages en autocar à travers la Côte d’Ivoire. Notre
+            mission est de simplifier le processus de réservation de voyage en
+            autocar en offrant aux utilisateurs une expérience transparente,
+            sécurisée et conviviale. Nous croyons fermement que voyager en
+            autocar devrait être aussi simple que quelques clics sur un écran,
+            et c'est précisément ce que nous nous efforçons d'offrir à nos
+            clients. Sur notre plateforme, les voyageurs peuvent parcourir une
+            large sélection d'itinéraires proposés par différents transporteurs,
+            comparer les horaires, les tarifs et les options de siège, puis
+            réserver leur billet en quelques étapes simples. Que ce soit pour un
+            voyage d'affaires, des vacances en famille ou une escapade entre
+            amis, nous sommes là pour rendre le processus de réservation aussi
+            fluide que possible. Nous travaillons en étroite collaboration avec
+            un réseau de partenaires de transport de confiance pour offrir à nos
+            clients un accès à une variété d'options de voyage, garantissant
+            ainsi une flexibilité maximale et une expérience de voyage agréable.
+            Chez Urban Bus Ticket’s, nous nous engageons à fournir un service
+            clientèle exceptionnel, répondant aux questions et aux
+            préoccupations de nos clients avec rapidité et efficacité. Nous
+            sommes là pour accompagner nos clients à chaque étape de leur
+            voyage, de la réservation initiale à l'arrivée à destination. Nous
+            sommes fiers de jouer un rôle dans la facilitation des voyages en
+            autocar, en offrant aux voyageurs une alternative pratique et
+            abordable aux autres modes de transport. Chez Urban Bus Ticket’s,
+            nous sommes déterminés à rendre chaque voyage aussi agréable que
+            possible, en offrant la commodité, la fiabilité et le service de
+            qualité que nos clients méritent. Merci de nous faire confiance pour
+            vos besoins de voyage en autocar. Nous sommes impatients de vous
+            accueillir à bord !
+          </span>
+        </div>
+      </div>
+    </div>
+    <br />
+
+    <div class="container ourServices">
+      <br /><br /><br /><br /><br /><br /><br />
+      <div class="row justify-content-center" id="our-services">
+        <h1 class="section_title">
+          <v-icon color="#2C3A47" size="64">mdi-menu-right</v-icon>NOS SERVICES
+        </h1>
+      </div>
+      <br />
+      <div class="container">
+        <br />
+        <div class="row">
+          <div
+            class="col-lg-4"
+            data-aos="fade-right"
+            data-aos-offset="300"
+            data-aos-easing="ease-in-sine"
+            data-aos-delay="500"
+          >
+            <v-card rounded="xl" elevation="5" height="600px">
+              <v-img src="../assets/growth.svg" height="220" cover></v-img>
+              <v-divider></v-divider>
+              <v-card-text>
+                Notre mission est de simplifier le processus de réservation de
+                voyage en autocar en offrant aux utilisateurs une expérience
+                transparente, sécurisée et conviviale. Nous croyons fermement
+                que voyager en autocar devrait être aussi simple que quelques
+                clics sur un écran, et c'est précisément ce que nous nous
+                efforçons d'offrir à nos clients.
+              </v-card-text>
+            </v-card>
+          </div>
+
+          <div
+            class="col-lg-4"
+            data-aos="fade-right"
+            data-aos-offset="300"
+            data-aos-easing="ease-in-sine"
+            data-aos-delay="800"
+          >
+            <v-card rounded="xl" elevation="5" height="600px">
+              <v-img src="../assets/managing.svg" height="220" cover></v-img>
+              <v-divider></v-divider>
+              <v-card-text>
+                Sur notre plateforme, les voyageurs peuvent parcourir une large
+                sélection d'itinéraires proposés par différents transporteurs,
+                comparer les horaires, les tarifs et les options de siège, puis
+                réserver leur billet en quelques étapes simples. Que ce soit
+                pour un voyage d'affaires, des vacances en famille ou une
+                escapade entre amis, nous sommes là pour rendre le processus de
+                réservation aussi fluide que possible. Nous travaillons en
+                étroite collaboration avec un réseau de partenaires de transport
+                de confiance pour offrir à nos clients un accès à une variété
+                d'options de voyage, garantissant ainsi une flexibilité maximale
+                et une expérience de voyage agréable.
+              </v-card-text>
+            </v-card>
+          </div>
+
+          <div
+            class="col-lg-4"
+            data-aos="fade-right"
+            data-aos-offset="300"
+            data-aos-easing="ease-in-sine"
+            data-aos-delay="1100"
+          >
+            <v-card rounded="xl" elevation="5" height="600px">
+              <v-img
+                src="../assets/otp-security.svg"
+                height="220"
+                cover
+              ></v-img>
+              <v-divider></v-divider>
+              <v-card-text>
+                Chez Urban Bus Ticket’s, nous nous engageons à fournir un
+                service clientèle exceptionnel, répondant aux questions et aux
+                préoccupations de nos clients avec rapidité et efficacité. Nous
+                sommes là pour accompagner nos clients à chaque étape de leur
+                voyage, de la réservation initiale à l'arrivée à destination.
+                Nous sommes fiers de jouer un rôle dans la facilitation des
+                voyages en autocar, en offrant aux voyageurs une alternative
+                pratique et abordable aux autres modes de transport. Chez Urban
+                Bus Ticket’s, nous sommes déterminés à rendre chaque voyage
+                aussi agréable que possible, en offrant la commodité, la
+                fiabilité et le service de qualité que nos clients méritent.
+                Merci de nous faire confiance pour vos besoins de voyage en
+                autocar.
+              </v-card-text>
+            </v-card>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container-fluid partner_background">
+      <div class="container">
+        <div class="row justify-content-center">
+          <h1 class="section_title" id="aboutUs-section">
+            <v-icon color="#2C3A47" size="64">mdi-menu-right</v-icon>PARTENARIAT
+          </h1>
+        </div>
+        <br />
+
+        <div class="container">
+          <div class="row">
+            <v-card> </v-card>
+            <div class="col-lg-7">
+              <div>
+                Chez Urban Bus Ticket’s, nous nous engageons à fournir un
+                service clientèle exceptionnel, répondant aux questions et aux
+                préoccupations de nos clients avec rapidité et efficacité. Nous
+                sommes là pour accompagner nos clients à chaque étape de leur
+                voyage, de la réservation initiale à l'arrivée à destination.
+                Nous sommes fiers de jouer un rôle dans la facilitation des
+                voyages en autocar, en offrant aux voyageurs une alternative
+                pratique et abordable aux autres modes de transport. Chez Urban
+                Bus Ticket’s, nous sommes déterminés à rendre chaque voyage
+                aussi agréable que possible, en offrant la commodité, la
+                fiabilité et le service de qualité que nos clients méritent.
+                Merci de nous faire confiance pour vos besoins de voyage en
+                autocar.
+              </div>
+              <br />
+              <v-btn class="partner_btn" small btn
+                ><span class="adhesion">DEMANDER UNE ADHÉSION</span></v-btn
+              >
             </div>
-        </div><br><br><br>
 
-        <v-footer color="secondary">
-           
-           <v-container fluid>
+            <div
+              class="col-lg-5"
+              data-aos="fade-zoom-in"
+              data-aos-easing="ease-in-back"
+              data-aos-delay="300"
+              data-aos-offset="0"
+              data-aos-duration="1500"
+            >
+              <v-card rounded="xl" max-height="">
+                <v-img src="../assets/partner.jpg" height="400" cover></v-img>
+              </v-card>
+            </div>
+          </div>
+          <br />
+        </div>
+      </div>
+    </div>
+    <br />
 
-               <v-row>
+    <v-footer color="secondary">
+      <v-container fluid>
+        <v-row>
+          <v-col class="text-center">
+            <span class="copyright"
+              >© copyright 2023 - Urban Bus Ticket. Tous droits réservés</span
+            >
+          </v-col>
+        </v-row>
+      </v-container>
+    </v-footer>
+  </v-app>
 
-                   <v-col class="text-center">
-
-                    <span class="copyright">© copyright 2023 - Urban Bus Ticket. Tous droits réservés</span>
-
-                   </v-col>
-
-               </v-row>
-
-           </v-container>
-
-       </v-footer>
-         
-    </v-app>
-
-    <!--<v-app id="inspire">
+  <!--<v-app id="inspire">
 
         <v-app-bar app color="teal">
             <v-toolbar-title class="icon_owner">
@@ -355,316 +454,340 @@
 </template>
 
 <script>
-import $ from 'jquery'
+import $ from "jquery";
 export default {
-    name:"LandingVue",
+  name: "LandingVue",
 
-    methods:{
-        // GO TO LOGIN PAGE TO GET INTEFACE USER
-        goToLoginPage(){
-            this.$router.push({path:"/Login"})
-        },
-
-        // GO TO LOGIN PAGE TO GET INTEFACE USER
-        goToAdhesionPage(){
-            this.$router.push({path:"/Partenaires"})
-        },
-
-        scrollToForm() {
-            document.querySelector('#aboutUs_text').scrollIntoView({behavior: 'smooth'});
-        }
+  methods: {
+    // GO TO LOGIN PAGE TO GET INTEFACE USER
+    goToLoginPage() {
+      this.$router.push({ path: "/Login" });
     },
 
-    computed:{
-        
-        //GESTION DES CONTRAINTES (SAISIE UTILISATEUR)
-        usernameError(){
-            const errors = [];
-            if (!this.$v.userLogin.login.$dirty) return errors
-            !this.$v.userLogin.login.required && errors.push('Entrer votre pseudo ou e-mail de connexion.')
-            return errors 
-        },
-
-        passwordError(){
-            const errors = [];
-            if (!this.$v.userLogin.password.$dirty) return errors
-            !this.$v.userLogin.password.required && errors.push('Entrer votre mot de passe.')
-            return errors 
-        }
-
+    // GO TO LOGIN PAGE TO GET INTEFACE USER
+    goToAdhesionPage() {
+      this.$router.push({ path: "/Partenaires" });
     },
 
-    mounted(){
-        setTimeout(function(){
-            $('.enough').toggle("slide:left");
-        }, 1500)
-        
-        setTimeout(function(){
-            $('.content_text').slideDown();
-        }, 2100)
-    }
-}
+    scrollToForm() {
+      document
+        .querySelector("#aboutUs_text")
+        .scrollIntoView({ behavior: "smooth" });
+    },
+  },
+
+  computed: {
+    //GESTION DES CONTRAINTES (SAISIE UTILISATEUR)
+    usernameError() {
+      const errors = [];
+      if (!this.$v.userLogin.login.$dirty) return errors;
+      !this.$v.userLogin.login.required &&
+        errors.push("Entrer votre pseudo ou e-mail de connexion.");
+      return errors;
+    },
+
+    passwordError() {
+      const errors = [];
+      if (!this.$v.userLogin.password.$dirty) return errors;
+      !this.$v.userLogin.password.required &&
+        errors.push("Entrer votre mot de passe.");
+      return errors;
+    },
+  },
+
+  mounted() {
+    setTimeout(function () {
+      $(".enough").toggle("slide:left");
+    }, 1500);
+
+    setTimeout(function () {
+      $(".content_text").slideDown();
+    }, 2100);
+  },
+};
 </script>
 
 <style lang="scss" scoped>
+.aboutUs {
+  background-color: #dfe4ea;
+  margin: auto;
+  padding-top: 50px;
+  height: 20%;
+}
 
-    .aboutUs{
-        background-color: #dfe4ea;
-        margin: auto;
-        padding-top: 50px;
-        height: 20%;
-    }
+.header {
+  padding-top: 150px;
+  padding-bottom: 150px;
+}
 
-    .header{
-        padding-top: 150px;
-        padding-bottom: 150px;
-    }
+.btn {
+  background: linear-gradient(#0c2461, #079992);
+}
 
-    .btn{
-        background: linear-gradient(#0c2461, #079992);
-    }
+.content_text {
+  display: none;
+  font-size: 25px;
+  font-weight: 300;
+  font-family: sans-serif;
+  word-spacing: 4px;
+}
 
-    .content_text{
-        display: none;
-        font-size: 25px;
-        font-weight: 300;
-        font-family: sans-serif;
-        word-spacing: 4px;
-    }
+.enough {
+  color: #2c3a47;
+  display: none;
+}
 
-    .enough{
-        color: #2C3A47;
-        display: none;
-    }
+#african_bt {
+  background: linear-gradient(to right, #079992, #0c2461);
+  font-size: 20px;
+  font-weight: bold;
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
 
-    #african_bt{
-        background: linear-gradient(to right, #079992, #0c2461);
-        font-size: 20px;
-        font-weight: bold;
-        background-clip: text;
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-    }
+.text_header {
+  padding-top: 100px;
+}
 
-    .text_header{
-        padding-top: 100px;
-    }
+.navbar-brand {
+  background: linear-gradient(to right, #079992, #0c2461);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
 
-    .navbar-brand{
-        background: linear-gradient(to right, #079992, #0c2461);
-        background-clip: text;
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-    }
+.nav-link {
+  color: #2c3a47;
+}
 
-    .nav-link{
-        color: #2C3A47;
-    }
+.nav-item button {
+  color: white;
+}
 
-    .nav-item button{
-        color: white;
-    }
+.nav-item button:hover {
+  font-weight: bold;
+}
 
-    .nav-item button:hover{
-        font-weight: bold;
-    }
+.nav-item:hover {
+  font-weight: bold;
+  font-size: 16px;
+}
 
+.section {
+  color: #192a56;
+  font-size: 35px;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+}
 
-    .nav-item:hover{
-        font-weight: bold;
-        font-size: 16px;
-    }
+.avatar {
+  color: black;
+  font-weight: bold;
+  font-size: 25px;
+}
 
-    .section{
-        color: #192a56;
-        font-size: 35px;
-        font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif
-    }
+.onglets {
+  font-size: 12px;
+  font-weight: bold;
+}
 
-    .avatar{
-        color: black;
-        font-weight: bold;
-        font-size: 25px;
-    }
+.onglets :hover {
+  font-size: 16px;
+  cursor: pointer;
+}
 
-    .onglets{
-        font-size: 12px;
-        font-weight: bold;
-    }
+.aboutMe_content {
+  color: black;
+  font-size: 20px;
+}
 
-    .onglets :hover{
-        font-size: 16px;
-        cursor: pointer;
-    }
+.icon_owner {
+  font-size: 40px;
+  font-weight: bold;
+}
 
-    .aboutMe_content{
-        color: black;
-        font-size: 20px;
-    }
+.v-card--reveal {
+  align-items: center;
+  bottom: 0;
+  justify-content: center;
+  opacity: 0.8;
+  position: absolute;
+  width: 100%;
+}
 
-    .icon_owner{
-        font-size: 40px;
-        font-weight: bold;
-    }
+.agence {
+  font-weight: bold;
+  color: #303952;
+}
 
+.libelle_application {
+  font-size: 12px;
+}
 
-    .v-card--reveal {
-        align-items: center;
-        bottom: 0;
-        justify-content: center;
-        opacity: .8;
-        position: absolute;
-        width: 100%;
-    }
+#odc {
+  color: orange;
+  font-weight: bold;
+}
 
-    .agence{
-        font-weight: bold;
-        color: #303952;
-    }
+.competences {
+  text-align: center;
+  color: black;
+}
 
-    .libelle_application{
-        font-size: 12px; 
-    }
+.skill_libelle {
+  text-align: center;
+  font-weight: 600;
+  color: black;
+}
 
-    #odc{
-        color: orange;
-        font-weight: bold;
-    }
+.card_skill :hover {
+  cursor: pointer;
+  background: #273c75;
+  .icon_skill {
+    color: white;
+  }
+  .skill_libelle {
+    color: white;
+  }
+}
 
-    .competences{
-        text-align: center;
-        color: black;
-    }
+.text-h5 {
+  color: white;
+  font-weight: 400;
+  font-style: italic;
+  font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
+    "Lucida Sans", Arial, sans-serif;
+}
 
-    .skill_libelle{
-        text-align: center;
-        font-weight: 600;
-        color: black;
-    }
+.author {
+  color: #636e72;
+  font-weight: thin;
+  font-style: italic;
+  font-size: 25px;
+}
 
-    .card_skill :hover{
-        cursor: pointer;
-        background: #273c75;
-        .icon_skill{
-            color:white
-        };
-        .skill_libelle{
-            color: white;
-        }
-    }
+.section_contact {
+  text-align: center;
+  margin-top: 75px;
+}
 
-    .text-h5{
-        color: white;
-        font-weight: 400;
-        font-style: italic;
-        font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
-    }
+.contact_form {
+  opacity: 0.9;
+  border-radius: 2%;
+  margin-top: 50px;
+}
 
+.btn_form {
+  background: #192a56;
+  color: white;
+  font-weight: bold;
+}
 
-    .author{
-        color: #636e72;
-        font-weight: thin;
-        font-style: italic;
-        font-size: 25px;
-    }
+.my_input {
+  font-weight: bolder;
+  font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
+    "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
+}
 
-    .section_contact{
-        text-align: center;
-        margin-top: 75px;
-    }
+.agreement {
+  color: white;
+}
 
-    .contact_form{
-        opacity: 0.9;
-        border-radius: 2%;
-        margin-top: 50px;
-    }
+.checkbox {
+  color: white;
+}
 
-    .btn_form{
-        background: #192a56;
-        color: white;
-        font-weight: bold;
-    }
+.form-check-label {
+  color: white;
+}
 
-    .my_input{
-        font-weight: bolder;
-        font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
-    }
+.copyright {
+  color: white;
+  font-size: 18px;
+  font-family: Georgia, "Times New Roman", Times, serif;
+}
 
-    .agreement {
-        color: white;
-    }
+.link {
+  color: white;
+  text-decoration: none;
+}
 
-    .checkbox{
-        color: white;
-    }
+.button_to_top {
+  border-radius: 50px;
+  height: 100%;
+  top: 75%;
+  right: 0;
+  margin-right: 15px;
+  position: fixed;
+  z-index: 2500;
+  visibility: hidden;
+}
 
-    .form-check-label{
-        color: white;
-    }
+#urban_text {
+  color: #192a56;
+}
 
-    .copyright{
-        color: white;
-        font-size: 18px;
-        font-family: Georgia, 'Times New Roman', Times, serif;
-    }
+#ticket_text {
+  color: teal;
+}
 
-    .link{
-        color: white;
-        text-decoration: none;
-    }
+.offres {
+  background: linear-gradient(#0c2461, #079992);
+}
 
-    .button_to_top{
-        border-radius: 50px;
-        height: 100%;
-        top: 75%;
-        right: 0;
-        margin-right: 15px;
-        position: fixed;
-        z-index: 2500;
-        visibility: hidden;
-    }
+.content_offre_text {
+  color: white;
+}
 
-    #urban_text{
-        color: #192a56;
-    }
+.content_offre_text:hover {
+  color: white;
+  font-weight: bold;
+}
 
-    #ticket_text{
-        color: teal;
-    }
+#aboutUs_text {
+  text-align: center;
+  font-size: 25px;
+  color: #2c3e50;
+  font-family: Impact, Haettenschweiler, "Arial Narrow Bold", sans-serif;
+}
 
-    .offres{
-        background: linear-gradient(#0c2461, #079992);
-    }
+.section_title {
+  color: #2c3a47;
+}
 
-    .content_offre_text{
-        color: white;
-    }
+.text_service {
+  padding-top: 900px;
+}
 
-    .content_offre_text:hover{
-        color: white;
-        font-weight: bold;
-    }
+.text_service {
+  font-size: 19px;
+  font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
+    "Lucida Sans", Arial, sans-serif;
+}
 
-    #aboutUs_text{
-        text-align: center;
-        font-size: 25px;
-        font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
-    }
+#top-header {
+  padding-bottom: 100px;
+}
 
-    .section_title{
-        color: #2C3A47;
-    }
+.aboutUs_background {
+  background: linear-gradient(#ecf0f1, white);
+}
 
-    .text_service{
-        padding-top: 900px;
-    }
+.contactUs_background {
+  background-image: url("../assets/nous\ contacter.jpg");
+}
 
-    .text_service{
-        font-size: 19px;
-        font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
-    }
+.partner_background {
+  padding-top: 160px;
+  background: linear-gradient(white, #ecf0f1);
+}
 
-    #top-header{
-        padding-bottom: 100px;
-    }
+.partner_btn {
+  background: linear-gradient(#0c2461, #079992);
+}
+
+.adhesion {
+  color: white;
+}
 </style>

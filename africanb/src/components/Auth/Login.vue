@@ -6,71 +6,66 @@
             </div>
         </nav>
         
-        <div class="container body_login">
+        <!--<div class="container body_login">
 
             <div class="row">
 
-                <div class="col-lg-7 img_auth">
-                    <img src="../../assets/authentication.svg" height="400" width="400" alt="">
-                </div>
-
-                <div class="col-lg-5 login_box">
-                    <v-form @submit.prevent="login">
-                            <v-row justify="center" align="center">
-                                <v-img max-height="120" max-width="120" src="../../assets/UB.jpg"></v-img>
-                            </v-row>
+                <v-form @submit.prevent="login">
+                    <v-row justify="center" align="center">
+                        <v-img max-height="120" max-width="120" src="../../assets/UB.jpg"></v-img>
+                    </v-row>
                         
-                            <v-card-text>
+                    <v-card-text>
+                        <v-container>
+                            <v-row justify="center">
+                                
+                                <div class="text_auth">
+                                    <h5 class="font-weight-bold">BIENVENUE</h5>
+                                    <small>Entrer vos paramètres de connexion pour accéder à votre espace de travail.</small>
+                                </div>
+
                                 <v-container>
+                                    <div class="form-group">
+                                        <label for="pseudoOrEmail" class="myLabel">Identifiant ou E-mail</label>
+                                        <v-text-field class="input_field" id="pseudoOrEmail" :error-messages="usernameError" 
+                                            v-model.trim="$v.userLogin.login.$model" dense outlined 
+                                            prepend-inner-icon="mdi-account" 
+                                            color="#273c75">
+                                        </v-text-field>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="login_password" class="myLabel">Mot de Passe</label>
+                                        <v-text-field :error-messages="passwordError" v-model.trim="$v.userLogin.password.$model" :append-icon="passwordIsVisible ? 'mdi-eye' : 'mdi-eye-off'"  
+                                            class="input_field" id="login_password" 
+                                            @click:append="passwordIsVisible = !passwordIsVisible"
+                                            dense outlined prepend-inner-icon="mdi-lock-check" color="#273c75" :type="passwordIsVisible ? 'text' : 'password'">
+                                        </v-text-field>
+                                    </div>
+
+                                    <span>Vous avez oublié votre mot de passe ? <small class="password_forget">Cliquez-ici</small></span><br><br><br>
+
                                     <v-row justify="center">
-                                        <div class="text_auth">
-                                            <h5 class="font-weight-bold">BIENVENUE</h5>
-                                            <small>Entrer vos paramètres de connexion pour accéder à votre espace de travail.</small>
+                                        <div class="text-xs-center">
+                                            <v-btn class="btn" small type="submit" rounded color="#192a56"><span class="connexion_text">CONNEXION</span></v-btn>
                                         </div>
-
-                                        <v-container>
-                                            <div class="form-group">
-                                                <label for="pseudoOrEmail" class="myLabel">Identifiant ou E-mail</label>
-                                                <v-text-field class="input_field" id="pseudoOrEmail" :error-messages="usernameError" 
-                                                    v-model.trim="$v.userLogin.login.$model" dense outlined 
-                                                    prepend-inner-icon="mdi-account" 
-                                                    color="#273c75">
-                                                </v-text-field>
-                                            </div>
-
-                                            <div class="form-group">
-                                                <label for="login_password" class="myLabel">Mot de Passe</label>
-                                                <v-text-field :error-messages="passwordError" v-model.trim="$v.userLogin.password.$model" :append-icon="passwordIsVisible ? 'mdi-eye' : 'mdi-eye-off'"  
-                                                    class="input_field" id="login_password" 
-                                                    @click:append="passwordIsVisible = !passwordIsVisible"
-                                                    dense outlined prepend-inner-icon="mdi-lock-check" color="#273c75" :type="passwordIsVisible ? 'text' : 'password'">
-                                                </v-text-field>
-                                            </div>
-
-                                            <span>Vous avez oublié votre mot de passe ? <small class="password_forget">Cliquez-ici</small></span><br><br><br>
-
-                                            <v-row justify="center">
-                                                <div class="text-xs-center">
-                                                    <v-btn class="btn" small type="submit" rounded color="#192a56"><span class="connexion_text">CONNEXION</span></v-btn>
-                                                </div>
-                                            </v-row>
-                                        </v-container><br>                        
                                     </v-row>
-                                </v-container>
-                            </v-card-text>    
-                    </v-form><br><br>
-                </div>
+                                </v-container><br>                        
+                            </v-row>
+                        </v-container>
+                    </v-card-text>    
+                </v-form><br><br>
 
             </div>
 
-        </div>
-        <!--<v-main class="my-container">
+        </div>-->
+        <v-main class="my-container">
             <div>
                 <v-container>
                     <v-form @submit.prevent="login">
-                        <v-card max-width="400" max-height="1000" elevation="5">
+                        <v-card width="500" max-height="1500" elevation="5" rounded="xl">
                             <v-row justify="center" align="center">
-                                <v-img max-height="60" max-width="60" src="../../assets/UB.jpg"></v-img>
+                                <v-img max-height="150" max-width="150" src="../../assets/UB.jpg"></v-img>
                             </v-row>
                         
                             <v-card-text>
@@ -83,28 +78,24 @@
 
                                         <v-container>
                                             <div class="form-group">
-                                                <label for="pseudoOrEmail" class="myLabel">Identifiant ou E-mail</label>
-                                                <v-text-field class="input_field" id="pseudoOrEmail" :error-messages="usernameError" 
-                                                    v-model.trim="$v.userLogin.login.$model" dense outlined 
-                                                    prepend-inner-icon="mdi-account" 
-                                                    color="#273c75">
-                                                </v-text-field>
+                                                <div class="mb-3">
+                                                    <label for="exampleFormControlInput1" class="form-label">Id ou E-mail</label>
+                                                    <input type="email" class="form-control" v-model.trim="$v.userLogin.login.$model"
+                                                        id="exampleFormControlInput1"
+                                                    >
+                                                </div>
+                                                <div class="mb-3">
+                                                    <label for="exampleFormControlInput1" class="form-label">Mot de passe</label>
+                                                    <input type="password" class="form-control" id="exampleFormControlInput1" v-model.trim="$v.userLogin.password.$model"
+                                                    >
+                                                </div>
                                             </div>
-
-                                            <div class="form-group">
-                                                <label for="login_password" class="myLabel">Mot de Passe</label>
-                                                <v-text-field :error-messages="passwordError" v-model.trim="$v.userLogin.password.$model" :append-icon="passwordIsVisible ? 'mdi-eye' : 'mdi-eye-off'"  
-                                                    class="input_field" id="login_password" 
-                                                    @click:append="passwordIsVisible = !passwordIsVisible"
-                                                    dense outlined prepend-inner-icon="mdi-lock-check" color="#273c75" :type="passwordIsVisible ? 'text' : 'password'">
-                                                </v-text-field>
-                                            </div>
-
+                                            
                                             <span>Vous avez oublié votre mot de passe ? <small class="password_forget">Cliquez-ici</small></span><br><br><br>
 
-                                            <v-row justify="center">
-                                                <div class="text-xs-center">
-                                                    <v-btn small type="submit" rounded color="#192a56"><span class="connexion_text">CONNEXION</span></v-btn>
+                                            <v-row>
+                                                <div class="text-center">
+                                                    <v-btn small type="submit" color="#192a56"><span class="connexion_text text-center">CONNEXION</span></v-btn>
                                                 </div>
                                             </v-row>
                                         </v-container><br>                        
@@ -115,9 +106,9 @@
                     </v-form><br><br>
                 </v-container>
             </div>
-        </v-main><br>-->
+        </v-main><br>
 
-        <!--<v-footer class="footer" dark>
+        <v-footer class="footer" dark>
             <v-container fluid>
                 <v-row>
                     <v-col class="text-center">
@@ -125,7 +116,7 @@
                     </v-col>
                 </v-row>
             </v-container>
-        </v-footer>-->
+        </v-footer>
         <v-overlay :value="overlay"><v-progress-circular  indeterminate size="64"></v-progress-circular></v-overlay>
     </v-app>
 </template>
@@ -284,6 +275,7 @@ export default {
 
     .connexion_text{
         color: white;
+        text-align: center;
     }
 
     .password_forget{

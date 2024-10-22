@@ -1,70 +1,106 @@
 <template>
-
     <v-app>
-        
         <v-container fluid>
-
-            <v-sheet color="#b2bec3">
-
-                <v-container>
-
+            <div class="row">
+                <div class="col-lg-8">
                     <v-card elevation="5">
-
-                        <v-card-title><span class="title-card">DÉTAIL SUR L'OFFRE:</span></v-card-title>
-
                         <v-card-text>
-                            <div class="row">
-                                <div class="col-sm-6">
-                                    <v-container>
-                                        <v-card>
-                                            <v-card-title><span class="designation-offre">{{ offreVoyage.designation }}</span></v-card-title>
-                                            <v-card-text>
-                                                <v-container>
+                            <v-list>
+                                <v-list-item>
+                                    <v-list-item-content>
+                                        <v-list-item-title class="designation_offre"> {{ offreVoyage.designation }}</v-list-item-title>
+                                    </v-list-item-content>
+                                </v-list-item>
 
-                                                    <v-row>
-                                                        <span>Type de l'offre :</span>&nbsp;&nbsp;
-                                                        <span>{{ offreVoyage.typeOffreVoyageDesignation }}</span>
-                                                    </v-row><br><br>
+                                <v-list-item>
+                                    <v-list-item-content>
+                                        <v-list-item-subtitle>Type l'offre:</v-list-item-subtitle>
+                                    </v-list-item-content>
+                    
+                                    <v-list-item-content>
+                                        <v-list-item-subtitle class="font-weight-bold">{{ offreVoyage.typeOffreVoyageDesignation }}</v-list-item-subtitle>
+                                    </v-list-item-content>
+                                </v-list-item>
 
-                                                    <v-row>
-                                                        <v-icon dense color="teal">mdi-circle</v-icon>&nbsp;&nbsp; Gare départ : <span class="gareDepart">{{ offreVoyage.villeDepartDesignation }}</span>  
-                                                    </v-row><br><br>
-                                                    
-                                                    <v-row>
-                                                        <v-icon dense color="#2C3A47">mdi-circle</v-icon>&nbsp;&nbsp; Gare destination : <span class="gareDestination">{{ offreVoyage.villeDestinationDesignation }} </span>  
-                                                    </v-row>        
-                                                </v-container>
-                                            </v-card-text>
-                                        </v-card>
-                                    </v-container>
-                                </div>
+                                <v-list-item>
+                                    <v-list-item-content>
+                                        <v-list-item-subtitle>Départ :</v-list-item-subtitle>
+                                    </v-list-item-content>
+                    
+                                    <v-list-item-content>
+                                        <v-list-item-subtitle class="font-weight-bold">{{ offreVoyage.villeDepartDesignation }}</v-list-item-subtitle>
+                                    </v-list-item-content>
+                                </v-list-item>
 
-                                <div class="col-sm-6">
-                                    <v-container>
-                                        <v-card>
-                                            <v-card-text>
-                                                <v-container>
-                                                    <div class="form-group">
-                                                        <label>Choisissez le jour du voyage:</label>
-                                                        <v-select :items="jourSemainesParOffreVoyagesList" item-text="jourSemaineDesignation" item-value="jourSemaineDesignation" v-model="jourDepart" dense outlined></v-select>
-
-                                                    </div>
-
-                                                    <div class="form-group" v-if="jourVoyageSelected">
-                                                        <label>Choisissez l'heure de départ:</label>
-                                                        <v-select v-model="jourVoyageSelected.designation" :items="getProgrammeFromDaySelected" item-text="heureDepart" item-value="designation" dense outlined></v-select>
-                                                    </div>
-                                                </v-container>
-                                            </v-card-text>
-                                        </v-card>
-                                    </v-container>
-                                </div>
+                                <v-list-item>
+                                    <v-list-item-content>
+                                        <v-list-item-subtitle>Destination :</v-list-item-subtitle>
+                                    </v-list-item-content>
+                    
+                                    <v-list-item-content>
+                                        <v-list-item-subtitle class="font-weight-bold">{{ offreVoyage.villeDestinationDesignation }}</v-list-item-subtitle>
+                                    </v-list-item-content>
+                                </v-list-item>
+                                
+                            </v-list>
+                        </v-card-text>
+                    </v-card>
+                    
+                    <div class="animate__animated animate__bounce">
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <v-card>
+                                    <v-card-subtitle>Selectionner le jour de voyage:</v-card-subtitle>
+                                    <v-card-text>
+                                        <div class="row">
+                                            <v-radio-group row v-model="jourDepart">
+                                                <v-radio v-for="jour, j in jourSemainesParOffreVoyagesList" :key="j" 
+                                                :label="jour.jourSemaineDesignation" :value="jour.jourSemaineDesignation" 
+                                                >
+                                            </v-radio>
+                                            </v-radio-group>
+                                        </div>
+                                    </v-card-text>
+                                </v-card>
                             </div>
-                            <v-divider></v-divider>
+                        </div>
+                    </div>
+                    
+
+                    <div class="row animate__animated animate__fadeInDown" :hidden="jourDepart==null">
+                        <div class="col-lg-12">
+                            <v-card>
+                                <v-card-subtitle>Pour quelle heure votre départ ?</v-card-subtitle>
+                                <v-card-text>
+                                    <div class="row">
+                                        <v-radio-group row>
+                                            <v-radio-group row v-model="jourVoyageSelected.designation">
+                                                <v-radio v-for="hours, h in getProgrammeFromDaySelected" :key="h" 
+                                                    :label="hours.heureDepart" :value="hours.designation" 
+                                                >
+                                                </v-radio>
+                                            </v-radio-group>
+                                        </v-radio-group>
+                                    </div>
+                                </v-card-text>
+                            </v-card>
+                        </div>
+                    </div>
+
+                    <div class="row animate__animated animate__fadeInDown" :hidden="jourVoyageSelected.designation==null">
+                        <div class="col-lg-12">
+                            <small class="">Sélectionnez un mode et une catégorie !</small>
                             <div class="row">
                                 <div class="col-sm-6" v-for="(mode,index) in prixEtModeParOffreVoyageList" :key="index">
-                                    <v-card>
-                                        <v-card-title>Mode n°{{ index + 1}}</v-card-title>
+                                    <v-card rounded="xl">
+                                            <v-card-title>Mode n°{{ index + 1}}
+                                            <v-spacer></v-spacer>
+                                            <v-radio-group row>
+                                                <v-radio-group row v-model="modeChoosen">
+                                                    <v-radio :value="mode"></v-radio>
+                                                </v-radio-group>
+                                            </v-radio-group>
+                                        </v-card-title>
                                         <v-card-text>
                                             <v-container>
                                                 <v-row>
@@ -85,52 +121,186 @@
                                     </v-card>
                                 </div>
                             </div>
-                        </v-card-text>
-                    </v-card><br>
+                        </div>
+                    </div>
 
+                    <div class="row animate__animated animate__fadeInDown" :hidden="modeChoosen.modeDesignation == null">
+                        <div class="col-lg-12">
+                            <v-card>
+                                <v-card-subtitle>Formulaire de réservation</v-card-subtitle>
+                                <v-card-text>
+                                    <form class="row g-3">
+                                        <div class="col-md-6">
+                                            <label for="inputEmail4" class="form-label">Nom</label>
+                                            <input type="text" v-model="user.nom" class="form-control" id="inputEmail4">
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label for="inputPassword4" class="form-label">Prenom(s)</label>
+                                            <input type="text" v-model="user.prenoms" class="form-control" id="inputPassword4">
+                                        </div>
+                                        <div class="col-12">
+                                            <label for="inputAddress" class="form-label">E-mail</label>
+                                            <input type="email" v-model="user.email" class="form-control" id="inputAddress">
+                                        </div>
+
+                                        <div class="col-md-6">
+                                            <label for="inputCity" class="form-label">N° de téléphone:</label>
+                                            <div class="input-group mb-3">
+                                                <span class="input-group-text" id="basic-addon1">+225</span>
+                                                <input type="text" v-model="user.telephone" class="form-control" aria-describedby="basic-addon1">
+                                            </div>
+                                        </div>
+ 
+                                        <div class="col-md-3">
+                                            <label for="inputZip" class="form-label">Nombre de places:</label>
+                                            <input type="text" v-model="programmeReserved.data.nombrePlace" class="form-control" id="inputZip">
+                                        </div>
+                                    </form>
+                                </v-card-text>
+                            </v-card>
+                        </div>
+
+                    </div><br>
+
+                    <v-card-actions class="float-right">
+                        <v-btn small color="secondary">ANNULER</v-btn>
+                        <v-btn small color="success" @click="reserverOffre()">RESERVER</v-btn>
+                    </v-card-actions> 
+
+                </div>
+
+                <div class="col-lg-4">
                     <v-card elevation="5">
-                        <v-card-title><span class="title-card">INFORMATION DU CLIENT:</span></v-card-title>
                         <v-card-text>
-                            <form>
-                                <div class="form-row">
-                                    <div class="form-group col-md-6">
-                                        <label for="inputEmail4">Nom:</label>
-                                        <input type="text" v-model="user.nom" class="form-control" id="inputEmail4">
-                                    </div>
-                                    <div class="form-group col-md-6">
-                                        <label for="inputPassword4">Prenoms:</label>
-                                        <input type="text" class="form-control" id="inputPassword4" v-model="user.prenoms">
-                                    </div>
-                                </div>
-                                <div class="form-row">
-                                    <div class="form-group col-md-6">
-                                        <label for="inputEmail4">Numero de téléphone:</label>
-                                        <input type="text" class="form-control" v-model="user.telephone" id="inputEmail4">
-                                    </div>
-                                    <div class="form-group col-md-6">
-                                        <label for="inputEmail4">Nombre de place:</label>
-                                        <input type="number" min="0" class="form-control" v-model="programmeReserved.data.nombrePlace" id="inputEmail4">
-                                    </div>
-                                </div>
-                                <div class="form-row">
-                                    <div class="form-group col-md-8">
-                                        <label for="inputEmail4">email:</label>
-                                        <input suffix="225" type="text" class="form-control" v-model="user.email" id="inputEmail4">
-                                    </div>
-                                </div>
-                            </form>
+                            <v-list>
+                                <v-list-item>
+                                    <v-list-item-content>
+                                        <v-list-item-title class="font-weight-bold">RESERVATION EN COURS:</v-list-item-title>
+                                    </v-list-item-content>
+                                </v-list-item>
+
+                                <v-list-item>
+                                    <v-list-item-content>
+                                        <v-list-item-subtitle>offre de voyage :</v-list-item-subtitle>
+                                    </v-list-item-content>
+                    
+                                    <v-list-item-content>
+                                        <v-list-item-subtitle class="font-weight-bold">{{ offreVoyage.designation }}</v-list-item-subtitle>
+                                    </v-list-item-content>
+                                </v-list-item>
+
+                                <v-list-item>
+                                    <v-list-item-content>
+                                        <v-list-item-subtitle>Départ :</v-list-item-subtitle>
+                                    </v-list-item-content>
+                    
+                                    <v-list-item-content>
+                                        <v-list-item-subtitle class="font-weight-bold">{{ offreVoyage.villeDepartDesignation}}</v-list-item-subtitle>
+                                    </v-list-item-content>
+                                </v-list-item>
+
+                                <v-list-item>
+                                    <v-list-item-content>
+                                        <v-list-item-subtitle>Destination :</v-list-item-subtitle>
+                                    </v-list-item-content>
+                    
+                                    <v-list-item-content>
+                                        <v-list-item-subtitle class="font-weight-bold">{{ offreVoyage.villeDestinationDesignation }}</v-list-item-subtitle>
+                                    </v-list-item-content>
+                                </v-list-item>
+
+                                <v-divider></v-divider>
+
+                                <v-list-item>
+                                    <v-list-item-content>
+                                        <v-list-item-subtitle>Jour de voyage :</v-list-item-subtitle>
+                                    </v-list-item-content>
+                    
+                                    <v-list-item-content>
+                                        <v-list-item-subtitle class="font-weight-bold">{{ jourDepart }}</v-list-item-subtitle>
+                                    </v-list-item-content>
+                                </v-list-item>
+
+                                
+
+                                <v-list-item>
+                                    <v-list-item-content>
+                                        <v-list-item-subtitle>Catégorie :</v-list-item-subtitle>
+                                    </v-list-item-content>
+                    
+                                    <v-list-item-content>
+                                        <v-list-item-subtitle class="font-weight-bold">{{ modeChoosen.categorieVoyageurDesignation }}</v-list-item-subtitle>
+                                    </v-list-item-content>
+                                </v-list-item>
+
+                                <v-list-item>
+                                    <v-list-item-content>
+                                        <v-list-item-subtitle>Prix :</v-list-item-subtitle>
+                                    </v-list-item-content>
+                    
+                                    <v-list-item-content>
+                                        <v-list-item-subtitle class="font-weight-bold">{{ modeChoosen.prix }}</v-list-item-subtitle>
+                                    </v-list-item-content>
+                                </v-list-item>
+
+                                <v-divider></v-divider>
+
+                                <v-list-item>
+                                    <v-list-item-content>
+                                        <v-list-item-subtitle>Nom:</v-list-item-subtitle>
+                                    </v-list-item-content>
+                    
+                                    <v-list-item-content>
+                                        <v-list-item-subtitle class="font-weight-bold">{{ user.nom}}</v-list-item-subtitle>
+                                    </v-list-item-content>
+                                </v-list-item>
+
+                                <v-list-item>
+                                    <v-list-item-content>
+                                        <v-list-item-subtitle>Prénom(s) :</v-list-item-subtitle>
+                                    </v-list-item-content>
+                    
+                                    <v-list-item-content>
+                                        <v-list-item-subtitle class="font-weight-bold">{{ user.prenoms }}</v-list-item-subtitle>
+                                    </v-list-item-content>
+                                </v-list-item>
+
+                                <v-list-item>
+                                    <v-list-item-content>
+                                        <v-list-item-subtitle>E-mail :</v-list-item-subtitle>
+                                    </v-list-item-content>
+                    
+                                    <v-list-item-content>
+                                        <v-list-item-subtitle class="font-weight-bold">{{ user.email }}</v-list-item-subtitle>
+                                    </v-list-item-content>
+                                </v-list-item>
+
+                                <v-list-item>
+                                    <v-list-item-content>
+                                        <v-list-item-subtitle>Numéro de télephone :</v-list-item-subtitle>
+                                    </v-list-item-content>
+                    
+                                    <v-list-item-content>
+                                        <v-list-item-subtitle class="font-weight-bold">{{ user.telephone }}</v-list-item-subtitle>
+                                    </v-list-item-content>
+                                </v-list-item>
+
+                                <v-list-item>
+                                    <v-list-item-content>
+                                        <v-list-item-subtitle>Nombre de places :</v-list-item-subtitle>
+                                    </v-list-item-content>
+                    
+                                    <v-list-item-content>
+                                        <v-list-item-subtitle class="font-weight-bold">{{ programmeReserved.data.nombrePlace }}</v-list-item-subtitle>
+                                    </v-list-item-content>
+                                </v-list-item>
+                                
+                            </v-list>
                         </v-card-text>
-                    </v-card><br>
-
-                </v-container>  
-
-                <v-card-actions>
-                    <v-btn x-small color="secondary">RETOUR</v-btn>
-                    <v-btn x-small color="teal" @click="chooseCategorieVoyageur"><span class="btn-title">RESERVER POUR CE TRAJET</span></v-btn>
-                </v-card-actions>  
-
-            </v-sheet>
-
+                    </v-card>
+                </div>
+            </div><br>
+             
         </v-container>
 
         <v-dialog v-model="dialog">
@@ -249,6 +419,8 @@ export default {
             successMsg : null,
             errorMsg : null,
 
+            modeChoosen:{},
+
 
             programmeReserved:{
                 data:{
@@ -325,60 +497,72 @@ export default {
 
         // FAIRE UNE RESERVATION POUR UN UTILISATEUR
         async reserverOffre(){
-            this.dialog = false;
-            this.overlay = true;
-            this.programmeReserved.data.programmeDesignation = this.jourVoyageSelected.designation
-            this.programmeReserved.data.gareDesignation = this.$store.state.userAuthentified.gareDesignation;
-            this.programmeReserved.data.offreVoyageDesignation = this.offreVoyage.designation
-            this.programmeReserved.data.clientDetails = this.user;
-            await axios.post(API_RESERVER_PROGRAMME_OFFRE, this.programmeReserved, { headers : HEADERS(this.$store.state.userAuthentified.token) }).then((response) => {
-                console.log(this.programmeReserved)
-                if (response.status == 200) {
-                    if (response.data.status.code == 800) {
-                        console.log(response)
-                        this.creerHistoriquePaiement(response.data.items[0].designation);
-                        this.successMsg = response.data.status.message
-                        $(".alert-success").fadeIn();
-                        setTimeout(function(){
-                            $(".alert-success").fadeOut(); 
-                        }, 4000)
-                        //this.objectContainList.datas = []
-                    }else{
-                        this.errorMsg = response.data.status.message
+            this.$swal.fire({
+                title: "Êtes vous sûre de confirmer cette réservation ?",
+                showCancelButton: true, 
+                confirmButtonText: "Confirmer",
+            }).then((result) => {
+                if(result.isConfirmed){
+                    this.overlay = true;
+                    this.programmeReserved.data.programmeDesignation = this.jourVoyageSelected.designation
+                    this.programmeReserved.data.gareDesignation = this.$store.state.userAuthentified.gareDesignation;
+                    this.programmeReserved.data.offreVoyageDesignation = this.offreVoyage.designation
+                    this.programmeReserved.data.categorieVoyageur = this.modeChoosen.categorieVoyageurDesignation
+                    this.programmeReserved.data.clientDetails = this.user;
+
+                    axios.post(API_RESERVER_PROGRAMME_OFFRE, this.programmeReserved, { headers : HEADERS(this.$store.state.userAuthentified.token) }).then((response) => {
+                        if (response.status == 200) {
+                            if (response.data.status.code == 800) {
+                                this.creerHistoriquePaiement(response.data.items[0].designation);
+                                this.successMsg = response.data.status.message
+                                $(".alert-success").fadeIn();
+                                setTimeout(function(){
+                                    $(".alert-success").fadeOut(); 
+                                }, 4000)
+                                //this.objectContainList.datas = []
+                            }else{
+                                this.errorMsg = response.data.status.message
+                                $(".alert-error").fadeIn();
+                                setTimeout(function(){
+                                    $(".alert-error").fadeOut(); 
+                                }, 3000)
+                                //this.objectContainList.datas = []
+                            }  
+                            
+                        } else if (response.status == 204) {
+                            this.warningMsg = "Erreur , lors de la création";
+                            $(".alert-warning").fadeIn();
+                            setTimeout(function(){
+                                $(".alert-warning").fadeOut(); 
+                            }, 3000)
+                            //this.objectContainList.datas = []
+                        }else{
+                            this.errorMsg = "Erreur , opération de création impossible";
+                            $(".alert-error").fadeIn();
+                            setTimeout(function(){
+                                $(".alert-error").fadeOut(); 
+                            }, 3000)
+                            //this.objectContainList.datas = []
+                        }
+                    }).catch((e) => {
+                        this.errorMsg = e;
                         $(".alert-error").fadeIn();
                         setTimeout(function(){
                             $(".alert-error").fadeOut(); 
                         }, 3000)
                         //this.objectContainList.datas = []
-                    }  
-                    
-                }
-                else if (response.status == 204) {
-                    this.warningMsg = "Erreur , lors de la création";
-                    $(".alert-warning").fadeIn();
-                    setTimeout(function(){
-                        $(".alert-warning").fadeOut(); 
-                    }, 3000)
-                    //this.objectContainList.datas = []
-                }
-                else{
-                    this.errorMsg = "Erreur , opération de création impossible";
-                    $(".alert-error").fadeIn();
+                    }).finally(() => {
+                        this.overlay = false;
+                    })
+                }else{
+                    this.errorMsg = "Error lors de la réservation";
+                        $(".alert-error").fadeIn();
                     setTimeout(function(){
                         $(".alert-error").fadeOut(); 
                     }, 3000)
-                    //this.objectContainList.datas = []
                 }
-            }).catch((e) => {
-                this.errorMsg = e;
-                $(".alert-error").fadeIn();
-                setTimeout(function(){
-                    $(".alert-error").fadeOut(); 
-                }, 3000)
-                //this.objectContainList.datas = []
-            }).finally(() => {
-                this.overlay = false;
             })
+        
         },
 
         // CREER HISTORIQUE DE PAIEMENT
@@ -394,7 +578,6 @@ export default {
             this.historyPaiement.data.reservationBilletVoyageDesignation = designationReservation
             this.historyPaiement.data.dateTimePayment = formattedDate;
             this.historyPaiement.data.modePaiementDesignation = "Mode espece"
-            console.log(this.historyPaiement);
             await axios.post(API_CREATE_HISTORIQUE_PAIEMENT, this.historyPaiement, { headers : HEADERS(this.$store.state.userAuthentified.token) }).then((response) => {
 
                 if (response.status == 200) {
@@ -447,7 +630,6 @@ export default {
                     await axios.post(API_OBENIR_JOUR_SEMAINE_PAR_OFFRE_VOYAGE , this.offreVoyageObject , { headers : HEADERS(this.$store.state.userAuthentified.token) }).then((response) => {
                         if (response.data.status.code == 800) {
                             this.jourSemainesParOffreVoyagesList = response.data.items
-                            console.log(this.jourSemainesParOffreVoyagesList)
                         }else{
                             this.jourSemainesParOffreVoyagesList = [];
                         }

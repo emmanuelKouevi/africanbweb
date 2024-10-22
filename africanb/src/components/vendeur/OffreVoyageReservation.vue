@@ -9,7 +9,8 @@
                 <v-card-text>
                     <v-data-table :search="search"  item-class="offreItem" :headers="headers" :loading="loading" :items="offreVoyageAvailableList">
                         <template v-slot:[`item.actions`]="{ item }">
-                           <v-btn @click="reserverTicket(item)" x-small color="teal"><small class="btn-label">Réserver</small></v-btn>
+                            <v-btn @click="voirDetailBtn(item)" x-small color="secondary"><small class="btn-label">Voir les détails</small></v-btn>&nbsp;&nbsp;
+                            <v-btn @click="reserverTicket(item)" x-small color="teal"><small class="btn-label">Réserver</small></v-btn>
                         </template>
                     </v-data-table>
                 </v-card-text>
@@ -98,6 +99,11 @@ import $ from 'jquery'
                 this.storeOffreVoyageItem(offreVoyage);
                 this.$router.push({ path: "/reservationBillet"})
             },
+
+            voirDetailBtn(offreVoyage){
+                this.storeOffreVoyageItem(offreVoyage);
+                this.$router.push({ path: "/offre_voyage_details"})
+            }
 
             
         },
