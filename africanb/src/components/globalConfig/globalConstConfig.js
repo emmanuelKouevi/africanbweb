@@ -1,6 +1,6 @@
 // URL A UTILISER POUR LES API
-export const BASE_URL = "https://localhost:8443/";
-//export const BASE_URL ="https://africanbrg-1c70f693e9c8.herokuapp.com/"
+//export const BASE_URL = "https://localhost:8443/";
+export const BASE_URL = "https://urban-bus-backend-ed1b0f53c872.herokuapp.com/";
 
 export const HEADERS = (token) => {
   return {

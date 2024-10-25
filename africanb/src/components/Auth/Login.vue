@@ -1,12 +1,71 @@
 <template>
-    <v-app class="body">
-        <nav class="navbar navbar-light">
-            <div class="container-fluid">
-                <a class="navbar-brand"><h2>URBAN BUS TICKET</h2></a>
+  <v-app class="inspire">
+    <div class="row">
+      <div class="col-lg-6 pl-6">
+        <div>
+          <v-img
+            class="ml-4"
+            max-height="125"
+            max-width="125"
+            src="../../assets/UB.jpg"
+          ></v-img>
+          <p class="ml-4 bienvenue"><span>BIENVENUE</span></p>
+          <p class="ml-4 connectez-vous">
+            Connectez-vous à votre espace de travail
+          </p>
+
+          <v-form @submit="login">
+            <div class="mb-3">
+              <v-text-field
+                class="col-lg-8 my_input"
+                type="text"
+                placeholder="Pseudo / E-mail"
+                v-model.trim="$v.userLogin.login.$model"
+                rounded
+                outlined
+                color="teal"
+              ></v-text-field>
             </div>
-        </nav>
-        
-        <!--<div class="container body_login">
+
+            <div class="mb-3">
+              <v-text-field
+                class="col-lg-8 my_input"
+                type="password"
+                v-model.trim="$v.userLogin.password.$model"
+                rounded
+                placeholder="Mot de passe"
+                outlined
+                color="teal"
+              ></v-text-field>
+            </div>
+          </v-form>
+        </div>
+        <div class="row">
+          <div class="col-lg-6">
+            <v-btn
+              type="submit"
+              @click="login"
+              color="teal"
+              outlined
+              rounded
+              large
+              >SE CONNECTER</v-btn
+            >
+          </div>
+        </div>
+        <v-divider></v-divider>
+        <div class="row">
+          <span class="text"
+            >Vous n'avez pas de compte ?
+            <small class="password_forget">Demandez une adhésion</small></span
+          >
+        </div>
+      </div>
+
+      <div class="col-lg-6 presentation"></div>
+    </div>
+
+    <!--<div class="container body_login">
 
             <div class="row">
 
@@ -59,282 +118,357 @@
             </div>
 
         </div>-->
-        <v-main class="my-container">
-            <div>
-                <v-container>
-                    <v-form @submit.prevent="login">
-                        <v-card width="500" max-height="1500" elevation="5" rounded="xl">
-                            <v-row justify="center" align="center">
-                                <v-img max-height="150" max-width="150" src="../../assets/UB.jpg"></v-img>
-                            </v-row>
-                        
-                            <v-card-text>
-                                <v-container>
-                                    <v-row justify="center">
-                                        <div class="text_auth">
-                                            <h5 class="font-weight-bold">BIENVENUE</h5>
-                                            <small>Entrer vos paramètres de connexion pour accéder à votre espace de travail.</small>
-                                        </div>
+    <!--<v-main class="my-container">
+      <div class="row">
+        <div class="col-lg-6">
+          <h1>BONJOUR</h1>
+          <div>
+            <v-container>
+              <v-form @submit.prevent="login">
+                <v-card>
+                  <v-row justify="center" align="center">
+                    <v-img
+                      max-height="150"
+                      max-width="150"
+                      src="../../assets/UB.jpg"
+                    ></v-img>
+                  </v-row>
 
-                                        <v-container>
-                                            <div class="form-group">
-                                                <div class="mb-3">
-                                                    <label for="exampleFormControlInput1" class="form-label">Id ou E-mail</label>
-                                                    <input type="email" class="form-control" v-model.trim="$v.userLogin.login.$model"
-                                                        id="exampleFormControlInput1"
-                                                    >
-                                                </div>
-                                                <div class="mb-3">
-                                                    <label for="exampleFormControlInput1" class="form-label">Mot de passe</label>
-                                                    <input type="password" class="form-control" id="exampleFormControlInput1" v-model.trim="$v.userLogin.password.$model"
-                                                    >
-                                                </div>
-                                            </div>
-                                            
-                                            <span>Vous avez oublié votre mot de passe ? <small class="password_forget">Cliquez-ici</small></span><br><br><br>
+                  <v-card-text>
+                    <v-container>
+                      <v-row justify="center">
+                        <div class="text_auth">
+                          <h5 class="font-weight-bold">BIENVENUE</h5>
+                          <small
+                            >Entrer vos paramètres de connexion pour accéder à
+                            votre espace de travail.</small
+                          >
+                        </div>
 
-                                            <v-row>
-                                                <div class="text-center">
-                                                    <v-btn small type="submit" color="#192a56"><span class="connexion_text text-center">CONNEXION</span></v-btn>
-                                                </div>
-                                            </v-row>
-                                        </v-container><br>                        
-                                    </v-row>
-                                </v-container>
-                            </v-card-text>    
-                        </v-card>
-                    </v-form><br><br>
-                </v-container>
-            </div>
-        </v-main><br>
+                        <v-container>
+                          <div class="form-group">
+                            <div class="mb-3">
+                              <label
+                                for="exampleFormControlInput1"
+                                class="form-label"
+                                >Id ou E-mail</label
+                              >
+                              <input
+                                type="email"
+                                class="form-control"
+                                v-model.trim="$v.userLogin.login.$model"
+                                id="exampleFormControlInput1"
+                              />
+                            </div>
+                            <div class="mb-3">
+                              <label
+                                for="exampleFormControlInput1"
+                                class="form-label"
+                                >Mot de passe</label
+                              >
+                              <input
+                                type="password"
+                                class="form-control"
+                                id="exampleFormControlInput1"
+                                v-model.trim="$v.userLogin.password.$model"
+                              />
+                            </div>
+                          </div>
 
-        <v-footer class="footer" dark>
-            <v-container fluid>
-                <v-row>
-                    <v-col class="text-center">
-                        <span class="font-weight-bold">© copyright 2023 - African bus. Tous droits réservés</span>
-                    </v-col>
-                </v-row>
+                          <span
+                            >Vous avez oublié votre mot de passe ?
+                            <small class="password_forget"
+                              >Cliquez-ici</small
+                            ></span
+                          ><br /><br /><br />
+
+                          <v-row>
+                            <div class="text-center">
+                              <v-btn small type="submit" color="#192a56"
+                                ><span class="connexion_text text-center"
+                                  >CONNEXION</span
+                                ></v-btn
+                              >
+                            </div>
+                          </v-row> </v-container
+                        ><br />
+                      </v-row>
+                    </v-container>
+                  </v-card-text>
+                </v-card> </v-form
+              ><br /><br />
             </v-container>
-        </v-footer>
-        <v-overlay :value="overlay"><v-progress-circular  indeterminate size="64"></v-progress-circular></v-overlay>
-    </v-app>
+          </div>
+        </div>
+        <div class="col-lg-6"></div>
+      </div> </v-main
+    >--><br />
+
+    <v-footer class="footer" dark>
+      <v-container fluid>
+        <v-row>
+          <v-col class="text-center">
+            <span class="font-weight-bold"
+              >© copyright 2023 - African bus. Tous droits réservés</span
+            >
+          </v-col>
+        </v-row>
+      </v-container>
+    </v-footer>
+    <v-overlay :value="overlay"
+      ><v-progress-circular indeterminate size="64"></v-progress-circular
+    ></v-overlay>
+  </v-app>
 </template>
 
 <script>
-import axios from 'axios';
-import { API_LOGIN_USER } from '../globalConfig/globalConstConfig'
-import { required } from 'vuelidate/lib/validators'
-import $ from 'jquery';
+import axios from "axios";
+import { API_LOGIN_USER } from "../globalConfig/globalConstConfig";
+import { required } from "vuelidate/lib/validators";
+import $ from "jquery";
 export default {
-    name:"LoginVue",
-    data(){
-        return{
-            overlay : false ,
-            passwordIsVisible : false ,
+  name: "LoginVue",
+  data() {
+    return {
+      overlay: false,
+      passwordIsVisible: false,
 
-            userLoginData:{
-                data :{
-                    login : null,
-                    password : null
-                }
-            },
+      userLoginData: {
+        data: {
+          login: null,
+          password: null,
+        },
+      },
 
-            userLogin :{
-                login: null,
-                password:null,
-            },
+      userLogin: {
+        login: null,
+        password: null,
+      },
+    };
+  },
 
-        }
+  validations: {
+    userLogin: {
+      login: {
+        required,
+      },
+
+      password: {
+        required,
+      },
     },
+  },
 
-    validations:{
+  methods: {
+    //SOUMISSION FORMULAIRE
+    submitForm() {},
 
-        userLogin:{
-            login:{
-                required
-            },
-
-            password:{
-                required
+    // SERVICE WEB PERMETTANT DE SE CONNECTER ET D'ACCEDER À SON ESPACE PERSONNEL
+    async login() {
+      this.userLoginData.data.login = this.userLogin.login;
+      this.userLoginData.data.password = this.userLogin.password;
+      await axios
+        .post(API_LOGIN_USER, this.userLoginData)
+        .then((response) => {
+          if (response.status == 200) {
+            if (response.data.status.code == 800) {
+              this.$store.commit("LOGIN_USER");
+              this.$store.commit("SET_USER_AUTHENTIFIED", response.data.item);
+              this.$router.push("/tableauBord");
+              localStorage.setItem("auth", true);
+              const user_info = JSON.stringify(response.data.item);
+              localStorage.setItem("token_user", user_info);
+            } else {
+              this.$swal.fire(
+                "Connexion échouée",
+                "Error lors de la connexion",
+                "error"
+              );
             }
-        }
-
+          } else {
+            this.$swal.fire(
+              "Connexion Impossible",
+              "Problème interne",
+              "error"
+            );
+          }
+        })
+        .catch((e) => {
+          this.$swal.fire("Connexion Impossible", e, "error");
+        });
     },
 
-    methods:{
+    /**
+     * Cette methode permettra de détecter si nous sommes sur la page de connexion (/connexion).
+     * Si c'est le cas , l'utilisateur perd sa session et sera invité de saisir
+     * à nouveau ses paramètres de connexion
+     */
+    initializeSession() {},
+  },
 
-        //SOUMISSION FORMULAIRE
-        submitForm(){
-            
-        },
-
-        // SERVICE WEB PERMETTANT DE SE CONNECTER ET D'ACCEDER À SON ESPACE PERSONNEL
-        async login(){
-            this.userLoginData.data.login = this.userLogin.login;
-            this.userLoginData.data.password = this.userLogin.password; 
-            await axios.post(API_LOGIN_USER,this.userLoginData).then((response) => {
-                if (response.status == 200) {
-                    if (response.data.status.code == 800) {
-                        this.$store.commit('LOGIN_USER');
-                        this.$store.commit('SET_USER_AUTHENTIFIED' , response.data.item);
-                        this.$router.push('/tableauBord')
-                        localStorage.setItem("auth", true);
-                        const user_info = JSON.stringify(response.data.item)
-                        localStorage.setItem("token_user", user_info);
-                    }else{
-                        this.$swal.fire('Connexion échouée','Error lors de la connexion','error')
-                    }  
-                }else{
-                    this.$swal.fire('Connexion Impossible','Problème interne','error')
-                }
-            }).catch((e) => {
-                this.$swal.fire('Connexion Impossible' , e , 'error')
-            })
-        },
-
-
-        /**
-         * Cette methode permettra de détecter si nous sommes sur la page de connexion (/connexion).
-         * Si c'est le cas , l'utilisateur perd sa session et sera invité de saisir 
-         * à nouveau ses paramètres de connexion
-         */
-        initializeSession() {
-
-        }
+  computed: {
+    //GESTION DES CONTRAINTES (SAISIE UTILISATEUR)
+    usernameError() {
+      const errors = [];
+      if (!this.$v.userLogin.login.$dirty) return errors;
+      !this.$v.userLogin.login.required &&
+        errors.push("Entrer votre pseudo ou e-mail de connexion.");
+      return errors;
     },
 
-    computed:{
-        
-        //GESTION DES CONTRAINTES (SAISIE UTILISATEUR)
-        usernameError(){
-            const errors = [];
-            if (!this.$v.userLogin.login.$dirty) return errors
-            !this.$v.userLogin.login.required && errors.push('Entrer votre pseudo ou e-mail de connexion.')
-            return errors 
-        },
-
-        passwordError(){
-            const errors = [];
-            if (!this.$v.userLogin.password.$dirty) return errors
-            !this.$v.userLogin.password.required && errors.push('Entrer votre mot de passe.')
-            return errors 
-        }
-
+    passwordError() {
+      const errors = [];
+      if (!this.$v.userLogin.password.$dirty) return errors;
+      !this.$v.userLogin.password.required &&
+        errors.push("Entrer votre mot de passe.");
+      return errors;
     },
+  },
 
-    mounted(){
+  mounted() {
+    setTimeout(function () {
+      $(".img_auth").slideDown();
+    }, 600);
 
-        setTimeout(function(){
-            $('.img_auth').slideDown();
-        },600)
-
-        setTimeout(function(){
-            $('.login_box').toggle("slide:left");
-        },1000)
-    }
-}
+    setTimeout(function () {
+      $(".login_box").toggle("slide:left");
+    }, 1000);
+  },
+};
 </script>
 
 <style scoped>
+.body_login {
+  padding-top: 90px;
+}
 
-    .body_login{
-        padding-top: 90px;
-    }
+.presentation {
+  background-image: url("../../assets/inside_bus.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
+}
 
-    .login_box{
-        display: none;
-    }
+.login_box {
+  display: none;
+}
 
-    .img_auth{
-        padding-top: 100px;
-        display:none;
-    }
+.img_auth {
+  padding-top: 100px;
+  display: none;
+}
 
-    .navbar-brand{
-        background: linear-gradient(to right, #079992, #0c2461);
-        background-clip: text;
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-    }
+.navbar-brand {
+  background: linear-gradient(to right, #079992, #0c2461);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
 
-    .my-container{
-        
-        margin: auto;
-        margin-top: 50px;
-        right: 0;
-        bottom: 0;
-        left: 0;
-    }
-    .title{
-        padding-top: 40px;
-        color: black;
-        font-weight: bold;
-        font-size: 60px;
-    }
+.my-container {
+  margin: auto;
+  margin-top: 50px;
+  right: 0;
+  bottom: 0;
+  left: 0;
+}
+.title {
+  padding-top: 40px;
+  color: black;
+  font-weight: bold;
+  font-size: 60px;
+}
 
-    .connexion_text{
-        color: white;
-        text-align: center;
-    }
+.connexion_text {
+  color: white;
+  text-align: center;
+}
 
-    .password_forget{
-        font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
-        font-size: 13px;
-        color: black;
-        opacity: 0.9;
-        font-weight: bolder;
-    }
+.password_forget {
+  font-family: Cambria, Cochin, Georgia, Times, "Times New Roman", serif;
+  font-size: 20px;
+  color: black;
+  opacity: 0.9;
+  font-weight: bolder;
+}
 
+.text {
+  font-size: 18px;
+  font-family: Cambria, Cochin, Georgia, Times, "Times New Roman", serif;
+}
 
-    .password_forget:hover{
-        cursor: pointer;
-        color: #487eb0;
-    }
+.password_forget:hover {
+  cursor: pointer;
+  color: teal;
+}
 
-    .label{
-        font-size: 15px;
-        font-weight: bold;
-    }
+.label {
+  font-size: 15px;
+  font-weight: bold;
+}
 
-    .text_auth{
-        text-align: center;
-    }
+.text_auth {
+  text-align: center;
+}
 
-    .text_auth small{
-        color: grey;
-    }
+.text_auth small {
+  color: grey;
+}
 
-    .input_field {
-        font-family: Arial, Helvetica, sans-serif;
-        font-weight: bolder;
-        color: #596275;
-    }
+.input_field {
+  font-family: Arial, Helvetica, sans-serif;
+  font-weight: bolder;
+  color: #596275;
+}
 
-    .footer{
-        color: white;
-    }
+.footer {
+  color: white;
+}
 
-    .myLabel{
-        font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
-        font-size: 13px;
-        color: black;
-        opacity: 0.9;
-        font-weight: bolder;
-    }
+.myLabel {
+  font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
+  font-size: 13px;
+  color: black;
+  opacity: 0.9;
+  font-weight: bolder;
+}
 
-    .header_card{
-        height: 10px;
-        background: linear-gradient(to left top, black, #273c75);
-    }
+.header_card {
+  height: 10px;
+  background: linear-gradient(to left top, black, #273c75);
+}
 
-    .card-subtitle{
-        color:black;
-        font-size: 13px;
-        opacity: 0.7;
-    }
+.card-subtitle {
+  color: black;
+  font-size: 13px;
+  opacity: 0.7;
+}
 
-    .btn{
-        background: linear-gradient(#0c2461, #079992);
-    }
+.connectez-vous {
+  font-size: 25px;
+  font-family: Cambria, Cochin, Georgia, Times, "Times New Roman", serif;
+}
+
+.colored_text {
+  font-size: 25px;
+  font-weight: bold;
+  text-transform: uppercase;
+  color: teal;
+  font-family: Cambria, Cochin, Georgia, Times, "Times New Roman", serif;
+}
+
+.my_input {
+  font-family: Cambria, Cochin, Georgia, Times, "Times New Roman", serif;
+  font-size: 20px;
+}
+
+.btn {
+  background: linear-gradient(#0c2461, #079992);
+}
+
+.bienvenue {
+  font-weight: bold;
+  color: #2c3e50;
+  font-family: Cambria, Cochin, Georgia, Times, "Times New Roman", serif;
+  font-size: 50px;
+}
 </style>
