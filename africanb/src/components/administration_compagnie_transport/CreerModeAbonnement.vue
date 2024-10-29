@@ -308,7 +308,7 @@ export default {
         redevancePublicite: null,
         typeModeAbonnementDesignation: null,
         periodiciteAbonnementDesignation: null,
-        compagnieTransportRaisonSociale: "KOUEVI CT",
+        compagnieTransportRaisonSociale: "KOUEVI TRANSPORT",
       },
 
       modeAbonnementPrelevementModel: {
@@ -317,7 +317,7 @@ export default {
         dateFinAbonnement: null,
         taux: null,
         periodiciteAbonnementDesignation: null,
-        compagnieTransportRaisonSociale: "KOUEVI CT",
+        compagnieTransportRaisonSociale: "KOUEVI TRANSPORT",
       },
 
       abonnementObject: {

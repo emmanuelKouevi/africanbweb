@@ -190,7 +190,7 @@ export default {
       offreVoyage: {
         designation: null,
         description: null,
-        compagnieTransportRaisonSociale: "KOUEVI CT",
+        compagnieTransportRaisonSociale: "KOUEVI TRANSPORT",
         typeOffreVoyageDesignation: null,
         villeDepartDesignation: null,
         villeDestinationDesignation: null,

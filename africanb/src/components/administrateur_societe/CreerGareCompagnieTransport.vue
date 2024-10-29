@@ -127,7 +127,7 @@ export default {
         telephone1: null,
         telephone2: null,
         adresseLocalisation: null,
-        compagnieTransportRaisonSociale: "KOUEVI CT",
+        compagnieTransportRaisonSociale: "KOUEVI TRANSPORT",
       },
     };
   },

@@ -15,7 +15,6 @@ export const HEADERS_ADMIN = () => {
   return {
     server_id: "backend@africanb",
     client_id: "frontend@africanb",
-    is_admin: "isAdmin",
   };
 };
 

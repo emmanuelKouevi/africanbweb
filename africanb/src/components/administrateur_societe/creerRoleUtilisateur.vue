@@ -16,7 +16,7 @@
                                         <v-dialog v-model="viewingFunctionnalityDialog" max-width="350">
                                             <template v-slot:activator="{ on, attrs }">
                                                 <v-badge :content="functionnalitiesChoosenList.length" :value="functionnalitiesChoosenList.length" color="primary" overlap>
-                                                    <v-btn small text v-bind="attrs" v-on="on">VOIR MA LISTE DISCRETE</v-btn>
+                                                    <v-btn small text v-bind="attrs" v-on="on">VOIR LES FONCTIONNALITÉS</v-btn>
                                                 </v-badge>
                                             </template>
                                             <v-card>

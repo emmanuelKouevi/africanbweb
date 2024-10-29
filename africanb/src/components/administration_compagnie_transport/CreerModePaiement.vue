@@ -121,7 +121,7 @@ export default {
         designation: null,
         telephoneGenerique: null,
         typeModePaiementDesignation: null,
-        compagnieTransportRaisonSociale: "KOUEVI CT",
+        compagnieTransportRaisonSociale: "KOUEVI TRANSPORT",
       },
 
       modePaiementObject: {

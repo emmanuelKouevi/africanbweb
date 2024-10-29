@@ -1,208 +1,74 @@
 <template>
-  <v-app class="inspire">
+  <v-app id="inspire">
     <div class="row">
-      <div class="col-lg-6 pl-6">
-        <div>
+      <div class="col-lg-8 presentation"></div>
+      <div class="col-lg-4 pl-6">
+        <div class="container p-5">
           <v-img
-            class="ml-4"
-            max-height="125"
-            max-width="125"
+            max-height="100"
+            max-width="100"
             src="../../assets/UB.jpg"
           ></v-img>
-          <p class="ml-4 bienvenue"><span>BIENVENUE</span></p>
-          <p class="ml-4 connectez-vous">
-            Connectez-vous à votre espace de travail
-          </p>
+          <div>
+            <span class="welcome_text">Bienvenue</span>,&nbsp;
+            <span class="connexion_text">connectez-vous à votre compte...</span>
+          </div>
+          <br />
 
-          <v-form @submit="login">
-            <div class="mb-3">
-              <v-text-field
-                class="col-lg-8 my_input"
-                type="text"
-                placeholder="Pseudo / E-mail"
-                v-model.trim="$v.userLogin.login.$model"
-                rounded
-                outlined
-                color="teal"
-              ></v-text-field>
-            </div>
+          <div class="row">
+            <v-form @submit.prevent="login">
+              <div class="mb-3">
+                <v-text-field
+                  type="text"
+                  class="input"
+                  v-model.trim="$v.userLogin.login.$model"
+                  placeholder="Login"
+                  outlined
+                  color="teal"
+                  dense
+                ></v-text-field>
+              </div>
 
-            <div class="mb-3">
-              <v-text-field
-                class="col-lg-8 my_input"
-                type="password"
-                v-model.trim="$v.userLogin.password.$model"
-                rounded
-                placeholder="Mot de passe"
-                outlined
-                color="teal"
-              ></v-text-field>
-            </div>
-          </v-form>
-        </div>
-        <div class="row">
-          <div class="col-lg-6">
-            <v-btn
-              type="submit"
-              @click="login"
-              color="teal"
-              outlined
-              rounded
-              large
-              >SE CONNECTER</v-btn
+              <div class="mb-3">
+                <v-text-field
+                  class="input"
+                  :type="passwordIsVisible ? 'text' : 'password'"
+                  v-model.trim="$v.userLogin.password.$model"
+                  placeholder="Mot de passe"
+                  dense
+                  :append-icon="passwordIsVisible ? 'mdi-eye' : 'mdi-eye-off'"
+                  @click:append="passwordIsVisible = !passwordIsVisible"
+                  outlined
+                  color="teal"
+                ></v-text-field>
+
+                <div class="float-right">
+                  <span class="font-weight-bold forget_password"
+                    >Mot de passe oublié ?</span
+                  >
+                </div>
+                <br />
+
+                <div class="row p-3">
+                  <v-btn type="submit" color="teal" outlined
+                    >SE CONNECTER</v-btn
+                  >
+                </div>
+              </div>
+            </v-form>
+            <v-divider></v-divider>
+          </div>
+          <div class="row">
+            <span class="dont_have_account text-center"
+              >Vous n'avez pas de compte ?
+              <small class="new_asking">Demander une adhésion</small></span
             >
           </div>
         </div>
-        <v-divider></v-divider>
-        <div class="row">
-          <span class="text"
-            >Vous n'avez pas de compte ?
-            <small class="password_forget">Demandez une adhésion</small></span
-          >
-        </div>
       </div>
-
-      <div class="col-lg-6 presentation"></div>
     </div>
 
-    <!--<div class="container body_login">
-
-            <div class="row">
-
-                <v-form @submit.prevent="login">
-                    <v-row justify="center" align="center">
-                        <v-img max-height="120" max-width="120" src="../../assets/UB.jpg"></v-img>
-                    </v-row>
-                        
-                    <v-card-text>
-                        <v-container>
-                            <v-row justify="center">
-                                
-                                <div class="text_auth">
-                                    <h5 class="font-weight-bold">BIENVENUE</h5>
-                                    <small>Entrer vos paramètres de connexion pour accéder à votre espace de travail.</small>
-                                </div>
-
-                                <v-container>
-                                    <div class="form-group">
-                                        <label for="pseudoOrEmail" class="myLabel">Identifiant ou E-mail</label>
-                                        <v-text-field class="input_field" id="pseudoOrEmail" :error-messages="usernameError" 
-                                            v-model.trim="$v.userLogin.login.$model" dense outlined 
-                                            prepend-inner-icon="mdi-account" 
-                                            color="#273c75">
-                                        </v-text-field>
-                                    </div>
-
-                                    <div class="form-group">
-                                        <label for="login_password" class="myLabel">Mot de Passe</label>
-                                        <v-text-field :error-messages="passwordError" v-model.trim="$v.userLogin.password.$model" :append-icon="passwordIsVisible ? 'mdi-eye' : 'mdi-eye-off'"  
-                                            class="input_field" id="login_password" 
-                                            @click:append="passwordIsVisible = !passwordIsVisible"
-                                            dense outlined prepend-inner-icon="mdi-lock-check" color="#273c75" :type="passwordIsVisible ? 'text' : 'password'">
-                                        </v-text-field>
-                                    </div>
-
-                                    <span>Vous avez oublié votre mot de passe ? <small class="password_forget">Cliquez-ici</small></span><br><br><br>
-
-                                    <v-row justify="center">
-                                        <div class="text-xs-center">
-                                            <v-btn class="btn" small type="submit" rounded color="#192a56"><span class="connexion_text">CONNEXION</span></v-btn>
-                                        </div>
-                                    </v-row>
-                                </v-container><br>                        
-                            </v-row>
-                        </v-container>
-                    </v-card-text>    
-                </v-form><br><br>
-
-            </div>
-
-        </div>-->
-    <!--<v-main class="my-container">
-      <div class="row">
-        <div class="col-lg-6">
-          <h1>BONJOUR</h1>
-          <div>
-            <v-container>
-              <v-form @submit.prevent="login">
-                <v-card>
-                  <v-row justify="center" align="center">
-                    <v-img
-                      max-height="150"
-                      max-width="150"
-                      src="../../assets/UB.jpg"
-                    ></v-img>
-                  </v-row>
-
-                  <v-card-text>
-                    <v-container>
-                      <v-row justify="center">
-                        <div class="text_auth">
-                          <h5 class="font-weight-bold">BIENVENUE</h5>
-                          <small
-                            >Entrer vos paramètres de connexion pour accéder à
-                            votre espace de travail.</small
-                          >
-                        </div>
-
-                        <v-container>
-                          <div class="form-group">
-                            <div class="mb-3">
-                              <label
-                                for="exampleFormControlInput1"
-                                class="form-label"
-                                >Id ou E-mail</label
-                              >
-                              <input
-                                type="email"
-                                class="form-control"
-                                v-model.trim="$v.userLogin.login.$model"
-                                id="exampleFormControlInput1"
-                              />
-                            </div>
-                            <div class="mb-3">
-                              <label
-                                for="exampleFormControlInput1"
-                                class="form-label"
-                                >Mot de passe</label
-                              >
-                              <input
-                                type="password"
-                                class="form-control"
-                                id="exampleFormControlInput1"
-                                v-model.trim="$v.userLogin.password.$model"
-                              />
-                            </div>
-                          </div>
-
-                          <span
-                            >Vous avez oublié votre mot de passe ?
-                            <small class="password_forget"
-                              >Cliquez-ici</small
-                            ></span
-                          ><br /><br /><br />
-
-                          <v-row>
-                            <div class="text-center">
-                              <v-btn small type="submit" color="#192a56"
-                                ><span class="connexion_text text-center"
-                                  >CONNEXION</span
-                                ></v-btn
-                              >
-                            </div>
-                          </v-row> </v-container
-                        ><br />
-                      </v-row>
-                    </v-container>
-                  </v-card-text>
-                </v-card> </v-form
-              ><br /><br />
-            </v-container>
-          </div>
-        </div>
-        <div class="col-lg-6"></div>
-      </div> </v-main
-    >--><br />
+    <br />
 
     <v-footer class="footer" dark>
       <v-container fluid>
@@ -223,7 +89,10 @@
 
 <script>
 import axios from "axios";
-import { API_LOGIN_USER } from "../globalConfig/globalConstConfig";
+import {
+  API_LOGIN_USER,
+  //HEADERS_ADMIN,
+} from "../globalConfig/globalConstConfig";
 import { required } from "vuelidate/lib/validators";
 import $ from "jquery";
 export default {
@@ -268,7 +137,12 @@ export default {
       this.userLoginData.data.login = this.userLogin.login;
       this.userLoginData.data.password = this.userLogin.password;
       await axios
-        .post(API_LOGIN_USER, this.userLoginData)
+        .post(API_LOGIN_USER, this.userLoginData, {
+          headers: {
+            server_id: "backend@africanb",
+            client_id: "frontend@africanb",
+          },
+        })
         .then((response) => {
           if (response.status == 200) {
             if (response.data.status.code == 800) {
@@ -343,44 +217,16 @@ export default {
 }
 
 .presentation {
-  background-image: url("../../assets/inside_bus.jpg");
+  background-image: url("../../assets/shiny.svg");
   background-repeat: no-repeat;
   background-size: cover;
 }
 
-.login_box {
-  display: none;
-}
-
-.img_auth {
-  padding-top: 100px;
-  display: none;
-}
-
-.navbar-brand {
-  background: linear-gradient(to right, #079992, #0c2461);
-  background-clip: text;
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
-
-.my-container {
-  margin: auto;
-  margin-top: 50px;
-  right: 0;
-  bottom: 0;
-  left: 0;
-}
-.title {
-  padding-top: 40px;
-  color: black;
-  font-weight: bold;
-  font-size: 60px;
-}
-
 .connexion_text {
-  color: white;
+  color: black;
   text-align: center;
+  font-family: "Montserrat";
+  font-size: 20px;
 }
 
 .password_forget {
@@ -391,84 +237,43 @@ export default {
   font-weight: bolder;
 }
 
-.text {
-  font-size: 18px;
-  font-family: Cambria, Cochin, Georgia, Times, "Times New Roman", serif;
+.dont_have_account {
+  font-size: 15px;
+  font-family: "Montserrat";
 }
 
-.password_forget:hover {
+.new_asking {
+  font-size: 15px;
+  font-family: "Montserrat";
+  color: teal;
+  cursor: pointer;
+}
+
+.forget_password:hover {
   cursor: pointer;
   color: teal;
-}
-
-.label {
-  font-size: 15px;
-  font-weight: bold;
-}
-
-.text_auth {
-  text-align: center;
-}
-
-.text_auth small {
-  color: grey;
-}
-
-.input_field {
-  font-family: Arial, Helvetica, sans-serif;
-  font-weight: bolder;
-  color: #596275;
 }
 
 .footer {
   color: white;
 }
 
-.myLabel {
-  font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
-  font-size: 13px;
-  color: black;
-  opacity: 0.9;
-  font-weight: bolder;
-}
-
-.header_card {
-  height: 10px;
-  background: linear-gradient(to left top, black, #273c75);
-}
-
-.card-subtitle {
-  color: black;
-  font-size: 13px;
-  opacity: 0.7;
-}
-
 .connectez-vous {
   font-size: 25px;
-  font-family: Cambria, Cochin, Georgia, Times, "Times New Roman", serif;
-}
-
-.colored_text {
-  font-size: 25px;
   font-weight: bold;
-  text-transform: uppercase;
-  color: teal;
   font-family: Cambria, Cochin, Georgia, Times, "Times New Roman", serif;
 }
 
-.my_input {
-  font-family: Cambria, Cochin, Georgia, Times, "Times New Roman", serif;
+.welcome_text {
+  letter-spacing: 2px;
+  color: black;
   font-size: 20px;
+  font-family: "Montserrat";
+  font-weight: normal;
 }
 
-.btn {
-  background: linear-gradient(#0c2461, #079992);
-}
-
-.bienvenue {
-  font-weight: bold;
-  color: #2c3e50;
-  font-family: Cambria, Cochin, Georgia, Times, "Times New Roman", serif;
-  font-size: 50px;
+.input {
+  border-radius: 7px;
+  font-family: "Montserrat";
 }
 </style>
