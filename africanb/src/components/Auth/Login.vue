@@ -49,10 +49,20 @@
                 </div>
                 <br />
 
-                <div class="row p-3">
+                <div class="row p-3" v-if="isLoading == false">
                   <v-btn type="submit" color="teal" outlined
                     >SE CONNECTER</v-btn
                   >
+                </div>
+
+                <div class="row p-3" v-else>
+                  <div class="text-center">
+                    <v-progress-circular
+                      indeterminate
+                      color="teal"
+                      size="32"
+                    ></v-progress-circular>
+                  </div>
                 </div>
               </div>
             </v-form>
@@ -61,7 +71,7 @@
           <div class="row">
             <span class="dont_have_account text-center"
               >Vous n'avez pas de compte ?
-              <small class="new_asking">Demander une adhésion</small></span
+              <small class="new_asking">Demander votre adhésion</small></span
             >
           </div>
         </div>
@@ -89,10 +99,7 @@
 
 <script>
 import axios from "axios";
-import {
-  API_LOGIN_USER,
-  //HEADERS_ADMIN,
-} from "../globalConfig/globalConstConfig";
+import { API_LOGIN_USER } from "../globalConfig/globalConstConfig";
 import { required } from "vuelidate/lib/validators";
 import $ from "jquery";
 export default {
@@ -101,6 +108,7 @@ export default {
     return {
       overlay: false,
       passwordIsVisible: false,
+      isLoading: false,
 
       userLoginData: {
         data: {
@@ -136,6 +144,7 @@ export default {
     async login() {
       this.userLoginData.data.login = this.userLogin.login;
       this.userLoginData.data.password = this.userLogin.password;
+      this.isLoading = true;
       await axios
         .post(API_LOGIN_USER, this.userLoginData, {
           headers: {
@@ -169,6 +178,9 @@ export default {
         })
         .catch((e) => {
           this.$swal.fire("Connexion Impossible", e, "error");
+        })
+        .finally(() => {
+          this.isLoading = false;
         });
     },
 
@@ -217,7 +229,7 @@ export default {
 }
 
 .presentation {
-  background-image: url("../../assets/shiny.svg");
+  background-image: url("../../assets/inside_bus.jpg");
   background-repeat: no-repeat;
   background-size: cover;
 }

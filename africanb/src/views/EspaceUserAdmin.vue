@@ -17,10 +17,11 @@
           link
           @click="$router.push({ path: '/tableauBord' }).catch(() => {})"
         >
-          <!--
           <v-list-item-icon>
-            <v-icon color="teal">mdi-view-dashboard</v-icon>
-          </v-list-item-icon>-->
+            <v-avatar size="25">
+              <v-img src="../assets/dashboard.png"></v-img>
+            </v-avatar>
+          </v-list-item-icon>
 
           <v-list-item-content>
             <v-list-item-title class="list-item-title"
@@ -46,9 +47,11 @@
             link
             @click="$router.push({ path: menu.navigation }).catch(() => {})"
           >
-            <!--<v-list-item-icon>
-              <v-icon color="teal">{{ menu.icon }}</v-icon>
-            </v-list-item-icon>-->
+            <v-list-item-icon>
+              <v-avatar size="25">
+                <v-img :src="menu.url"></v-img>
+              </v-avatar>
+            </v-list-item-icon>
 
             <v-list-item-content>
               <v-list-item-title class="list-item-title">{{
@@ -59,7 +62,168 @@
         </v-list>
       </div>
 
-      <v-list nav dense v-else>
+      <div v-else>
+        <v-list
+          dense
+          nav
+          v-for="menu in buildComponentFromFunctionnalities"
+          :key="menu.title"
+        >
+          <div v-if="menu.items == undefined">
+            <v-list-item
+              link
+              @click="$router.push({ path: menu.navigation }).catch(() => {})"
+            >
+              <v-list-item-icon>
+                <v-avatar size="25">
+                  <v-img :src="menu.url"></v-img>
+                </v-avatar>
+              </v-list-item-icon>
+
+              <v-list-item-content>
+                <v-list-item-title class="list-item-title">{{
+                  menu.title.toUpperCase()
+                }}</v-list-item-title>
+              </v-list-item-content>
+            </v-list-item>
+          </div>
+
+          <div v-else>
+            <div v-if="menu.items.length > 1">
+              <v-list-group no-action>
+                <template v-slot:activator>
+                  <v-list-item-icon>
+                    <v-avatar size="25">
+                      <v-img :src="menu.url"></v-img>
+                    </v-avatar>
+                  </v-list-item-icon>
+                  <v-list-item-content
+                    ><v-list-item-title class="list-item-title">{{
+                      menu.title
+                    }}</v-list-item-title></v-list-item-content
+                  >
+                </template>
+
+                <v-list-item
+                  link
+                  v-for="child in menu.items"
+                  :key="child.title"
+                >
+                  <!--<v-list-item-icon>
+                    <v-avatar size="25" color="teal">
+                      <v-img :src="child.url"></v-img>
+                    </v-avatar>
+                  </v-list-item-icon>-->
+                  <v-list-item-content>
+                    <v-list-item-title
+                      class="list-item-title"
+                      @click="
+                        $router.push({ path: child.navigation }).catch(() => {})
+                      "
+                      >{{ child.title }}</v-list-item-title
+                    >
+                  </v-list-item-content>
+                </v-list-item>
+              </v-list-group>
+            </div>
+          </div>
+
+          <!--<div v-if="menu.items.length > 1">
+            <v-list-group
+              v-for="item in menu.items"
+              :key="item.title"
+              v-model="item.active"
+              no-action
+            >
+              <template v-slot:activator>
+                <v-list-item-content
+                  ><v-list-item-title class="list-item-title">{{
+                    item.title
+                  }}</v-list-item-title></v-list-item-content
+                >
+              </template>
+
+              <v-list-item link v-for="child in item.items" :key="child.title">
+                <v-list-item-content>
+                  <v-list-item-title
+                    class="list-item-title"
+                    @click="
+                      $router.push({ path: child.navigation }).catch(() => {})
+                    "
+                    >{{ child.title }}</v-list-item-title
+                  >
+                </v-list-item-content>
+              </v-list-item>
+            </v-list-group>
+          </div>--->
+        </v-list>
+      </div>
+
+      <!--<div
+        v-else-if="
+          $store.state.userAuthentified.roleCode ==
+          'RoleAdminCompagnieTransport'
+        "
+      >
+        <v-list nav dense>
+          <v-list-group
+            v-for="item in items"
+            :key="item.title"
+            v-model="item.active"
+            no-action
+          >
+            <template v-slot:activator>
+              <v-list-item-content
+                ><v-list-item-title class="list-item-title">{{
+                  item.title
+                }}</v-list-item-title></v-list-item-content
+              >
+            </template>
+
+            <v-list-item link v-for="child in item.items" :key="child.title">
+              <v-list-item-content>
+                <v-list-item-title
+                  class="list-item-title"
+                  @click="
+                    $router.push({ path: child.navigation }).catch(() => {})
+                  "
+                  >{{ child.title }}</v-list-item-title
+                >
+              </v-list-item-content>
+            </v-list-item>
+          </v-list-group>
+        </v-list>
+      </div>-->
+
+      <!--<div
+        v-else-if="
+          $store.state.userAuthentified.roleCode ==
+          'RoleAdminCompagnieTransport'
+        "
+      >
+        <v-list
+          dense
+          nav
+          v-for="menu in buildComponentFromFunctionnalities"
+          :key="menu.title"
+        >
+          <v-list-item
+            link
+            @click="$router.push({ path: menu.navigation }).catch(() => {})"
+          >
+            <v-list-item-icon>
+              <v-icon color="teal">{{ menu.icon }}</v-icon>
+            </v-list-item-icon>
+
+            <v-list-item-content>
+              <v-list-item-title class="list-item-title">{{
+                menu.title.toUpperCase()
+              }}</v-list-item-title>
+            </v-list-item-content>
+          </v-list-item>
+        </v-list>
+      </div>-->
+      <!--<v-list nav dense v-else>
         <v-list-group
           v-for="item in items"
           :key="item.title"
@@ -86,7 +250,7 @@
             </v-list-item-content>
           </v-list-item>
         </v-list-group>
-      </v-list>
+      </v-list>-->
       <!--
       <v-list
         dense
@@ -111,14 +275,6 @@
       </v-list>
       -->
     </v-navigation-drawer>
-
-    <v-system-bar app color="teal">
-      <v-spacer></v-spacer>
-      <v-btn text><span class="lang">FR</span></v-btn
-      >&nbsp;&nbsp; <v-divider vertical></v-divider>&nbsp;&nbsp;
-      <v-btn text><span class="lang">EN</span></v-btn
-      >&nbsp;&nbsp;
-    </v-system-bar>
 
     <v-app-bar app color="white">
       <v-app-bar-nav-icon
@@ -247,9 +403,9 @@ import {
 import {
   FUNCTIONNALITY_CREATE_OFFRE_VOYAGE,
   FUNCTIONNALITY_CREATE_VILLE,
-  FUNCTIONNALITY_LISTING_VILLE,
+  //FUNCTIONNALITY_LISTING_VILLE,
   FUNCTIONNALITY_RATTACHE_ATTESTION_TRANSPORT,
-  FUNCTIONNALITY_CREATE_JOUR_OFFRE_VOYAGE,
+  //FUNCTIONNALITY_CREATE_JOUR_OFFRE_VOYAGE,
   FUNCTIONNALITY_CREATE_PROGRAMME_OFFRE_VOYAGE,
 } from "../components/globalConfig/constFunctionnalies";
 import {
@@ -257,24 +413,24 @@ import {
   FUNCTIONNALITY_CREATE_USER_ROLE,
   FUNCTIONNALITY_CREATE_USER_ACCOUNT,
   FUNCTIONNALITY_DEMANDE_ADHESION,
-  FUNCTIONNALITY_CREATE_PAYS,
-  FUNCTIONNALITY_LISTING_PAYS,
+  //FUNCTIONNALITY_CREATE_PAYS,
+  //FUNCTIONNALITY_LISTING_PAYS,
 } from "../components/globalConfig/constFunctionnalies";
 import {
-  /*UNCTIONNALITY_CREATE_VILLE_ESCALE ,*/ FUNCTIONNALITY_CREATE_PRIX_OFFRE_VOYAGE,
+  /*UNCTIONNALITY_CREATE_VILLE_ESCALE ,*/ //FUNCTIONNALITY_CREATE_PRIX_OFFRE_VOYAGE,
   FUNCTIONNALITY_CREATE_BUS_OFFRE_VOYAGE,
   FUNCTIONNALITY_LIST_ADHESION,
 } from "../components/globalConfig/constFunctionnalies";
 import {
   FUNCTIONNALITY_CREATE_CARACTERISTIQUE_OFFRE_VOYAGE,
   FUNCTIONNALITY_CREATE_GARE_TRANSPORT,
-  FUNCTIONNALITY_LISTING_GARE_TRANSPORT /*FUNCTIONNALITY_CREATE_BAGAGE*/,
+  //FUNCTIONNALITY_LISTING_GARE_TRANSPORT /*FUNCTIONNALITY_CREATE_BAGAGE*/,
 } from "../components/globalConfig/constFunctionnalies";
 import {
   FUNCTIONNALITY_CREATE_MODE_ABONNEMENT,
   FUNCTIONNALITY_CREATE_MODE_PAIEMENT,
   FUNCTIONNALITY_LISTING_MODE_PAIEMENT,
-  FUNCTIONNALITY_LISTING_OFFRE_VOYAGE,
+  //FUNCTIONNALITY_LISTING_OFFRE_VOYAGE,
 } from "../components/globalConfig/constFunctionnalies";
 import {
   FUNCTIONNALITY_RESERVING_FROM_OFFRE_VOYAGE,
@@ -293,7 +449,7 @@ export default {
       functionnalitiesListByUserRole: [],
       functionnalitiesListComponents: [],
 
-      items: [
+      /*items: [
         {
           icon: "mdi-ticket",
           items: [
@@ -479,7 +635,7 @@ export default {
           ],
           title: "ESPACE VENDEUR",
         },
-      ],
+      ],*/
     };
   },
 
@@ -545,37 +701,55 @@ export default {
       this.functionnalitiesListByUserRole.forEach((element) => {
         if (element.code == FUNCTIONNALITY_CREATE_OFFRE_VOYAGE) {
           var createOffreVoyageFunction = {
-            title: "CREER UNE OFFRE DE VOYAGE",
-            icon: "mdi-train-car",
-            navigation: "/creerOffreVoyage",
+            title: "OFFRE DE VOYAGE",
+            url: require("@/assets/route.png"),
+            items: [
+              {
+                title: "CREER UNE OFFRE DE VOYAGE",
+                url: "mdi-train-car",
+                navigation: "/creerOffreVoyage",
+                funct: "FUNCTIONNALITY_CREATE_OFFRE_VOYAGE",
+              },
+              {
+                title: "VOIR MES OFFRES ENREGISTRÉS",
+                url: require("../assets/liste.png"),
+                navigation: "/selectionnerOffreVoyage",
+              },
+            ],
           };
           globalFunctionnalities.push(createOffreVoyageFunction);
         }
-        if (element.code == FUNCTIONNALITY_LISTING_OFFRE_VOYAGE) {
-          var listingOffreVoyageFunction = {
-            title: "VOIR MES OFFRES ENREGISTRÉS",
-            icon: "mdi-ticket",
-            navigation: "/selectionnerOffreVoyage",
-          };
-          globalFunctionnalities.push(listingOffreVoyageFunction);
-        }
         if (element.code == FUNCTIONNALITY_CREATE_VILLE) {
           var createTownFunction = {
-            title: "CREER UNE VILLE",
-            icon: "mdi-domain",
-            navigation: "/creerVille",
+            title: "LOCALITÉ",
+            url: "",
+            items: [
+              {
+                title: "AJOUTER UNE VILLE",
+                url: "mdi-train-car",
+                navigation: "/creerVille",
+              },
+              {
+                title: "AJOUTER UN PAYS",
+                url: "mdi-train-car",
+                navigation: "/creerPays",
+              },
+              {
+                title: "GÉRER LES VILLES",
+                url: require("../assets/liste.png"),
+                navigation: "/selectionnerVille",
+              },
+              {
+                title: "GÉRER LES PAYS",
+                url: require("../assets/liste.png"),
+                navigation: "/selectionnerPays",
+              },
+            ],
           };
+
           globalFunctionnalities.push(createTownFunction);
         }
-        if (element.code == FUNCTIONNALITY_LISTING_VILLE) {
-          var createTownSelected = {
-            title: "GESTION DES VILLES",
-            icon: "mdi-office-building-cog",
-            navigation: "/selectionnerVille",
-          };
-          globalFunctionnalities.push(createTownSelected);
-        }
-
+        /*
         if (element.code == FUNCTIONNALITY_CREATE_PAYS) {
           var createCountryFunction = {
             title: "CREER UN PAYS",
@@ -586,21 +760,40 @@ export default {
         }
 
         if (element.code == FUNCTIONNALITY_LISTING_PAYS) {
-          var createCountrySelected = {
-            title: "GESTION DES PAYS",
-            icon: "mdi-wrench-cog",
-            navigation: "/selectionnerPays",
+          var createCountryFunction = {
+            title: "LOCALITÉ",
+            url: "",
+            items: [
+              {
+                title: "AJOUTER UN PAYS",
+                url: "mdi-train-car",
+                navigation: "/creerVille",
+              },
+              {
+                title: "GÉRER LES VILLES",
+                url: require("../assets/liste.png"),
+                navigation: "/selectionnerVille",
+              },
+            ],
           };
           globalFunctionnalities.push(createCountrySelected);
-        }
+        }*/
 
         if (element.code == FUNCTIONNALITY_RATTACHE_ATTESTION_TRANSPORT) {
           var bindTravelFile = {
-            title: "DOCUMENT DE TRANSPORT",
-            icon: "mdi-file-chart-check",
+            title: "DOCUMENT D'ADHESION",
+            url: require("../assets/docs.png"),
             navigation: "/documentAttestationTransport",
           };
           globalFunctionnalities.push(bindTravelFile);
+        }
+        if (element.code == FUNCTIONNALITY_CREATE_BUS_OFFRE_VOYAGE) {
+          var creerBusOffreFunction = {
+            title: "DÉLIVRER UN BUS",
+            url: require("@/assets/bus.png"),
+            navigation: "/associerBusCompagnieTransport",
+          };
+          globalFunctionnalities.push(creerBusOffreFunction);
         }
         if (element.code == FUNCTIONNALITY_CREATE_USER_ROLE) {
           var userRoleFunction = {
@@ -629,47 +822,38 @@ export default {
         if (element.code == FUNCTIONNALITY_DEMANDE_ADHESION) {
           var demandAdhesionFunction = {
             title: "DEMANDE D'ADHESION",
-            icon: "mdi-newspaper-check",
+            url: require("../assets/adhesion.png"),
             navigation: "/creerDemandeAdhesion",
           };
           globalFunctionnalities.push(demandAdhesionFunction);
         }
-        if (element.code == FUNCTIONNALITY_CREATE_JOUR_OFFRE_VOYAGE) {
-          var daterOffreFunction = {
-            title: "DATER UNE OFFRE DE VOYAGE",
-            icon: "mdi-calendar",
-            navigation: "/rattacherJourSemaineOffreVoyage",
-          };
-          globalFunctionnalities.push(daterOffreFunction);
-        }
         if (element.code == FUNCTIONNALITY_CREATE_PROGRAMME_OFFRE_VOYAGE) {
-          var programmeOffreFunction = {
-            title: "PROGRAMMER UNE OFFRE",
-            icon: "mdi-clock-outline",
-            navigation: "/programmeOffreVoyage",
+          var offrePlanification = {
+            title: "PLANIFICATION DE VOYAGE",
+            url: require("@/assets/calendar.png"),
+            items: [
+              {
+                title: "PROGRAMMER UN VOYAGE",
+                url: "mdi-train-car",
+                navigation: "/programmeOffreVoyage",
+                funct: "FUNCTIONNALITY_CREATE_OFFRE_VOYAGE",
+              },
+              {
+                title: "ASSOCIER UN PRIX",
+                url: require("../assets/liste.png"),
+                navigation: "/creerModeTarif",
+              },
+              {
+                title: "ASSOCIER UNE DATE À UN VOYAGE",
+                url: require("../assets/liste.png"),
+                navigation: "/rattacherJourSemaineOffreVoyage",
+              },
+            ],
           };
-          globalFunctionnalities.push(programmeOffreFunction);
+
+          globalFunctionnalities.push(offrePlanification);
         }
-        /*if (element.code == FUNCTIONNALITY_CREATE_VILLE_ESCALE) {
-                    var creerVilleEscaleFunction = { title : 'CREER VILLE ESCALE' , icon : 'mdi-city-switch' , navigation : '/creerVilleEscale' };
-                    globalFunctionnalities.push(creerVilleEscaleFunction);
-                }*/
-        if (element.code == FUNCTIONNALITY_CREATE_PRIX_OFFRE_VOYAGE) {
-          var tariferOffreFunction = {
-            title: "TARIFER UNE OFFRE",
-            icon: "mdi-currency-usd",
-            navigation: "/creerModeTarif",
-          };
-          globalFunctionnalities.push(tariferOffreFunction);
-        }
-        if (element.code == FUNCTIONNALITY_CREATE_BUS_OFFRE_VOYAGE) {
-          var creerBusOffreFunction = {
-            title: "DÉLIVRER UN BUS",
-            icon: "mdi-bus",
-            navigation: "/associerBusCompagnieTransport",
-          };
-          globalFunctionnalities.push(creerBusOffreFunction);
-        }
+
         if (
           element.code == FUNCTIONNALITY_CREATE_CARACTERISTIQUE_OFFRE_VOYAGE
         ) {
@@ -681,25 +865,27 @@ export default {
           globalFunctionnalities.push(createFeatureOffre);
         }
         if (element.code == FUNCTIONNALITY_CREATE_GARE_TRANSPORT) {
-          var creerGareFunction = {
-            title: "CREER UNE GARE",
-            icon: "mdi-subway",
-            navigation: "/creerGareCompagnieTransport",
+          var stations = {
+            title: "GARES DE TRANSPORT",
+            url: require("@/assets/station.png"),
+            items: [
+              {
+                title: "NOUVELLE GARE",
+                url: "mdi-train-car",
+                navigation: "/creerGareCompagnieTransport",
+                funct: "FUNCTIONNALITY_CREATE_OFFRE_VOYAGE",
+              },
+              {
+                title: "GESTION DES GARES",
+                url: require("../assets/liste.png"),
+                navigation: "/selectionnerGareCompagnieTransport",
+              },
+            ],
           };
-          globalFunctionnalities.push(creerGareFunction);
+
+          globalFunctionnalities.push(stations);
         }
-        if (element.code == FUNCTIONNALITY_LISTING_GARE_TRANSPORT) {
-          var gestionGareFunction = {
-            title: "GESTION DES GARES",
-            icon: "mdi-store-cog",
-            navigation: "/selectionnerGareCompagnieTransport",
-          };
-          globalFunctionnalities.push(gestionGareFunction);
-        }
-        /*if (element.code == FUNCTIONNALITY_CREATE_BAGAGE) {
-                    var creerBagageFunction = { title : 'AFFECTER DES BAGAGES' , icon : 'mdi-bag-checked' , navigation : '/gestionBagageCompagnieTransport' };
-                    globalFunctionnalities.push(creerBagageFunction);
-                }*/
+
         if (element.code == FUNCTIONNALITY_CREATE_MODE_ABONNEMENT) {
           var creerModeAbonnement = {
             title: "CREER MODE ABONNEMENT",
@@ -759,7 +945,7 @@ export default {
         if (element.code == FUNCTIONNALITY_LISTING_MODE_PAIEMENT) {
           var gestionPaiementEtAbonnementFunction = {
             title: "MODE ABONNEMENT ET PAIEMENT",
-            icon: "mdi-cash-sync",
+            url: "mdi-cash-sync",
             navigation: "/selectionnerModeAbonnementEtPaiement",
           };
           globalFunctionnalities.push(gestionPaiementEtAbonnementFunction);
@@ -767,7 +953,7 @@ export default {
         if (element.code == FUNCTIONNALITY_RESERVING_FROM_OFFRE_VOYAGE) {
           var selectingFromTravel = {
             title: "CONSULTER LES OFFRES",
-            icon: "mdi-train-car",
+            url: require("@/assets/liste.png"),
             navigation: "/selectionnerOffreVoyageReservation",
           };
           globalFunctionnalities.push(selectingFromTravel);
@@ -775,7 +961,7 @@ export default {
         if (element.code == FUNCTIONNALITY_SELECTION_RESERVATION_TICKET) {
           var managingReservation = {
             title: "GESTION DES RESERVATIONS",
-            icon: "mdi-clipboard-list",
+            url: require("@/assets/tickets.png"),
             navigation: "/selectionnerReservationBillet",
           };
           globalFunctionnalities.push(managingReservation);
@@ -797,7 +983,7 @@ export default {
 }
 
 .list-item-title {
-  font-family: "Raleway";
+  font-family: "Montserrat";
   font-size: 20px;
 }
 

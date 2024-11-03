@@ -33,15 +33,15 @@
     <div class="container" id="top-header">
       <div class="container-fluid" id="top-header">
         <div class="row header">
-          <div class="col-lg-7 text_header">
+          <div class="col-lg-8 text_header">
             <h1 class="font-weight-bold enough">
-              Voulez-vous passer un cap dans l'administration de votre compagnie
-              de transport?
+              Envie de voyager sans stress et de réserver vos billets en un clin
+              d'œil ? 🌍💺
             </h1>
             <br />
             <div class="content_text">
               <p>
-                <span id="african_bt">URBAN BUS TICKET </span>
+                <span id="african_bt">URBAN BUS TICKET'S </span>
                 est votre plateforme vous permettant de pouvoir administrer ,
                 gérer de maniere efficiente votre compagnie de transport. Vos
                 bénéfices ne pourront qu'augmenter.
@@ -66,7 +66,7 @@
       <div class="container">
         <div class="row justify-content-center">
           <h1 class="section_title" id="aboutUs-section">
-            <v-icon color="#2C3A47" size="64">mdi-menu-right</v-icon>A PROPOS
+            <v-icon color="#2C3A47" size="64">mdi-menu-right</v-icon>À PROPOS
           </h1>
         </div>
         <br />
@@ -78,37 +78,21 @@
           data-aos-duration="800"
         >
           <span id="aboutUs_text">
-            Urban Bus Ticket’s est une entreprise spécialisée dans la vente de
-            billets d'autocar en ligne, offrant un moyen pratique et efficace de
-            réserver des voyages en autocar à travers la Côte d’Ivoire. Notre
-            mission est de simplifier le processus de réservation de voyage en
-            autocar en offrant aux utilisateurs une expérience transparente,
-            sécurisée et conviviale. Nous croyons fermement que voyager en
-            autocar devrait être aussi simple que quelques clics sur un écran,
-            et c'est précisément ce que nous nous efforçons d'offrir à nos
-            clients. Sur notre plateforme, les voyageurs peuvent parcourir une
-            large sélection d'itinéraires proposés par différents transporteurs,
-            comparer les horaires, les tarifs et les options de siège, puis
-            réserver leur billet en quelques étapes simples. Que ce soit pour un
-            voyage d'affaires, des vacances en famille ou une escapade entre
-            amis, nous sommes là pour rendre le processus de réservation aussi
-            fluide que possible. Nous travaillons en étroite collaboration avec
-            un réseau de partenaires de transport de confiance pour offrir à nos
-            clients un accès à une variété d'options de voyage, garantissant
-            ainsi une flexibilité maximale et une expérience de voyage agréable.
-            Chez Urban Bus Ticket’s, nous nous engageons à fournir un service
-            clientèle exceptionnel, répondant aux questions et aux
-            préoccupations de nos clients avec rapidité et efficacité. Nous
-            sommes là pour accompagner nos clients à chaque étape de leur
-            voyage, de la réservation initiale à l'arrivée à destination. Nous
-            sommes fiers de jouer un rôle dans la facilitation des voyages en
-            autocar, en offrant aux voyageurs une alternative pratique et
-            abordable aux autres modes de transport. Chez Urban Bus Ticket’s,
-            nous sommes déterminés à rendre chaque voyage aussi agréable que
-            possible, en offrant la commodité, la fiabilité et le service de
-            qualité que nos clients méritent. Merci de nous faire confiance pour
-            vos besoins de voyage en autocar. Nous sommes impatients de vous
-            accueillir à bord !
+            Urban Bus Ticket’s simplifie vos voyages en autocar à travers la
+            Côte d’Ivoire en vous offrant une plateforme intuitive de
+            réservation en ligne. Avec nous, réservez facilement, rapidement, et
+            en toute sécurité, en profitant d’un large choix d’itinéraires,
+            d’horaires et de tarifs compétitifs. Notre mission est de rendre vos
+            déplacements en autocar aussi fluides que possible. En collaboration
+            avec des transporteurs de confiance, nous assurons flexibilité,
+            confort, et tranquillité d’esprit. Que ce soit pour le travail, les
+            loisirs, ou une aventure entre amis, chaque étape de votre
+            réservation est optimisée pour répondre à vos attentes. Nous sommes
+            fiers de fournir une alternative pratique et abordable aux autres
+            modes de transport en Côte d’Ivoire. Chez Urban Bus Ticket’s, nous
+            vous offrons le confort, la fiabilité et le service client de
+            qualité que vous méritez. Merci de voyager avec nous – votre confort
+            est notre priorité !
           </span>
         </div>
       </div>
@@ -528,7 +512,7 @@ export default {
   display: none;
   font-size: 25px;
   font-weight: 300;
-  font-family: sans-serif;
+  font-family: "Roboto";
   word-spacing: 4px;
 }
 
@@ -749,10 +733,13 @@ export default {
   text-align: center;
   font-size: 25px;
   color: #2c3e50;
-  font-family: Impact, Haettenschweiler, "Arial Narrow Bold", sans-serif;
+  font-family: "Roboto";
+  opacity: 0.8;
 }
 
 .section_title {
+  font-size: 30px;
+  font-family: "Oswald";
   color: #2c3a47;
 }
 
