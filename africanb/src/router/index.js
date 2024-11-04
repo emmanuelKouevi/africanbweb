@@ -23,11 +23,11 @@ import modifierCompteUtilisateur from "../components/administrateur_societe/user
 import resetPasswordUser from "../components/administrateur_societe/changerPassword";
 import selectionnerUtilisateur from "../components/administrateur_societe/selectionnerUtilisateur";
 
-import creerOffreVoyage from "../components/administration_compagnie_transport/CreerOffreVoyage";
+import creerOffreVoyage from "@/functionnalities/CreerOffreVoyage.vue";
 import creerVilleEscale from "../components/administration_compagnie_transport/CreerVilleEscale";
 import programmerOffreVoyage from "../components/administration_compagnie_transport/ProgrammerOffreVoyage";
 import creerModeTarif from "../components/administration_compagnie_transport/CreerModeTarif";
-import selectionnerOffreVoyage from "../components/administration_compagnie_transport/SelectionnerOffreVoyage";
+import selectionnerOffreVoyage from "@/functionnalities/SelectionnerOffreVoyage.vue";
 import modifierOffreVoyage from "../components/administration_compagnie_transport/ModifierOffreVoyage";
 import rattacherJourSemaineOffreVoyage from "../components/administration_compagnie_transport/RattacherJourSemaineOffreVoyage";
 import creerProprieteCaracteristiqueOffreVoyage from "../components/administration_compagnie_transport/CreerProprieteCaracteristiqueOffreVoyage";

@@ -1,6 +1,26 @@
 <template>
   <v-app id="inspire">
     <v-container>
+      <div class="row justify-space-evenly">
+        <div class="col-lg-1">
+          <v-avatar size="72">
+            <v-img src="@/assets/avatar.png"></v-img>
+          </v-avatar>
+        </div>
+        <div class="col-lg-4">
+          <div class="row">
+            <span class="greeting"
+              >Bienvenue, {{ $store.state.userAuthentified.nom }}</span
+            >
+          </div>
+          <div class="row">
+            <span class="last_connexion"
+              >Dernière connexion le:
+              {{ $store.state.userAuthentified.lastConnection }}</span
+            >
+          </div>
+        </div>
+      </div>
       <div class="row">
         <div class="col-lg-3">
           <v-card rounded="lg" elevation="5" class="count-books">
@@ -131,8 +151,17 @@ export default {
 </script>
 
 <style scoped>
-template {
-  background: grey;
+.greeting {
+  font-size: 23px;
+  word-spacing: 2px;
+  letter-spacing: 2px;
+  font-weight: bold;
+  font-family: "Montserrat";
+}
+
+.last_connexion {
+  font-family: "Montserrat";
+  opacity: 0.7;
 }
 
 .card-title-text {

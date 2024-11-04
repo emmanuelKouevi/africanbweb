@@ -2,7 +2,7 @@
   <v-app>
     <v-form @submit.prevent="submitForm">
       <v-container fluid>
-        <v-card max-width="1200px" class="mx-auto" elevation="5">
+        <v-card elevation="5">
           <v-card-title
             ><h6 class="font-weight-bold">
               CREER UNE OFFRE DE VOYAGE
@@ -14,122 +14,115 @@
 
           <v-card-text>
             <v-container fluid>
-              <div class="form-group">
-                <label for="designationOffre">Désignation de l'offre</label>
-                <v-text-field
-                  id="designationOffre"
-                  data-cy="designationOffre"
-                  :error-messages="designationOffreVoyageErrors"
-                  dense
-                  class="my_input"
-                  outlined
-                  color="primary"
-                  v-model.trim="$v.offreVoyage.designation.$model"
-                >
-                </v-text-field>
-              </div>
-
-              <div class="form-group">
-                <label for="descriptionOffre">Description de l'offre</label>
-                <v-textarea
-                  id="descriptionOffre"
-                  data-cy="descriptionOffre"
-                  :error-messages="descriptionOffreVoyageErrors"
-                  class="my_input"
-                  dense
-                  outlined
-                  color="primary"
-                  v-model.trim="$v.offreVoyage.description.$model"
-                >
-                </v-textarea>
-              </div>
-
-              <div class="form-row">
-                <div class="form-group col-md-6">
-                  <label for="gareDepart">Gare de départ</label>
-                  <v-select
-                    :error-messages="villeDepartErrors"
-                    id="gareDepart"
-                    data-cy="gareDepart"
-                    class="my_input"
-                    v-model.trim="$v.offreVoyage.villeDepartDesignation.$model"
-                    dense
-                    outlined
-                    :items="villesList"
-                    item-text="designation"
-                    item-value="designation"
-                    color="primary"
-                    prefix="De :"
-                    placeholder="Départ"
-                  >
-                  </v-select>
+              <form>
+                <div class="row">
+                  <div class="col-lg-6">
+                    <label for="exampleInputEmail1" class="form-label"
+                      >Désignation de l'offre</label
+                    >
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="exampleInputEmail1"
+                      v-model.trim="$v.offreVoyage.designation.$model"
+                    />
+                  </div>
+                  <div class="col-lg-4">
+                    <label for="exampleInputEmail1" class="form-label"
+                      >Type</label
+                    >
+                    <select
+                      class="form-select"
+                      aria-label="Default select example"
+                      v-model.trim="
+                        $v.offreVoyage.typeOffreVoyageDesignation.$model
+                      "
+                    >
+                      <option
+                        v-for="(type, t) in referenceTypeOffreVoyageList"
+                        :key="t"
+                      >
+                        {{ type.designation }}
+                      </option>
+                    </select>
+                  </div>
                 </div>
+                <br />
 
-                <div class="form-group col-md-6">
-                  <label for="gareArrivee">Gare d'arrivée</label>
-                  <v-select
-                    :error-messages="villeDestinationErrors"
-                    id="gareArrivee"
-                    data-cy="gareArrivee"
-                    class="my_input"
-                    v-model.trim="
-                      $v.offreVoyage.villeDestinationDesignation.$model
-                    "
-                    dense
-                    outlined
-                    :items="villesList"
-                    item-text="designation"
-                    item-value="designation"
-                    color="primary"
-                    prefix="Vers :"
-                    placeholder="Arrivée"
+                <div class="mb-3">
+                  <label for="exampleInputPassword1" class="form-label"
+                    >Description</label
                   >
-                  </v-select>
+                  <textarea
+                    class="form-control col-lg-10"
+                    name=""
+                    id=""
+                    v-model.trim="$v.offreVoyage.description.$model"
+                  ></textarea>
                 </div>
-              </div>
-
-              <div class="form-row">
-                <div class="form-group col-md-6">
-                  <label for="referenceOffre">Type de l'offre</label>
-                  <v-select
-                    :items="referenceTypeOffreVoyageList"
-                    id="referenceOffre"
-                    data-cy="referenceOffre"
-                    class="my_input"
-                    item-text="designation"
-                    item-value="designation"
-                    :error-messages="typeOffreVoyageErrors"
-                    v-model.trim="
-                      $v.offreVoyage.typeOffreVoyageDesignation.$model
-                    "
-                    dense
-                    outlined
-                    color="primary"
-                  >
-                  </v-select>
+                <div class="row">
+                  <div class="col-lg-5">
+                    <label for="exampleInputEmail1" class="form-label"
+                      >Départ</label
+                    >
+                    <select
+                      class="form-select"
+                      aria-label="Default select example"
+                      v-model.trim="
+                        $v.offreVoyage.villeDepartDesignation.$model
+                      "
+                    >
+                      <option
+                        v-for="(ville, l) in villesList"
+                        :key="l"
+                        :value="ville.designation"
+                      >
+                        {{ ville.designation }}
+                      </option>
+                    </select>
+                  </div>
+                  <div class="col-lg-5">
+                    <label for="exampleInputEmail1" class="form-label"
+                      >Destination</label
+                    >
+                    <select
+                      class="form-select"
+                      aria-label="Default select example"
+                      v-model.trim="
+                        $v.offreVoyage.villeDestinationDesignation.$model
+                      "
+                    >
+                      <option
+                        v-for="(ville, l) in villesList"
+                        :key="l"
+                        :value="ville.designation"
+                      >
+                        {{ ville.designation }}
+                      </option>
+                    </select>
+                  </div>
                 </div>
-              </div>
+              </form>
             </v-container>
           </v-card-text>
           <v-card-actions>
             <v-btn
-              x-small
-              id="btnInitialize"
               small
+              id="btnInitialize"
               dark
               color="secondary"
               data-cy="btnInitialize"
-              ><v-icon>mdi-sync</v-icon> REINITIALISER</v-btn
+              >REINITIALISER</v-btn
             >
             <v-btn
-              x-small
-              id="btnCreate"
               small
+              id="btnCreate"
               type="submit"
               dark
-              color="primary"
+              color="success"
               data-cy="btnCreate"
-              ><v-icon>mdi-check</v-icon> CRÉER L'OFFRE</v-btn
+            >
+              CRÉER L'OFFRE</v-btn
             >
           </v-card-actions>
         </v-card>
@@ -170,7 +163,7 @@ import {
   API_OBTENIR_REFERENCE_PAR_PAR_FAMILLE,
   API_CREER_OFFRE_VOYAGE,
   HEADERS,
-} from "../globalConfig/globalConstConfig";
+} from "@/components/globalConfig/globalConstConfig";
 import { required, minLength } from "vuelidate/lib/validators";
 import $ from "jquery";
 
@@ -197,7 +190,7 @@ export default {
       offreVoyage: {
         designation: null,
         description: null,
-        compagnieTransportRaisonSociale: "KOUEVI TRANSPORT",
+        compagnieTransportRaisonSociale: null,
         typeOffreVoyageDesignation: null,
         villeDepartDesignation: null,
         villeDestinationDesignation: null,
@@ -234,10 +227,14 @@ export default {
   methods: {
     //SOUMISSION DU FORMULAIRE
     submitForm() {
-      this.$v.touch();
-      if (this.$v.offreVoyage.$invalid)
+      this.$v.$touch();
+      if (this.$v.offreVoyage.$invalid) {
         this.errorMsg = "Vous n'avez saisi les champs concernés";
-      else this.creerOffreVoyage();
+        $(".alert-error").fadeIn();
+        setTimeout(function () {
+          $(".alert-error").fadeOut();
+        }, 4000);
+      } else this.creerOffreVoyage();
     },
 
     //OBTENIR REFERENCE DESIGNATION TYPE OFFRE DE VOYAGE
@@ -261,6 +258,8 @@ export default {
 
     // CREATION D'UNE OFFRE DE VOYAGE
     async creerOffreVoyage() {
+      this.offreVoyage.compagnieTransportRaisonSociale =
+        this.$store.state.userAuthentified.compagnieTransportRaisonSociale;
       this.offreVoyageToSend.datas.push(this.offreVoyage);
       this.overlay = true;
       await axios
@@ -336,7 +335,6 @@ export default {
 
   computed: {
     // GESTION DES CONTRAINTES DE CHAMPS D'ENTREES POUR LA CREATION D'UNE OFFRE DE VOYAGE
-
     designationOffreVoyageErrors() {
       const errors = [];
       if (!this.$v.offreVoyage.designation.$dirty) return errors;
