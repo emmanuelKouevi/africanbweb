@@ -1,51 +1,57 @@
 <template>
   <v-app>
-    <v-card>
-      <v-card-title class="title-card"
-        >LISTE DES GARES ENREGISTRÉS
-        <v-spacer></v-spacer>
-        <v-text-field
-          v-model="search"
-          append-icon="mdi-magnify"
-          label="Search"
-          single-line
-          hide-details
-        ></v-text-field>
-      </v-card-title>
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="container">
+          <v-card>
+            <v-card-title class="title-card"
+              >LISTE DES GARES ENREGISTRÉS
+              <v-spacer></v-spacer>
+              <v-text-field
+                v-model="search"
+                append-icon="mdi-magnify"
+                label="Search"
+                single-line
+                hide-details
+              ></v-text-field>
+            </v-card-title>
 
-      <v-data-table
-        :headers="headers"
-        :items="gareDisponiblesList"
-        :loading="loading"
-        :search="search"
-      >
-        <template v-slot:[`item.actions`]="{ item }">
-          <v-icon
-            title="editer"
-            color="blue"
-            small
-            class="mr-2"
-            @click="editerOffreVoyage(item)"
-            >mdi-pencil</v-icon
-          >
-          <v-icon
-            title="supprimer"
-            color="red"
-            small
-            class="mr-2"
-            @click="supprimerProduitLogement(item)"
-            >mdi-delete</v-icon
-          >
-        </template>
-      </v-data-table>
-      <v-alert
-        class="myalert alert-error"
-        type="error"
-        width="350px"
-        dismissible
-        >{{ errorMsg }}</v-alert
-      >
-    </v-card>
+            <v-data-table
+              :headers="headers"
+              :items="gareDisponiblesList"
+              :loading="loading"
+              :search="search"
+            >
+              <template v-slot:[`item.actions`]="{ item }">
+                <v-icon
+                  title="editer"
+                  color="blue"
+                  small
+                  class="mr-2"
+                  @click="editerOffreVoyage(item)"
+                  >mdi-pencil</v-icon
+                >
+                <v-icon
+                  title="supprimer"
+                  color="red"
+                  small
+                  class="mr-2"
+                  @click="supprimerProduitLogement(item)"
+                  >mdi-delete</v-icon
+                >
+              </template>
+            </v-data-table>
+            <v-alert
+              class="myalert alert-error"
+              type="error"
+              width="350px"
+              dismissible
+              >{{ errorMsg }}</v-alert
+            >
+          </v-card>
+        </div>
+      </div>
+    </div>
   </v-app>
 </template>
 
@@ -55,7 +61,7 @@ import $ from "jquery";
 import {
   API_RECUPERER_LISTE_GARES_PAR_COMPAGNIE,
   HEADERS,
-} from "../globalConfig/globalConstConfig";
+} from "../components/globalConfig/globalConstConfig";
 export default {
   name: "SelectionnerGareCompagnieTransport",
   data() {
@@ -74,7 +80,7 @@ export default {
 
       gareListObject: {
         data: {
-          compagnieTransportRaisonSociale: "KOUEVI TRANSPORT",
+          compagnieTransportRaisonSociale: null,
         },
       },
       gareDisponiblesList: [],
@@ -85,6 +91,8 @@ export default {
     // RECUPERER LA LISTE DES GARES ENREGISTRÉS PAR COMPAGNIE DE TRANSPORT
     async obtenirGareListParCompagnieTransport() {
       this.loading = true;
+      this.gareListObject.data.compagnieTransportRaisonSociale =
+        this.$store.state.userAuthentified.compagnieTransportRaisonSociale;
       axios
         .post(API_RECUPERER_LISTE_GARES_PAR_COMPAGNIE, this.gareListObject, {
           headers: HEADERS(this.$store.state.userAuthentified.token),

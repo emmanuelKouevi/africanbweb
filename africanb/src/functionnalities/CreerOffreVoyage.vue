@@ -103,28 +103,27 @@
                   </div>
                 </div>
               </form>
+              <br />
             </v-container>
-          </v-card-text>
-          <v-card-actions>
-            <v-btn
-              small
-              id="btnInitialize"
-              dark
-              color="secondary"
-              data-cy="btnInitialize"
-              >REINITIALISER</v-btn
-            >
-            <v-btn
-              small
-              id="btnCreate"
-              type="submit"
-              dark
-              color="success"
-              data-cy="btnCreate"
-            >
-              CRÉER L'OFFRE</v-btn
-            >
-          </v-card-actions>
+            <div class="float-right">
+              <v-btn
+                id="btnInitialize"
+                dark
+                color="secondary"
+                data-cy="btnInitialize"
+                >REINITIALISER</v-btn
+              >&nbsp;&nbsp;
+              <v-btn
+                id="btnCreate"
+                type="submit"
+                dark
+                color="success"
+                data-cy="btnCreate"
+              >
+                CRÉER L'OFFRE</v-btn
+              >
+            </div> </v-card-text
+          ><br />
         </v-card>
       </v-container>
     </v-form>

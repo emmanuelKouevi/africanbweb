@@ -90,14 +90,11 @@
                   />
                 </div>
               </form>
-            </v-card-text>
-
-            <v-card-actions>
-              <v-btn small btn color="secondary">REINITIALISER</v-btn>
-              <v-btn type="submit" small color="success" btn
-                >CREER LA GARE</v-btn
-              >
-            </v-card-actions>
+              <div class="float-right">
+                <v-btn btn color="secondary">REINITIALISER</v-btn>&nbsp;&nbsp;
+                <v-btn type="submit" color="success" btn>CREER LA GARE</v-btn>
+              </div> </v-card-text
+            ><br /><br />
           </v-card>
         </v-container>
       </v-form>
@@ -129,7 +126,7 @@ import $ from "jquery";
 import {
   API_CREER_GARE_COMPAGNIE_TRANSPORT,
   HEADERS,
-} from "../globalConfig/globalConstConfig";
+} from "../components/globalConfig/globalConstConfig";
 export default {
   name: "CreerGareCompagnieTransport",
   data() {
@@ -148,7 +145,7 @@ export default {
         telephone1: null,
         telephone2: null,
         adresseLocalisation: null,
-        compagnieTransportRaisonSociale: "KOUEVI TRANSPORT",
+        compagnieTransportRaisonSociale: null,
       },
     };
   },
@@ -195,6 +192,8 @@ export default {
 
     //CREER UNE COMPAGNIE DE TRANSPORT
     async creerGareCompagnieTransport() {
+      this.gareTransportModel.compagnieTransportRaisonSociale =
+        this.$store.state.userAuthentified.compagnieTransportRaisonSociale;
       this.gareTransportToSend.datas.push(this.gareTransportModel);
       this.overlay = true;
       await axios

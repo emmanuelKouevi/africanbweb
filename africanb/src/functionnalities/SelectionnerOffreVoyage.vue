@@ -1,7 +1,7 @@
 <template>
   <v-app>
     <div class="row">
-      <div class="col-lg-10">
+      <div class="col-lg-12">
         <v-container fluid>
           <v-card>
             <v-card-title class="title-card"
