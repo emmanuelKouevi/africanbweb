@@ -126,7 +126,7 @@ import $ from "jquery";
 import {
   API_CREER_GARE_COMPAGNIE_TRANSPORT,
   HEADERS,
-} from "../components/globalConfig/globalConstConfig";
+} from "../../components/globalConfig/globalConstConfig";
 export default {
   name: "CreerGareCompagnieTransport",
   data() {

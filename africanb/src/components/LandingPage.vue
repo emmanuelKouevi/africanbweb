@@ -2,7 +2,7 @@
   <v-app id="inspire">
     <nav class="navbar navbar-light bg-light fixed-top">
       <div class="container-fluid">
-        <a class="navbar-brand"><h2>URBAN BUS TICKET</h2></a>
+        <a class="navbar-brand"><h2>URBAN BUS TICKET'S</h2></a>
         <ul class="nav nav-pills justify-content-end">
           <li class="nav-item">
             <a class="nav-link" href="#aboutUs-section" aria-current="page"
@@ -13,11 +13,11 @@
             <a class="nav-link" href="#our-services">NOS SERVICES</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">NOS PARTENAIRES</a>
+            <a class="nav-link" href="#partner-section">NOS PARTENAIRES</a>
           </li>
-          <li class="nav-item">
+          <!--<li class="nav-item">
             <a class="nav-link" href="#">NOUS CONTACTER</a>
-          </li>
+          </li>-->
           &nbsp;&nbsp;
           <li class="nav-item">
             <button type="button" class="btn" @click="goToLoginPage">
@@ -120,13 +120,13 @@
             <v-card rounded="xl" elevation="5" height="600px">
               <v-img src="../assets/growth.svg" height="220" cover></v-img>
               <v-divider></v-divider>
+              <v-card-title>Simplification de la Réservation 📲</v-card-title>
               <v-card-text>
-                Notre mission est de simplifier le processus de réservation de
-                voyage en autocar en offrant aux utilisateurs une expérience
-                transparente, sécurisée et conviviale. Nous croyons fermement
-                que voyager en autocar devrait être aussi simple que quelques
-                clics sur un écran, et c'est précisément ce que nous nous
-                efforçons d'offrir à nos clients.
+                Notre mission est de rendre la réservation en autocar aussi
+                simple et rapide que possible. Grâce à une interface intuitive
+                et sécurisée, nous permettons aux usagers de réserver leur
+                trajet en quelques clics. Voyager devient aussi facile que de
+                naviguer sur votre téléphone.
               </v-card-text>
             </v-card>
           </div>
@@ -141,18 +141,13 @@
             <v-card rounded="xl" elevation="5" height="600px">
               <v-img src="../assets/managing.svg" height="220" cover></v-img>
               <v-divider></v-divider>
+              <v-card-title>Choix et Flexibilité 🔍</v-card-title>
               <v-card-text>
-                Sur notre plateforme, les voyageurs peuvent parcourir une large
-                sélection d'itinéraires proposés par différents transporteurs,
-                comparer les horaires, les tarifs et les options de siège, puis
-                réserver leur billet en quelques étapes simples. Que ce soit
-                pour un voyage d'affaires, des vacances en famille ou une
-                escapade entre amis, nous sommes là pour rendre le processus de
-                réservation aussi fluide que possible. Nous travaillons en
-                étroite collaboration avec un réseau de partenaires de transport
-                de confiance pour offrir à nos clients un accès à une variété
-                d'options de voyage, garantissant ainsi une flexibilité maximale
-                et une expérience de voyage agréable.
+                Accédez à une grande variété d’itinéraires et de transporteurs.
+                Sur notre plateforme, comparez facilement les horaires, tarifs,
+                et options de siège proposés par différents transporteurs. Que
+                vous voyagiez pour affaires, en famille ou entre amis, trouvez
+                l'option idéale pour vous.
               </v-card-text>
             </v-card>
           </div>
@@ -171,20 +166,17 @@
                 cover
               ></v-img>
               <v-divider></v-divider>
+              <v-card-title
+                >Service Client : Accompagnement et Suivi 🤝</v-card-title
+              >
               <v-card-text>
-                Chez Urban Bus Ticket’s, nous nous engageons à fournir un
-                service clientèle exceptionnel, répondant aux questions et aux
-                préoccupations de nos clients avec rapidité et efficacité. Nous
-                sommes là pour accompagner nos clients à chaque étape de leur
-                voyage, de la réservation initiale à l'arrivée à destination.
-                Nous sommes fiers de jouer un rôle dans la facilitation des
-                voyages en autocar, en offrant aux voyageurs une alternative
-                pratique et abordable aux autres modes de transport. Chez Urban
-                Bus Ticket’s, nous sommes déterminés à rendre chaque voyage
-                aussi agréable que possible, en offrant la commodité, la
-                fiabilité et le service de qualité que nos clients méritent.
-                Merci de nous faire confiance pour vos besoins de voyage en
-                autocar.
+                Votre satisfaction est notre priorité. Bien que chaque compagnie
+                de transport gère directement son service client, les équipes
+                d'Urban Bus Ticket’s travaillent en étroite collaboration avec
+                elles pour traiter vos réclamations et s’assurer que vos
+                préoccupations soient prises en compte. Nous nous engageons à
+                faciliter le dialogue entre les voyageurs et les transporteurs
+                pour une expérience de voyage sans souci.
               </v-card-text>
             </v-card>
           </div>
@@ -195,7 +187,7 @@
     <div class="container-fluid partner_background">
       <div class="container">
         <div class="row justify-content-center">
-          <h1 class="section_title" id="aboutUs-section">
+          <h1 class="section_title" id="partner-section">
             <v-icon color="#2C3A47" size="64">mdi-menu-right</v-icon>PARTENARIAT
           </h1>
         </div>
@@ -221,7 +213,13 @@
                 autocar.
               </div>
               <br />
-              <v-btn class="partner_btn" small btn
+              <v-btn
+                class="partner_btn"
+                @click="
+                  $router.push({ path: '/DemandeAdhesion' }).catch(() => {})
+                "
+                small
+                btn
                 ><span class="adhesion">DEMANDER UNE ADHÉSION</span></v-btn
               >
             </div>

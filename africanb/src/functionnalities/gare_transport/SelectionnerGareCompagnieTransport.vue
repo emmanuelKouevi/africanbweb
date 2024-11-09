@@ -61,7 +61,7 @@ import $ from "jquery";
 import {
   API_RECUPERER_LISTE_GARES_PAR_COMPAGNIE,
   HEADERS,
-} from "../components/globalConfig/globalConstConfig";
+} from "../../components/globalConfig/globalConstConfig";
 export default {
   name: "SelectionnerGareCompagnieTransport",
   data() {

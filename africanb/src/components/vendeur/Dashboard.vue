@@ -26,13 +26,32 @@
           <v-card rounded="lg" elevation="5" class="count-books">
             <v-card-title
               ><span class="card-title-text"
-                >Total Réservation</span
+                >TOTAL RESERVATION PAYEE</span
               ></v-card-title
             >
             <v-card-text>
               <v-container>
                 <v-row justify="center">
-                  <span class="libelle font-weight-bold">15</span>
+                  <span class="libelle font-weight-bold">{{
+                    reservationList.length
+                  }}</span>
+                </v-row>
+              </v-container>
+            </v-card-text>
+          </v-card>
+        </div>
+
+        <div class="col-lg-3">
+          <v-card rounded="lg" elevation="5">
+            <v-card-title
+              ><span class="card-title-text">CAISSE</span></v-card-title
+            >
+            <v-card-text>
+              <v-container>
+                <v-row justify="center">
+                  <span class="libelle font-weight-bold"
+                    >{{ totalPriceReservation }} FCFA
+                  </span>
                 </v-row>
               </v-container>
             </v-card-text>
@@ -43,24 +62,7 @@
           <v-card rounded="lg" elevation="5">
             <v-card-title
               ><span class="card-title-text"
-                >Caisse actuelle</span
-              ></v-card-title
-            >
-            <v-card-text>
-              <v-container>
-                <v-row justify="center">
-                  <span class="libelle font-weight-bold">258.015 </span>
-                </v-row>
-              </v-container>
-            </v-card-text>
-          </v-card>
-        </div>
-
-        <div class="col-lg-3">
-          <v-card rounded="lg" elevation="5">
-            <v-card-title
-              ><span class="card-title-text"
-                >Offres Disponibles</span
+                >TOTAL RESERVATION NON PAYEE</span
               ></v-card-title
             >
             <v-card-text>
@@ -77,7 +79,7 @@
           <v-card rounded="lg" elevation="5">
             <v-card-title
               ><span class="card-title-text"
-                >Reservation en cours</span
+                >TOTAL RESERVATION EFFECTIVE</span
               ></v-card-title
             >
             <v-card-text>
@@ -110,6 +112,15 @@
 </template>
 
 <script>
+import axios from "axios";
+//import $ from 'jquery';
+import {
+  API_GET_RESERVATIONS_BY_SELLER,
+  API_GET_RESERVATIONS_BY_ADMIN_TP,
+  //API_GENERATE_TICKET,
+  HEADERS,
+  //API_GENERATE_REPORT,
+} from "../globalConfig/globalConstConfig";
 export default {
   name: "DashboardSeller",
 
@@ -118,14 +129,87 @@ export default {
       search: "",
       loading: true,
       headers: [
-        { text: "Référence", value: "" },
-        { text: "Prix", value: "" },
-        { text: "Nom et Prenoms", value: "" },
-        { text: "E-mail", value: "" },
+        { text: "REFERENCE", value: "" },
+        { text: "PRIX", value: "" },
+        { text: "NOM ET PRENOMS", value: "" },
+        { text: "E-MAIL", value: "" },
       ],
+
+      objectToSend: {
+        data: {},
+      },
 
       reservationList: [],
     };
+  },
+
+  methods: {
+    //OBTENIR LA LISTE DES RESERVATIONS EFFECTUÉ PAR LES UTILISATEUR À LA GARE
+    async getAllReservationTicketAvailable() {
+      this.loading = true;
+      if (
+        this.$store.state.userAuthentified.roleCode ==
+        "RoleAdminCompagnieTransport"
+      ) {
+        await axios
+          .post(API_GET_RESERVATIONS_BY_ADMIN_TP, this.objectToSend, {
+            headers: HEADERS(this.$store.state.userAuthentified.token),
+          })
+          .then((response) => {
+            if (response.status == 200) {
+              if (response.data.hasError == false) {
+                this.reservationList = response.data.items;
+              } else {
+                //
+              }
+            } else {
+              alert("");
+            }
+          })
+          .catch((e) => {
+            this.errorMsg = e;
+          })
+          .finally(() => {
+            this.loading = false;
+          });
+      } else {
+        await axios
+          .post(API_GET_RESERVATIONS_BY_SELLER, this.objectToSend, {
+            headers: HEADERS(this.$store.state.userAuthentified.token),
+          })
+          .then((response) => {
+            if (response.status == 200) {
+              if (response.data.hasError == false) {
+                this.reservationList = response.data.items;
+              } else {
+                //
+              }
+            } else {
+              //
+            }
+          })
+          .catch((e) => {
+            this.errorMsg = e;
+          })
+          .finally(() => {
+            this.loading = false;
+          });
+      }
+    },
+  },
+
+  computed: {
+    totalPriceReservation() {
+      var total = 0;
+      for (let index = 0; index < this.reservationList.length; index++) {
+        total += this.reservationList[index].montantTotalReservation;
+      }
+      return total;
+    },
+  },
+
+  mounted() {
+    this.getAllReservationTicketAvailable();
   },
 };
 </script>
@@ -144,7 +228,7 @@ export default {
   opacity: 0.7;
 }
 .card-title-text {
-  font-size: 17px;
+  font-size: 12px;
   letter-spacing: 1.9px;
   font-family: "Montserrat";
   color: #2d3436;

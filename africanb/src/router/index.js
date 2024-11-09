@@ -23,11 +23,11 @@ import modifierCompteUtilisateur from "../components/administrateur_societe/user
 import resetPasswordUser from "../components/administrateur_societe/changerPassword";
 import selectionnerUtilisateur from "../components/administrateur_societe/selectionnerUtilisateur";
 
-import creerOffreVoyage from "@/functionnalities/CreerOffreVoyage.vue";
+import creerOffreVoyage from "@/functionnalities/offre_voyage/CreerOffreVoyage.vue";
 import creerVilleEscale from "../components/administration_compagnie_transport/CreerVilleEscale";
 import programmerOffreVoyage from "../components/administration_compagnie_transport/ProgrammerOffreVoyage";
 import creerModeTarif from "../components/administration_compagnie_transport/CreerModeTarif";
-import selectionnerOffreVoyage from "@/functionnalities/SelectionnerOffreVoyage.vue";
+import selectionnerOffreVoyage from "@/functionnalities/offre_voyage/SelectionnerOffreVoyage.vue";
 import modifierOffreVoyage from "../components/administration_compagnie_transport/ModifierOffreVoyage";
 import rattacherJourSemaineOffreVoyage from "../components/administration_compagnie_transport/RattacherJourSemaineOffreVoyage";
 import creerProprieteCaracteristiqueOffreVoyage from "../components/administration_compagnie_transport/CreerProprieteCaracteristiqueOffreVoyage";
@@ -35,8 +35,8 @@ import modifierModeTarif from "../components/administration_compagnie_transport/
 import modifierVilleEscaleOffreVoyage from "../components/administration_compagnie_transport/ModifierVilleEscaleOffreVoyage";
 import modifierJourOffreVoyage from "../components/administration_compagnie_transport/ModifierJourOffreVoyage";
 import gestionBagageCompagnieTransport from "../components/administration_compagnie_transport/GestionBagageCompagnieTransport";
-import creerGareCompagnieTransport from "../functionnalities/CreerGareCompagnieTransport.vue";
-import selectionnerGareCompagnieTransport from "../functionnalities/SelectionnerGareCompagnieTransport.vue";
+import creerGareCompagnieTransport from "../functionnalities/gare_transport/CreerGareCompagnieTransport.vue";
+import selectionnerGareCompagnieTransport from "../functionnalities/gare_transport/SelectionnerGareCompagnieTransport.vue";
 import tableauBord from "../components/Dashboard/TableauBord";
 import creerModeAbonnement from "../components/administration_compagnie_transport/CreerModeAbonnement";
 import creerModePaiement from "../components/administration_compagnie_transport/CreerModePaiement";
@@ -58,7 +58,7 @@ import modifierVille from "@/components/administrateur_societe/modifierVille.vue
 import UserInfo from "@/components/UserInfo.vue";
 import InfosAdhesion from "@/components/InfosAdhesion.vue";
 import InfosAdhesionValide from "@/components/InfosAdhesionValide.vue";
-import creerDemandeAdhesion from "../components/CreerDemandeAdhesion";
+import creerDemandeAdhesion from "../functionnalities/adhesion/DemandeAdhesion.vue";
 import creerDemandeAdhesionInterne from "../components/administrateur_societe/CreerDemandeAdhesion copy.vue";
 import SelectionnerProgrammeOffreVoyageList from "../components/vendeur/ProgrammeOffreVoyageList.vue";
 //import { ROLE_ADMIN_COMPAGNIE_TRANSPORT , ROLE_ADMIN_SOCIETE_MERE } from '../components/globalConfig/constUsersRoles'
@@ -81,7 +81,7 @@ const routes = [
     component: HomePage,
   },
   {
-    path: "/Partenaires",
+    path: "/DemandeAdhesion",
     name: "creerDemandeAdhesion",
     component: creerDemandeAdhesion,
   },

@@ -28,6 +28,7 @@
                 @click="checkBooking(item)"
                 >mdi-pencil</v-icon
               >&nbsp;
+
               <v-icon
                 title="imprimer"
                 color="blue"
@@ -70,7 +71,7 @@ import {
   API_GET_RESERVATIONS_BY_ADMIN_TP,
   API_GENERATE_TICKET,
   HEADERS,
-  API_GENERATE_REPORT,
+  //API_GENERATE_REPORT,
 } from "../globalConfig/globalConstConfig";
 export default {
   name: "SelectionnerReservationBillet",
@@ -97,13 +98,13 @@ export default {
       },
 
       headers: [
-        { text: "Réference N°", value: "id" },
-        { text: "Gare", value: "gareDesignation" },
-        { text: "Trajet", value: "offreVoyageDesignation" },
-        { text: "Nom du client", value: "clientDetails.nom" },
-        { text: "Prenom du client", value: "clientDetails.prenoms" },
-        { text: "Montant versé", value: "montantTotalReservation" },
-        { text: "Actions", value: "actions", sortable: false },
+        { text: "Réference N°", value: "designation" },
+        { text: "GARE", value: "gareDesignation" },
+        { text: "TRAJET", value: "offreVoyageDesignation" },
+        { text: "NOM", value: "clientDetails.nom" },
+        { text: "PRENOM", value: "clientDetails.prenoms" },
+        { text: "MONTANT", value: "montantTotalReservation" },
+        { text: "ACTIONS", value: "actions", sortable: false },
       ],
 
       overlay: false,
@@ -116,7 +117,6 @@ export default {
 
   methods: {
     async convertToBase64(byte) {
-      console.log(byte);
       window.open(
         "data:application/pdf;base64," + byte,
         "_blank",
@@ -125,7 +125,7 @@ export default {
     },
 
     //Exporter le rapport en PDF
-    async toExportReport() {
+    /*async toExportReport() {
       await axios
         .post(API_GENERATE_REPORT, this.ticketGenerated, {
           headers: HEADERS(this.$store.state.userAuthentified.token),
@@ -136,7 +136,7 @@ export default {
         .catch((e) => {
           this.errorMsg = e;
         });
-    },
+    },*/
 
     //Generer le billet de voyage
     async imprimerBillet(designationBillet) {
@@ -164,7 +164,6 @@ export default {
     //OBTENIR LA LISTE DES RESERVATIONS EFFECTUÉ PAR LES UTILISATEUR À LA GARE
     async getAllReservationTicketAvailable() {
       this.loading = true;
-      console.log("Dans le service de recuperation des reservation");
       if (
         this.$store.state.userAuthentified.roleCode ==
         "RoleAdminCompagnieTransport"
@@ -175,7 +174,6 @@ export default {
           })
           .then((response) => {
             if (response.status == 200) {
-              console.log(response);
               if (response.data.hasError == false) {
                 this.reservationTicketList = response.data.items;
               } else {
@@ -198,7 +196,6 @@ export default {
           })
           .then((response) => {
             if (response.status == 200) {
-              console.log(response);
               if (response.data.hasError == false) {
                 this.reservationTicketList = response.data.items;
               } else {
@@ -229,7 +226,6 @@ export default {
     totalPriceReservation() {
       var total = 0;
       for (let index = 0; index < this.reservationTicketList.length; index++) {
-        console.log(this.reservationTicketList[index].montantTotalReservation);
         total += this.reservationTicketList[index].montantTotalReservation;
       }
       return total;

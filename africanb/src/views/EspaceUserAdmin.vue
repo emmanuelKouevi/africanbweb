@@ -870,13 +870,13 @@ export default {
             url: require("@/assets/station.png"),
             items: [
               {
-                title: "NOUVELLE GARE",
+                title: "NOUVELLE GARE DE TRANSPORT",
                 url: "mdi-train-car",
                 navigation: "/creerGareCompagnieTransport",
                 funct: "FUNCTIONNALITY_CREATE_OFFRE_VOYAGE",
               },
               {
-                title: "GESTION DES GARES",
+                title: "LISTE DES GARES DISPONIBLES",
                 url: require("../assets/liste.png"),
                 navigation: "/selectionnerGareCompagnieTransport",
               },
@@ -952,7 +952,7 @@ export default {
         }
         if (element.code == FUNCTIONNALITY_RESERVING_FROM_OFFRE_VOYAGE) {
           var selectingFromTravel = {
-            title: "CONSULTER LES OFFRES",
+            title: "RÉSERVER UN BILLET DE VOYAGE",
             url: require("@/assets/liste.png"),
             navigation: "/selectionnerOffreVoyageReservation",
           };
@@ -960,7 +960,7 @@ export default {
         }
         if (element.code == FUNCTIONNALITY_SELECTION_RESERVATION_TICKET) {
           var managingReservation = {
-            title: "GESTION DES RESERVATIONS",
+            title: "VOIR LES RESERVATIONS",
             url: require("@/assets/tickets.png"),
             navigation: "/selectionnerReservationBillet",
           };

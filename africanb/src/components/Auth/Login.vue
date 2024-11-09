@@ -71,7 +71,13 @@
           <div class="row">
             <span class="dont_have_account text-center"
               >Vous n'avez pas de compte ?
-              <small class="new_asking">Demander votre adhésion</small></span
+              <small
+                class="new_asking"
+                @click="
+                  $router.push({ path: '/DemandeAdhesion' }).catch(() => {})
+                "
+                >Demander votre adhésion</small
+              ></span
             >
           </div>
         </div>
