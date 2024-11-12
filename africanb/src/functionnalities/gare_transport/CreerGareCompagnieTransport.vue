@@ -91,8 +91,11 @@
                 </div>
               </form>
               <div class="float-right">
-                <v-btn btn color="secondary">REINITIALISER</v-btn>&nbsp;&nbsp;
-                <v-btn type="submit" color="success" btn>CREER LA GARE</v-btn>
+                <v-btn btn color="secondary" outlined>REINITIALISER</v-btn
+                >&nbsp;&nbsp;
+                <v-btn type="submit" color="success" btn outlined
+                  >CREER LA GARE</v-btn
+                >
               </div> </v-card-text
             ><br /><br />
           </v-card>

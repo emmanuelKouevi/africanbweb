@@ -103,6 +103,7 @@ export default {
         { text: "TRAJET", value: "offreVoyageDesignation" },
         { text: "NOM", value: "clientDetails.nom" },
         { text: "PRENOM", value: "clientDetails.prenoms" },
+        { text: "NBRE DE PLACES", value: "nombrePlace" },
         { text: "MONTANT", value: "montantTotalReservation" },
         { text: "ACTIONS", value: "actions", sortable: false },
       ],
@@ -123,20 +124,6 @@ export default {
         "fullscreen=yes"
       );
     },
-
-    //Exporter le rapport en PDF
-    /*async toExportReport() {
-      await axios
-        .post(API_GENERATE_REPORT, this.ticketGenerated, {
-          headers: HEADERS(this.$store.state.userAuthentified.token),
-        })
-        .then((response) => {
-          console.log(response);
-        })
-        .catch((e) => {
-          this.errorMsg = e;
-        });
-    },*/
 
     //Generer le billet de voyage
     async imprimerBillet(designationBillet) {
@@ -176,6 +163,7 @@ export default {
             if (response.status == 200) {
               if (response.data.hasError == false) {
                 this.reservationTicketList = response.data.items;
+                console.log(this.reservationTicketList);
               } else {
                 //
               }
@@ -198,6 +186,7 @@ export default {
             if (response.status == 200) {
               if (response.data.hasError == false) {
                 this.reservationTicketList = response.data.items;
+                console.log(this.reservationTicketList);
               } else {
                 //
               }

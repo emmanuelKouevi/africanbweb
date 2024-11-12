@@ -51,7 +51,7 @@ import LandingPage from "../components/LandingPage";
 // IMPORT FOR ENTITY VENDEUR
 import selectionnerReservationBillet from "../components/vendeur/SelectionnerReservationBillet";
 import DetailReservation from "../components/vendeur/DetailReservation";
-import selectionnerOffreVoyageReservation from "../components/vendeur/OffreVoyageReservation";
+import selectionnerOffreVoyageReservation from "@/functionnalities/vendeur/SelectionnerUnProgramme.vue";
 import reservationBillet from "../components/vendeur/ReservationBillet";
 import modifierPays from "@/components/administrateur_societe/modifierPays.vue";
 import modifierVille from "@/components/administrateur_societe/modifierVille.vue";

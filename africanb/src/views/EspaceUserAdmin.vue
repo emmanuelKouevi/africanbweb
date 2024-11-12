@@ -711,7 +711,7 @@ export default {
                 funct: "FUNCTIONNALITY_CREATE_OFFRE_VOYAGE",
               },
               {
-                title: "VOIR MES OFFRES ENREGISTRÉS",
+                title: "LISTE DES OFFRES DE VOYAGE",
                 url: require("../assets/liste.png"),
                 navigation: "/selectionnerOffreVoyage",
               },

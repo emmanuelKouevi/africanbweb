@@ -38,7 +38,7 @@
 import {
   API_RECUPERER_LISTE_OFFRE_VOYAGE,
   HEADERS,
-} from "../globalConfig/globalConstConfig";
+} from "@/components/globalConfig/globalConstConfig";
 import axios from "axios";
 import $ from "jquery";
 export default {
@@ -64,7 +64,7 @@ export default {
       offreVoyageList: [],
       offreVoyageObject: {
         data: {
-          compagnieTransportRaisonSociale: "KOUEVI TRANSPORT",
+          compagnieTransportRaisonSociale: null,
         },
       },
     };
@@ -72,10 +72,13 @@ export default {
 
   methods: {
     /*OBTENIR LA LISTE DES OFFRES DE VOYAGES DISPONIBLES POUR LES VENDEURS POUR 
-                QU'ILS PUISSENT PROCÉDER À LA RESERVATION DE BILLETS POUR LES CLIENTS
-            */
+        QU'ILS PUISSENT PROCÉDER À LA RESERVATION DE BILLETS POUR LES CLIENTS
+    */
     async getOffreVoyageAvailables() {
       this.loading = true;
+      this.offreVoyageObject.data.compagnieTransportRaisonSociale =
+        "KOUEVI TRANSPORT";
+      //this.$store.state.userAuthentified.compagnieTransportRaisonSociale;
       await axios
         .post(API_RECUPERER_LISTE_OFFRE_VOYAGE, this.offreVoyageObject, {
           headers: HEADERS(this.$store.state.userAuthentified.token),

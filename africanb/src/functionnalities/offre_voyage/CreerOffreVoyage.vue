@@ -111,6 +111,7 @@
                 dark
                 color="secondary"
                 data-cy="btnInitialize"
+                outlined
                 >REINITIALISER</v-btn
               >&nbsp;&nbsp;
               <v-btn
@@ -119,6 +120,7 @@
                 dark
                 color="success"
                 data-cy="btnCreate"
+                outlined
               >
                 CRÉER L'OFFRE</v-btn
               >

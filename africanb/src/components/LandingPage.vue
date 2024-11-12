@@ -42,7 +42,7 @@
             <div class="content_text">
               <p>
                 <span id="african_bt">URBAN BUS TICKET'S </span>
-                est votre plateforme vous permettant de pouvoir administrer ,
+                est votre plateforme vous permettant de pouvoir administrer,
                 gérer de maniere efficiente votre compagnie de transport. Vos
                 bénéfices ne pourront qu'augmenter.
               </p>
@@ -220,7 +220,7 @@
                 "
                 small
                 btn
-                ><span class="adhesion">DEMANDER UNE ADHÉSION</span></v-btn
+                ><span class="adhesion">DEMANDER VOTRE ADHÉSION</span></v-btn
               >
             </div>
 

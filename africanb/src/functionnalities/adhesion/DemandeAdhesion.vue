@@ -35,7 +35,7 @@
                 </div>
 
                 <div class="mb-3">
-                  <v-text-field
+                  <v-textarea
                     class="input"
                     dense
                     outlined
@@ -45,7 +45,7 @@
                     v-model.trim="$v.compagnieTransport.description.$model"
                     @input="$v.compagnieTransport.description.$touch()"
                     @blur="$v.compagnieTransport.description.$touch()"
-                  ></v-text-field>
+                  ></v-textarea>
                 </div>
 
                 <div class="mb-3">

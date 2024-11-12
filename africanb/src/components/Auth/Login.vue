@@ -76,7 +76,7 @@
                 @click="
                   $router.push({ path: '/DemandeAdhesion' }).catch(() => {})
                 "
-                >Demander votre adhésion</small
+                >Demandez votre adhésion</small
               ></span
             >
           </div>
