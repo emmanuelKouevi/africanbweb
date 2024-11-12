@@ -26,7 +26,7 @@
           <v-card rounded="lg" elevation="5" class="count-books">
             <v-card-title
               ><span class="card-title-text"
-                >TOTAL RESERVATION PAYEE</span
+                >TOTAL RESERVATIONS PAYEES</span
               ></v-card-title
             >
             <v-card-text>
@@ -62,7 +62,7 @@
           <v-card rounded="lg" elevation="5">
             <v-card-title
               ><span class="card-title-text"
-                >TOTAL RESERVATION NON PAYEE</span
+                >TOTAL RESERVATIONS NON PAYEES</span
               ></v-card-title
             >
             <v-card-text>
@@ -79,7 +79,7 @@
           <v-card rounded="lg" elevation="5">
             <v-card-title
               ><span class="card-title-text"
-                >TOTAL RESERVATION EFFECTIVE</span
+                >TOTAL RESERVATIONS EFFECTIVES</span
               ></v-card-title
             >
             <v-card-text>
