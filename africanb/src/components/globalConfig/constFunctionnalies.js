@@ -161,3 +161,7 @@ export const FUNCTIONNALITY_RESERVING_FROM_OFFRE_VOYAGE =
   "functionnalityChooseOffreVoyage";
 export const FUNCTIONNALITY_SELECTION_RESERVATION_TICKET =
   "functionnalitySelectTicketRservation";
+
+export const FUNCTIONNALITY_TO_CONFIRM_TICKET = "functionnalityConfirmTicket";
+
+export const FUNCTIONNALITY_TO_CHECK_TICKET = "functionnalityCheckTicket";

@@ -255,7 +255,14 @@
           <br />
 
           <v-card-actions class="float-right">
-            <v-btn small color="secondary">ANNULER</v-btn>
+            <v-btn
+              small
+              color="secondary"
+              @click="
+                $router.push({ path: '/offre_voyage_details' }).catch(() => {})
+              "
+              >ANNULER</v-btn
+            >
             <v-btn small color="success" @click="reserverOffre()"
               >RESERVER</v-btn
             >

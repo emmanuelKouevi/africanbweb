@@ -41,8 +41,8 @@
                         dense
                         outlined
                         color="teal"
-                        :error-messages="numeroBusContrainte"
-                        v-model.number="$v.addedBusData.numeroBus.$model"
+                        :error-messages="numeroContrainte"
+                        v-model.number="$v.addedBusData.numero.$model"
                       ></v-text-field>
                     </div>
 
@@ -92,6 +92,30 @@
         </v-container>
       </v-form>
     </div>
+    <v-alert
+      class="myalert alert-success"
+      type="success"
+      width="350px"
+      dismissible
+      >{{ successMsg }}</v-alert
+    >
+    <v-alert
+      class="myalert alert-warning"
+      type="warning"
+      width="350px"
+      dismissible
+      >{{ warningMsg }}</v-alert
+    >
+    <v-alert
+      class="myalert alert-error"
+      type="error"
+      width="350px"
+      dismissible
+      >{{ errorMsg }}</v-alert
+    >
+    <v-overlay :value="overlay"
+      ><v-progress-circular indeterminate size="64"></v-progress-circular
+    ></v-overlay>
   </v-app>
 </template>
 
@@ -108,6 +132,14 @@ export default {
 
   data() {
     return {
+      errorMsg: null,
+
+      successMsg: null,
+
+      overlay: false,
+
+      warningMsg: false,
+
       busObject: {
         datas: [],
       },
@@ -120,8 +152,9 @@ export default {
 
       addedBusData: {
         designation: null,
-        numeroBus: null,
+        numero: null,
         nombrePlace: null,
+        raisonSociale: null,
         //offreVoyageDesignation: null,
       },
     };
@@ -132,7 +165,7 @@ export default {
       designation: {
         required,
       },
-      numeroBus: {
+      numero: {
         required,
       },
       nombrePlace: {
@@ -158,13 +191,16 @@ export default {
 
     reinitializeForm() {
       this.addedBusData.designation = null;
-      this.addedBusData.numeroBus = null;
+      this.addedBusData.numero = null;
       this.addedBusData.nombrePlace = null;
     },
 
     //ENREGISTRER UN BUS
     async saveBus() {
       this.overlay = true;
+      this.addedBusData.raisonSociale =
+        this.$store.state.userAuthentified.compagnieTransportRaisonSociale;
+      this.busObject.datas.push(this.addedBusData);
       await axios
         .post(API_ASSOCIER_BUS_OFFRE_VOYAGE, this.busObject, {
           headers: HEADERS(this.$store.state.userAuthentified.token),
@@ -211,6 +247,7 @@ export default {
           this.busObject.datas = [];
         })
         .finally(() => {
+          this.reinitializeForm();
           this.overlay = false;
         });
     },
@@ -232,12 +269,12 @@ export default {
       return errors;
     },
 
-    numeroBusContrainte() {
+    numeroContrainte() {
       const errors = [];
-      if (!this.$v.addedBusData.numeroBus.$dirty) return errors;
-      !this.$v.addedBusData.numeroBus.required &&
+      if (!this.$v.addedBusData.numero.$dirty) return errors;
+      !this.$v.addedBusData.numero.required &&
         errors.push("Information requis.");
-      !this.isOverToZero(this.addedBusData.numeroBus) &&
+      !this.isOverToZero(this.addedBusData.numero) &&
         errors.push("Champs Incorrect");
       return errors;
     },

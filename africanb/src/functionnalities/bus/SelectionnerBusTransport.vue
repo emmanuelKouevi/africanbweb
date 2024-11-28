@@ -1,11 +1,11 @@
 <template>
-  <v-app>
+  <v-app id="inspire">
     <div class="row">
-      <div class="col-lg-10">
+      <div class="col-lg-12">
         <v-container fluid>
           <v-card>
             <v-card-title class="title-card"
-              >LISTE DES OFFRES DE VOYAGES
+              >LISTE DES BUS DISPONIBLES
               <v-spacer></v-spacer>
               <v-text-field
                 v-model="search"
@@ -18,7 +18,7 @@
 
             <v-data-table
               :headers="headers"
-              :items="offreVoyageDisponibleList"
+              :items="availableBusList"
               :loading="loading"
               :search="search"
             >
@@ -47,16 +47,8 @@
                   color="blue"
                   small
                   class="mr-2"
-                  @click="editerOffreVoyage(item)"
+                  @click="updateBus(item)"
                   >mdi-pencil</v-icon
-                >
-                <v-icon
-                  title="activer"
-                  color="success"
-                  small
-                  class="mr-2"
-                  @click="activerOffreVoyage(item)"
-                  >mdi-broadcast</v-icon
                 >
               </template>
             </v-data-table>
@@ -76,50 +68,44 @@
 
 <script>
 import axios from "axios";
-import $ from "jquery";
 import {
-  API_RECUPERER_LISTE_OFFRE_VOYAGE,
-  API_ACTIVER_OFFRE_DE_VOYAGE,
+  API_RECUPERER_LISTE_BUS_PAR_COMPAGNIE,
   HEADERS,
-} from "../globalConfig/globalConstConfig";
-
+} from "@/components/globalConfig/globalConstConfig";
+import $ from "jquery";
 export default {
-  name: "SelectionnerOffreVoyage",
+  name: "SelectionnerBusTransport",
   data() {
     return {
       errorMsg: null,
       loading: true,
       search: "",
       headers: [
-        { text: "reference", value: "id" },
-        { text: "Designation", value: "designation" },
-        { text: "Type de l'offre", value: "typeOffreVoyageDesignation" },
-        { text: "Ville de départ", value: "villeDepartDesignation" },
-        { text: "Ville d'arrivée", value: "villeDestinationDesignation" },
-        { text: "Active", value: "isActif" },
+        { text: "RÉFÉRENCE", value: "designation" },
+        { text: "NUMERO DU BUS", value: "numero" },
+        { text: "NOMBRE DE PLACES", value: "nombrePlace" },
+        { text: "ETAT", value: "etat" },
         { text: "Actions", value: "actions", sortable: false },
       ],
 
-      offreVoyageDisponibleList: [],
+      availableBusList: [],
 
-      offreVoyageObject: {
+      busObject: {
         data: {
-          compagnieTransportRaisonSociale: "KOUEVI TRANSPORT",
+          raisonSociale: null,
         },
-      },
-
-      offreVoyageToActived: {
-        datas: [],
       },
     };
   },
 
   methods: {
     //OBTENIR LISTE DES OFFRES DE VOYAGES DISPONIBLES PAR COMPAGNIE
-    async obtenirOffreVoyageListParCompagnie() {
+    async getAllAvailableBus() {
+      this.busObject.data.raisonSociale =
+        this.$store.state.userAuthentified.compagnieTransportRaisonSociale;
       this.loading = true;
       await axios
-        .post(API_RECUPERER_LISTE_OFFRE_VOYAGE, this.offreVoyageObject, {
+        .post(API_RECUPERER_LISTE_BUS_PAR_COMPAGNIE, this.busObject, {
           headers: HEADERS(this.$store.state.userAuthentified.token),
         })
         .then((response) => {
@@ -131,8 +117,7 @@ export default {
                 $(".alert-error").fadeOut();
               }, 4000);
             } else {
-              this.offreVoyageDisponibleList = response.data.items;
-              console.log(this.offreVoyageDisponibleList);
+              this.availableBusList = response.data.items;
             }
           } else {
             this.errorMsg = "Erreur";
@@ -149,60 +134,15 @@ export default {
           this.loading = false;
         });
     },
-
-    //ACTIVER L'OFFRE DE VOYAGE
-    async activerOffreVoyage(offreVoyage) {
-      var offreActived = { id: null };
-      offreActived.id = offreVoyage.id;
-      this.offreVoyageToActived.datas.push(offreActived);
-      axios
-        .post(API_ACTIVER_OFFRE_DE_VOYAGE, this.offreVoyageToActived, {
-          headers: HEADERS(this.$store.state.userAuthentified.token),
-        })
-        .then((response) => {
-          if (response.status == 200) {
-            if (response.data.status.code != 800) {
-              this.$swal.fire(
-                "Activation",
-                response.data.status.message,
-                "error"
-              );
-            } else {
-              this.$swal.fire(
-                "Activation",
-                response.data.status.message,
-                "success"
-              );
-              offreVoyage.isActived = true;
-            }
-          } else {
-            this.$swal.fire(
-              "Activation",
-              "Error lors de la validation",
-              "error"
-            );
-          }
-        })
-        .catch((e) => {
-          this.$swal.fire("Activation refusée", e, "error");
-        });
-    },
-
-    //EDITER UNE OFFRE DE VOYAGE
-    editerOffreVoyage(offreVoyage) {
-      const parsedOffreVoyage = JSON.stringify(offreVoyage);
-      localStorage.setItem("offreVoyage", parsedOffreVoyage);
-      this.$router.push({ path: "/modifierOffreVoyage" });
-    },
   },
 
   mounted() {
-    this.obtenirOffreVoyageListParCompagnie();
+    this.getAllAvailableBus();
   },
 };
 </script>
 
-<style scoped>
+<style>
 .title-card {
   font-weight: bold;
   color: black;

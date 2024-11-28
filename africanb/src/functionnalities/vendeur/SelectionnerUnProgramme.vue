@@ -23,9 +23,9 @@
               <v-btn @click="voirDetailBtn(item)" x-small color="secondary"
                 ><small class="btn-label">Voir les détails</small></v-btn
               >&nbsp;&nbsp;
-              <v-btn @click="reserverTicket(item)" x-small color="teal"
+              <!--v-btn @click="reserverTicket(item)" x-small color="teal"
                 ><small class="btn-label">Réserver</small></v-btn
-              >
+            -->
             </template>
           </v-data-table>
         </v-card-text>
@@ -76,8 +76,7 @@ export default {
     */
     async getOffreVoyageAvailables() {
       this.loading = true;
-      this.offreVoyageObject.data.compagnieTransportRaisonSociale =
-        "KOUEVI TRANSPORT";
+      this.offreVoyageObject.data.compagnieTransportRaisonSociale = "KOUEVI CT";
       //this.$store.state.userAuthentified.compagnieTransportRaisonSociale;
       await axios
         .post(API_RECUPERER_LISTE_OFFRE_VOYAGE, this.offreVoyageObject, {

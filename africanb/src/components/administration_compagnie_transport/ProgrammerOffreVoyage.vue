@@ -376,13 +376,9 @@ export default {
         heureArrivee: null,
       },
 
-      objectToSend: {
-        datas: [],
-      },
-
       offreVoyageObject: {
         data: {
-          compagnieTransportRaisonSociale: "KOUEVI TRANSPORT",
+          compagnieTransportRaisonSociale: "KOUEVI CT",
         },
       },
 

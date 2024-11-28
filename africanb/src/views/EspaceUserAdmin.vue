@@ -430,6 +430,8 @@ import {
   FUNCTIONNALITY_CREATE_MODE_ABONNEMENT,
   FUNCTIONNALITY_CREATE_MODE_PAIEMENT,
   FUNCTIONNALITY_LISTING_MODE_PAIEMENT,
+  FUNCTIONNALITY_TO_CONFIRM_TICKET,
+  FUNCTIONNALITY_TO_CHECK_TICKET,
   //FUNCTIONNALITY_LISTING_OFFRE_VOYAGE,
 } from "../components/globalConfig/constFunctionnalies";
 import {
@@ -789,9 +791,21 @@ export default {
         }
         if (element.code == FUNCTIONNALITY_CREATE_BUS_OFFRE_VOYAGE) {
           var creerBusOffreFunction = {
-            title: "DÉLIVRER UN BUS",
+            title: "BUS",
             url: require("@/assets/bus.png"),
-            navigation: "/associerBusCompagnieTransport",
+            items: [
+              {
+                title: "NOUVEAU BUS",
+                url: "",
+                navigation: "/associerBusCompagnieTransport",
+                funct: "FUNCTIONNALITY_CREATE_OFFRE_VOYAGE",
+              },
+              {
+                title: "LISTE DES BUS DISPONIBLES",
+                url: "",
+                navigation: "/selectionnerBusCompagnieTransport",
+              },
+            ],
           };
           globalFunctionnalities.push(creerBusOffreFunction);
         }
@@ -965,6 +979,22 @@ export default {
             navigation: "/selectionnerReservationBillet",
           };
           globalFunctionnalities.push(managingReservation);
+        }
+        if (element.code == FUNCTIONNALITY_TO_CONFIRM_TICKET) {
+          var confirmTicketReservation = {
+            title: "CONFIRMER UN BILLET DE VOYAGE",
+            url: require("@/assets/coche.png"),
+            navigation: "/confirmerBilletReservation",
+          };
+          globalFunctionnalities.push(confirmTicketReservation);
+        }
+        if (element.code == FUNCTIONNALITY_TO_CHECK_TICKET) {
+          var checkTicketReservation = {
+            title: "VERIFIER UN BILLET DE VOYAGE",
+            url: require("@/assets/verification.png"),
+            navigation: "/verifierBilletReservation",
+          };
+          globalFunctionnalities.push(checkTicketReservation);
         }
       });
       return globalFunctionnalities;

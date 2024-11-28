@@ -295,52 +295,6 @@
         </v-card> </v-card
       ><br />
 
-      <v-card :loading="loadingVilleEscale">
-        <v-card-title class="title_card"
-          >VILLES ESCALES
-          <v-spacer></v-spacer>
-          <v-btn
-            outlined
-            rounded
-            icon
-            small
-            title="Voir plus"
-            @click="isVisibleVilleEscaleOffreVoyage()"
-            ><v-icon>mdi-menu-down</v-icon></v-btn
-          >
-        </v-card-title>
-        <v-card id="card-ville-escale-offre-voyage">
-          <v-card-title>
-            <v-spacer></v-spacer>
-            <v-btn small rounded color="teal" outlined
-              >FAIRE DES MODIFICATIONS</v-btn
-            >
-          </v-card-title>
-
-          <v-container>
-            <v-data-table
-              :headers="headersCities"
-              :items="villesEscalesParOffreVoyagesList"
-              :search="searchVille"
-            >
-              <template v-slot:[`item.actions`]="{ item }">
-                <v-icon
-                  title="editer"
-                  color="blue"
-                  small
-                  class="mr-2"
-                  @click="editerVilleEscale(item)"
-                  >mdi-pencil</v-icon
-                >
-                <v-icon title="supprimer" color="red" small class="mr-2"
-                  >mdi-delete</v-icon
-                >
-              </template>
-            </v-data-table>
-          </v-container>
-        </v-card> </v-card
-      ><br />
-
       <v-card :loading="loadingProprieteOffreVoyage">
         <v-card-title class="title_card"
           >PROPRIETES DE L'OFFRE

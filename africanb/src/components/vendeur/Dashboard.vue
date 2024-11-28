@@ -62,7 +62,7 @@
           <v-card rounded="lg" elevation="5">
             <v-card-title
               ><span class="card-title-text"
-                >TOTAL RESERVATIONS NON PAYEES</span
+                >RESERVATIONS NON EFFECTIVES</span
               ></v-card-title
             >
             <v-card-text>
@@ -79,7 +79,7 @@
           <v-card rounded="lg" elevation="5">
             <v-card-title
               ><span class="card-title-text"
-                >TOTAL RESERVATIONS EFFECTIVES</span
+                >RESERVATIONS EFFECTIVES</span
               ></v-card-title
             >
             <v-card-text>

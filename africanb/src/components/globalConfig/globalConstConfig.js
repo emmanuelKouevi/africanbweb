@@ -1,6 +1,6 @@
 // URL A UTILISER POUR LES API
-//export const BASE_URL = "https://localhost:8443/";
-export const BASE_URL = "https://urban-bus-backend-ed1b0f53c872.herokuapp.com/";
+export const BASE_URL = "https://localhost:8443/";
+//export const BASE_URL = "https://urban-bus-backend-ed1b0f53c872.herokuapp.com/";
 
 export const HEADERS = (token) => {
   return {
@@ -54,7 +54,7 @@ export const API_OBTENIR_LISTE_PROPRIETE_OFFRE_VOYAGE = `${BASE_URL}proprieteOff
 export const API_CREER_CARACTERISTIQUES_OFFRE_VOYAGE = `${BASE_URL}valeurCaracteristiqueOffreVoyages`;
 export const API_RECUPERER_PROPRIETE_PAR_OFFRE_VOYAGE = `${BASE_URL}valeurCaracteristiqueOffreVoyages/getAllValeurCaracteristiqueOffreVoyageByOffreVoyageDesignation`;
 export const API_ASSOCIER_BUS_OFFRE_VOYAGE = `${BASE_URL}bus`;
-export const API_RECUPERER_LISTE_BUS_PAR_OFFRE_VOYAGE = `${BASE_URL}bus/getBusByOffreVoyage`;
+export const API_RECUPERER_LISTE_BUS_PAR_COMPAGNIE = `${BASE_URL}bus/getByRaisonSociale`;
 
 //-------------------------------- APIs GESTION DES BAGAGES---------------------------------------------------------------------//
 
@@ -105,3 +105,7 @@ export const API_GET_RESERVATIONS_BY_SELLER = `${BASE_URL}reservationBilletVoyag
 export const API_GET_RESERVATIONS_BY_ADMIN_TP = `${BASE_URL}reservationBilletVoyages/getReservationByAdminCompagnieTransport`;
 export const API_GENERATE_TICKET = `${BASE_URL}reservationBilletVoyages/generateBilletBase64`;
 export const API_GENERATE_REPORT = `${BASE_URL}reservationBilletVoyages/generateReservationReportBase64`;
+
+export const API_CHECK_TICKET = `${BASE_URL}reservationBilletVoyages/verifierUnBilletVoyage`;
+
+export const API_CONFIRM_TICKET = `${BASE_URL}reservationBilletVoyages/confirmerUnVoyage`;

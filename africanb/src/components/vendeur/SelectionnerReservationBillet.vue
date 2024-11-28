@@ -98,7 +98,6 @@ export default {
       },
 
       headers: [
-        { text: "Réference N°", value: "designation" },
         { text: "GARE", value: "gareDesignation" },
         { text: "TRAJET", value: "offreVoyageDesignation" },
         { text: "NOM", value: "clientDetails.nom" },

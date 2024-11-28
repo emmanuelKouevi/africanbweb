@@ -44,6 +44,7 @@ import selectionnerModeAbonnementEtPaiement from "../components/administration_c
 import modifierModePaiement from "../components/administration_compagnie_transport/ModifierModePaiement";
 import documentAttestationTransport from "../components/administration_compagnie_transport/DocumentAttestationTransport";
 import associerBusCompagnieTransport from "@/functionnalities/bus/CreerBusCompagnieTransport.vue";
+import selectionnerBusCompagnieTransport from "@/functionnalities/bus/SelectionnerBusTransport.vue";
 import resetPasswordUserCompagnie from "../components/administration_compagnie_transport/changerPasswordCompagnieTransport.vue";
 import userProfilCompagnieTransport from "../components/administration_compagnie_transport/userProfilCompagnieTransport.vue";
 import LandingPage from "../components/LandingPage";
@@ -61,7 +62,10 @@ import InfosAdhesionValide from "@/components/InfosAdhesionValide.vue";
 import creerDemandeAdhesion from "../functionnalities/adhesion/DemandeAdhesion.vue";
 import creerDemandeAdhesionInterne from "../components/administrateur_societe/CreerDemandeAdhesion copy.vue";
 import SelectionnerProgrammeOffreVoyageList from "../components/vendeur/ProgrammeOffreVoyageList.vue";
-//import { ROLE_ADMIN_COMPAGNIE_TRANSPORT , ROLE_ADMIN_SOCIETE_MERE } from '../components/globalConfig/constUsersRoles'
+
+import VerifierBilletReservation from "@/functionnalities/ticket/VerifierBilletReservation.vue";
+import ConfirmerBilletReservation from "@/functionnalities/ticket/ConfirmerBilletReservation.vue";
+
 Vue.use(VueRouter);
 
 const routes = [
@@ -191,6 +195,11 @@ const routes = [
         path: "/associerBusCompagnieTransport",
         name: "associerBusCompagnieTransport",
         component: associerBusCompagnieTransport,
+      },
+      {
+        path: "/selectionnerBusCompagnieTransport",
+        name: "selectionnerBusCompagnieTransport",
+        component: selectionnerBusCompagnieTransport,
       },
       {
         path: "/resetPasswordCompagnieTransport",
@@ -337,6 +346,16 @@ const routes = [
         name: "SelectionnerProgrammeOffreVoyageList",
         component: SelectionnerProgrammeOffreVoyageList,
       },
+      {
+        path: "/verifierBilletReservation",
+        name: "VerifierBilletReservation",
+        component: VerifierBilletReservation,
+      },
+      {
+        path: "/confirmerBilletReservation",
+        name: "ConfirmerBilletReservation",
+        component: ConfirmerBilletReservation,
+      },
     ],
   },
 ];
@@ -351,7 +370,7 @@ const router = new VueRouter({
 router.beforeEach((to, from, next) => {
   const isAuth = localStorage.getItem("auth") === "true";
   if (to.matched.some((record) => record.meta.requiresAuth && !isAuth)) {
-    next({ name: "Login" });
+    next({ path: "/Login" });
   } else {
     next();
   }

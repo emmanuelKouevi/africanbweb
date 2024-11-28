@@ -1,134 +1,404 @@
 <template>
   <v-app>
-    <v-form @submit.prevent="submitForm">
-      <v-container fluid>
-        <v-card elevation="5">
-          <v-card-title
-            ><h6 class="font-weight-bold">
-              CREER UNE OFFRE DE VOYAGE
-            </h6></v-card-title
-          >
-          <v-card-subtitle
-            >Mettre en ligne un nouvel offre de voyage</v-card-subtitle
-          ><br />
+    <div class="container">
+      <span class="title_form"
+        >Finalisez le processus d'activation de votre offre de voyage.</span
+      >
+    </div>
 
-          <v-card-text>
-            <v-container fluid>
-              <form>
-                <div class="row">
-                  <div class="col-lg-6">
-                    <label for="exampleInputEmail1" class="form-label"
-                      >Désignation de l'offre</label
-                    >
-                    <input
-                      type="text"
-                      class="form-control"
-                      id="exampleInputEmail1"
-                      v-model.trim="$v.offreVoyage.designation.$model"
-                    />
-                  </div>
-                  <div class="col-lg-4">
-                    <label for="exampleInputEmail1" class="form-label"
-                      >Type</label
-                    >
-                    <select
-                      class="form-select"
-                      aria-label="Default select example"
-                      v-model.trim="
-                        $v.offreVoyage.typeOffreVoyageDesignation.$model
-                      "
-                    >
-                      <option
-                        v-for="(type, t) in referenceTypeOffreVoyageList"
-                        :key="t"
-                      >
-                        {{ type.designation }}
-                      </option>
-                    </select>
-                  </div>
-                </div>
-                <br />
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-9">
+          <v-stepper v-model="e6" vertical>
+            <v-stepper-step :complete="e6 > 1" step="1" color="teal">
+              Sélectionner une offre
+              <small
+                >Selectionner l'offre de voyage que vous voudriez
+                finaliser.</small
+              >
+            </v-stepper-step>
 
-                <div class="mb-3">
-                  <label for="exampleInputPassword1" class="form-label"
-                    >Description</label
+            <v-stepper-content step="1">
+              <v-card color="white" class="mb-12">
+                <v-card-text>
+                  <v-container fluid>
+                    <form>
+                      <div class="row">
+                        <div class="col-lg-6">
+                          <label for="exampleInputEmail1" class="form-label"
+                            >Désignation de l'offre</label
+                          >
+                          <input
+                            type="text"
+                            class="form-control"
+                            id="exampleInputEmail1"
+                            v-model.trim="$v.offreVoyage.designation.$model"
+                          />
+                        </div>
+                        <div class="col-lg-4">
+                          <label for="exampleInputEmail1" class="form-label"
+                            >Type</label
+                          >
+                          <select
+                            class="form-select"
+                            aria-label="Default select example"
+                            v-model.trim="
+                              $v.offreVoyage.typeOffreVoyageDesignation.$model
+                            "
+                          >
+                            <option
+                              v-for="(type, t) in referenceTypeOffreVoyageList"
+                              :key="t"
+                            >
+                              {{ type.designation }}
+                            </option>
+                          </select>
+                        </div>
+                      </div>
+                      <br />
+
+                      <div class="mb-3">
+                        <label for="exampleInputPassword1" class="form-label"
+                          >Description</label
+                        >
+                        <textarea
+                          class="form-control col-lg-10"
+                          name=""
+                          id=""
+                          v-model.trim="$v.offreVoyage.description.$model"
+                        ></textarea>
+                      </div>
+                      <div class="row">
+                        <div class="col-lg-5">
+                          <label for="exampleInputEmail1" class="form-label"
+                            >Départ</label
+                          >
+                          <select
+                            class="form-select"
+                            aria-label="Default select example"
+                            v-model.trim="
+                              $v.offreVoyage.villeDepartDesignation.$model
+                            "
+                          >
+                            <option
+                              v-for="(ville, l) in villesList"
+                              :key="l"
+                              :value="ville.designation"
+                            >
+                              {{ ville.designation }}
+                            </option>
+                          </select>
+                        </div>
+                        <div class="col-lg-5">
+                          <label for="exampleInputEmail1" class="form-label"
+                            >Destination</label
+                          >
+                          <select
+                            class="form-select"
+                            aria-label="Default select example"
+                            v-model.trim="
+                              $v.offreVoyage.villeDestinationDesignation.$model
+                            "
+                          >
+                            <option
+                              v-for="(ville, l) in villesList"
+                              :key="l"
+                              :value="ville.designation"
+                            >
+                              {{ ville.designation }}
+                            </option>
+                          </select>
+                        </div>
+                      </div>
+                    </form>
+                    <br />
+                  </v-container>
+                </v-card-text>
+              </v-card>
+              <v-btn color="primary" @click="checkInfosOffreVoyage">
+                Continuer
+              </v-btn>
+              <v-btn text disabled> Annuler </v-btn>
+            </v-stepper-content>
+
+            <v-stepper-step :complete="e6 > 2" step="2" color="teal">
+              Définir vos prix de voyages
+            </v-stepper-step>
+
+            <v-stepper-content step="2">
+              <v-card color="white" class="mb-12">
+                <v-card-title>
+                  <v-spacer></v-spacer>
+                  <!--BOITE DE DIALOGUE POUR LES PRIX -->
+                  <v-dialog
+                    v-model="dialogForPrice"
+                    persistent
+                    max-width="600px"
                   >
-                  <textarea
-                    class="form-control col-lg-10"
-                    name=""
-                    id=""
-                    v-model.trim="$v.offreVoyage.description.$model"
-                  ></textarea>
-                </div>
-                <div class="row">
-                  <div class="col-lg-5">
-                    <label for="exampleInputEmail1" class="form-label"
-                      >Départ</label
-                    >
-                    <select
-                      class="form-select"
-                      aria-label="Default select example"
-                      v-model.trim="
-                        $v.offreVoyage.villeDepartDesignation.$model
-                      "
-                    >
-                      <option
-                        v-for="(ville, l) in villesList"
-                        :key="l"
-                        :value="ville.designation"
+                    <template v-slot:activator="{ on, attrs }">
+                      <v-btn
+                        small
+                        color="primary"
+                        dark
+                        v-bind="attrs"
+                        v-on="on"
                       >
-                        {{ ville.designation }}
-                      </option>
-                    </select>
+                        Definir un prix
+                      </v-btn>
+                    </template>
+                    <v-card>
+                      <v-card-title>
+                        <span class="text-h5">Prix de voyage</span>
+                      </v-card-title>
+                      <v-card-text>
+                        <form>
+                          <div class="row">
+                            <div class="col-lg-5">
+                              <label for="exampleInputEmail1" class="form-label"
+                                >Réference du mode:</label
+                              >
+                              <input
+                                type="text"
+                                class="form-control"
+                                id="exampleInputEmail1"
+                                v-model="
+                                  $v.prixOffreVoyageModel.designation.$model
+                                "
+                              />
+                            </div>
+                            <div class="col-lg-5">
+                              <label for="exampleInputEmail1" class="form-label"
+                                >Catégorie de l'offre:</label
+                              >
+                              <select
+                                class="form-select"
+                                aria-label="Default select example"
+                                v-model="
+                                  prixOffreVoyageModel.categorieVoyageurDesignation
+                                "
+                              >
+                                <option
+                                  v-for="(
+                                    categorie, cat
+                                  ) in referenceModeCategorieVoyageurList"
+                                  :key="cat"
+                                >
+                                  {{ categorie.designation }}
+                                </option>
+                              </select>
+                            </div>
+                          </div>
+
+                          <div class="row">
+                            <div class="col-lg-5">
+                              <label for="exampleInputEmail1" class="form-label"
+                                >Mode de l'offre:</label
+                              >
+                              <select
+                                class="form-select"
+                                aria-label="Default select example"
+                                v-model="prixOffreVoyageModel.modeDesignation"
+                              >
+                                <option
+                                  v-for="(
+                                    mode, mod
+                                  ) in referenceModeOffreVoyageList"
+                                  :key="mod"
+                                >
+                                  {{ mode.designation }}
+                                </option>
+                              </select>
+                            </div>
+
+                            <div class="col-lg-5">
+                              <label for="exampleInputEmail1" class="form-label"
+                                >Prix:</label
+                              >
+                              <div class="input-group mb-3">
+                                <input
+                                  type="number"
+                                  class="form-control"
+                                  v-model.number="
+                                    $v.prixOffreVoyageModel.prix.$model
+                                  "
+                                  aria-describedby="basic-addon1"
+                                />
+                                <span class="input-group-text" id="basic-addon1"
+                                  >FCFA</span
+                                >
+                              </div>
+                            </div>
+                          </div>
+                        </form>
+                      </v-card-text>
+                      <v-card-actions>
+                        <v-spacer></v-spacer>
+                        <v-btn
+                          color="blue darken-1"
+                          text
+                          @click="dialogForPrice = false"
+                        >
+                          Annuler
+                        </v-btn>
+                        <v-btn
+                          color="blue darken-1"
+                          text
+                          @click="savePriceInList"
+                        >
+                          Enregistrer
+                        </v-btn>
+                      </v-card-actions>
+                    </v-card>
+                  </v-dialog>
+                  <!-- FIN DE BOITE DE DIALOGUE -->
+                </v-card-title>
+                <v-card-text>
+                  <div v-if="priceList.length == 0">
+                    <span class="font-weight-bold text-center"
+                      >AUCUN PRIX DÉFINI</span
+                    >
                   </div>
-                  <div class="col-lg-5">
-                    <label for="exampleInputEmail1" class="form-label"
-                      >Destination</label
-                    >
-                    <select
-                      class="form-select"
-                      aria-label="Default select example"
-                      v-model.trim="
-                        $v.offreVoyage.villeDestinationDesignation.$model
-                      "
-                    >
-                      <option
-                        v-for="(ville, l) in villesList"
-                        :key="l"
-                        :value="ville.designation"
+                  <div v-else class="container">
+                    <div class="row">
+                      <div
+                        v-for="(price, p) in priceList"
+                        :key="p"
+                        class="col-lg-4"
                       >
-                        {{ ville.designation }}
-                      </option>
-                    </select>
+                        <v-card>
+                          <v-card-title>
+                            <span>Prix n°{{ p + 1 }}</span>
+                            <v-spacer></v-spacer>
+                            <v-icon
+                              @click="deleteItemInPriceList(p)"
+                              color="red"
+                              >mdi-close</v-icon
+                            >
+                          </v-card-title>
+                          <v-card-text>
+                            <div>
+                              <span>Réf:</span> &nbsp;&nbsp;
+                              <span class="font-weight-bold">{{
+                                price.designation
+                              }}</span>
+                            </div>
+                            <div>
+                              <span>Mode:</span>&nbsp;&nbsp;
+                              <span class="font-weight-bold">{{
+                                price.modeDesignation
+                              }}</span>
+                            </div>
+                            <div>
+                              <span>Catégorie:</span>&nbsp;&nbsp;
+                              <span class="font-weight-bold">{{
+                                price.categorieVoyageurDesignation
+                              }}</span>
+                            </div>
+                            <div>
+                              <span>Prix:</span>&nbsp;&nbsp;
+                              <span class="font-weight-bold"
+                                >{{ price.prix }} FCFA</span
+                              >
+                            </div>
+                          </v-card-text>
+                        </v-card>
+                      </div>
+                    </div>
                   </div>
-                </div>
-              </form>
-              <br />
-            </v-container>
-            <div class="float-right">
-              <v-btn
-                id="btnInitialize"
-                dark
-                color="secondary"
-                data-cy="btnInitialize"
-                outlined
-                >REINITIALISER</v-btn
-              >&nbsp;&nbsp;
-              <v-btn
-                id="btnCreate"
-                type="submit"
-                dark
-                color="success"
-                data-cy="btnCreate"
-                outlined
-              >
-                CRÉER L'OFFRE</v-btn
-              >
-            </div> </v-card-text
-          ><br />
-        </v-card>
-      </v-container>
-    </v-form>
+                </v-card-text>
+              </v-card>
+              <v-btn color="primary" @click="rattacherJourVoyage">
+                TERMINER
+              </v-btn>
+              <v-btn text @click="e6 = 1"> ANNULER </v-btn>
+            </v-stepper-content>
+          </v-stepper>
+        </div>
+
+        <div class="col-lg-3">
+          <v-card elevation="5">
+            <v-card-text>
+              <v-list>
+                <v-list-item>
+                  <v-list-item-content>
+                    <v-list-item-title class="font-weight-bold"
+                      >OFFRE DE VOYAGE EN COURS DE
+                      PROGRAMMATION:</v-list-item-title
+                    >
+                  </v-list-item-content>
+                </v-list-item>
+
+                <v-list-item>
+                  <v-list-item-content>
+                    <v-list-item-subtitle
+                      >offre de voyage :</v-list-item-subtitle
+                    >
+                  </v-list-item-content>
+
+                  <v-list-item-content>
+                    <v-list-item-subtitle class="font-weight-bold">{{
+                      offreVoyage.designation
+                    }}</v-list-item-subtitle>
+                  </v-list-item-content>
+                </v-list-item>
+
+                <v-list-item>
+                  <v-list-item-content>
+                    <v-list-item-subtitle
+                      >Type de l'offre:</v-list-item-subtitle
+                    >
+                  </v-list-item-content>
+
+                  <v-list-item-content>
+                    <v-list-item-subtitle class="font-weight-bold">{{
+                      offreVoyage.typeOffreVoyageDesignation
+                    }}</v-list-item-subtitle>
+                  </v-list-item-content>
+                </v-list-item>
+
+                <v-list-item>
+                  <v-list-item-content>
+                    <v-list-item-subtitle>Départ :</v-list-item-subtitle>
+                  </v-list-item-content>
+
+                  <v-list-item-content>
+                    <v-list-item-subtitle class="font-weight-bold">{{
+                      offreVoyage.villeDepartDesignation
+                    }}</v-list-item-subtitle>
+                  </v-list-item-content>
+                </v-list-item>
+
+                <v-list-item>
+                  <v-list-item-content>
+                    <v-list-item-subtitle>Destination:</v-list-item-subtitle>
+                  </v-list-item-content>
+
+                  <v-list-item-content>
+                    <v-list-item-subtitle class="font-weight-bold">{{
+                      offreVoyage.villeDestinationDesignation
+                    }}</v-list-item-subtitle>
+                  </v-list-item-content>
+                </v-list-item>
+
+                <v-divider></v-divider>
+
+                <v-list-item>
+                  <v-list-item-content>
+                    <v-list-item-subtitle>Total des prix:</v-list-item-subtitle>
+                  </v-list-item-content>
+
+                  <v-list-item-content>
+                    <v-list-item-subtitle class="font-weight-bold">{{
+                      priceList.length
+                    }}</v-list-item-subtitle>
+                  </v-list-item-content>
+                </v-list-item>
+              </v-list>
+            </v-card-text>
+          </v-card>
+        </div>
+      </div>
+    </div>
 
     <v-alert
       class="myalert alert-success"
@@ -172,6 +442,9 @@ export default {
   name: "CreerOffreVoyage",
   data() {
     return {
+      e6: 1,
+      dialogForPrice: false,
+
       successMsg: null,
       errorMsg: null,
       warningMsg: null,
@@ -183,6 +456,8 @@ export default {
       objectToSend: {
         datas: [],
       },
+
+      // ---------------------- DEBUT: VARIABLES EN RAPPORT AVEC LES OFFRES DE VOYAGE ------------------------//
 
       offreVoyageToSend: {
         datas: [],
@@ -200,10 +475,46 @@ export default {
       referenceTypeOffreVoyage: {
         referenceFamilleDesignation: "referenceFamilleTypeOffreVoyage",
       },
+
+      // ---------------------- FIN: VARIABLES EN RAPPORT AVEC LES OFFRES DE VOYAGE------------------------//
+
+      // ---------------------- DEBUT: VARIABLES EN RAPPORT AVEC LES PRIX DE VOYAGES ------------------------//
+
+      prixOffreVoyageModel: {
+        designation: null,
+        prix: null,
+        modeDesignation: null,
+        categorieVoyageurDesignation: null,
+        offreVoyageDesignation: null,
+      },
+
+      objectToSendReferenceModeOffre: {
+        datas: [],
+      },
+
+      objectToSendReferenceModeCategorieVoyageur: {
+        datas: [],
+      },
+
+      referenceModeOffreVoyage: {
+        referenceFamilleDesignation: "referenceFamilleMode",
+      },
+
+      referenceCategorieVoyageur: {
+        referenceFamilleDesignation: "referenceFamilleCategorieVoyaeur",
+      },
+
+      referenceModeOffreVoyageList: [],
+      referenceModeCategorieVoyageurList: [],
+
+      priceList: [],
+
+      // ----------------------- FIN: VARIABLE EN RAPPORT AVEC LES PRIX DE VOYAGES --------------------------//
     };
   },
 
   validations: {
+    // VALIDATION DES CONTRAINTES OFFRE DE VOYAGES
     offreVoyage: {
       designation: {
         required,
@@ -223,9 +534,73 @@ export default {
         required,
       },
     },
+
+    // VALIDATION DES CONTRAINTES PRIX DE VOYAGES
+    prixOffreVoyageModel: {
+      designation: {
+        required,
+      },
+      prix: {
+        required,
+      },
+      modeDesignation: {
+        required,
+      },
+
+      categorieVoyageurDesignation: {
+        required,
+      },
+    },
   },
 
   methods: {
+    //ENREGISTRER UN NOUVEAU PRIX
+    savePriceInList() {
+      this.$v.$touch();
+      if (this.$v.prixOffreVoyageModel.$invalid) {
+        this.errorMsg = "Vous devez saisir tous les champs obligatoires";
+        $(".alert-error").fadeIn();
+        setTimeout(function () {
+          $(".alert-error").fadeOut();
+        }, 4000);
+      } else {
+        var price = {
+          designation: null,
+          prix: null,
+          modeDesignation: null,
+          categorieVoyageurDesignation: null,
+        };
+        price.designation = this.prixOffreVoyageModel.designation;
+        price.prix = this.prixOffreVoyageModel.prix;
+        price.modeDesignation = this.prixOffreVoyageModel.modeDesignation;
+        price.categorieVoyageurDesignation =
+          this.prixOffreVoyageModel.categorieVoyageurDesignation;
+
+        this.priceList.push(price);
+        this.dialogForPrice = false;
+
+        this.prixOffreVoyageModel.designation = null;
+        this.prixOffreVoyageModel.modeDesignation = null;
+        this.prixOffreVoyageModel.categorieVoyageurDesignation = null;
+        this.prixOffreVoyageModel.prix = null;
+      }
+    },
+
+    deleteItemInPriceList(position) {
+      this.priceList.splice(position, 1);
+    },
+
+    //VERIFICATION DE L'ETAPE DE SAISIE DES INFORMATIONS D'OFFRE DE VOYAGE
+    checkInfosOffreVoyage() {
+      this.$v.$touch();
+      if (this.$v.offreVoyage.$invalid) {
+        this.errorMsg = "Vous n'avez saisi les champs concernés";
+        $(".alert-error").fadeIn();
+        setTimeout(function () {
+          $(".alert-error").fadeOut();
+        }, 4000);
+      } else this.e6 = 2;
+    },
     //SOUMISSION DU FORMULAIRE
     submitForm() {
       this.$v.$touch();
@@ -236,6 +611,52 @@ export default {
           $(".alert-error").fadeOut();
         }, 4000);
       } else this.creerOffreVoyage();
+    },
+
+    //OBTENIR REFERENCE DESIGNATION TYPE OFFRE DE VOYAGE
+    async obtenirReferenceModeOffreVoyage() {
+      this.objectToSendReferenceModeOffre.datas.push(
+        this.referenceModeOffreVoyage
+      );
+      await axios
+        .post(
+          API_OBTENIR_REFERENCE_PAR_PAR_FAMILLE,
+          this.objectToSendReferenceModeOffre,
+          { headers: HEADERS(this.$store.state.userAuthentified.token) }
+        )
+        .then((response) => {
+          this.referenceModeOffreVoyageList = response.data.items;
+        })
+        .catch((e) => {
+          this.errorMsg = e;
+          $(".alert-error").fadeIn();
+          setTimeout(function () {
+            $(".alert-error").fadeOut();
+          }, 4000);
+        });
+    },
+
+    //OBTENIR REFERENCE DESIGNATION CATEGORIE VOYAGEUR
+    async obtenirReferenceModeCategorieVoyageur() {
+      this.objectToSendReferenceModeCategorieVoyageur.datas.push(
+        this.referenceCategorieVoyageur
+      );
+      await axios
+        .post(
+          API_OBTENIR_REFERENCE_PAR_PAR_FAMILLE,
+          this.objectToSendReferenceModeCategorieVoyageur,
+          { headers: HEADERS(this.$store.state.userAuthentified.token) }
+        )
+        .then((response) => {
+          this.referenceModeCategorieVoyageurList = response.data.items;
+        })
+        .catch((e) => {
+          this.errorMsg = e;
+          $(".alert-error").fadeIn();
+          setTimeout(function () {
+            $(".alert-error").fadeOut();
+          }, 4000);
+        });
     },
 
     //OBTENIR REFERENCE DESIGNATION TYPE OFFRE DE VOYAGE
@@ -332,6 +753,11 @@ export default {
           }, 4000);
         });
     },
+
+    //VERIFIE SI CEST UN NOMBRE POSITIF
+    isNumber(item) {
+      return item > 0;
+    },
   },
 
   computed: {
@@ -380,11 +806,50 @@ export default {
         errors.push("Le type d'offre de voyage est obligatoire.");
       return errors;
     },
+
+    // GESTION DES CONTRAINTES DE CHAMPS D'ENTREES POUR LES PRIX DE VOYAGE
+
+    designationPrixOffreVoyageErrors() {
+      const errors = [];
+      if (!this.$v.prixOffreVoyageModel.designation.$dirty) return errors;
+      !this.$v.prixOffreVoyageModel.designation.required &&
+        errors.push("La désignation est obligatoire.");
+      return errors;
+    },
+
+    pricePrixOffreVoyageErrors() {
+      const errors = [];
+      if (!this.$v.prixOffreVoyageModel.prix.$dirty) return errors;
+      !this.isNumber(this.prixOffreVoyageModel.prix) &&
+        errors.push("Saisissez un prix correct.");
+      !this.$v.prixOffreVoyageModel.prix.required &&
+        errors.push("Le prix est obligatoire.");
+      return errors;
+    },
+
+    modePrixOffreVoyageErrors() {
+      const errors = [];
+      if (!this.$v.prixOffreVoyageModel.modeDesignation.$dirty) return errors;
+      !this.$v.prixOffreVoyageModel.modeDesignation.required &&
+        errors.push("La selection du mode de l'offre est obligatoire.");
+      return errors;
+    },
+
+    categoriePrixOffreVoyageErrors() {
+      const errors = [];
+      if (!this.$v.prixOffreVoyageModel.categorieVoyageurDesignation.$dirty)
+        return errors;
+      !this.$v.prixOffreVoyageModel.categorieVoyageurDesignation.required &&
+        errors.push("Veuillez selectionner une catégorie.");
+      return errors;
+    },
   },
 
   mounted() {
     this.getAllCities();
     this.obtenirReferenceTypeOffreVoyage();
+    this.obtenirReferenceModeOffreVoyage();
+    this.obtenirReferenceModeCategorieVoyageur();
   },
 };
 </script>
@@ -423,5 +888,12 @@ h4 {
 .my_input {
   font-family: "Times New Roman", Times, serif;
   font-size: 15px;
+}
+
+.title_form {
+  font-weight: bold;
+  font-size: 25px;
+  opacity: 0.7;
+  font-family: "Montserrat";
 }
 </style>
