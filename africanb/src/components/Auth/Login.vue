@@ -5,6 +5,7 @@
       <div class="col-lg-4 pl-6">
         <div class="container p-5">
           <v-img
+            @click="$router.push({ path: '/' }).catch(() => {})"
             max-height="100"
             max-width="100"
             src="../../assets/UB.jpg"

@@ -22,14 +22,14 @@
               :loading="loading"
               :search="search"
             >
-              <template v-slot:[`item.isActif`]="{ item }">
+              <template v-slot:[`item.etat`]="{ item }">
                 <v-chip
                   x-small
-                  v-if="item.isActif == true"
+                  v-if="item.etat !== 'HORS_SERVICE'"
                   color="success"
                   text-color="white"
                   class="mr-2"
-                  ><span class="etat font-weight-bold">active</span></v-chip
+                  ><span class="etat font-weight-bold">en service</span></v-chip
                 >
                 <v-chip
                   x-small
@@ -37,7 +37,7 @@
                   color="red"
                   text-color="white"
                   class="mr-2"
-                  ><span class="etat">non-active</span></v-chip
+                  ><span class="etat">hors service</span></v-chip
                 >
               </template>
 
@@ -85,7 +85,7 @@ export default {
         { text: "NUMERO DU BUS", value: "numero" },
         { text: "NOMBRE DE PLACES", value: "nombrePlace" },
         { text: "ETAT", value: "etat" },
-        { text: "Actions", value: "actions", sortable: false },
+        { text: "ACTIONS", value: "actions", sortable: false },
       ],
 
       availableBusList: [],

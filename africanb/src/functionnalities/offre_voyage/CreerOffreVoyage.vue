@@ -1,9 +1,7 @@
 <template>
   <v-app>
     <div class="container">
-      <span class="title_form"
-        >Finalisez le processus d'activation de votre offre de voyage.</span
-      >
+      <span class="title_form">Création d'une offre de voyage.</span>
     </div>
 
     <div class="container">
@@ -11,10 +9,8 @@
         <div class="col-lg-9">
           <v-stepper v-model="e6" vertical>
             <v-stepper-step :complete="e6 > 1" step="1" color="teal">
-              Sélectionner une offre
-              <small
-                >Selectionner l'offre de voyage que vous voudriez
-                finaliser.</small
+              <span class="litle_title"
+                >Renseigner les informations générales</span
               >
             </v-stepper-step>
 
@@ -115,14 +111,14 @@
                   </v-container>
                 </v-card-text>
               </v-card>
-              <v-btn color="primary" @click="checkInfosOffreVoyage">
+              <v-btn color="teal" outlined @click="checkInfosOffreVoyage">
                 Continuer
               </v-btn>
               <v-btn text disabled> Annuler </v-btn>
             </v-stepper-content>
 
             <v-stepper-step :complete="e6 > 2" step="2" color="teal">
-              Définir vos prix de voyages
+              <span class="litle_title">Définir vos prix de voyages</span>
             </v-stepper-step>
 
             <v-stepper-content step="2">
@@ -136,13 +132,7 @@
                     max-width="600px"
                   >
                     <template v-slot:activator="{ on, attrs }">
-                      <v-btn
-                        small
-                        color="primary"
-                        dark
-                        v-bind="attrs"
-                        v-on="on"
-                      >
+                      <v-btn small color="secondary" v-bind="attrs" v-on="on">
                         Definir un prix
                       </v-btn>
                     </template>
@@ -248,8 +238,8 @@
                           Enregistrer
                         </v-btn>
                       </v-card-actions>
-                    </v-card>
-                  </v-dialog>
+                    </v-card> </v-dialog
+                  >Sélectionner une offre
                   <!-- FIN DE BOITE DE DIALOGUE -->
                 </v-card-title>
                 <v-card-text>
@@ -307,9 +297,7 @@
                   </div>
                 </v-card-text>
               </v-card>
-              <v-btn color="primary" @click="rattacherJourVoyage">
-                TERMINER
-              </v-btn>
+              <v-btn color="teal" @click="creerOffreVoyage"> TERMINER </v-btn>
               <v-btn text @click="e6 = 1"> ANNULER </v-btn>
             </v-stepper-content>
           </v-stepper>
@@ -470,6 +458,7 @@ export default {
         typeOffreVoyageDesignation: null,
         villeDepartDesignation: null,
         villeDestinationDesignation: null,
+        prixOffreVoyageDTOList: [],
       },
 
       referenceTypeOffreVoyage: {
@@ -682,13 +671,18 @@ export default {
     async creerOffreVoyage() {
       this.offreVoyage.compagnieTransportRaisonSociale =
         this.$store.state.userAuthentified.compagnieTransportRaisonSociale;
+      this.offreVoyage.prixOffreVoyageDTOList = this.priceList;
       this.offreVoyageToSend.datas.push(this.offreVoyage);
+      this.prixOffreVoyageDTOList = this.priceList;
+      console.log(this.offreVoyageToSend);
       this.overlay = true;
       await axios
         .post(API_CREER_OFFRE_VOYAGE, this.offreVoyageToSend, {
           headers: HEADERS(this.$store.state.userAuthentified.token),
         })
         .then((response) => {
+          console.log("Nous sommes dans l'API");
+          console.log(response);
           if (response.status == 200) {
             if (response.data.status.code == 800) {
               this.successMsg = response.data.status.message;
@@ -894,6 +888,12 @@ h4 {
   font-weight: bold;
   font-size: 25px;
   opacity: 0.7;
+  font-family: "Montserrat";
+}
+
+.litle_title {
+  opacity: 0.7;
+  font-size: 18px;
   font-family: "Montserrat";
 }
 </style>

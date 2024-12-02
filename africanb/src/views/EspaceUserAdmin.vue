@@ -845,24 +845,7 @@ export default {
           var offrePlanification = {
             title: "PLANIFICATION DE VOYAGE",
             url: require("@/assets/calendar.png"),
-            items: [
-              {
-                title: "PROGRAMMER UN VOYAGE",
-                url: "mdi-train-car",
-                navigation: "/programmeOffreVoyage",
-                funct: "FUNCTIONNALITY_CREATE_OFFRE_VOYAGE",
-              },
-              {
-                title: "ASSOCIER UN PRIX",
-                url: require("../assets/liste.png"),
-                navigation: "/creerModeTarif",
-              },
-              {
-                title: "ASSOCIER UNE DATE À UN VOYAGE",
-                url: require("../assets/liste.png"),
-                navigation: "/rattacherJourSemaineOffreVoyage",
-              },
-            ],
+            navigation: "/creerModeTarif",
           };
 
           globalFunctionnalities.push(offrePlanification);
