@@ -125,7 +125,6 @@ export default {
           headers: HEADERS(this.$store.state.userAuthentified.token),
         })
         .then((response) => {
-          console.log(response);
           if (response.status == 200) {
             if (response.data.status.code != 800) {
               this.errorMsg = response.data.status.message;

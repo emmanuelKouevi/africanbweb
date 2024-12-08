@@ -60,6 +60,7 @@
                                 $v.programmeOffreVoyageModel.dateDepart.$model
                               "
                             />
+                            {{ programmeOffreVoyageModel.dateDepart }}
                           </div>
 
                           <div class="col-lg-6">
@@ -259,10 +260,10 @@ import {
   API_RECUPERER_LISTE_OFFRE_VOYAGE,
   API_RECUPERER_LISTE_BUS_PAR_COMPAGNIE,
   HEADERS,
-} from "../globalConfig/globalConstConfig";
+} from "@/components/globalConfig/globalConstConfig";
 
 export default {
-  name: "CreerModeTarif",
+  name: "PlanifierOffreVoyage",
   data() {
     return {
       // VARIABLES COMMUNES

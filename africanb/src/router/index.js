@@ -28,7 +28,7 @@ import creerVilleEscale from "../components/administration_compagnie_transport/C
 import programmerOffreVoyage from "../components/administration_compagnie_transport/ProgrammerOffreVoyage";
 import creerModeTarif from "../components/administration_compagnie_transport/CreerModeTarif";
 import selectionnerOffreVoyage from "@/functionnalities/offre_voyage/SelectionnerOffreVoyage.vue";
-import modifierOffreVoyage from "../components/administration_compagnie_transport/ModifierOffreVoyage";
+import modifierOffreVoyage from "@/functionnalities/offre_voyage/ModifierOffreVoyage.vue";
 import rattacherJourSemaineOffreVoyage from "../components/administration_compagnie_transport/RattacherJourSemaineOffreVoyage";
 import creerProprieteCaracteristiqueOffreVoyage from "../components/administration_compagnie_transport/CreerProprieteCaracteristiqueOffreVoyage";
 import modifierModeTarif from "../components/administration_compagnie_transport/ModifierModeTarif";
@@ -48,6 +48,7 @@ import selectionnerBusCompagnieTransport from "@/functionnalities/bus/Selectionn
 import resetPasswordUserCompagnie from "../components/administration_compagnie_transport/changerPasswordCompagnieTransport.vue";
 import userProfilCompagnieTransport from "../components/administration_compagnie_transport/userProfilCompagnieTransport.vue";
 import LandingPage from "../components/LandingPage";
+import planifierOffreVoyage from "@/functionnalities/offre_voyage/PlanifierOffreVoyage.vue";
 
 // IMPORT FOR ENTITY VENDEUR
 import selectionnerReservationBillet from "../components/vendeur/SelectionnerReservationBillet";
@@ -110,6 +111,11 @@ const routes = [
         path: "/creerModeTarif",
         name: "creerModeTarif",
         component: creerModeTarif,
+      },
+      {
+        path: "/PlanifierOffreVoyage",
+        name: "PlanifierOffreVoyage",
+        component: planifierOffreVoyage,
       },
       {
         path: "/programmeOffreVoyage",

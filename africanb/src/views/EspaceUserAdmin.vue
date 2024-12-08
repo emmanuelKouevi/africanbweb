@@ -845,7 +845,7 @@ export default {
           var offrePlanification = {
             title: "PLANIFICATION DE VOYAGE",
             url: require("@/assets/calendar.png"),
-            navigation: "/creerModeTarif",
+            navigation: "/planifierOffreVoyage",
           };
 
           globalFunctionnalities.push(offrePlanification);

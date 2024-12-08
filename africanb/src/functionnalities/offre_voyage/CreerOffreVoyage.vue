@@ -1,7 +1,7 @@
 <template>
   <v-app>
     <div class="container">
-      <span class="title_form">Création d'une offre de voyage.</span>
+      <span class="title_form">Création d'une offre de voyage</span>
     </div>
 
     <div class="container">
@@ -238,8 +238,8 @@
                           Enregistrer
                         </v-btn>
                       </v-card-actions>
-                    </v-card> </v-dialog
-                  >Sélectionner une offre
+                    </v-card>
+                  </v-dialog>
                   <!-- FIN DE BOITE DE DIALOGUE -->
                 </v-card-title>
                 <v-card-text>
@@ -297,8 +297,135 @@
                   </div>
                 </v-card-text>
               </v-card>
-              <v-btn color="teal" @click="creerOffreVoyage"> TERMINER </v-btn>
+              <v-btn color="teal" outlined @click="e6 = 3"> CONTINUER </v-btn>
               <v-btn text @click="e6 = 1"> ANNULER </v-btn>
+            </v-stepper-content>
+
+            <v-stepper-step :complete="e6 > 3" step="3" color="teal">
+              <span class="litle_title">Définir vos villes esclaves</span>
+            </v-stepper-step>
+            <v-stepper-content step="3">
+              <div class="row justify-end">
+                <div class="col-lg-6">
+                  <!-- BOITE DE DIALOG DEBUT-->
+                  <v-dialog
+                    v-model="dialogForEscale"
+                    persistent
+                    max-width="600px"
+                  >
+                    <template v-slot:activator="{ on, attrs }">
+                      <v-btn small color="secondary" v-bind="attrs" v-on="on">
+                        AJOUTER DES ESCALES
+                      </v-btn>
+                    </template>
+                    <v-card>
+                      <v-toolbar color="white"
+                        ><span class="font-weight-bold"
+                          >SÉLECTIONNER VOS VILLES D'ESCALES</span
+                        ></v-toolbar
+                      >
+                      <v-card-text>
+                        <v-container fluid>
+                          <div class="row">
+                            <div class="col-lg-3">
+                              <label for="exampleInputEmail1" class="form-label"
+                                >Ordre escale</label
+                              >
+                              <input
+                                type="number"
+                                min="0"
+                                class="form-control"
+                                id="exampleInputEmail1"
+                                v-model.trim="
+                                  $v.villeEscaleData.position.$model
+                                "
+                              />
+                            </div>
+                            <div class="col-lg-6">
+                              <label for="exampleInputEmail1" class="form-label"
+                                >Ville</label
+                              >
+                              <select
+                                class="form-select"
+                                aria-label="Default select example"
+                                v-model.trim="
+                                  $v.villeEscaleData.villeDesignation.$model
+                                "
+                              >
+                                <option
+                                  v-for="(ville, v) in villesList"
+                                  :key="v"
+                                >
+                                  {{ ville.designation }}
+                                </option>
+                              </select>
+                            </div>
+                          </div>
+                        </v-container>
+                      </v-card-text>
+                      <v-card-actions>
+                        <v-spacer></v-spacer>
+                        <v-btn
+                          color="blue darken-1"
+                          text
+                          @click="dialogForEscale = false"
+                        >
+                          Annuler
+                        </v-btn>
+                        <v-btn
+                          color="blue darken-1"
+                          text
+                          @click="saveVilleEscale(villeEscaleData)"
+                        >
+                          Valider
+                        </v-btn>
+                      </v-card-actions>
+                    </v-card>
+                  </v-dialog>
+
+                  <!-- BOITE DE DIALOG FIN-->
+                </div>
+              </div>
+              <br />
+              <v-card width="900px">
+                <v-card-title class="title-card"
+                  >Vos villes d'escales
+                  <v-spacer></v-spacer>
+                  <v-text-field
+                    v-model="search"
+                    append-icon="mdi-magnify"
+                    label="Search"
+                    single-line
+                    hide-details
+                  ></v-text-field>
+                </v-card-title>
+
+                <v-data-table
+                  :headers="headers"
+                  :items="villesEscaleList"
+                  :search="search"
+                >
+                  <template v-slot:[`item.actions`]="{ item }">
+                    <v-btn
+                      x-small
+                      @click="deleteItemInVilleEscaleList(item)"
+                      color="error"
+                      >Supprimer</v-btn
+                    >
+                  </template>
+                </v-data-table>
+                <v-alert
+                  class="myalert alert-error"
+                  type="error"
+                  width="350px"
+                  dismissible
+                  >{{ errorMsg }}</v-alert
+                > </v-card
+              ><br />
+              <v-btn color="teal" outlined @click="creerOffreVoyage">
+                Terminer
+              </v-btn>
+              <v-btn @click="e6 = 2" text> Annuler </v-btn>
             </v-stepper-content>
           </v-stepper>
         </div>
@@ -430,22 +557,41 @@ export default {
   name: "CreerOffreVoyage",
   data() {
     return {
+      // ------------------------------ VARIABLES COMMUNES ----------------------------------- //
       e6: 1,
-      dialogForPrice: false,
-
       successMsg: null,
       errorMsg: null,
       warningMsg: null,
       overlay: false,
 
-      villesList: [],
       objectValue: {},
-      referenceTypeOffreVoyageList: [],
+
       objectToSend: {
         datas: [],
       },
 
-      // ---------------------- DEBUT: VARIABLES EN RAPPORT AVEC LES OFFRES DE VOYAGE ------------------------//
+      // ---------------------- VARIABLES EN RAPPORT AVEC LES VILLES ------------------------//
+
+      search: "",
+      headers: [
+        { text: "ORDRE", value: "position" },
+        { text: "VILLE", value: "villeDesignation" },
+        { text: "ACTIONS", value: "actions", sortable: false },
+      ],
+
+      villeEscaleData: {
+        offreVoyageDesignation: null,
+        villeDesignation: null,
+        position: null,
+      },
+
+      villesEscaleList: [],
+
+      villesList: [],
+
+      dialogForEscale: false,
+
+      // ---------------------- VARIABLES EN RAPPORT AVEC LES OFFRES DE VOYAGE ------------------------//
 
       offreVoyageToSend: {
         datas: [],
@@ -459,15 +605,18 @@ export default {
         villeDepartDesignation: null,
         villeDestinationDesignation: null,
         prixOffreVoyageDTOList: [],
+        villeEscaleDTOList: [],
       },
 
       referenceTypeOffreVoyage: {
         referenceFamilleDesignation: "referenceFamilleTypeOffreVoyage",
       },
 
-      // ---------------------- FIN: VARIABLES EN RAPPORT AVEC LES OFFRES DE VOYAGE------------------------//
+      referenceTypeOffreVoyageList: [],
 
-      // ---------------------- DEBUT: VARIABLES EN RAPPORT AVEC LES PRIX DE VOYAGES ------------------------//
+      // ---------------------- VARIABLES EN RAPPORT AVEC LES PRIX DE VOYAGES ------------------------//
+
+      dialogForPrice: false,
 
       prixOffreVoyageModel: {
         designation: null,
@@ -504,6 +653,7 @@ export default {
 
   validations: {
     // VALIDATION DES CONTRAINTES OFFRE DE VOYAGES
+
     offreVoyage: {
       designation: {
         required,
@@ -540,9 +690,76 @@ export default {
         required,
       },
     },
+
+    // VALIDATION DES CONTRAINTES POUR LES VILLES ESCALES
+    villeEscaleData: {
+      /*offreVoyageDesignation: {
+        required,
+      },*/
+      villeDesignation: {
+        required,
+      },
+      position: {
+        required,
+      },
+    },
   },
 
   methods: {
+    // ENREGISTRER UNE VILLE ESCALE
+    saveVilleEscale(villeEscale) {
+      this.$v.$touch();
+      if (
+        this.$v.villeEscaleData.position.$invalid ||
+        this.$v.villeEscaleData.villeDesignation.$invalid
+      ) {
+        this.errorMsg = "Le numero d'ordre et la ville escale sont obligatoire";
+        $(".alert-error").fadeIn();
+        setTimeout(function () {
+          $(".alert-error").fadeOut();
+        }, 2000);
+      } else {
+        var escale = {
+          position: null,
+          villeDesignation: null,
+          offreVoyageDesignation: null,
+        };
+        if (this.villesEscaleList.length == 0) {
+          escale.position = villeEscale.position;
+          escale.villeDesignation = villeEscale.villeDesignation;
+          //escale.offreVoyageDesignation = villeEscale.offreVoyageDesignation;
+
+          this.villesEscaleList.push(escale);
+          villeEscale.position = null;
+          villeEscale.villeDesignation = null;
+        } else {
+          this.villesEscaleList.forEach((element) => {
+            if (element.villeDesignation == villeEscale.villeDesignation) {
+              this.$swal.fire(
+                "Erreur",
+                "Vous avez déja enregistré cette ville",
+                "error"
+              );
+            } else {
+              escale.position = villeEscale.position;
+              escale.villeDesignation = villeEscale.villeDesignation;
+              //escale.offreVoyageDesignation = villeEscale.offreVoyageDesignation;
+
+              this.villesEscaleList.push(escale);
+              villeEscale.position = null;
+              villeEscale.villeDesignation = null;
+            }
+          });
+        }
+      }
+    },
+
+    // SUPPRIMER DES VILLES ESCALES ENREGISTRÉS
+    deleteItemInVilleEscaleList(item) {
+      this.editedIndex = this.villesEscaleList.indexOf(item);
+      this.villesEscaleList.splice(this.editedIndex, 1);
+    },
+
     //ENREGISTRER UN NOUVEAU PRIX
     savePriceInList() {
       this.$v.$touch();
@@ -672,17 +889,16 @@ export default {
       this.offreVoyage.compagnieTransportRaisonSociale =
         this.$store.state.userAuthentified.compagnieTransportRaisonSociale;
       this.offreVoyage.prixOffreVoyageDTOList = this.priceList;
-      this.offreVoyageToSend.datas.push(this.offreVoyage);
+      this.offreVoyage.villeEscaleDTOList = this.villesEscaleList;
       this.prixOffreVoyageDTOList = this.priceList;
-      console.log(this.offreVoyageToSend);
+      this.offreVoyageToSend.datas.push(this.offreVoyage);
+
       this.overlay = true;
       await axios
         .post(API_CREER_OFFRE_VOYAGE, this.offreVoyageToSend, {
           headers: HEADERS(this.$store.state.userAuthentified.token),
         })
         .then((response) => {
-          console.log("Nous sommes dans l'API");
-          console.log(response);
           if (response.status == 200) {
             if (response.data.status.code == 800) {
               this.successMsg = response.data.status.message;
@@ -725,6 +941,13 @@ export default {
           this.offreVoyageToSend.datas = [];
         })
         .finally(() => {
+          this.offreVoyage.designation = null;
+          this.offreVoyage.description = null;
+          this.offreVoyage.typeOffreVoyageDesignation = null;
+          this.offreVoyage.villeDepartDesignation = null;
+          this.offreVoyage.villeDestinationDesignation = null;
+          this.priceList = [];
+          this.villesEscaleList = [];
           this.overlay = false;
         });
     },
@@ -835,6 +1058,24 @@ export default {
         return errors;
       !this.$v.prixOffreVoyageModel.categorieVoyageurDesignation.required &&
         errors.push("Veuillez selectionner une catégorie.");
+      return errors;
+    },
+
+    // CONTRAINTES POUR L'ENREGISTREMENT DES VILLES ESCALES
+
+    villeDesignation() {
+      const errors = [];
+      if (!this.$v.villeEscaleData.villeDesignation.$dirty) return errors;
+      !this.$v.villeEscaleData.villeDesignation.required &&
+        errors.push("Le champs ville est obligatoire.");
+      return errors;
+    },
+
+    positionRequired() {
+      const errors = [];
+      if (!this.$v.villeEscaleData.position.$dirty) return errors;
+      !this.$v.villeEscaleData.position.required &&
+        errors.push("Definissez une position.");
       return errors;
     },
   },
