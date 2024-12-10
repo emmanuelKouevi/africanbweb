@@ -165,3 +165,18 @@ export const FUNCTIONNALITY_SELECTION_RESERVATION_TICKET =
 export const FUNCTIONNALITY_TO_CONFIRM_TICKET = "functionnalityConfirmTicket";
 
 export const FUNCTIONNALITY_TO_CHECK_TICKET = "functionnalityCheckTicket";
+
+// DEFINITION DE NOUVELLES FONCTIONNALITÉS
+
+export const FUNCTIONNALITY_MANAGE_OFFRE_VOYAGE =
+  "functionnalityManageOffreVoyage";
+
+export const FUNCTIONNALITY_MANAGE_BUS = "functionnalityManageBus";
+
+export const FUNCTIONNALITY_MANAGE_STATION = "functionnalityManageStation";
+
+export const FUNCTIONNALITY_MANAGE_RESERVATION_TICKET =
+  "functionnalityManageReservationTicket";
+
+export const FUNCTIONNALITY_MANAGE_SUBSCRIPTION_AND_PAYMENT =
+  "functionnalityManageSubscriptionAndPayment";

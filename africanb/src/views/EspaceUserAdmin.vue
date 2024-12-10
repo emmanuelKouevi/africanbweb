@@ -401,12 +401,16 @@ import {
   HEADERS,
 } from "../components/globalConfig/globalConstConfig";
 import {
-  FUNCTIONNALITY_CREATE_OFFRE_VOYAGE,
   FUNCTIONNALITY_CREATE_VILLE,
   //FUNCTIONNALITY_LISTING_VILLE,
   FUNCTIONNALITY_RATTACHE_ATTESTION_TRANSPORT,
   //FUNCTIONNALITY_CREATE_JOUR_OFFRE_VOYAGE,
   FUNCTIONNALITY_CREATE_PROGRAMME_OFFRE_VOYAGE,
+  FUNCTIONNALITY_MANAGE_OFFRE_VOYAGE,
+  FUNCTIONNALITY_MANAGE_STATION,
+  FUNCTIONNALITY_MANAGE_BUS,
+  FUNCTIONNALITY_MANAGE_RESERVATION_TICKET,
+  FUNCTIONNALITY_MANAGE_SUBSCRIPTION_AND_PAYMENT,
 } from "../components/globalConfig/constFunctionnalies";
 import {
   FUNCTIONNALITY_CREATE_USER_FUNCTION,
@@ -450,194 +454,6 @@ export default {
       drawer: true,
       functionnalitiesListByUserRole: [],
       functionnalitiesListComponents: [],
-
-      /*items: [
-        {
-          icon: "mdi-ticket",
-          items: [
-            {
-              title: "CREER UNE OFFRE DE VOYAGE",
-              icon: "mdi-train-car",
-              navigation: "/creerOffreVoyage",
-              funct: "FUNCTIONNALITY_CREATE_OFFRE_VOYAGE",
-            },
-            {
-              title: "VOIR MES OFFRES ENREGISTRÉS",
-              icon: "mdi-ticket",
-              navigation: "/selectionnerOffreVoyage",
-            },
-            {
-              title: "PROPRIETE OFFRE DE VOYAGE",
-              icon: "mdi-feature-search",
-              navigation: "/creerProprieteCaracteristiqueOffreVoyage",
-            },
-          ],
-          title: "OFFRES DE VOYAGES",
-        },
-
-        {
-          icon: "mdi-silverware-fork-knife",
-          active: true,
-          items: [
-            {
-              title: "CREER UNE VILLE",
-              icon: "mdi-domain",
-              navigation: "/creerVille",
-            },
-            {
-              title: "VOIR LES VILLES",
-              icon: "mdi-currency-usd",
-              navigation: "/selectionnerVille",
-            },
-            {
-              title: "CREER UNE GARE",
-              icon: "mdi-subway",
-              navigation: "/creerGareCompagnieTransport",
-            },
-            {
-              title: "GESTION DES GARES",
-              icon: "mdi-store-cog",
-              navigation: "/selectionnerGareCompagnieTransport",
-            },
-          ],
-          title: "LOCALITÉ",
-        },
-
-        {
-          icon: "mdi-silverware-fork-knife",
-          active: true,
-          items: [
-            {
-              title: "DATER UNE OFFRE DE VOYAGE",
-              icon: "mdi-calendar",
-              navigation: "/rattacherJourSemaineOffreVoyage",
-            },
-            {
-              title: "TARIFER UNE OFFRE",
-              icon: "mdi-currency-usd",
-              navigation: "/creerModeTarif",
-            },
-            {
-              title: "PROGRAMMER UNE OFFRE",
-              icon: "mdi-clock-outline",
-              navigation: "/programmeOffreVoyage",
-            },
-          ],
-          title: "PLANIFICATIONS DES OFFRES",
-        },
-
-        {
-          action: "mdi-school",
-          items: [
-            {
-              title: "DÉLIVRER UN BUS",
-              icon: "mdi-bus",
-              navigation: "/associerBusCompagnieTransport",
-            },
-          ],
-          title: "GESTIONS DES BUS",
-        },
-
-        {
-          action: "mdi-human-male-female-child",
-          items: [
-            {
-              title: "ROLE UTILISATEUR",
-              icon: "mdi-account-credit-card",
-              navigation: "/creerRoleUtilisateur",
-            },
-            {
-              title: "GERER LES COMPTES",
-              icon: "mdi-account-credit-card",
-              navigation: "/selectionnerUtilisateur",
-            },
-            {
-              title: "AJOUTER UN MEMBRE",
-              icon: "mdi-account-plus",
-              navigation: "/creerUtilisateur",
-            },
-          ],
-          title: "GESTIONS DES UTILISATEURS",
-        },
-
-        {
-          action: "mdi-bottle-tonic-plus",
-          items: [
-            {
-              title: "AJOUTER DES FONCTIONNALITÉS",
-              icon: "mdi-cog",
-              navigation: "/creerFonctionnalite",
-            },
-            {
-              title: "ROLE ET FONCTIONNALITÉ",
-              icon: "mdi-account-credit-card",
-              navigation: "/gestionFonctionnalitesEtRoles",
-            },
-          ],
-          title: "PARAMÈTRES",
-        },
-
-        {
-          action: "mdi-briefcase",
-          items: [
-            {
-              title: "CREER MODE ABONNEMENT",
-              icon: "mdi-bank-transfer-out",
-              navigation: "/creerModeAbonnement",
-            },
-            {
-              title: "CREER MODE DE PAIEMENT",
-              icon: "mdi-account-credit-card",
-              navigation: "/creerModePaiement",
-            },
-            {
-              title: "MODE ABONNEMENT ET PAIEMENT",
-              icon: "mdi-cash-sync",
-              navigation: "/selectionnerModeAbonnementEtPaiement",
-            },
-          ],
-          title: "ABONNEMENT ET PAIEMENT",
-        },
-
-        {
-          action: "mdi-briefcase",
-          items: [
-            {
-              title: "DEMANDE D'ADHESION",
-              icon: "mdi-newspaper-check",
-              navigation: "/creerDemandeAdhesion",
-            },
-            {
-              title: "LISTE DES DEMANDES D'ADHESION",
-              icon: "mdi-account-credit-card",
-              navigation: "/selectionnerDemandeAdhesionCompagnie",
-            },
-            {
-              title: "DOCUMENT DE TRANSPORT",
-              icon: "mdi-file-chart-check",
-              navigation: "/documentAttestationTransport",
-            },
-          ],
-          title: "AUTRES OPÉRATIONS",
-        },
-
-        {
-          action: "mdi-tag",
-          items: [
-            {
-              title: "CONSULTER LES OFFRES",
-              icon: "mdi-train-car",
-              navigation: "/selectionnerOffreVoyageReservation",
-            },
-            {
-              title: "GESTION DES RESERVATIONS",
-              icon: "mdi-clipboard-list",
-              navigation: "/selectionnerReservationBillet",
-            },
-          ],
-          title: "ESPACE VENDEUR",
-        },
-      ],*/
     };
   },
 
@@ -700,27 +516,116 @@ export default {
   computed: {
     buildComponentFromFunctionnalities() {
       var globalFunctionnalities = [];
+
       this.functionnalitiesListByUserRole.forEach((element) => {
-        if (element.code == FUNCTIONNALITY_CREATE_OFFRE_VOYAGE) {
-          var createOffreVoyageFunction = {
-            title: "OFFRE DE VOYAGE",
-            url: require("@/assets/route.png"),
+        if (element.code == FUNCTIONNALITY_MANAGE_SUBSCRIPTION_AND_PAYMENT) {
+          var manageStation = {
+            title: "Abonnement Et Paiement",
+            url: require("@/assets/station.png"),
             items: [
               {
-                title: "CREER UNE OFFRE DE VOYAGE",
-                url: "mdi-train-car",
-                navigation: "/creerOffreVoyage",
-                funct: "FUNCTIONNALITY_CREATE_OFFRE_VOYAGE",
+                title: "Creer un mode abonnement",
+                navigation: "/creerModeAbonnement",
               },
               {
-                title: "LISTE DES OFFRES DE VOYAGE",
-                url: require("../assets/liste.png"),
-                navigation: "/selectionnerOffreVoyage",
+                title: "Creer un mode de paiement",
+                navigation: "/creerModePaiement",
+              },
+              {
+                title: "Liste des abonnements et paiements",
+                navigation: "/selectionnerModeAbonnementEtPaiement",
               },
             ],
           };
-          globalFunctionnalities.push(createOffreVoyageFunction);
+          globalFunctionnalities.push(manageStation);
         }
+
+        if (element.code == FUNCTIONNALITY_MANAGE_STATION) {
+          var manageStation = {
+            title: "Gare de transport",
+            url: require("@/assets/station.png"),
+            items: [
+              {
+                title: "Nouvelle de gare de transport",
+                url: "mdi-train-car",
+                navigation: "/creerGareCompagnieTransport",
+              },
+              {
+                title: "Liste des gares disponibles",
+                url: require("../assets/liste.png"),
+                navigation: "/selectionnerGareCompagnieTransport",
+              },
+            ],
+          };
+          globalFunctionnalities.push(manageStation);
+        }
+
+        if (element.code == FUNCTIONNALITY_MANAGE_BUS) {
+          var manageBus = {
+            title: "Bus",
+            url: require("@/assets/bus.png"),
+            items: [
+              {
+                title: "Nouveau bus",
+                navigation: "/associerBusCompagnieTransport",
+              },
+              {
+                title: "Liste des bus disponibles",
+                navigation: "/selectionnerBusCompagnieTransport",
+              },
+            ],
+          };
+          globalFunctionnalities.push(manageBus);
+        }
+
+        if (element.code == FUNCTIONNALITY_MANAGE_OFFRE_VOYAGE) {
+          var manageOffreVoyage = {
+            title: "Offre de voyage",
+            url: require("@/assets/route.png"),
+            items: [
+              {
+                title: "Creer une offre de voyage",
+                navigation: "/creerOffreVoyage",
+              },
+              {
+                title: "Liste des offres de voyage",
+                navigation: "/selectionnerOffreVoyage",
+              },
+              {
+                title: "Planifier une offre de voyage",
+                navigation: "/planifierOffreVoyage",
+              },
+            ],
+          };
+          globalFunctionnalities.push(manageOffreVoyage);
+        }
+
+        if (element.code == FUNCTIONNALITY_MANAGE_RESERVATION_TICKET) {
+          var manageReservationTicket = {
+            title: "Billet de réservation",
+            url: require("@/assets/route.png"),
+            items: [
+              {
+                title: "Réserver un billet de voyage",
+                navigation: "/selectionnerOffreVoyageReservation",
+              },
+              {
+                title: "Voir les réservations",
+                navigation: "/selectionnerReservationBillet",
+              },
+              {
+                title: "Vérifier un billet de voyage",
+                navigation: "/verifierBilletReservation",
+              },
+              {
+                title: "Confirmer un billet de voyage",
+                navigation: "/confirmerBilletReservation",
+              },
+            ],
+          };
+          globalFunctionnalities.push(manageReservationTicket);
+        }
+
         if (element.code == FUNCTIONNALITY_CREATE_VILLE) {
           var createTownFunction = {
             title: "LOCALITÉ",
