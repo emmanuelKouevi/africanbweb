@@ -401,34 +401,28 @@ import {
   HEADERS,
 } from "../components/globalConfig/globalConstConfig";
 import {
-  FUNCTIONNALITY_CREATE_VILLE,
-  //FUNCTIONNALITY_LISTING_VILLE,
   FUNCTIONNALITY_RATTACHE_ATTESTION_TRANSPORT,
-  //FUNCTIONNALITY_CREATE_JOUR_OFFRE_VOYAGE,
   FUNCTIONNALITY_CREATE_PROGRAMME_OFFRE_VOYAGE,
   FUNCTIONNALITY_MANAGE_OFFRE_VOYAGE,
   FUNCTIONNALITY_MANAGE_STATION,
   FUNCTIONNALITY_MANAGE_BUS,
   FUNCTIONNALITY_MANAGE_RESERVATION_TICKET,
   FUNCTIONNALITY_MANAGE_SUBSCRIPTION_AND_PAYMENT,
+  FUNCTIONNALITY_MANAGE_LOCALISATION,
+  FUNCTIONNALITY_MANAGE_USERS,
+  FUNCTIONNALITY_MANAGE_ROLE_AND_FUNCTIONNALITY,
+  FUNCTIONNALITY_MANAGE_ADHESION,
 } from "../components/globalConfig/constFunctionnalies";
 import {
   FUNCTIONNALITY_CREATE_USER_FUNCTION,
   FUNCTIONNALITY_CREATE_USER_ROLE,
   FUNCTIONNALITY_CREATE_USER_ACCOUNT,
   FUNCTIONNALITY_DEMANDE_ADHESION,
-  //FUNCTIONNALITY_CREATE_PAYS,
-  //FUNCTIONNALITY_LISTING_PAYS,
 } from "../components/globalConfig/constFunctionnalies";
-import {
-  /*UNCTIONNALITY_CREATE_VILLE_ESCALE ,*/ //FUNCTIONNALITY_CREATE_PRIX_OFFRE_VOYAGE,
-  FUNCTIONNALITY_CREATE_BUS_OFFRE_VOYAGE,
-  FUNCTIONNALITY_LIST_ADHESION,
-} from "../components/globalConfig/constFunctionnalies";
+import { FUNCTIONNALITY_LIST_ADHESION } from "../components/globalConfig/constFunctionnalies";
 import {
   FUNCTIONNALITY_CREATE_CARACTERISTIQUE_OFFRE_VOYAGE,
   FUNCTIONNALITY_CREATE_GARE_TRANSPORT,
-  //FUNCTIONNALITY_LISTING_GARE_TRANSPORT /*FUNCTIONNALITY_CREATE_BAGAGE*/,
 } from "../components/globalConfig/constFunctionnalies";
 import {
   FUNCTIONNALITY_CREATE_MODE_ABONNEMENT,
@@ -436,7 +430,6 @@ import {
   FUNCTIONNALITY_LISTING_MODE_PAIEMENT,
   FUNCTIONNALITY_TO_CONFIRM_TICKET,
   FUNCTIONNALITY_TO_CHECK_TICKET,
-  //FUNCTIONNALITY_LISTING_OFFRE_VOYAGE,
 } from "../components/globalConfig/constFunctionnalies";
 import {
   FUNCTIONNALITY_RESERVING_FROM_OFFRE_VOYAGE,
@@ -519,7 +512,7 @@ export default {
 
       this.functionnalitiesListByUserRole.forEach((element) => {
         if (element.code == FUNCTIONNALITY_MANAGE_SUBSCRIPTION_AND_PAYMENT) {
-          var manageStation = {
+          var manageSubscription = {
             title: "Abonnement Et Paiement",
             url: require("@/assets/station.png"),
             items: [
@@ -537,7 +530,7 @@ export default {
               },
             ],
           };
-          globalFunctionnalities.push(manageStation);
+          globalFunctionnalities.push(manageSubscription);
         }
 
         if (element.code == FUNCTIONNALITY_MANAGE_STATION) {
@@ -626,65 +619,86 @@ export default {
           globalFunctionnalities.push(manageReservationTicket);
         }
 
-        if (element.code == FUNCTIONNALITY_CREATE_VILLE) {
-          var createTownFunction = {
-            title: "LOCALITÉ",
+        if (element.code == FUNCTIONNALITY_MANAGE_LOCALISATION) {
+          var createlocation = {
+            title: "Localité",
             url: "",
             items: [
               {
-                title: "AJOUTER UNE VILLE",
-                url: "mdi-train-car",
+                title: "Ajouter une ville",
                 navigation: "/creerVille",
               },
               {
-                title: "AJOUTER UN PAYS",
-                url: "mdi-train-car",
+                title: "Ajouter un pays",
                 navigation: "/creerPays",
               },
               {
-                title: "GÉRER LES VILLES",
-                url: require("../assets/liste.png"),
+                title: "Liste des villes",
                 navigation: "/selectionnerVille",
               },
               {
-                title: "GÉRER LES PAYS",
-                url: require("../assets/liste.png"),
+                title: "Liste des pays",
                 navigation: "/selectionnerPays",
               },
             ],
           };
 
-          globalFunctionnalities.push(createTownFunction);
-        }
-        /*
-        if (element.code == FUNCTIONNALITY_CREATE_PAYS) {
-          var createCountryFunction = {
-            title: "CREER UN PAYS",
-            icon: "mdi-town-hall",
-            navigation: "/creerPays",
-          };
-          globalFunctionnalities.push(createCountryFunction);
+          globalFunctionnalities.push(createlocation);
         }
 
-        if (element.code == FUNCTIONNALITY_LISTING_PAYS) {
-          var createCountryFunction = {
-            title: "LOCALITÉ",
+        if (element.code == FUNCTIONNALITY_MANAGE_USERS) {
+          var createUserFunction = {
+            title: "Comptes uitlisateurs",
             url: "",
             items: [
               {
-                title: "AJOUTER UN PAYS",
-                url: "mdi-train-car",
-                navigation: "/creerVille",
+                title: "Creer un compte utilisateur",
+                navigation: "/creerUtilisateur",
               },
               {
-                title: "GÉRER LES VILLES",
-                url: require("../assets/liste.png"),
-                navigation: "/selectionnerVille",
+                title: "Liste des comptes",
+                navigation: "/selectionnerUtilisateur",
               },
             ],
           };
-          globalFunctionnalities.push(createCountrySelected);
-        }*/
+
+          globalFunctionnalities.push(createUserFunction);
+        }
+
+        if (element.code == FUNCTIONNALITY_MANAGE_ROLE_AND_FUNCTIONNALITY) {
+          var createRoleAndFunctionnality = {
+            title: "Roles et Fonctionnalités",
+            url: "",
+            items: [
+              {
+                title: "Ajouter une fonctionnalité",
+                navigation: "/creerFonctionnalite",
+              },
+              {
+                title: "Ajouter un rôle utilisateur",
+                navigation: "/creerRoleUtilisateur",
+              },
+
+              {
+                title: "Liste des roles et fonctionnalités",
+                navigation: "/gestionFonctionnalitesEtRoles",
+              },
+            ],
+          };
+
+          globalFunctionnalities.push(createRoleAndFunctionnality);
+        }
+
+        if (element.code == FUNCTIONNALITY_MANAGE_ADHESION) {
+          var adhesionFunction = {
+            title: "Liste des demandes d'adhésion",
+            url: "",
+            navigation: "/selectionnerDemandeAdhesionCompagnie",
+          };
+          globalFunctionnalities.push(listAdhesionDisponible);
+        }
+
+        // ==============================================================================================================================================//
 
         if (element.code == FUNCTIONNALITY_RATTACHE_ATTESTION_TRANSPORT) {
           var bindTravelFile = {
@@ -694,26 +708,7 @@ export default {
           };
           globalFunctionnalities.push(bindTravelFile);
         }
-        if (element.code == FUNCTIONNALITY_CREATE_BUS_OFFRE_VOYAGE) {
-          var creerBusOffreFunction = {
-            title: "BUS",
-            url: require("@/assets/bus.png"),
-            items: [
-              {
-                title: "NOUVEAU BUS",
-                url: "",
-                navigation: "/associerBusCompagnieTransport",
-                funct: "FUNCTIONNALITY_CREATE_OFFRE_VOYAGE",
-              },
-              {
-                title: "LISTE DES BUS DISPONIBLES",
-                url: "",
-                navigation: "/selectionnerBusCompagnieTransport",
-              },
-            ],
-          };
-          globalFunctionnalities.push(creerBusOffreFunction);
-        }
+
         if (element.code == FUNCTIONNALITY_CREATE_USER_ROLE) {
           var userRoleFunction = {
             title: "GESTION DES ROLES",

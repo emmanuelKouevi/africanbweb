@@ -180,3 +180,13 @@ export const FUNCTIONNALITY_MANAGE_RESERVATION_TICKET =
 
 export const FUNCTIONNALITY_MANAGE_SUBSCRIPTION_AND_PAYMENT =
   "functionnalityManageSubscriptionAndPayment";
+
+export const FUNCTIONNALITY_MANAGE_USERS = "functionnalityManageUsers";
+
+export const FUNCTIONNALITY_MANAGE_ROLE_AND_FUNCTIONNALITY =
+  "functionnalityManageRoleAndFunctionnality";
+
+export const FUNCTIONNALITY_MANAGE_LOCALISATION =
+  "functionnalityManageLocalisation";
+
+export const FUNCTIONNALITY_MANAGE_ADHESION = "functionnalityManageAdhesion";
