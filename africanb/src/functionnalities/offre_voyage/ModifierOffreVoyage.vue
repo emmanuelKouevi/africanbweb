@@ -966,6 +966,7 @@ export default {
       });
     },
 
+    // FERMER LA BOITE DE DIALOGUE DES VILLES ESCALES
     closeDialogEscale() {
       this.dialogEscale = false;
       this.$nextTick(() => {
@@ -1038,7 +1039,7 @@ export default {
               setTimeout(function () {
                 $(".alert-success").fadeOut();
               }, 4000);
-              this.villeEscaleList.push(this.editedEscale);
+              this.obtenirVilleEscaleParOffreVoyage();
               this.villeEscaleObject.datas = [];
             } else {
               this.errorMsg = response.data.status.message;
@@ -1159,7 +1160,7 @@ export default {
               setTimeout(function () {
                 $(".alert-success").fadeOut();
               }, 4000);
-              this.tarificationList.push(this.editedTarif);
+              this.getAllPriceByTravelOffers();
               this.priceObject.datas = [];
             } else {
               this.errorMsg = response.data.status.message;
@@ -1349,7 +1350,7 @@ export default {
               setTimeout(function () {
                 $(".alert-success").fadeOut();
               }, 4000);
-              this.programmeList.push(this.editedProgramme);
+              this.getPlanningByOffersTravel();
               this.programmeObject.datas = [];
             } else {
               this.errorMsg = response.data.status.message;
@@ -1524,6 +1525,7 @@ export default {
           const offreVoyageEditing = JSON.parse(
             localStorage.getItem("offreVoyage")
           );
+          console.log(localStorage.getItem("offreVoyage"));
           this.offreVoyage.id = offreVoyageEditing.id;
           this.offreVoyage.designation = offreVoyageEditing.designation;
           this.offreVoyage.description = offreVoyageEditing.description;

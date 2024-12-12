@@ -174,7 +174,8 @@ export default {
                 response.data.status.message,
                 "success"
               );
-              offreVoyage.isActived = true;
+              offreVoyage.isActif = true;
+              this.obtenirOffreVoyageListParCompagnie();
             }
           } else {
             this.$swal.fire(

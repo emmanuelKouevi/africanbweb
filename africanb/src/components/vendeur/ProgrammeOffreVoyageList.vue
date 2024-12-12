@@ -64,11 +64,7 @@
         </h4>
         <br /><br />
 
-        <div
-          class="row"
-          v-for="(programme, p) in jourSemainesParOffreVoyagesList"
-          :key="p"
-        >
+        <div class="row" v-for="(programme, p) in programmeList" :key="p">
           <div class="col-lg-10">
             <v-card rounded="xl" elevation="3">
               <v-card-text>
@@ -98,6 +94,18 @@
                             >Faire une réservation</v-list-item-subtitle
                           >
                         </v-list-item>
+
+                        <v-list-item
+                          link
+                          @click="toExportReport(programme.designation)"
+                        >
+                          <v-list-item-action
+                            ><v-icon>mdi-file</v-icon></v-list-item-action
+                          >
+                          <v-list-item-subtitle
+                            >Exporter le rapport</v-list-item-subtitle
+                          >
+                        </v-list-item>
                       </v-list>
                     </v-menu>
                   </v-list-item-action>
@@ -105,92 +113,67 @@
 
                 <v-list-item>
                   <v-list-item-content>
-                    <v-list-item-subtitle>Jour de voyage:</v-list-item-subtitle>
+                    <v-list-item-subtitle>Réference:</v-list-item-subtitle>
                   </v-list-item-content>
 
                   <v-list-item-content>
                     <v-list-item-subtitle class="font-weight-bold">{{
-                      programme.jourSemaineDesignation
+                      programme.designation
+                    }}</v-list-item-subtitle>
+                  </v-list-item-content>
+                </v-list-item>
+
+                <v-list-item>
+                  <v-list-item-content>
+                    <v-list-item-subtitle>Jour de départ:</v-list-item-subtitle>
+                  </v-list-item-content>
+
+                  <v-list-item-content>
+                    <v-list-item-subtitle class="font-weight-bold">{{
+                      programme.dateDepart
+                    }}</v-list-item-subtitle>
+                  </v-list-item-content>
+                </v-list-item>
+
+                <v-list-item>
+                  <v-list-item-content>
+                    <v-list-item-subtitle>Jour d'arrivée:</v-list-item-subtitle>
+                  </v-list-item-content>
+
+                  <v-list-item-content>
+                    <v-list-item-subtitle class="font-weight-bold">{{
+                      programme.dateArrivee
+                    }}</v-list-item-subtitle>
+                  </v-list-item-content>
+                </v-list-item>
+
+                <v-list-item>
+                  <v-list-item-content>
+                    <v-list-item-subtitle>Bus:</v-list-item-subtitle>
+                  </v-list-item-content>
+
+                  <v-list-item-content>
+                    <v-list-item-subtitle class="font-weight-bold">{{
+                      programme.numeroBus
+                    }}</v-list-item-subtitle>
+                  </v-list-item-content>
+                </v-list-item>
+
+                <v-list-item>
+                  <v-list-item-content>
+                    <v-list-item-subtitle
+                      >Nombre de places:</v-list-item-subtitle
+                    >
+                  </v-list-item-content>
+
+                  <v-list-item-content>
+                    <v-list-item-subtitle class="font-weight-bold">{{
+                      programme.nombrePlaceDisponible
                     }}</v-list-item-subtitle>
                   </v-list-item-content>
                 </v-list-item>
 
                 <v-divider></v-divider>
-
-                <div v-for="(voyage, v) in programme.programmeDTOList" :key="v">
-                  <v-list-item>
-                    <v-list-item-content>
-                      <v-list-item-subtitle class="font-weight-bold"
-                        >Départ n°{{ v + 1 }}:</v-list-item-subtitle
-                      >
-                    </v-list-item-content>
-                    <v-spacer></v-spacer>
-                    <v-btn
-                      x-small
-                      text
-                      color="primary"
-                      @click="toExportReport(voyage.designation)"
-                      ><v-icon>mdi-file</v-icon>&nbsp;Exporter le rapport</v-btn
-                    >
-                  </v-list-item>
-
-                  <v-list-item>
-                    <v-list-item-content>
-                      <v-list-item-subtitle>Reference:</v-list-item-subtitle>
-                    </v-list-item-content>
-
-                    <v-list-item-content>
-                      <v-list-item-subtitle class="font-weight-bold">{{
-                        voyage.designation
-                      }}</v-list-item-subtitle>
-                    </v-list-item-content>
-                  </v-list-item>
-
-                  <v-list-item>
-                    <v-list-item-content>
-                      <v-list-item-subtitle
-                        >Heure de départ:</v-list-item-subtitle
-                      >
-                    </v-list-item-content>
-
-                    <v-list-item-content>
-                      <v-list-item-subtitle class="font-weight-bold">{{
-                        voyage.heureDepart
-                      }}</v-list-item-subtitle>
-                    </v-list-item-content>
-                  </v-list-item>
-
-                  <v-list-item>
-                    <v-list-item-content>
-                      <v-list-item-subtitle
-                        >Heure d'arrivée (estimation):</v-list-item-subtitle
-                      >
-                    </v-list-item-content>
-
-                    <v-list-item-content>
-                      <v-list-item-subtitle class="font-weight-bold">{{
-                        voyage.heureArrivee
-                      }}</v-list-item-subtitle>
-                    </v-list-item-content>
-                  </v-list-item>
-
-                  <v-list-item>
-                    <v-list-item-content>
-                      <v-list-item-subtitle
-                        >Nombre de place(s) restante(s):</v-list-item-subtitle
-                      >
-                    </v-list-item-content>
-
-                    <v-list-item-content>
-                      <v-list-item-subtitle class="font-weight-bold"
-                        >{{
-                          voyage.nombrePlaceDisponible
-                        }}
-                        place(s)</v-list-item-subtitle
-                      >
-                    </v-list-item-content>
-                  </v-list-item>
-                </div>
               </v-card-text>
             </v-card>
           </div>
@@ -205,8 +188,8 @@ import axios from "axios";
 import $ from "jquery";
 import {
   HEADERS,
-  API_OBENIR_JOUR_SEMAINE_PAR_OFFRE_VOYAGE,
   API_GENERATE_REPORT,
+  API_RECUPERER_PROGRAMME_PAR_OFFRE_VOYAGE,
 } from "../globalConfig/globalConstConfig";
 export default {
   name: "ProgrammeOffreVoyageList",
@@ -216,7 +199,7 @@ export default {
         id: null,
         designation: null,
         description: null,
-        compagnieTransportRaisonSociale: "KOUEVI TRANSPORT",
+        compagnieTransportRaisonSociale: null,
         typeOffreVoyageDesignation: null,
         villeDepartDesignation: null,
         villeDestinationDesignation: null,
@@ -234,7 +217,7 @@ export default {
         },
       },
 
-      jourSemainesParOffreVoyagesList: [],
+      programmeList: [],
     };
   },
 
@@ -245,6 +228,31 @@ export default {
         "_blank",
         "fullscreen=yes"
       );
+    },
+
+    //OBTENIR LA LISTE DES PROGRAMMES PAR OFFRE DE VOYAGE
+    async getPlanningByOffersTravel() {
+      await axios
+        .post(
+          API_RECUPERER_PROGRAMME_PAR_OFFRE_VOYAGE,
+          this.offreVoyageObject,
+          { headers: HEADERS(this.$store.state.userAuthentified.token) }
+        )
+        .then((response) => {
+          if (response.data.status.code == 800) {
+            this.programmeList = response.data.items;
+          } else {
+            this.programmeList = [];
+          }
+        })
+        .catch((e) => {
+          this.errorMsg = e;
+          this.programmeList = [];
+          $(".alert-error").fadeIn();
+          setTimeout(function () {
+            $(".alert-error").fadeOut();
+          }, 4000);
+        });
     },
 
     //Exporter le rapport en PDF
@@ -300,26 +308,7 @@ export default {
             offreVoyageEditing.villeDestinationDesignation;
           this.offreVoyageObject.data.designation =
             this.offreVoyage.designation;
-          await axios
-            .post(
-              API_OBENIR_JOUR_SEMAINE_PAR_OFFRE_VOYAGE,
-              this.offreVoyageObject,
-              { headers: HEADERS(this.$store.state.userAuthentified.token) }
-            )
-            .then((response) => {
-              if (response.data.status.code == 800) {
-                this.jourSemainesParOffreVoyagesList = response.data.items;
-              } else {
-                this.jourSemainesParOffreVoyagesList = [];
-              }
-            })
-            .catch((e) => {
-              this.errorMsg = e;
-              $(".alert-error").fadeIn();
-              setTimeout(function () {
-                $(".alert-error").fadeOut();
-              }, 4000);
-            });
+          await this.getPlanningByOffersTravel();
         } catch (error) {
           localStorage.removeItem("offreVoyage");
         }

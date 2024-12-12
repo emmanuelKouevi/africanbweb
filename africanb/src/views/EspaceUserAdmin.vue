@@ -25,7 +25,7 @@
 
           <v-list-item-content>
             <v-list-item-title class="list-item-title"
-              >TABLEAU DE BORD</v-list-item-title
+              >Tableau de bord</v-list-item-title
             >
           </v-list-item-content>
         </v-list-item>
@@ -43,22 +43,59 @@
           v-for="menu in buildComponentFromFunctionnalities"
           :key="menu.title"
         >
-          <v-list-item
-            link
-            @click="$router.push({ path: menu.navigation }).catch(() => {})"
-          >
-            <v-list-item-icon>
-              <v-avatar size="25">
-                <v-img :src="menu.url"></v-img>
-              </v-avatar>
-            </v-list-item-icon>
+          <div v-if="menu.items == undefined">
+            <v-list-item
+              link
+              @click="$router.push({ path: menu.navigation }).catch(() => {})"
+            >
+              <v-list-item-icon>
+                <v-avatar size="25">
+                  <v-img :src="menu.url"></v-img>
+                </v-avatar>
+              </v-list-item-icon>
 
-            <v-list-item-content>
-              <v-list-item-title class="list-item-title">{{
-                menu.title.toUpperCase()
-              }}</v-list-item-title>
-            </v-list-item-content>
-          </v-list-item>
+              <v-list-item-content>
+                <v-list-item-title class="list-item-title">{{
+                  menu.title.toUpperCase()
+                }}</v-list-item-title>
+              </v-list-item-content>
+            </v-list-item>
+          </div>
+
+          <div v-else>
+            <div v-if="menu.items.length > 1">
+              <v-list-group no-action>
+                <template v-slot:activator>
+                  <v-list-item-icon>
+                    <v-avatar size="25">
+                      <v-img :src="menu.url"></v-img>
+                    </v-avatar>
+                  </v-list-item-icon>
+                  <v-list-item-content
+                    ><v-list-item-title class="list-item-title">{{
+                      menu.title
+                    }}</v-list-item-title></v-list-item-content
+                  >
+                </template>
+
+                <v-list-item
+                  link
+                  v-for="child in menu.items"
+                  :key="child.title"
+                >
+                  <v-list-item-content>
+                    <v-list-item-title
+                      class="list-item-title"
+                      @click="
+                        $router.push({ path: child.navigation }).catch(() => {})
+                      "
+                      >{{ child.title }}</v-list-item-title
+                    >
+                  </v-list-item-content>
+                </v-list-item>
+              </v-list-group>
+            </div>
+          </div>
         </v-list>
       </div>
 
@@ -109,11 +146,6 @@
                   v-for="child in menu.items"
                   :key="child.title"
                 >
-                  <!--<v-list-item-icon>
-                    <v-avatar size="25" color="teal">
-                      <v-img :src="child.url"></v-img>
-                    </v-avatar>
-                  </v-list-item-icon>-->
                   <v-list-item-content>
                     <v-list-item-title
                       class="list-item-title"
@@ -127,153 +159,8 @@
               </v-list-group>
             </div>
           </div>
-
-          <!--<div v-if="menu.items.length > 1">
-            <v-list-group
-              v-for="item in menu.items"
-              :key="item.title"
-              v-model="item.active"
-              no-action
-            >
-              <template v-slot:activator>
-                <v-list-item-content
-                  ><v-list-item-title class="list-item-title">{{
-                    item.title
-                  }}</v-list-item-title></v-list-item-content
-                >
-              </template>
-
-              <v-list-item link v-for="child in item.items" :key="child.title">
-                <v-list-item-content>
-                  <v-list-item-title
-                    class="list-item-title"
-                    @click="
-                      $router.push({ path: child.navigation }).catch(() => {})
-                    "
-                    >{{ child.title }}</v-list-item-title
-                  >
-                </v-list-item-content>
-              </v-list-item>
-            </v-list-group>
-          </div>--->
         </v-list>
       </div>
-
-      <!--<div
-        v-else-if="
-          $store.state.userAuthentified.roleCode ==
-          'RoleAdminCompagnieTransport'
-        "
-      >
-        <v-list nav dense>
-          <v-list-group
-            v-for="item in items"
-            :key="item.title"
-            v-model="item.active"
-            no-action
-          >
-            <template v-slot:activator>
-              <v-list-item-content
-                ><v-list-item-title class="list-item-title">{{
-                  item.title
-                }}</v-list-item-title></v-list-item-content
-              >
-            </template>
-
-            <v-list-item link v-for="child in item.items" :key="child.title">
-              <v-list-item-content>
-                <v-list-item-title
-                  class="list-item-title"
-                  @click="
-                    $router.push({ path: child.navigation }).catch(() => {})
-                  "
-                  >{{ child.title }}</v-list-item-title
-                >
-              </v-list-item-content>
-            </v-list-item>
-          </v-list-group>
-        </v-list>
-      </div>-->
-
-      <!--<div
-        v-else-if="
-          $store.state.userAuthentified.roleCode ==
-          'RoleAdminCompagnieTransport'
-        "
-      >
-        <v-list
-          dense
-          nav
-          v-for="menu in buildComponentFromFunctionnalities"
-          :key="menu.title"
-        >
-          <v-list-item
-            link
-            @click="$router.push({ path: menu.navigation }).catch(() => {})"
-          >
-            <v-list-item-icon>
-              <v-icon color="teal">{{ menu.icon }}</v-icon>
-            </v-list-item-icon>
-
-            <v-list-item-content>
-              <v-list-item-title class="list-item-title">{{
-                menu.title.toUpperCase()
-              }}</v-list-item-title>
-            </v-list-item-content>
-          </v-list-item>
-        </v-list>
-      </div>-->
-      <!--<v-list nav dense v-else>
-        <v-list-group
-          v-for="item in items"
-          :key="item.title"
-          v-model="item.active"
-          no-action
-        >
-          <template v-slot:activator>
-            <v-list-item-content
-              ><v-list-item-title class="list-item-title">{{
-                item.title
-              }}</v-list-item-title></v-list-item-content
-            >
-          </template>
-
-          <v-list-item link v-for="child in item.items" :key="child.title">
-            <v-list-item-content>
-              <v-list-item-title
-                class="list-item-title"
-                @click="
-                  $router.push({ path: child.navigation }).catch(() => {})
-                "
-                >{{ child.title }}</v-list-item-title
-              >
-            </v-list-item-content>
-          </v-list-item>
-        </v-list-group>
-      </v-list>-->
-      <!--
-      <v-list
-        dense
-        nav
-        v-for="menu in buildComponentFromFunctionnalities"
-        :key="menu.title"
-      >
-        <v-list-item
-          link
-          @click="$router.push({ path: menu.navigation }).catch(() => {})"
-        >
-          <v-list-item-icon>
-            <v-icon color="teal">{{ menu.icon }}</v-icon>
-          </v-list-item-icon>
-
-          <v-list-item-content>
-            <v-list-item-title class="list-item-title">{{
-              menu.title.toUpperCase()
-            }}</v-list-item-title>
-          </v-list-item-content>
-        </v-list-item>
-      </v-list>
-      -->
     </v-navigation-drawer>
 
     <v-app-bar app color="white">
@@ -401,8 +288,6 @@ import {
   HEADERS,
 } from "../components/globalConfig/globalConstConfig";
 import {
-  FUNCTIONNALITY_RATTACHE_ATTESTION_TRANSPORT,
-  FUNCTIONNALITY_CREATE_PROGRAMME_OFFRE_VOYAGE,
   FUNCTIONNALITY_MANAGE_OFFRE_VOYAGE,
   FUNCTIONNALITY_MANAGE_STATION,
   FUNCTIONNALITY_MANAGE_BUS,
@@ -412,30 +297,6 @@ import {
   FUNCTIONNALITY_MANAGE_USERS,
   FUNCTIONNALITY_MANAGE_ROLE_AND_FUNCTIONNALITY,
   FUNCTIONNALITY_MANAGE_ADHESION,
-} from "../components/globalConfig/constFunctionnalies";
-import {
-  FUNCTIONNALITY_CREATE_USER_FUNCTION,
-  FUNCTIONNALITY_CREATE_USER_ROLE,
-  FUNCTIONNALITY_CREATE_USER_ACCOUNT,
-  FUNCTIONNALITY_DEMANDE_ADHESION,
-} from "../components/globalConfig/constFunctionnalies";
-import { FUNCTIONNALITY_LIST_ADHESION } from "../components/globalConfig/constFunctionnalies";
-import {
-  FUNCTIONNALITY_CREATE_CARACTERISTIQUE_OFFRE_VOYAGE,
-  FUNCTIONNALITY_CREATE_GARE_TRANSPORT,
-} from "../components/globalConfig/constFunctionnalies";
-import {
-  FUNCTIONNALITY_CREATE_MODE_ABONNEMENT,
-  FUNCTIONNALITY_CREATE_MODE_PAIEMENT,
-  FUNCTIONNALITY_LISTING_MODE_PAIEMENT,
-  FUNCTIONNALITY_TO_CONFIRM_TICKET,
-  FUNCTIONNALITY_TO_CHECK_TICKET,
-} from "../components/globalConfig/constFunctionnalies";
-import {
-  FUNCTIONNALITY_RESERVING_FROM_OFFRE_VOYAGE,
-  FUNCTIONNALITY_SELECTION_RESERVATION_TICKET,
-  FUNCTIONNALITY_MANAGE_ALL_ACCOUNT_USER,
-  FUNCTIONNALITY_MANAGING_ROLE_AND_FUNCTIONNALITY,
 } from "../components/globalConfig/constFunctionnalies";
 export default {
   name: "EspaceUI",
@@ -695,191 +556,12 @@ export default {
             url: "",
             navigation: "/selectionnerDemandeAdhesionCompagnie",
           };
-          globalFunctionnalities.push(listAdhesionDisponible);
+          globalFunctionnalities.push(adhesionFunction);
         }
 
         // ==============================================================================================================================================//
-
-        if (element.code == FUNCTIONNALITY_RATTACHE_ATTESTION_TRANSPORT) {
-          var bindTravelFile = {
-            title: "DOCUMENT D'ADHESION",
-            url: require("../assets/docs.png"),
-            navigation: "/documentAttestationTransport",
-          };
-          globalFunctionnalities.push(bindTravelFile);
-        }
-
-        if (element.code == FUNCTIONNALITY_CREATE_USER_ROLE) {
-          var userRoleFunction = {
-            title: "GESTION DES ROLES",
-            icon: "mdi-account-key",
-            navigation: "/creerRoleUtilisateur",
-          };
-          globalFunctionnalities.push(userRoleFunction);
-        }
-        if (element.code == FUNCTIONNALITY_CREATE_USER_FUNCTION) {
-          var userFunction = {
-            title: "AJOUTER DES FONCTIONNALITÉS",
-            icon: "mdi-cog",
-            navigation: "/creerFonctionnalite",
-          };
-          globalFunctionnalities.push(userFunction);
-        }
-        if (element.code == FUNCTIONNALITY_CREATE_USER_ACCOUNT) {
-          var userAccountFunction = {
-            title: "AJOUTER UN MEMBRE",
-            icon: "mdi-account-plus",
-            navigation: "/creerUtilisateur",
-          };
-          globalFunctionnalities.push(userAccountFunction);
-        }
-        if (element.code == FUNCTIONNALITY_DEMANDE_ADHESION) {
-          var demandAdhesionFunction = {
-            title: "DEMANDE D'ADHESION",
-            url: require("../assets/adhesion.png"),
-            navigation: "/creerDemandeAdhesion",
-          };
-          globalFunctionnalities.push(demandAdhesionFunction);
-        }
-        if (element.code == FUNCTIONNALITY_CREATE_PROGRAMME_OFFRE_VOYAGE) {
-          var offrePlanification = {
-            title: "PLANIFICATION DE VOYAGE",
-            url: require("@/assets/calendar.png"),
-            navigation: "/planifierOffreVoyage",
-          };
-
-          globalFunctionnalities.push(offrePlanification);
-        }
-
-        if (
-          element.code == FUNCTIONNALITY_CREATE_CARACTERISTIQUE_OFFRE_VOYAGE
-        ) {
-          var createFeatureOffre = {
-            title: "PROPRIETE OFFRE DE VOYAGE",
-            icon: "mdi-feature-search",
-            navigation: "/creerProprieteCaracteristiqueOffreVoyage",
-          };
-          globalFunctionnalities.push(createFeatureOffre);
-        }
-        if (element.code == FUNCTIONNALITY_CREATE_GARE_TRANSPORT) {
-          var stations = {
-            title: "GARES DE TRANSPORT",
-            url: require("@/assets/station.png"),
-            items: [
-              {
-                title: "NOUVELLE GARE DE TRANSPORT",
-                url: "mdi-train-car",
-                navigation: "/creerGareCompagnieTransport",
-                funct: "FUNCTIONNALITY_CREATE_OFFRE_VOYAGE",
-              },
-              {
-                title: "LISTE DES GARES DISPONIBLES",
-                url: require("../assets/liste.png"),
-                navigation: "/selectionnerGareCompagnieTransport",
-              },
-            ],
-          };
-
-          globalFunctionnalities.push(stations);
-        }
-
-        if (element.code == FUNCTIONNALITY_CREATE_MODE_ABONNEMENT) {
-          var creerModeAbonnement = {
-            title: "CREER MODE ABONNEMENT",
-            icon: "mdi-bank-transfer-out",
-            navigation: "/creerModeAbonnement",
-          };
-          globalFunctionnalities.push(creerModeAbonnement);
-        }
-        if (element.code == FUNCTIONNALITY_CREATE_MODE_PAIEMENT) {
-          var creerModePaiement = {
-            title: "CREER MODE DE PAIEMENT",
-            icon: "mdi-account-credit-card",
-            navigation: "/creerModePaiement",
-          };
-          globalFunctionnalities.push(creerModePaiement);
-        }
-        if (element.code == FUNCTIONNALITY_LIST_ADHESION) {
-          var listAdhesionDisponible = {
-            title: "LISTE DES DEMANDES D'ADHESION",
-            icon: "mdi-account-credit-card",
-            navigation: "/selectionnerDemandeAdhesionCompagnie",
-          };
-          globalFunctionnalities.push(listAdhesionDisponible);
-        }
-        if (element.code == FUNCTIONNALITY_CREATE_USER_FUNCTION) {
-          var creerUserFunctionnality = {
-            title: "FONCTIONNALITÉ UTILISATEUR",
-            icon: "mdi-account-credit-card",
-            navigation: "/creerFonctionnalite",
-          };
-          globalFunctionnalities.push(creerUserFunctionnality);
-        }
-        if (element.code == FUNCTIONNALITY_CREATE_USER_ROLE) {
-          var creerUserRole = {
-            title: "ROLE UTILISATEUR",
-            icon: "mdi-account-credit-card",
-            navigation: "/creerRoleUtilisateur",
-          };
-          globalFunctionnalities.push(creerUserRole);
-        }
-        if (element.code == FUNCTIONNALITY_MANAGING_ROLE_AND_FUNCTIONNALITY) {
-          var manageRoleAndFunctionnality = {
-            title: "ROLE ET FONCTIONNALITÉ",
-            icon: "mdi-account-credit-card",
-            navigation: "/gestionFonctionnalitesEtRoles",
-          };
-          globalFunctionnalities.push(manageRoleAndFunctionnality);
-        }
-        if (element.code == FUNCTIONNALITY_MANAGE_ALL_ACCOUNT_USER) {
-          var manageAllUserAccount = {
-            title: "GERER LES COMPTES",
-            icon: "mdi-account-credit-card",
-            navigation: "/selectionnerUtilisateur",
-          };
-          globalFunctionnalities.push(manageAllUserAccount);
-        }
-        if (element.code == FUNCTIONNALITY_LISTING_MODE_PAIEMENT) {
-          var gestionPaiementEtAbonnementFunction = {
-            title: "MODE ABONNEMENT ET PAIEMENT",
-            url: "mdi-cash-sync",
-            navigation: "/selectionnerModeAbonnementEtPaiement",
-          };
-          globalFunctionnalities.push(gestionPaiementEtAbonnementFunction);
-        }
-        if (element.code == FUNCTIONNALITY_RESERVING_FROM_OFFRE_VOYAGE) {
-          var selectingFromTravel = {
-            title: "RÉSERVER UN BILLET DE VOYAGE",
-            url: require("@/assets/liste.png"),
-            navigation: "/selectionnerOffreVoyageReservation",
-          };
-          globalFunctionnalities.push(selectingFromTravel);
-        }
-        if (element.code == FUNCTIONNALITY_SELECTION_RESERVATION_TICKET) {
-          var managingReservation = {
-            title: "VOIR LES RESERVATIONS",
-            url: require("@/assets/tickets.png"),
-            navigation: "/selectionnerReservationBillet",
-          };
-          globalFunctionnalities.push(managingReservation);
-        }
-        if (element.code == FUNCTIONNALITY_TO_CONFIRM_TICKET) {
-          var confirmTicketReservation = {
-            title: "CONFIRMER UN BILLET DE VOYAGE",
-            url: require("@/assets/coche.png"),
-            navigation: "/confirmerBilletReservation",
-          };
-          globalFunctionnalities.push(confirmTicketReservation);
-        }
-        if (element.code == FUNCTIONNALITY_TO_CHECK_TICKET) {
-          var checkTicketReservation = {
-            title: "VERIFIER UN BILLET DE VOYAGE",
-            url: require("@/assets/verification.png"),
-            navigation: "/verifierBilletReservation",
-          };
-          globalFunctionnalities.push(checkTicketReservation);
-        }
       });
+
       return globalFunctionnalities;
     },
   },

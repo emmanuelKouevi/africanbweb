@@ -53,66 +53,7 @@
             </v-card-text>
           </v-card>
 
-          <div class="animate__animated animate__bounce">
-            <div class="row">
-              <div class="col-lg-12">
-                <v-card>
-                  <v-card-subtitle
-                    >Selectionner le jour de voyage:</v-card-subtitle
-                  >
-                  <v-card-text>
-                    <div class="row">
-                      <v-radio-group row v-model="jourDepart">
-                        <v-radio
-                          v-for="(jour, j) in jourSemainesParOffreVoyagesList"
-                          :key="j"
-                          :label="jour.jourSemaineDesignation"
-                          :value="jour.jourSemaineDesignation"
-                        >
-                        </v-radio>
-                      </v-radio-group>
-                    </div>
-                  </v-card-text>
-                </v-card>
-              </div>
-            </div>
-          </div>
-
-          <div
-            class="row animate__animated animate__fadeInDown"
-            :hidden="jourDepart == null"
-          >
-            <div class="col-lg-12">
-              <v-card>
-                <v-card-subtitle
-                  >Pour quelle heure votre départ ?</v-card-subtitle
-                >
-                <v-card-text>
-                  <div class="row">
-                    <v-radio-group row>
-                      <v-radio-group
-                        row
-                        v-model="jourVoyageSelected.designation"
-                      >
-                        <v-radio
-                          v-for="(hours, h) in getProgrammeFromDaySelected"
-                          :key="h"
-                          :label="hours.heureDepart"
-                          :value="hours.designation"
-                        >
-                        </v-radio>
-                      </v-radio-group>
-                    </v-radio-group>
-                  </div>
-                </v-card-text>
-              </v-card>
-            </div>
-          </div>
-
-          <div
-            class="row animate__animated animate__fadeInDown"
-            :hidden="jourVoyageSelected.designation == null"
-          >
+          <div class="row animate__animated animate__fadeInDown">
             <div class="col-lg-12">
               <small class="">Sélectionnez un mode et une catégorie !</small>
               <div class="row">

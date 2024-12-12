@@ -23,9 +23,6 @@
               <v-btn @click="voirDetailBtn(item)" x-small color="secondary"
                 ><small class="btn-label">Voir les détails</small></v-btn
               >&nbsp;&nbsp;
-              <!--v-btn @click="reserverTicket(item)" x-small color="teal"
-                ><small class="btn-label">Réserver</small></v-btn
-            -->
             </template>
           </v-data-table>
         </v-card-text>
@@ -95,7 +92,6 @@ export default {
               this.offreVoyageList.forEach((element) => {
                 if (element.isActif == true) {
                   this.offreVoyageAvailableList.push(element);
-                  console.log(this.offreVoyageAvailableList);
                 }
               });
             }
