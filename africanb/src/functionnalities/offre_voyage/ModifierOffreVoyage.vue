@@ -395,7 +395,7 @@
                           >Date de départ:</label
                         >
                         <input
-                          type="text"
+                          type="date"
                           class="form-control"
                           id="exampleInputEmail1"
                           v-model="editedProgramme.dateDepart"
@@ -407,7 +407,7 @@
                           >Date d'arrivée:</label
                         >
                         <input
-                          type="text"
+                          type="date"
                           class="form-control"
                           id="exampleInputEmail1"
                           v-model="editedProgramme.dateArrivee"
@@ -934,8 +934,10 @@ export default {
     saveOrUpdateProgramme() {
       if (this.editedProgrammeIndex > -1) {
         this.modifierProgrammeOffreVoyage();
+        this.showProgrammeList = false;
       } else {
         this.creerProgrammeOffreVoyage();
+        this.showProgrammeList = false;
       }
     },
 
@@ -1263,11 +1265,29 @@ export default {
         });
     },
 
+    // RETOURNER LA DATE SOUS FORME JJ-MM-AAAA
+    returnDateFormatted(dateFormatted) {
+      let date = new Date(dateFormatted);
+      let jour = date.getDate();
+      let mois = date.getMonth() + 1;
+      let annee = date.getFullYear();
+      jour = String(jour).padStart(2, "0");
+      mois = String(mois).padStart(2, "0");
+      let dateFormat = `${jour}/${mois}/${annee}`;
+      return dateFormat;
+    },
+
     // MODIFIER UN PROGRAMME
     async modifierProgrammeOffreVoyage() {
       this.overlay = true;
       this.editedProgramme.offreVoyageDesignation =
         this.offreVoyage.designation;
+      this.editedProgramme.dateDepart = this.returnDateFormatted(
+        this.editedProgramme.dateDepart
+      );
+      this.editedProgramme.dateArrivee = this.returnDateFormatted(
+        this.editedProgramme.dateArrivee
+      );
       this.editedProgramme.numeroBus = this.returnBusNumber(
         this.editedProgramme.numeroBus
       );
@@ -1284,6 +1304,12 @@ export default {
               setTimeout(function () {
                 $(".alert-success").fadeOut();
               }, 4000);
+              this.editedProgramme.dateDepart = this.returnOriginalDate(
+                this.editedProgramme.dateDepart
+              );
+              this.editedProgramme.dateArrivee = this.returnOriginalDate(
+                this.editedProgramme.dateArrivee
+              );
               Object.assign(
                 this.programmeList[this.editedProgrammeIndex],
                 this.editedProgramme
@@ -1334,6 +1360,12 @@ export default {
       this.overlay = true;
       this.editedProgramme.offreVoyageDesignation =
         this.offreVoyage.designation;
+      this.editedProgramme.dateDepart = this.returnDateFormatted(
+        this.editedProgramme.dateDepart
+      );
+      this.editedProgramme.dateArrivee = this.returnDateFormatted(
+        this.editedProgramme.dateArrivee
+      );
       this.editedProgramme.numeroBus = this.returnBusNumber(
         this.editedProgramme.numeroBus
       );
@@ -1350,7 +1382,6 @@ export default {
               setTimeout(function () {
                 $(".alert-success").fadeOut();
               }, 4000);
-              this.getPlanningByOffersTravel();
               this.programmeObject.datas = [];
             } else {
               this.errorMsg = response.data.status.message;
@@ -1389,6 +1420,7 @@ export default {
         .finally(() => {
           this.overlay = false;
           this.dialogEditProg = false;
+          this.getPlanningByOffersTravel();
         });
     },
 
@@ -1492,6 +1524,12 @@ export default {
       return designationBus;
     },
 
+    // METHODE PERMETTANT DE CONVERTIR CE FORMAT "DD/MM/YY" EN "YY-MM-DD"
+    returnOriginalDate(date) {
+      var formattedDate = date.split("/").reverse().join("-");
+      return formattedDate;
+    },
+
     //OBTENIR LA LISTE DES PROGRAMMES PAR OFFRE DE VOYAGE
     async getPlanningByOffersTravel() {
       this.offreVoyageObject.data.designation = this.offreVoyage.designation;
@@ -1503,7 +1541,22 @@ export default {
         )
         .then((response) => {
           if (response.data.status.code == 800) {
-            this.programmeList = response.data.items;
+            response.data.items.forEach((element) => {
+              var prog = {
+                createdAt: element.createdAt,
+                dateArrivee: this.returnOriginalDate(element.dateArrivee),
+                dateDepart: this.returnOriginalDate(element.dateDepart),
+                designation: element.designation,
+                heureArrivee: element.heureArrivee,
+                heureDepart: element.heureDepart,
+                id: element.id,
+                isDeleted: element.isDeleted,
+                nombrePlaceDisponible: element.nombrePlaceDisponible,
+                numeroBus: element.numeroBus,
+                offreVoyageDesignation: element.offreVoyageDesignation,
+              };
+              this.programmeList.push(prog);
+            });
           } else {
             this.programmeList = [];
           }
@@ -1525,7 +1578,6 @@ export default {
           const offreVoyageEditing = JSON.parse(
             localStorage.getItem("offreVoyage")
           );
-          console.log(localStorage.getItem("offreVoyage"));
           this.offreVoyage.id = offreVoyageEditing.id;
           this.offreVoyage.designation = offreVoyageEditing.designation;
           this.offreVoyage.description = offreVoyageEditing.description;

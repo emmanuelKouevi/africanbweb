@@ -190,3 +190,6 @@ export const FUNCTIONNALITY_MANAGE_LOCALISATION =
   "functionnalityManageLocalisation";
 
 export const FUNCTIONNALITY_MANAGE_ADHESION = "functionnalityManageAdhesion";
+
+export const FUNCTIONNALITY_MANAGE_STRATEGIE_BAGAGE =
+  "functionnalityManageStrategieBagage";

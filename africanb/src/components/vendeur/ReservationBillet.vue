@@ -124,6 +124,111 @@
             :hidden="modeChoosen.modeDesignation == null"
           >
             <div class="col-lg-12">
+              <small class="">Sélectionnez un programme!</small>
+              <div class="row">
+                <div
+                  class="col-sm-6"
+                  v-for="(programme, prog) in programmeList"
+                  :key="prog"
+                >
+                  <v-card rounded="xl" :disabled="programme.isExpired == true">
+                    <v-card-title
+                      >Programme n°{{ prog + 1 }}
+                      <v-spacer></v-spacer>
+                      <v-chip
+                        x-small
+                        v-if="programme.isExpired == true"
+                        color="error"
+                        text-color="white"
+                        class="mr-2"
+                        ><span class="etat font-weight-bold"
+                          >Expiré</span
+                        ></v-chip
+                      >
+                      <v-radio-group row>
+                        <v-radio-group row v-model="progChoosen">
+                          <v-radio :value="programme"></v-radio>
+                        </v-radio-group>
+                      </v-radio-group>
+                    </v-card-title>
+                    <v-card-text>
+                      <v-container>
+                        <v-row>
+                          <v-col
+                            ><small class="muted-text"
+                              >Designation :</small
+                            ></v-col
+                          >
+                          <v-col
+                            ><span class="label-text font-weight-bold">{{
+                              programme.designation
+                            }}</span></v-col
+                          >
+                        </v-row>
+
+                        <v-row>
+                          <v-col
+                            ><small class="muted-text"
+                              >Date de départ :</small
+                            ></v-col
+                          >
+                          <v-col
+                            ><span class="label-text font-weight-bold">{{
+                              programme.dateDepart
+                            }}</span></v-col
+                          >
+                        </v-row>
+                        <v-row>
+                          <v-col
+                            ><small class="muted-text"
+                              >Heure de depart :</small
+                            ></v-col
+                          >
+                          <v-col
+                            ><span class="label-text font-weight-bold"
+                              >{{ programme.heureDepart }}
+                            </span></v-col
+                          >
+                        </v-row>
+
+                        <v-row>
+                          <v-col
+                            ><small class="muted-text"
+                              >Place disponible :</small
+                            ></v-col
+                          >
+                          <v-col
+                            ><span class="label-text font-weight-bold">{{
+                              programme.nombrePlaceDisponible
+                            }}</span></v-col
+                          >
+                        </v-row>
+
+                        <v-row>
+                          <v-col
+                            ><small class="muted-text"
+                              >Numero Bus :</small
+                            ></v-col
+                          >
+                          <v-col
+                            ><span class="label-text font-weight-bold">{{
+                              programme.numeroBus
+                            }}</span></v-col
+                          >
+                        </v-row>
+                      </v-container>
+                    </v-card-text>
+                  </v-card>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div
+            class="row animate__animated animate__fadeInDown"
+            :hidden="progChoosen.designation == null"
+          >
+            <div class="col-lg-12">
               <v-card>
                 <v-card-subtitle>Formulaire de réservation</v-card-subtitle>
                 <v-card-text>
@@ -264,17 +369,43 @@
 
                 <v-list-item>
                   <v-list-item-content>
+                    <v-list-item-subtitle>Date de depart:</v-list-item-subtitle>
+                  </v-list-item-content>
+
+                  <v-list-item-content>
+                    <v-list-item-subtitle class="font-weight-bold">{{
+                      progChoosen.dateDepart
+                    }}</v-list-item-subtitle>
+                  </v-list-item-content>
+                </v-list-item>
+
+                <v-list-item>
+                  <v-list-item-content>
                     <v-list-item-subtitle
-                      >Jour de voyage :</v-list-item-subtitle
+                      >Heure de depart:</v-list-item-subtitle
                     >
                   </v-list-item-content>
 
                   <v-list-item-content>
                     <v-list-item-subtitle class="font-weight-bold">{{
-                      jourDepart
+                      progChoosen.heureDepart
                     }}</v-list-item-subtitle>
                   </v-list-item-content>
                 </v-list-item>
+
+                <v-list-item>
+                  <v-list-item-content>
+                    <v-list-item-subtitle>Numero du bus:</v-list-item-subtitle>
+                  </v-list-item-content>
+
+                  <v-list-item-content>
+                    <v-list-item-subtitle class="font-weight-bold">{{
+                      progChoosen.numeroBus
+                    }}</v-list-item-subtitle>
+                  </v-list-item-content>
+                </v-list-item>
+
+                <v-divider></v-divider>
 
                 <v-list-item>
                   <v-list-item-content>
@@ -526,8 +657,8 @@
 import axios from "axios";
 import $ from "jquery";
 import {
-  API_OBENIR_JOUR_SEMAINE_PAR_OFFRE_VOYAGE,
   API_RECUPERER_PRIX_PAR_OFFRE_VOYAGE,
+  API_RECUPERER_PROGRAMME_PAR_OFFRE_VOYAGE,
   HEADERS,
 } from "../globalConfig/globalConstConfig";
 import {
@@ -542,6 +673,10 @@ export default {
       errorMsg: null,
 
       modeChoosen: {},
+
+      progChoosen: {},
+
+      programmeList: [],
 
       programmeReserved: {
         data: {
@@ -584,7 +719,7 @@ export default {
         id: null,
         designation: null,
         description: null,
-        compagnieTransportRaisonSociale: "KOUEVI TRANSPORT",
+        compagnieTransportRaisonSociale: null,
         typeOffreVoyageDesignation: null,
         villeDepartDesignation: null,
         villeDestinationDesignation: null,
@@ -624,7 +759,7 @@ export default {
           if (result.isConfirmed) {
             this.overlay = true;
             this.programmeReserved.data.programmeDesignation =
-              this.jourVoyageSelected.designation;
+              this.progChoosen.designation;
             this.programmeReserved.data.gareDesignation =
               this.$store.state.userAuthentified.gareDesignation;
             this.programmeReserved.data.offreVoyageDesignation =
@@ -749,6 +884,32 @@ export default {
       this.dialog = true;
     },
 
+    //OBTENIR LA LISTE DES PROGRAMMES PAR OFFRE DE VOYAGE
+    async getPlanningByOffersTravel() {
+      this.offreVoyageObject.data.designation = this.offreVoyage.designation;
+      await axios
+        .post(
+          API_RECUPERER_PROGRAMME_PAR_OFFRE_VOYAGE,
+          this.offreVoyageObject,
+          { headers: HEADERS(this.$store.state.userAuthentified.token) }
+        )
+        .then((response) => {
+          if (response.data.status.code == 800) {
+            this.programmeList = response.data.items;
+          } else {
+            this.programmeList = [];
+          }
+        })
+        .catch((e) => {
+          this.errorMsg = e;
+          this.programmeList = [];
+          $(".alert-error").fadeIn();
+          setTimeout(function () {
+            $(".alert-error").fadeOut();
+          }, 4000);
+        });
+    },
+
     async retrieveOffreSelected() {
       if (localStorage.getItem("offreVoyageSelected")) {
         try {
@@ -760,33 +921,15 @@ export default {
           this.offreVoyage.description = offreVoyageEditing.description;
           this.offreVoyage.typeOffreVoyageDesignation =
             offreVoyageEditing.typeOffreVoyageDesignation;
+          this.offreVoyage.compagnieTransportRaisonSociale =
+            this.$store.state.userAuthentified.compagnieTransportRaisonSociale;
           this.offreVoyage.villeDepartDesignation =
             offreVoyageEditing.villeDepartDesignation;
           this.offreVoyage.villeDestinationDesignation =
             offreVoyageEditing.villeDestinationDesignation;
           this.offreVoyageObject.data.designation =
             this.offreVoyage.designation;
-          await axios
-            .post(
-              API_OBENIR_JOUR_SEMAINE_PAR_OFFRE_VOYAGE,
-              this.offreVoyageObject,
-              { headers: HEADERS(this.$store.state.userAuthentified.token) }
-            )
-            .then((response) => {
-              if (response.data.status.code == 800) {
-                this.jourSemainesParOffreVoyagesList = response.data.items;
-              } else {
-                this.jourSemainesParOffreVoyagesList = [];
-              }
-            })
-            .catch((e) => {
-              this.errorMsg = e;
-              $(".alert-error").fadeIn();
-              setTimeout(function () {
-                $(".alert-error").fadeOut();
-              }, 4000);
-            });
-
+          this.getPlanningByOffersTravel();
           await axios
             .post(API_RECUPERER_PRIX_PAR_OFFRE_VOYAGE, this.offreVoyageObject, {
               headers: HEADERS(this.$store.state.userAuthentified.token),

@@ -119,7 +119,7 @@
 
               <v-list-item-content>
                 <v-list-item-title class="list-item-title">{{
-                  menu.title.toUpperCase()
+                  menu.title
                 }}</v-list-item-title>
               </v-list-item-content>
             </v-list-item>
@@ -297,6 +297,7 @@ import {
   FUNCTIONNALITY_MANAGE_USERS,
   FUNCTIONNALITY_MANAGE_ROLE_AND_FUNCTIONNALITY,
   FUNCTIONNALITY_MANAGE_ADHESION,
+  FUNCTIONNALITY_MANAGE_STRATEGIE_BAGAGE,
 } from "../components/globalConfig/constFunctionnalies";
 export default {
   name: "EspaceUI",
@@ -548,6 +549,25 @@ export default {
           };
 
           globalFunctionnalities.push(createRoleAndFunctionnality);
+        }
+
+        if (element.code == FUNCTIONNALITY_MANAGE_STRATEGIE_BAGAGE) {
+          var createStrategieBagageFunctionality = {
+            title: "Gestion des strategie de bagages",
+            url: "",
+            items: [
+              {
+                title: "Creer une strategie",
+                navigation: "/creerStrategieBagage",
+              },
+              {
+                title: "Modifier une strategie",
+                navigation: "/creerStrategieBagage",
+              },
+            ],
+          };
+
+          globalFunctionnalities.push(createStrategieBagageFunctionality);
         }
 
         if (element.code == FUNCTIONNALITY_MANAGE_ADHESION) {

@@ -66,7 +66,11 @@
 
         <div class="row" v-for="(programme, p) in programmeList" :key="p">
           <div class="col-lg-10">
-            <v-card rounded="xl" elevation="3">
+            <v-card
+              rounded="xl"
+              elevation="3"
+              :disabled="programme.isExpired == true"
+            >
               <v-card-text>
                 <v-list-item>
                   <v-list-item-content>
@@ -74,6 +78,28 @@
                       >Programme n°{{ p + 1 }}</v-list-item-title
                     >
                   </v-list-item-content>
+
+                  <v-list-item-action>
+                    <v-chip
+                      x-small
+                      v-if="programme.isExpired == true"
+                      color="error"
+                      text-color="white"
+                      class="mr-2"
+                      ><span class="etat font-weight-bold">Expiré</span></v-chip
+                    >
+
+                    <v-chip
+                      x-small
+                      v-else
+                      color="success"
+                      text-color="white"
+                      class="mr-2"
+                      ><span class="etat font-weight-bold"
+                        >En cours</span
+                      ></v-chip
+                    >
+                  </v-list-item-action>
 
                   <v-list-item-action>
                     <v-menu bottom right>
@@ -263,7 +289,6 @@ export default {
           headers: HEADERS(this.$store.state.userAuthentified.token),
         })
         .then((response) => {
-          console.log(response);
           if (designationProgramme == null) {
             this.$swal.fire(
               "Erreur",

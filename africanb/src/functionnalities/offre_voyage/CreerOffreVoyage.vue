@@ -243,10 +243,8 @@
                   <!-- FIN DE BOITE DE DIALOGUE -->
                 </v-card-title>
                 <v-card-text>
-                  <div v-if="priceList.length == 0">
-                    <span class="font-weight-bold text-center"
-                      >AUCUN PRIX DÉFINI</span
-                    >
+                  <div v-if="priceList.length == 0" class="text-center">
+                    <span class="font-weight-bold">AUCUN PRIX DÉFINI</span>
                   </div>
                   <div v-else class="container">
                     <div class="row">

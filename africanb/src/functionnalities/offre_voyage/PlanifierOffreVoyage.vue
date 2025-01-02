@@ -60,7 +60,6 @@
                                 $v.programmeOffreVoyageModel.dateDepart.$model
                               "
                             />
-                            {{ programmeOffreVoyageModel.dateDepart }}
                           </div>
 
                           <div class="col-lg-6">

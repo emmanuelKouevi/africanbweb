@@ -112,3 +112,7 @@ export const API_GENERATE_REPORT = `${BASE_URL}reservationBilletVoyages/generate
 export const API_CHECK_TICKET = `${BASE_URL}reservationBilletVoyages/verifierUnBilletVoyage`;
 
 export const API_CONFIRM_TICKET = `${BASE_URL}reservationBilletVoyages/confirmerUnVoyage`;
+
+// ------------------------------------------------------- STRATEGIE BAGAGES -------------------------------------------------------------//
+
+export const API_CREATE_STRATEGIE_BAGAGE = `${BASE_URL}strategieBagages`;
