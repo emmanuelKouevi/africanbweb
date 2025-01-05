@@ -134,6 +134,40 @@
                   </v-text-field>
                 </div>
 
+                <v-divider height="36"></v-divider>
+
+                <div>
+                  <span class="font-weight-bold file_provider"
+                    >Document à fournir</span
+                  >
+                </div>
+                <br />
+
+                <div class="mb-3">
+                  <v-file-input
+                    class="input"
+                    v-model="logoSelected"
+                    show-size
+                    outlined
+                    dense
+                    accept="image/*"
+                    placeholder="Logo de la compagnie"
+                  ></v-file-input>
+                </div>
+                <br />
+
+                <div class="mb-3">
+                  <v-file-input
+                    class="input"
+                    v-model="attestationSelected"
+                    show-size
+                    outlined
+                    accept="application/pdf"
+                    dense
+                    placeholder="Attestation de transport"
+                  ></v-file-input>
+                </div>
+
                 <div class="row p-3" v-if="isLoading == false">
                   <v-btn type="submit" color="teal" outlined
                     >DEMANDER VOTRE ADHÉSION</v-btn
@@ -208,6 +242,9 @@ export default {
       warningMsg: null,
       overlay: false,
 
+      logoSelected: null,
+      attestationSelected: null,
+
       isLoading: false,
 
       defaultObject: {},
@@ -225,6 +262,21 @@ export default {
         sigle: null,
         telephone: null,
         villeDesignation: null,
+        documentDTOS: [],
+      },
+
+      attestationTransportDocumentModel: {
+        compagnieTransportRaisonSociale: null,
+        typeDocument: null,
+        content: null,
+        typeMime: null,
+      },
+
+      logoDocumentModel: {
+        compagnieTransportRaisonSociale: null,
+        typeDocument: null,
+        content: null,
+        typeMime: null,
       },
     };
   },
@@ -284,7 +336,6 @@ export default {
           headers: {
             server_id: "backend@africanb",
             client_id: "frontend@africanb",
-            //'is_admin'  : 'isAdmin'
           },
         })
         .then((response) => {
@@ -297,6 +348,31 @@ export default {
             $(".alert-error").fadeOut();
           }, 4000);
         });
+    },
+
+    convertirEnBase64(file, documentModel) {
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = function () {
+        documentModel.content = reader.result.split(",")[1];
+      };
+    },
+
+    returnTypeMime(file) {
+      var formatTypeMime = "";
+      if (file.type == "image/png") {
+        formatTypeMime = "FORMAT_PNG";
+      }
+      if (file.type == "image/jpeg") {
+        formatTypeMime = "FORMAT_PNG";
+      }
+      if (file.type == "image/gif") {
+        formatTypeMime = "FORMAT_GIF";
+      }
+      if (file.type == "application/pdf") {
+        formatTypeMime = "FORMAT_PDF";
+      }
+      return formatTypeMime;
     },
 
     // SOUMETTRE LE FORMULAIRE
@@ -315,6 +391,27 @@ export default {
 
     // CREATION D'UNE DEMANDE D'ADHESION
     async creerDemandeAdhesion() {
+      this.logoDocumentModel.compagnieTransportRaisonSociale =
+        this.compagnieTransport.raisonSociale;
+      this.logoDocumentModel.typeDocument = "LOGO";
+      this.convertirEnBase64(this.logoSelected, this.logoDocumentModel);
+      this.logoDocumentModel.typeMime = this.returnTypeMime(this.logoSelected);
+
+      this.attestationTransportDocumentModel.typeDocument =
+        "ATTESTATION_TRANSPORT";
+      this.attestationTransportDocumentModel.compagnieTransportRaisonSociale =
+        this.compagnieTransport.raisonSociale;
+      this.convertirEnBase64(
+        this.attestationSelected,
+        this.attestationTransportDocumentModel
+      );
+      this.attestationTransportDocumentModel.typeMime = this.returnTypeMime(
+        this.attestationSelected
+      );
+      this.compagnieTransport.documentDTOS.push(
+        this.attestationTransportDocumentModel
+      );
+      this.compagnieTransport.documentDTOS.push(this.logoDocumentModel);
       this.isLoading = true;
       this.objectContainList.datas.push(this.compagnieTransport);
       this.overlay = true;
@@ -323,7 +420,6 @@ export default {
           headers: {
             server_id: "backend@africanb",
             client_id: "frontend@africanb",
-            //is_admin: "isAdmin",
           },
         })
         .then((response) => {
@@ -512,6 +608,11 @@ export default {
 
 .input {
   border-radius: 7px;
+  font-family: "Montserrat";
+}
+
+.file_provider {
+  font-size: 18px;
   font-family: "Montserrat";
 }
 </style>

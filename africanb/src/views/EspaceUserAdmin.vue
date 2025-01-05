@@ -298,6 +298,7 @@ import {
   FUNCTIONNALITY_MANAGE_ROLE_AND_FUNCTIONNALITY,
   FUNCTIONNALITY_MANAGE_ADHESION,
   FUNCTIONNALITY_MANAGE_STRATEGIE_BAGAGE,
+  FUNCTIONNALITY_MANAGE_DOCUMENT,
 } from "../components/globalConfig/constFunctionnalies";
 export default {
   name: "EspaceUI",
@@ -568,6 +569,25 @@ export default {
           };
 
           globalFunctionnalities.push(createStrategieBagageFunctionality);
+        }
+
+        if (element.code == FUNCTIONNALITY_MANAGE_DOCUMENT) {
+          var manageDocumentFunctionality = {
+            title: "Gestion des documents",
+            url: "",
+            items: [
+              {
+                title: "Attestation de transport",
+                navigation: "/attestationTransport",
+              },
+              {
+                title: "Logo de la compagnie",
+                navigation: "/imageCompagnieTransport",
+              },
+            ],
+          };
+
+          globalFunctionnalities.push(manageDocumentFunctionality);
         }
 
         if (element.code == FUNCTIONNALITY_MANAGE_ADHESION) {

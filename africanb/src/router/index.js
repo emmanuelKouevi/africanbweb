@@ -66,7 +66,11 @@ import SelectionnerProgrammeOffreVoyageList from "../components/vendeur/Programm
 
 import VerifierBilletReservation from "@/functionnalities/ticket/VerifierBilletReservation.vue";
 import ConfirmerBilletReservation from "@/functionnalities/ticket/ConfirmerBilletReservation.vue";
+
 import CreerStrategieBagage from "@/functionnalities/bagages/CreerStrategieBagage.vue";
+
+import DocumentAttestationTransport from "@/functionnalities/documents/DocumentAttestationTransport.vue";
+import DocumentLogoCompagnieTransport from "@/functionnalities/documents/DocumentLogoCompagnieTransport.vue";
 
 Vue.use(VueRouter);
 
@@ -367,6 +371,16 @@ const routes = [
         path: "/creerStrategieBagage",
         name: "creerStrategieBagage",
         component: CreerStrategieBagage,
+      },
+      {
+        path: "/attestationTransport",
+        name: "documentAttestationTransport",
+        component: DocumentAttestationTransport,
+      },
+      {
+        path: "/imageCompagnieTransport",
+        name: "imageCompagnieTransport",
+        component: DocumentLogoCompagnieTransport,
       },
     ],
   },

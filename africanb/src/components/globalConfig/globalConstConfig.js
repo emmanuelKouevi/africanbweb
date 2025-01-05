@@ -116,3 +116,7 @@ export const API_CONFIRM_TICKET = `${BASE_URL}reservationBilletVoyages/confirmer
 // ------------------------------------------------------- STRATEGIE BAGAGES -------------------------------------------------------------//
 
 export const API_CREATE_STRATEGIE_BAGAGE = `${BASE_URL}strategieBagages`;
+
+// -------------------------------------------------------- GESTION DES DOCUMENTS --------------------------------------------------------- //
+
+export const API_SEND_DOCUMENTS = `${BASE_URL}documents`;

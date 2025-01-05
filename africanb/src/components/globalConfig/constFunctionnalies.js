@@ -193,3 +193,5 @@ export const FUNCTIONNALITY_MANAGE_ADHESION = "functionnalityManageAdhesion";
 
 export const FUNCTIONNALITY_MANAGE_STRATEGIE_BAGAGE =
   "functionnalityManageStrategieBagage";
+
+export const FUNCTIONNALITY_MANAGE_DOCUMENT = "functionnalityManageDocument";
