@@ -4,7 +4,11 @@
       <div class="row justify-space-evenly">
         <div class="col-lg-1">
           <v-avatar size="72">
-            <v-img src="@/assets/avatar.png"></v-img>
+            <v-img
+              v-if="photoProfilUrl == null"
+              src="@/assets/avatar.png"
+            ></v-img>
+            <v-img v-else :src="photoProfilUrl"></v-img>
           </v-avatar>
         </div>
         <div class="col-lg-4">
@@ -130,6 +134,12 @@
 </template>
 
 <script>
+import {
+  API_GET_DOCUMENT_URL,
+  HEADERS,
+} from "../globalConfig/globalConstConfig";
+import axios from "axios";
+import $ from "jquery";
 export default {
   name: "DashboardAdminTransportCompanie",
 
@@ -145,7 +155,58 @@ export default {
       ],
 
       reservationList: [],
+
+      photoProfilObject: {
+        data: {
+          typeDocument: null,
+        },
+      },
+
+      photoProfilUrl: null,
     };
+  },
+
+  methods: {
+    async getUrlPhotoProfil() {
+      console.log("Nous sommes dans la fonction");
+      this.photoProfilObject.data.typeDocument = "PHOTO_PROFIL";
+      this.loading = true;
+      await axios
+        .post(API_GET_DOCUMENT_URL, this.photoProfilObject, {
+          headers: HEADERS(this.$store.state.userAuthentified.token),
+        })
+        .then((response) => {
+          console.log(response);
+          if (response.status == 200) {
+            if (response.data.status.code != 800) {
+              this.errorMsg = response.data.status.message;
+              $(".alert-error").fadeIn();
+              setTimeout(function () {
+                $(".alert-error").fadeOut();
+              }, 4000);
+            } else {
+              this.photoProfilUrl = response.data.item.url;
+              console.log(this.photoProfilUrl);
+            }
+          } else {
+            this.errorMsg = "Erreur";
+            $(".alert-error").fadeIn();
+            setTimeout(function () {
+              $(".alert-error").fadeOut();
+            }, 4000);
+          }
+        })
+        .catch((e) => {
+          this.errorMsg = e;
+        })
+        .finally(() => {
+          this.loading = false;
+        });
+    },
+  },
+
+  mounted() {
+    this.getUrlPhotoProfil();
   },
 };
 </script>

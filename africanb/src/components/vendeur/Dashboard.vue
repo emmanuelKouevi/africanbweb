@@ -5,7 +5,11 @@
         <div class="row justify-space-evenly">
           <div class="col-lg-1">
             <v-avatar size="72">
-              <v-img src="@/assets/avatar.png"></v-img>
+              <v-img
+                v-if="photoProfilUrl == null"
+                src="@/assets/avatar.png"
+              ></v-img>
+              <v-img v-else :src="photoProfilUrl"></v-img>
             </v-avatar>
           </div>
           <div class="col-lg-4">
@@ -113,12 +117,13 @@
 
 <script>
 import axios from "axios";
-//import $ from 'jquery';
+import $ from "jquery";
 import {
   API_GET_RESERVATIONS_BY_SELLER,
   API_GET_RESERVATIONS_BY_ADMIN_TP,
   //API_GENERATE_TICKET,
   HEADERS,
+  API_GET_DOCUMENT_URL,
   //API_GENERATE_REPORT,
 } from "../globalConfig/globalConstConfig";
 export default {
@@ -140,6 +145,14 @@ export default {
       },
 
       reservationList: [],
+
+      photoProfilObject: {
+        data: {
+          typeDocument: null,
+        },
+      },
+
+      photoProfilUrl: null,
     };
   },
 
@@ -196,6 +209,44 @@ export default {
           });
       }
     },
+
+    // RECUPERER LA PHOTO DE PROFIL DE L'UTILISATEUR
+    async getUrlPhotoProfil() {
+      console.log("Nous sommes dans la fonction");
+      this.photoProfilObject.data.typeDocument = "PHOTO_PROFIL";
+      this.loading = true;
+      await axios
+        .post(API_GET_DOCUMENT_URL, this.photoProfilObject, {
+          headers: HEADERS(this.$store.state.userAuthentified.token),
+        })
+        .then((response) => {
+          console.log(response);
+          if (response.status == 200) {
+            if (response.data.status.code != 800) {
+              this.errorMsg = response.data.status.message;
+              $(".alert-error").fadeIn();
+              setTimeout(function () {
+                $(".alert-error").fadeOut();
+              }, 4000);
+            } else {
+              this.photoProfilUrl = response.data.item.url;
+              console.log(this.photoProfilUrl);
+            }
+          } else {
+            this.errorMsg = "Erreur";
+            $(".alert-error").fadeIn();
+            setTimeout(function () {
+              $(".alert-error").fadeOut();
+            }, 4000);
+          }
+        })
+        .catch((e) => {
+          this.errorMsg = e;
+        })
+        .finally(() => {
+          this.loading = false;
+        });
+    },
   },
 
   computed: {
@@ -209,6 +260,7 @@ export default {
   },
 
   mounted() {
+    this.getUrlPhotoProfil();
     this.getAllReservationTicketAvailable();
   },
 };

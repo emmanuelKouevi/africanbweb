@@ -2,12 +2,13 @@
   <v-app id="inspire">
     <v-navigation-drawer app v-model="drawer" width="350">
       <v-list-item>
-        <v-list-item-content>
-          <v-list-item-title class="text-h6 font-weight-thin">{{
-            $store.state.userAuthentified.compagnieTransportRaisonSociale
-          }}</v-list-item-title>
-          <v-list-item-subtitle>Société AFRICANB</v-list-item-subtitle>
-        </v-list-item-content>
+        <v-list-item-avatar>
+          <v-img v-if="logoCompagnieUrl == null" src=""></v-img>
+          <v-img v-else :src="logoCompagnieUrl"></v-img>
+        </v-list-item-avatar>
+        <v-list-item-title class="text-h6 font-weight-thin">{{
+          $store.state.userAuthentified.compagnieTransportRaisonSociale
+        }}</v-list-item-title>
       </v-list-item>
 
       <v-divider></v-divider>
@@ -185,8 +186,8 @@
       >
         <template v-slot:activator="{ on, attrs }">
           <v-btn icon color="transparent" v-bind="attrs" v-on="on"
-            ><v-avatar size="30"
-              ><v-img src="../assets/undraw_profile.svg"></v-img></v-avatar
+            ><v-avatar size="45">
+              <v-img :src="$store.state.pictureProfilUser"></v-img></v-avatar
           ></v-btn>
         </template>
 
@@ -274,7 +275,7 @@
       </v-menu>
     </v-app-bar>
 
-    <v-main>
+    <v-main class="content_router">
       <!-- Provides the application the proper gutter -->
       <router-view></router-view>
     </v-main>
@@ -284,9 +285,11 @@
 <script>
 import axios from "axios";
 import {
+  API_GET_DOCUMENT_URL,
   API_GET_FUNCTIONNALITY_BY_ROLE,
   HEADERS,
 } from "../components/globalConfig/globalConstConfig";
+import $ from "jquery";
 import {
   FUNCTIONNALITY_MANAGE_OFFRE_VOYAGE,
   FUNCTIONNALITY_MANAGE_STATION,
@@ -310,10 +313,102 @@ export default {
       drawer: true,
       functionnalitiesListByUserRole: [],
       functionnalitiesListComponents: [],
+
+      photoProfilObject: {
+        data: {
+          typeDocument: null,
+        },
+      },
+
+      logoCompagnieTransport: {
+        data: {
+          typeDocument: null,
+          compagnieTransportRaisonSociale: null,
+        },
+      },
+
+      photoProfilUrl: null,
+      logoCompagnieUrl: null,
     };
   },
 
   methods: {
+    async getUrlPhotoProfil() {
+      this.photoProfilObject.data.typeDocument = "PHOTO_PROFIL";
+      this.loading = true;
+      await axios
+        .post(API_GET_DOCUMENT_URL, this.photoProfilObject, {
+          headers: HEADERS(this.$store.state.userAuthentified.token),
+        })
+        .then((response) => {
+          if (response.status == 200) {
+            if (response.data.status.code != 800) {
+              this.errorMsg = response.data.status.message;
+              $(".alert-error").fadeIn();
+              setTimeout(function () {
+                $(".alert-error").fadeOut();
+              }, 4000);
+            } else {
+              this.photoProfilUrl = response.data.item.url;
+              this.$store.commit(
+                "UPDATE_PICTURE_PROFIL",
+                response.data.item.url
+              );
+            }
+          } else {
+            this.errorMsg = "Erreur";
+            $(".alert-error").fadeIn();
+            setTimeout(function () {
+              $(".alert-error").fadeOut();
+            }, 4000);
+          }
+        })
+        .catch((e) => {
+          this.errorMsg = e;
+        })
+        .finally(() => {
+          this.loading = false;
+        });
+    },
+
+    async getUrlLogoCompagnie() {
+      this.logoCompagnieTransport.data.typeDocument = "LOGO";
+      this.logoCompagnieTransport.data.compagnieTransportRaisonSociale =
+        this.$store.state.userAuthentified.compagnieTransportRaisonSociale;
+      this.loading = true;
+      await axios
+        .post(API_GET_DOCUMENT_URL, this.logoCompagnieTransport, {
+          headers: HEADERS(this.$store.state.userAuthentified.token),
+        })
+        .then((response) => {
+          console.log(response);
+          if (response.status == 200) {
+            if (response.data.status.code != 800) {
+              this.errorMsg = response.data.status.message;
+              $(".alert-error").fadeIn();
+              setTimeout(function () {
+                $(".alert-error").fadeOut();
+              }, 4000);
+            } else {
+              this.logoCompagnieUrl = response.data.item.url;
+              console.log(this.logoCompagnieUrl);
+            }
+          } else {
+            this.errorMsg = "Erreur";
+            $(".alert-error").fadeIn();
+            setTimeout(function () {
+              $(".alert-error").fadeOut();
+            }, 4000);
+          }
+        })
+        .catch((e) => {
+          this.errorMsg = e;
+        })
+        .finally(() => {
+          this.loading = false;
+        });
+    },
+
     // RECUPERER LES DONNNES DE L'UTILISATEUR CONNECTÉ POUR LA SAUVEGARDE DE SA SESSION
     storeSessionUser() {
       if (localStorage.getItem("token_user")) {
@@ -376,8 +471,8 @@ export default {
       this.functionnalitiesListByUserRole.forEach((element) => {
         if (element.code == FUNCTIONNALITY_MANAGE_SUBSCRIPTION_AND_PAYMENT) {
           var manageSubscription = {
-            title: "Abonnement Et Paiement",
-            url: require("@/assets/station.png"),
+            title: "Gestion des abonnements et paiments",
+            url: require("@/assets/souscription.png"),
             items: [
               {
                 title: "Creer un mode abonnement",
@@ -398,7 +493,7 @@ export default {
 
         if (element.code == FUNCTIONNALITY_MANAGE_STATION) {
           var manageStation = {
-            title: "Gare de transport",
+            title: "Gestion des gares de transport",
             url: require("@/assets/station.png"),
             items: [
               {
@@ -418,7 +513,7 @@ export default {
 
         if (element.code == FUNCTIONNALITY_MANAGE_BUS) {
           var manageBus = {
-            title: "Bus",
+            title: "Gestion des bus",
             url: require("@/assets/bus.png"),
             items: [
               {
@@ -436,7 +531,7 @@ export default {
 
         if (element.code == FUNCTIONNALITY_MANAGE_OFFRE_VOYAGE) {
           var manageOffreVoyage = {
-            title: "Offre de voyage",
+            title: "Gestion des offres de voyage",
             url: require("@/assets/route.png"),
             items: [
               {
@@ -458,8 +553,8 @@ export default {
 
         if (element.code == FUNCTIONNALITY_MANAGE_RESERVATION_TICKET) {
           var manageReservationTicket = {
-            title: "Billet de réservation",
-            url: require("@/assets/route.png"),
+            title: "Gestion des billets de reservation",
+            url: require("@/assets/billets.png"),
             items: [
               {
                 title: "Réserver un billet de voyage",
@@ -511,8 +606,8 @@ export default {
 
         if (element.code == FUNCTIONNALITY_MANAGE_USERS) {
           var createUserFunction = {
-            title: "Comptes uitlisateurs",
-            url: "",
+            title: "Gestion des comptes utilisateurs",
+            url: require("@/assets/partners.png"),
             items: [
               {
                 title: "Creer un compte utilisateur",
@@ -530,7 +625,7 @@ export default {
 
         if (element.code == FUNCTIONNALITY_MANAGE_ROLE_AND_FUNCTIONNALITY) {
           var createRoleAndFunctionnality = {
-            title: "Roles et Fonctionnalités",
+            title: "Gestion des rôles et fonctionnalités",
             url: "",
             items: [
               {
@@ -554,16 +649,16 @@ export default {
 
         if (element.code == FUNCTIONNALITY_MANAGE_STRATEGIE_BAGAGE) {
           var createStrategieBagageFunctionality = {
-            title: "Gestion des strategie de bagages",
-            url: "",
+            title: "Gestion des strategies de bagages",
+            url: require("@/assets/bagages.png"),
             items: [
               {
                 title: "Creer une strategie",
                 navigation: "/creerStrategieBagage",
               },
               {
-                title: "Modifier une strategie",
-                navigation: "/creerStrategieBagage",
+                title: "Liste des strategies",
+                navigation: "/SelectionnerStrategieBagage",
               },
             ],
           };
@@ -574,7 +669,7 @@ export default {
         if (element.code == FUNCTIONNALITY_MANAGE_DOCUMENT) {
           var manageDocumentFunctionality = {
             title: "Gestion des documents",
-            url: "",
+            url: require("@/assets/timbre.png"),
             items: [
               {
                 title: "Attestation de transport",
@@ -584,6 +679,10 @@ export default {
                 title: "Logo de la compagnie",
                 navigation: "/imageCompagnieTransport",
               },
+              {
+                title: "Liste des documents",
+                navigation: "/Liste des documents",
+              },
             ],
           };
 
@@ -592,10 +691,20 @@ export default {
 
         if (element.code == FUNCTIONNALITY_MANAGE_ADHESION) {
           var adhesionFunction = {
-            title: "Liste des demandes d'adhésion",
+            title: "Gestion des adhésions",
             url: "",
-            navigation: "/selectionnerDemandeAdhesionCompagnie",
+            items: [
+              {
+                title: "Créer une adhésion",
+                navigation: "/CreerAdhesionAdmin",
+              },
+              {
+                title: "Liste des demandes d'adhésions",
+                navigation: "/selectionnerDemandeAdhesionCompagnie",
+              },
+            ],
           };
+
           globalFunctionnalities.push(adhesionFunction);
         }
 
@@ -607,12 +716,18 @@ export default {
   },
 
   mounted() {
+    this.getUrlPhotoProfil();
+    this.getUrlLogoCompagnie();
     this.getAllFunctionnalitiesByUserRole();
   },
 };
 </script>
 
 <style scoped>
+.content_router {
+  padding-top: 70px;
+}
+
 .lang {
   color: white;
 }

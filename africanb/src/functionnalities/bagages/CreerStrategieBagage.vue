@@ -1,13 +1,10 @@
 <template>
   <v-app>
     <div class="container">
-      <h5>
-        <v-icon size="30">mdi-menu-right</v-icon>
-        <span class="title"
-          >DÉFINISSEZ VOTRE STRATEGIE POUR UNE MEILLEURE GESTION DES
-          BAGAGES</span
-        >
-      </h5>
+      <span class="strategie_title">
+        CRÉER VOTRE STRATEGIE DE GESTION DE BAGAGES
+      </span>
+      <br />
       <br />
       <v-card elevation="3">
         <v-card-title
@@ -54,10 +51,12 @@
         elevation="3"
         :hidden="
           strategieSelected == null ||
-          strategieSelected === 'Strategie bagage Par Type'
+          strategieSelected === 'typeStrategieBagageType'
         "
       >
-        <v-card-title>{{ strategieSelected }}</v-card-title>
+        <v-card-title
+          ><span class="mini_title">Stratégie par poids</span></v-card-title
+        >
         <v-card-text>
           <div class="row justify-space-around">
             <div class="col-lg-3">
@@ -109,11 +108,11 @@
         elevation="3"
         :hidden="
           strategieSelected == null ||
-          strategieSelected === 'Strategie bagage Par Poids'
+          strategieSelected === 'typeStrategieBagagePoids'
         "
       >
         <v-card-title
-          >{{ strategieSelected }}
+          ><span class="mini_title">Stratégie par type de bagage</span>
           <v-spacer></v-spacer>
           <!--BOITE DE DIALOGUE POUR LES PRIX -->
           <v-dialog v-model="dialog" persistent max-width="600px">
@@ -454,7 +453,7 @@ export default {
 
     // ENVOYER LA STRATEGIE SÉLECTIONNÉE
     submitStrategieBagage() {
-      if (this.strategieSelected == "Strategie bagage Par Poids") {
+      if (this.strategieSelected == "typeStrategieBagagePoids") {
         this.$v.$touch();
         if (this.$v.strategieBagagePoidsModel.$invalid) {
           this.errorMsg = "Vous n'avez saisi les champs concernés";
@@ -539,6 +538,7 @@ export default {
           headers: HEADERS(this.$store.state.userAuthentified.token),
         })
         .then((response) => {
+          console.log(this.strategieBagagePoidsModel);
           if (response.status == 200) {
             if (response.data.status.code == 800) {
               this.successMsg = response.data.status.message;
@@ -626,6 +626,20 @@ export default {
 </script>
 
 <style scoped>
+.strategie_title {
+  font-size: 18px;
+  font-weight: 600;
+  font-family: "Montserrat";
+  word-spacing: 3px;
+  letter-spacing: 2px;
+}
+
+.mini_title {
+  font-family: "Montserrat";
+  font-size: 15px;
+  font-weight: 700;
+}
+
 .myalert {
   display: none;
   z-index: 1900;

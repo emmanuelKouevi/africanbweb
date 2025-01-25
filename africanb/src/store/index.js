@@ -19,6 +19,8 @@ export default new Vuex.Store({
       token: null,
     },
     isAuthentified: false,
+
+    pictureProfilUser: null,
   },
 
   getters: {},
@@ -39,6 +41,10 @@ export default new Vuex.Store({
     DESTROY_SESSION_USER(state) {
       state.isAuthentified = false;
       state.userAuthentified = {};
+    },
+
+    UPDATE_PICTURE_PROFIL(state, data) {
+      state.pictureProfilUser = data;
     },
   },
   actions: {},

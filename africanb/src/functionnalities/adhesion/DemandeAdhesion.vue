@@ -420,9 +420,11 @@ export default {
           headers: {
             server_id: "backend@africanb",
             client_id: "frontend@africanb",
+            is_admin: "isAdmin",
           },
         })
         .then((response) => {
+          console.log(response);
           if (response.status == 200) {
             if (response.data.status.code == 800) {
               this.successMsg = response.data.status.message;

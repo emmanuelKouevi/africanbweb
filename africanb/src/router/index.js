@@ -61,16 +61,19 @@ import UserInfo from "@/components/UserInfo.vue";
 import InfosAdhesion from "@/components/InfosAdhesion.vue";
 import InfosAdhesionValide from "@/components/InfosAdhesionValide.vue";
 import creerDemandeAdhesion from "../functionnalities/adhesion/DemandeAdhesion.vue";
-import creerDemandeAdhesionInterne from "../components/administrateur_societe/CreerDemandeAdhesion copy.vue";
+import creerDemandeAdhesionInterne from "@/functionnalities/adhesion/CreerDemandeAdhesion.vue";
 import SelectionnerProgrammeOffreVoyageList from "../components/vendeur/ProgrammeOffreVoyageList.vue";
 
 import VerifierBilletReservation from "@/functionnalities/ticket/VerifierBilletReservation.vue";
 import ConfirmerBilletReservation from "@/functionnalities/ticket/ConfirmerBilletReservation.vue";
 
 import CreerStrategieBagage from "@/functionnalities/bagages/CreerStrategieBagage.vue";
+import SelectionnerStrategieParCompagnie from "@/functionnalities/bagages/SelectionnerStrategieParCompagnie.vue";
+import ModifierStrategieBagage from "@/functionnalities/bagages/ModifierStrategieBagage.vue";
 
 import DocumentAttestationTransport from "@/functionnalities/documents/DocumentAttestationTransport.vue";
 import DocumentLogoCompagnieTransport from "@/functionnalities/documents/DocumentLogoCompagnieTransport.vue";
+import SelectionnerDocument from "@/functionnalities/documents/SelectionnerDocument.vue";
 
 Vue.use(VueRouter);
 
@@ -373,6 +376,16 @@ const routes = [
         component: CreerStrategieBagage,
       },
       {
+        path: "/selectionnerStrategieBagage",
+        name: "selectionnerStrategieBagage",
+        component: SelectionnerStrategieParCompagnie,
+      },
+      {
+        path: "/modifierStrategieBagage",
+        name: "modifierStrategieBagage",
+        component: ModifierStrategieBagage,
+      },
+      {
         path: "/attestationTransport",
         name: "documentAttestationTransport",
         component: DocumentAttestationTransport,
@@ -381,6 +394,16 @@ const routes = [
         path: "/imageCompagnieTransport",
         name: "imageCompagnieTransport",
         component: DocumentLogoCompagnieTransport,
+      },
+      {
+        path: "/Liste des documents",
+        name: "SelectionnerDocument",
+        component: SelectionnerDocument,
+      },
+      {
+        path: "/CreerAdhesionAdmin",
+        name: "CreerAdhesionAdmin",
+        component: creerDemandeAdhesionInterne,
       },
     ],
   },
