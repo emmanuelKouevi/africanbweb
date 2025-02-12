@@ -1,6 +1,6 @@
 <template>
   <v-app id="inspire">
-    <v-navigation-drawer app v-model="drawer" width="350">
+    <v-navigation-drawer app v-model="drawer" width="400">
       <v-list-item>
         <v-list-item-avatar>
           <v-img v-if="logoCompagnieUrl == null" src=""></v-img>
@@ -381,7 +381,6 @@ export default {
           headers: HEADERS(this.$store.state.userAuthentified.token),
         })
         .then((response) => {
-          console.log(response);
           if (response.status == 200) {
             if (response.data.status.code != 800) {
               this.errorMsg = response.data.status.message;
@@ -391,7 +390,6 @@ export default {
               }, 4000);
             } else {
               this.logoCompagnieUrl = response.data.item.url;
-              console.log(this.logoCompagnieUrl);
             }
           } else {
             this.errorMsg = "Erreur";
@@ -659,6 +657,10 @@ export default {
               {
                 title: "Liste des strategies",
                 navigation: "/SelectionnerStrategieBagage",
+              },
+              {
+                title: "Gestion de bagages",
+                navigation: "/GestionBagagePoids",
               },
             ],
           };

@@ -122,7 +122,9 @@
               <v-list>
                 <v-list-item>
                   <v-list-item-content>
-                    <v-list-item-subtitle>Prix du kilo</v-list-item-subtitle>
+                    <v-list-item-subtitle
+                      >Total kilo non Taxable</v-list-item-subtitle
+                    >
                   </v-list-item-content>
 
                   <v-list-item-content>

@@ -67,13 +67,15 @@ import SelectionnerProgrammeOffreVoyageList from "../components/vendeur/Programm
 import VerifierBilletReservation from "@/functionnalities/ticket/VerifierBilletReservation.vue";
 import ConfirmerBilletReservation from "@/functionnalities/ticket/ConfirmerBilletReservation.vue";
 
-import CreerStrategieBagage from "@/functionnalities/bagages/CreerStrategieBagage.vue";
-import SelectionnerStrategieParCompagnie from "@/functionnalities/bagages/SelectionnerStrategieParCompagnie.vue";
-import ModifierStrategieBagage from "@/functionnalities/bagages/ModifierStrategieBagage.vue";
+import CreerStrategieBagage from "@/functionnalities/bagages/views/CreerStrategieBagage.vue";
+import SelectionnerStrategieParCompagnie from "@/functionnalities/bagages/views/SelectionnerStrategieParCompagnie.vue";
+import ModifierStrategieBagage from "@/functionnalities/bagages/views/ModifierStrategieBagage.vue";
 
 import DocumentAttestationTransport from "@/functionnalities/documents/DocumentAttestationTransport.vue";
 import DocumentLogoCompagnieTransport from "@/functionnalities/documents/DocumentLogoCompagnieTransport.vue";
 import SelectionnerDocument from "@/functionnalities/documents/SelectionnerDocument.vue";
+import SearchTicket from "@/functionnalities/bagages/views/searchTicket.vue";
+import GestionBagagePoids from "@/functionnalities/bagages/components/gestionBagage/GestionBagagePoids.vue";
 
 Vue.use(VueRouter);
 
@@ -404,6 +406,16 @@ const routes = [
         path: "/CreerAdhesionAdmin",
         name: "CreerAdhesionAdmin",
         component: creerDemandeAdhesionInterne,
+      },
+      {
+        path: "/searchTicket",
+        name: "SearchTicket",
+        component: SearchTicket,
+      },
+      {
+        path: "/GestionBagagePoids",
+        name: "GestionBagagePoids",
+        component: GestionBagagePoids,
       },
     ],
   },

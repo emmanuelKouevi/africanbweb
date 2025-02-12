@@ -47,62 +47,15 @@
         </v-card-text> </v-card
       ><br />
 
-      <v-card
-        elevation="3"
+      <StrategieBagagePoids
+        :type-strategie="strategieSelected"
         :hidden="
           strategieSelected == null ||
           strategieSelected === 'typeStrategieBagageType'
         "
-      >
-        <v-card-title
-          ><span class="mini_title">Stratégie par poids</span></v-card-title
-        >
-        <v-card-text>
-          <div class="row justify-space-around">
-            <div class="col-lg-3">
-              <label for="inputPrice" class="form-label"
-                >Prix du kilo (kg)*</label
-              >
-              <div class="input-group mb-3">
-                <input
-                  type="text"
-                  class="form-control"
-                  aria-describedby="basic-addon1"
-                  v-model.number="
-                    $v.strategieBagagePoidsModel.data.strategieBagagePoidsDTO
-                      .prixKilo.$model
-                  "
-                />
-                <span class="input-group-text" id="basic-addon1">FCFA</span>
-              </div>
-            </div>
-            <div class="col-lg-3">
-              <label for="exampleInputPassword1" class="form-label"
-                >Kilo gratuit*</label
-              >
-              <input
-                type="number"
-                min="0"
-                id=""
-                class="form-control col-lg-8"
-                v-model.number="
-                  $v.strategieBagagePoidsModel.data.strategieBagagePoidsDTO
-                    .nombreKiloNonTaxable.$model
-                "
-              />
-            </div>
-          </div>
-          <br />
-          <div class="float-right">
-            <v-btn btn color="secondary" outlined>REINITIALISER</v-btn
-            >&nbsp;&nbsp;
-            <v-btn color="success" @click="submitStrategieBagage" btn outlined
-              >ENREGISTRER</v-btn
-            >
-          </div>
-          <br /><br />
-        </v-card-text> </v-card
-      ><br />
+      />
+
+      <br />
 
       <v-card
         elevation="3"
@@ -258,31 +211,6 @@
         </v-card-text>
       </v-card>
     </div>
-
-    <v-alert
-      class="myalert alert-success"
-      type="success"
-      width="350px"
-      dismissible
-      >{{ successMsg }}</v-alert
-    >
-    <v-alert
-      class="myalert alert-warning"
-      type="warning"
-      width="350px"
-      dismissible
-      >{{ warningMsg }}</v-alert
-    >
-    <v-alert
-      class="myalert alert-error"
-      type="error"
-      width="350px"
-      dismissible
-      >{{ errorMsg }}</v-alert
-    >
-    <v-overlay :value="overlay"
-      ><v-progress-circular indeterminate size="64"></v-progress-circular
-    ></v-overlay>
   </v-app>
 </template>
 
@@ -295,8 +223,12 @@ import {
   API_OBTENIR_REFERENCE_PAR_PAR_FAMILLE,
   HEADERS,
 } from "@/components/globalConfig/globalConstConfig";
+import StrategieBagagePoids from "../components/strategieBagage/StrategieBagagePoids.vue";
 export default {
   name: "CreerStrategieBagage",
+  components: {
+    StrategieBagagePoids,
+  },
   data() {
     return {
       // COMMON VARIABLES
@@ -638,25 +570,6 @@ export default {
   font-family: "Montserrat";
   font-size: 15px;
   font-weight: 700;
-}
-
-.myalert {
-  display: none;
-  z-index: 1900;
-}
-
-.alert-success {
-  position: fixed;
-  top: 25px;
-  right: 2%;
-  width: 25%;
-}
-
-.alert-error {
-  position: fixed;
-  top: 25px;
-  right: 2%;
-  width: 25%;
 }
 
 .alert-warning {
