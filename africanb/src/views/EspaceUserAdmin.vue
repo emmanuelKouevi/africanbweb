@@ -659,8 +659,16 @@ export default {
                 navigation: "/SelectionnerStrategieBagage",
               },
               {
+                title: "Recherche de billet",
+                navigation: "/SearchTicket",
+              },
+              {
                 title: "Gestion de bagages",
                 navigation: "/GestionBagagePoids",
+              },
+              {
+                title: "Bagage Client",
+                navigation: "/BagageClient",
               },
             ],
           };

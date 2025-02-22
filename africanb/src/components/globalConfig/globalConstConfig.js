@@ -118,6 +118,8 @@ export const API_CONFIRM_TICKET = `${BASE_URL}reservationBilletVoyages/confirmer
 export const API_CREATE_STRATEGIE_BAGAGE = `${BASE_URL}strategieBagages`;
 export const API_GET_STRATEGIE_PAR_COMPAGNIE = `${BASE_URL}strategieBagages/getByCompagnieTransport`;
 
+export const API_SAVE_BAGAGE = `${BASE_URL}bagages`;
+
 // -------------------------------------------------------- GESTION DES DOCUMENTS --------------------------------------------------------- //
 
 export const API_SEND_DOCUMENTS = `${BASE_URL}documents`;

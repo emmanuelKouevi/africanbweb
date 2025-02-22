@@ -18,6 +18,9 @@ export default new Vuex.Store({
       roleLibelle: null,
       token: null,
     },
+
+    ticket: {},
+
     isAuthentified: false,
 
     pictureProfilUser: null,
@@ -26,6 +29,10 @@ export default new Vuex.Store({
   getters: {},
 
   mutations: {
+    STORE_TICKET(state, data) {
+      state.ticket = data;
+    },
+
     LOGIN_USER(state) {
       state.isAuthentified = true;
     },

@@ -75,7 +75,8 @@ import DocumentAttestationTransport from "@/functionnalities/documents/DocumentA
 import DocumentLogoCompagnieTransport from "@/functionnalities/documents/DocumentLogoCompagnieTransport.vue";
 import SelectionnerDocument from "@/functionnalities/documents/SelectionnerDocument.vue";
 import SearchTicket from "@/functionnalities/bagages/views/searchTicket.vue";
-import GestionBagagePoids from "@/functionnalities/bagages/components/gestionBagage/GestionBagagePoids.vue";
+import GestionBagage from "@/functionnalities/bagages/components/gestionBagage/GestionBagage.vue";
+import BagageClient from "@/functionnalities/bagages/components/gestionBagage/BagageClient.vue";
 
 Vue.use(VueRouter);
 
@@ -413,9 +414,14 @@ const routes = [
         component: SearchTicket,
       },
       {
-        path: "/GestionBagagePoids",
-        name: "GestionBagagePoids",
-        component: GestionBagagePoids,
+        path: "/GestionBagage",
+        name: "GestionBagage",
+        component: GestionBagage,
+      },
+      {
+        path: "/BagageClient",
+        name: "BagageClient",
+        component: BagageClient,
       },
     ],
   },
