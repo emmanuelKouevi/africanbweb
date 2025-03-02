@@ -107,11 +107,26 @@ export default {
         setTimeout(function () {
           $(".alert-error").fadeOut();
         }, 4000);
+      } else if (this.keyword == "") {
+        this.errorMsg = "Veuillez entrer une référence";
+        $(".alert-error").fadeIn();
+        setTimeout(function () {
+          $(".alert-error").fadeOut();
+        }, 4000);
       } else {
+        var referenceFound = "";
         this.ticketAvailableList.forEach((element) => {
           if (element.designation == this.keyword) {
+            referenceFound = element.designation;
             this.$store.commit("STORE_TICKET", element);
             this.$router.push({ path: "/GestionBagage" });
+          } else {
+            referenceFound = "Aucune correspondance";
+            this.errorMsg = referenceFound;
+            $(".alert-error").fadeIn();
+            setTimeout(function () {
+              $(".alert-error").fadeOut();
+            }, 4000);
           }
         });
       }

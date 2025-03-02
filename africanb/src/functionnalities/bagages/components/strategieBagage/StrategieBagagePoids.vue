@@ -15,6 +15,10 @@
                 type="text"
                 class="form-control"
                 aria-describedby="basic-addon1"
+                v-model="
+                  strategieBagagePoidsModel.data.strategieBagagePoidsDTO
+                    .prixKilo
+                "
               />
               <span class="input-group-text" id="basic-addon1">FCFA</span>
             </div>
@@ -23,7 +27,16 @@
             <label for="exampleInputPassword1" class="form-label"
               >Kilo gratuit*</label
             >
-            <input type="number" min="0" id="" class="form-control col-lg-8" />
+            <input
+              type="number"
+              min="0"
+              id=""
+              class="form-control col-lg-8"
+              v-model="
+                strategieBagagePoidsModel.data.strategieBagagePoidsDTO
+                  .nombreKiloNonTaxable
+              "
+            />
           </div>
         </div>
         <br />
@@ -120,6 +133,7 @@ export default {
           headers: HEADERS(this.$store.state.userAuthentified.token),
         })
         .then((response) => {
+          console.log(response);
           if (response.status == 200) {
             if (response.data.status.code == 800) {
               this.successMsg = response.data.status.message;

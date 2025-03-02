@@ -493,7 +493,7 @@ export default {
               );
             } else {
               this.$swal.fire(
-                "Opération non effectuée",
+                "Opération effectuée",
                 response.data.status.message,
                 "success"
               );

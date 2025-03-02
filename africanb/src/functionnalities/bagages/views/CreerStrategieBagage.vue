@@ -465,12 +465,14 @@ export default {
       this.strategieBagagePoidsModel.data.strategieBagagePoidsDTO.designation =
         this.strategieSelected;
 
+      console.log(this.strategieBagagePoidsModel);
+
       await axios
         .post(API_CREATE_STRATEGIE_BAGAGE, this.strategieBagagePoidsModel, {
           headers: HEADERS(this.$store.state.userAuthentified.token),
         })
         .then((response) => {
-          console.log(this.strategieBagagePoidsModel);
+          console.log(response);
           if (response.status == 200) {
             if (response.data.status.code == 800) {
               this.successMsg = response.data.status.message;

@@ -119,6 +119,8 @@ export const API_CREATE_STRATEGIE_BAGAGE = `${BASE_URL}strategieBagages`;
 export const API_GET_STRATEGIE_PAR_COMPAGNIE = `${BASE_URL}strategieBagages/getByCompagnieTransport`;
 
 export const API_SAVE_BAGAGE = `${BASE_URL}bagages`;
+export const API_FIND_BAGS_BY_TICKET = `${BASE_URL}bagages/findByReservationBilletVoyageReference`;
+export const API_FIND_BAGS_BY_OFFRE = `${BASE_URL}bagages/findByProgrammeDesignation`;
 
 // -------------------------------------------------------- GESTION DES DOCUMENTS --------------------------------------------------------- //
 

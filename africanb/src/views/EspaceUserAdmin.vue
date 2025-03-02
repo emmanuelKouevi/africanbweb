@@ -670,6 +670,10 @@ export default {
                 title: "Bagage Client",
                 navigation: "/BagageClient",
               },
+              {
+                title: "Suivi des bagages",
+                navigation: "/SuiviDesBagages",
+              },
             ],
           };
 
