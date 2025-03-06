@@ -575,6 +575,24 @@ export default {
           globalFunctionnalities.push(manageReservationTicket);
         }
 
+        if (element.code == FUNCTIONNALITY_MANAGE_RESERVATION_TICKET) {
+          var manageBags = {
+            title: "Gestion des bagages",
+            url: require("@/assets/bus.png"),
+            items: [
+              {
+                title: "Enregistrement de bagages",
+                navigation: "/SearchTicket",
+              },
+              {
+                title: "Suivi des bagages",
+                navigation: "/SuiviDesBagages",
+              },
+            ],
+          };
+          globalFunctionnalities.push(manageBags);
+        }
+
         if (element.code == FUNCTIONNALITY_MANAGE_LOCALISATION) {
           var createlocation = {
             title: "Localité",
@@ -657,22 +675,6 @@ export default {
               {
                 title: "Liste des strategies",
                 navigation: "/SelectionnerStrategieBagage",
-              },
-              {
-                title: "Recherche de billet",
-                navigation: "/SearchTicket",
-              },
-              {
-                title: "Gestion de bagages",
-                navigation: "/GestionBagagePoids",
-              },
-              {
-                title: "Bagage Client",
-                navigation: "/BagageClient",
-              },
-              {
-                title: "Suivi des bagages",
-                navigation: "/SuiviDesBagages",
               },
             ],
           };

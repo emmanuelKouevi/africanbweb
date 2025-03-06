@@ -50,6 +50,7 @@
 <script>
 import {
   API_GET_RESERVATIONS_BY_ADMIN_TP,
+  API_GET_RESERVATIONS_BY_SELLER,
   HEADERS,
 } from "@/components/globalConfig/globalConstConfig";
 import axios from "axios";
@@ -75,9 +76,16 @@ export default {
     //RÉCUPÉRER LA LISTE DES BILLETS DISPONIBLES.
     async getTicketAvailables() {
       await axios
-        .post(API_GET_RESERVATIONS_BY_ADMIN_TP, this.objectToSend, {
-          headers: HEADERS(this.$store.state.userAuthentified.token),
-        })
+        .post(
+          this.$store.state.userAuthentified.roleCode ==
+            "RoleUtiGareCompagnieTransport"
+            ? API_GET_RESERVATIONS_BY_SELLER
+            : API_GET_RESERVATIONS_BY_ADMIN_TP,
+          this.objectToSend,
+          {
+            headers: HEADERS(this.$store.state.userAuthentified.token),
+          }
+        )
         .then((response) => {
           if (response.status == 200) {
             if (response.data.hasError == false) {
@@ -118,8 +126,19 @@ export default {
         this.ticketAvailableList.forEach((element) => {
           if (element.designation == this.keyword) {
             referenceFound = element.designation;
-            this.$store.commit("STORE_TICKET", element);
-            this.$router.push({ path: "/GestionBagage" });
+            if (
+              element.statusActualDesignation ==
+              "ReservationPayeeEtNonEffective"
+            ) {
+              this.$swal.fire(
+                "Erreur",
+                "Le billet de reservation a déjà expiré",
+                "error"
+              );
+            } else {
+              this.$store.commit("STORE_TICKET", element);
+              this.$router.push({ path: "/GestionBagage" });
+            }
           } else {
             referenceFound = "Aucune correspondance";
             this.errorMsg = referenceFound;

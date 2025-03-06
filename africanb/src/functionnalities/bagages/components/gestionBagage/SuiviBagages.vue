@@ -11,7 +11,8 @@
                 >Rechercher des bagages par:</span
               ></v-card-title
             >
-            <v-card-subtitle>Sélectionnez le type de recherche</v-card-subtitle>
+            <v-card-subtitle>Sélectionnez le type de recherche</v-card-subtitle
+            ><br />
             <v-card-text>
               <div class="row justify-space-between">
                 <v-radio-group v-model="searchType" row>
@@ -81,16 +82,25 @@
               <div class="row">
                 <div class="col-lg-6">
                   <div>
-                    <v-text-field
-                      outlined
-                      dense
-                      label="Entrer la designation du programme"
-                    ></v-text-field>
+                    <input
+                      id="searchTicket"
+                      v-model="designationProgramme"
+                      type="text"
+                      class="form-control"
+                      aria-describedby="basic-addon1"
+                      placeholder="Entrer la désignation du programme"
+                    />
                   </div>
                 </div>
                 <div class="col-lg-3">
-                  <div>
-                    <v-btn btn color="primary"
+                  <div v-if="isSearchingByDesignation == true">
+                    <v-progress-circular
+                      indeterminate
+                      color="secondary"
+                    ></v-progress-circular>
+                  </div>
+                  <div v-else>
+                    <v-btn btn color="primary" @click="getBagsByOffre"
                       ><v-icon>mdi-magnify</v-icon>&nbsp;&nbsp;Rechercher</v-btn
                     >
                   </div>
@@ -101,97 +111,17 @@
         </div>
       </div>
 
-      <div
-        class="row"
-        :hidden="apiResponse == null"
-        v-if="typeStrategieCompagnieStrategie == 'typeStrategieBagagePoids'"
-      >
-        <div class="col-lg-7">
-          <v-card>
-            <v-card-title
-              ><span class="title_card">Détail des bagages</span>
-              <v-spacer></v-spacer>
-              <v-btn btn color="secondary" small>Imprimer le reçu</v-btn>
-            </v-card-title>
-            <v-card-text>
-              <div class="row justify-space-around">
-                <div class="col-lg-6">
-                  <label for="designation" class="form-label"
-                    >Poids Total</label
-                  >
-                  <div class="input-group mb-3">
-                    <input
-                      disabled
-                      :value="
-                        apiResponse != null
-                          ? apiResponse.bagagePoidsDTO.poidsTotalBagage
-                          : ''
-                      "
-                      type="text"
-                      class="form-control"
-                      aria-describedby="basic-addon1"
-                    />
-                    <span class="input-group-text" id="basic-addon1">KG</span>
-                  </div>
-                </div>
-                <div class="col-lg-6">
-                  <label for="exampleInputPassword1" class="form-label"
-                    >Montant à payer</label
-                  >
-                  <div class="input-group mb-3">
-                    <input
-                      disabled
-                      :value="
-                        apiResponse != null ? apiResponse.montantSoldable : ''
-                      "
-                      type="text"
-                      class="form-control"
-                      aria-describedby="basic-addon1"
-                    />
-                    <span class="input-group-text" id="basic-addon1">FCFA</span>
-                  </div>
-                </div>
-              </div>
-            </v-card-text>
-          </v-card>
-        </div>
-        <div class="col-lg-5">
-          <v-card>
-            <v-card-title
-              ><span class="search_text"
-                >Total bagages:
-                {{
-                  apiResponse != null
-                    ? apiResponse.bagagePoidsDTO.bagagePoidsReferenceDTOS.length
-                    : ""
-                }}</span
-              ></v-card-title
-            >
-            <v-card-text v-if="apiResponse != null">
-              <div
-                v-if="
-                  apiResponse.bagagePoidsDTO.bagagePoidsReferenceDTOS.length > 0
-                "
-              >
-                <div class="row">
-                  <div
-                    class="col-lg-6"
-                    v-for="(bag, b) in apiResponse.bagagePoidsDTO
-                      .bagagePoidsReferenceDTOS"
-                    :key="b"
-                  >
-                    <span>{{ bag.typeBagageDesignation }}</span>
-                  </div>
-                </div>
-              </div>
-              <div v-else>
-                <span>AUCUN BAGAGE</span>
-              </div>
-            </v-card-text>
-          </v-card>
-        </div>
-      </div>
+      <DetailBagageClient
+        :response="apiResponse"
+        :strategyType="typeStrategieCompagnieStrategie"
+      ></DetailBagageClient>
 
+      <DetailBagageClientType
+        :response="apiResponse"
+        :strategyType="typeStrategieCompagnieStrategie"
+      ></DetailBagageClientType>
+
+      <!--
       <div
         class="row"
         :hidden="apiResponse == null"
@@ -262,6 +192,178 @@
             </v-card-text>
           </v-card>
         </div>
+      </div>-->
+
+      <div
+        class="row"
+        :hidden="apiResponseProgramme == null"
+        v-if="typeStrategieCompagnieStrategie == 'typeStrategieBagagePoids'"
+      >
+        <div class="col-lg-7">
+          <v-card>
+            <v-card-title
+              ><span class="title_card">Détail des bagages</span>
+              <v-spacer></v-spacer>
+              <v-btn btn color="secondary" small>Imprimer le reçu</v-btn>
+            </v-card-title>
+            <v-card-text>
+              <div class="row justify-space-around">
+                <div class="col-lg-6">
+                  <label for="designation" class="form-label"
+                    >Poids Total</label
+                  >
+                  <div class="input-group mb-3">
+                    <input
+                      disabled
+                      :value="
+                        apiResponseProgramme != null
+                          ? apiResponseProgramme[0].bagagePoidsDTO
+                              .poidsTotalBagage
+                          : ''
+                      "
+                      type="text"
+                      class="form-control"
+                      aria-describedby="basic-addon1"
+                    />
+                    <span class="input-group-text" id="basic-addon1">KG</span>
+                  </div>
+                </div>
+                <div class="col-lg-6">
+                  <label for="exampleInputPassword1" class="form-label"
+                    >Montant à payer</label
+                  >
+                  <div class="input-group mb-3">
+                    <input
+                      disabled
+                      :value="
+                        apiResponseProgramme != null
+                          ? apiResponseProgramme[0].montantSoldable
+                          : ''
+                      "
+                      type="text"
+                      class="form-control"
+                      aria-describedby="basic-addon1"
+                    />
+                    <span class="input-group-text" id="basic-addon1">FCFA</span>
+                  </div>
+                </div>
+              </div>
+            </v-card-text>
+          </v-card>
+        </div>
+        <div class="col-lg-5">
+          <v-card>
+            <v-card-title
+              ><span class="search_text"
+                >Total bagages:
+                {{
+                  apiResponseProgramme != null
+                    ? apiResponseProgramme[0].bagagePoidsDTO
+                        .bagagePoidsReferenceDTOS.length
+                    : ""
+                }}</span
+              ></v-card-title
+            >
+            <v-card-text v-if="apiResponseProgramme != null">
+              <div
+                v-if="
+                  apiResponseProgramme[0].bagagePoidsDTO
+                    .bagagePoidsReferenceDTOS.length > 0
+                "
+              >
+                <div class="row">
+                  <div
+                    class="col-lg-6"
+                    v-for="(bag, b) in apiResponseProgramme[0].bagagePoidsDTO
+                      .bagagePoidsReferenceDTOS"
+                    :key="b"
+                  >
+                    <span>{{ bag.typeBagageDesignation }}</span>
+                  </div>
+                </div>
+              </div>
+              <div v-else>
+                <span>AUCUN BAGAGE</span>
+              </div>
+            </v-card-text>
+          </v-card>
+        </div>
+      </div>
+
+      <div
+        class="row"
+        :hidden="apiResponseProgramme == null"
+        v-if="typeStrategieCompagnieStrategie == 'typeStrategieBagageType'"
+      >
+        <div class="col-lg-7">
+          <v-card>
+            <v-card-title
+              ><span class="title_card">Détail des bagages</span>
+              <v-spacer></v-spacer>
+              <v-btn btn color="secondary" small>Imprimer le reçu</v-btn>
+            </v-card-title>
+            <v-card-text>
+              <div class="row">
+                <div class="col-lg-6">
+                  <label for="exampleInputPassword1" class="form-label"
+                    >Montant à payer</label
+                  >
+                  <div class="input-group mb-3">
+                    <input
+                      disabled
+                      :value="
+                        apiResponseProgramme != null
+                          ? apiResponseProgramme[0].montantSoldable
+                          : ''
+                      "
+                      type="text"
+                      class="form-control"
+                      aria-describedby="basic-addon1"
+                    />
+                    <span class="input-group-text" id="basic-addon1">FCFA</span>
+                  </div>
+                </div>
+              </div>
+            </v-card-text>
+          </v-card>
+        </div>
+        <div class="col-lg-5">
+          <v-card>
+            <v-card-title
+              ><span class="search_text"
+                >Total bagages:
+                {{
+                  apiResponseProgramme != null
+                    ? apiResponseProgramme[0].bagageTypeDTO
+                        .bagageTypeReferenceDTOS.length
+                    : ""
+                }}</span
+              ></v-card-title
+            >
+            <v-card-text v-if="apiResponseProgramme != null">
+              <div
+                v-if="
+                  apiResponseProgramme[0].bagageTypeDTO.bagageTypeReferenceDTOS
+                    .length > 0
+                "
+              >
+                <div class="row">
+                  <div
+                    class="col-lg-6"
+                    v-for="(bag, b) in apiResponseProgramme[0].bagageTypeDTO
+                      .bagageTypeReferenceDTOS"
+                    :key="b"
+                  >
+                    <span>{{ bag.typeBagageDesignation }}</span>
+                  </div>
+                </div>
+              </div>
+              <div v-else>
+                <span>AUCUN BAGAGE</span>
+              </div>
+            </v-card-text>
+          </v-card>
+        </div>
       </div>
     </div>
     <v-alert
@@ -283,8 +385,14 @@ import {
 } from "@/components/globalConfig/globalConstConfig";
 import $ from "jquery";
 import axios from "axios";
+import DetailBagageClient from "./widgets/DetailBagageClient.vue";
+import DetailBgageClientType from "./widgets/DetailBgageClientType.vue";
 export default {
   name: "SuiviBagages",
+  components: {
+    DetailBagageClient,
+    DetailBgageClientType,
+  },
   data() {
     return {
       searchType: null,
@@ -310,6 +418,7 @@ export default {
       },
 
       apiResponse: null,
+      apiResponseProgramme: null,
 
       strategieObject: {
         data: {},
@@ -322,6 +431,7 @@ export default {
   methods: {
     // Rechercher bagages par reference billet de réservation
     async getBagsByReference() {
+      this.apiResponseProgramme = null;
       this.isSearchingByTicket = true;
       this.bagageByTicket.data.reservationBilletReference =
         this.referenceTicket;
@@ -330,7 +440,6 @@ export default {
           headers: HEADERS(this.$store.state.userAuthentified.token),
         })
         .then((response) => {
-          console.log(response);
           if (response.data.status.code == 800) {
             this.apiResponse = response.data.item;
           } else {
@@ -354,6 +463,39 @@ export default {
         });
     },
 
+    // Rechercher bagages par programme designation
+    async getBagsByOffre() {
+      this.isSearchingByDesignation = true;
+      this.apiResponse = null;
+      this.bagageByProgramme.data.designation = this.designationProgramme;
+      await axios
+        .post(API_FIND_BAGS_BY_OFFRE, this.bagageByProgramme, {
+          headers: HEADERS(this.$store.state.userAuthentified.token),
+        })
+        .then((response) => {
+          if (response.data.status.code == 800) {
+            this.apiResponseProgramme = response.data.items;
+          } else {
+            this.apiResponseProgramme = null;
+            this.errorMsg = "Aucune donnée enregistré";
+            $(".alert-error").fadeIn();
+            setTimeout(function () {
+              $(".alert-error").fadeOut();
+            }, 4000);
+          }
+        })
+        .catch((e) => {
+          this.errorMsg = e;
+          $(".alert-error").fadeIn();
+          setTimeout(function () {
+            $(".alert-error").fadeOut();
+          }, 4000);
+        })
+        .finally(() => {
+          this.isSearchingByDesignation = false;
+        });
+    },
+
     // Obtenir la strategie de gestion de bagage de la compagnie
     async getStrategyByCompany() {
       await axios
@@ -374,29 +516,6 @@ export default {
             setTimeout(function () {
               $(".alert-error").fadeOut();
             }, 4000);
-          }
-        })
-        .catch((e) => {
-          this.errorMsg = e;
-          $(".alert-error").fadeIn();
-          setTimeout(function () {
-            $(".alert-error").fadeOut();
-          }, 4000);
-        });
-    },
-
-    // Rechercher bagages par programme designation
-    async getBagsByOffre() {
-      this.bagageByProgramme.data.designation = this.designationProgramme;
-      await axios
-        .post(API_FIND_BAGS_BY_OFFRE, this.bagageByProgramme, {
-          headers: HEADERS(this.$store.state.userAuthentified.token),
-        })
-        .then((response) => {
-          if (response.data.status.code == 800) {
-            this.prixEtModeParOffreVoyageList = response.data.items;
-          } else {
-            this.prixEtModeParOffreVoyageList = [];
           }
         })
         .catch((e) => {
