@@ -223,7 +223,7 @@ import {
   API_OBTENIR_REFERENCE_PAR_PAR_FAMILLE,
   HEADERS,
 } from "@/components/globalConfig/globalConstConfig";
-import StrategieBagagePoids from "../components/strategieBagage/StrategieBagagePoids.vue";
+import StrategieBagagePoids from "./StrategieBagagePoids.vue";
 export default {
   name: "CreerStrategieBagage",
   components: {

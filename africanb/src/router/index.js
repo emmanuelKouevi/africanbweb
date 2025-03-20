@@ -67,9 +67,9 @@ import SelectionnerProgrammeOffreVoyageList from "../components/vendeur/Programm
 import VerifierBilletReservation from "@/functionnalities/ticket/VerifierBilletReservation.vue";
 import ConfirmerBilletReservation from "@/functionnalities/ticket/ConfirmerBilletReservation.vue";
 
-import CreerStrategieBagage from "@/functionnalities/bagages/views/CreerStrategieBagage.vue";
-import SelectionnerStrategieParCompagnie from "@/functionnalities/bagages/views/SelectionnerStrategieParCompagnie.vue";
-import ModifierStrategieBagage from "@/functionnalities/bagages/views/ModifierStrategieBagage.vue";
+import CreerStrategieBagage from "@/functionnalities/bagages/components/strategieBagage/CreerStrategieBagage.vue";
+import SelectionnerStrategieParCompagnie from "@/functionnalities/bagages/components/strategieBagage/SelectionnerStrategieParCompagnie.vue";
+import ModifierStrategieBagage from "@/functionnalities/bagages/components/strategieBagage/ModifierStrategieBagage.vue";
 
 import DocumentAttestationTransport from "@/functionnalities/documents/DocumentAttestationTransport.vue";
 import DocumentLogoCompagnieTransport from "@/functionnalities/documents/DocumentLogoCompagnieTransport.vue";

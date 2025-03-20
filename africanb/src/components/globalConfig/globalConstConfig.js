@@ -62,6 +62,7 @@ export const API_RECUPERER_PRIX_PAR_OFFRE_VOYAGE = `${BASE_URL}prixOffreVoyages/
 //-------------------------------- APIs GESTION DES BAGAGES---------------------------------------------------------------------//
 
 export const API_CREER_BAGAGE = `${BASE_URL}bagages`;
+export const API_GET_BAGAGE_TYPE_SELECTED = `${BASE_URL}prixBagageParTypes/getByStrategieBagageType`;
 
 // --------------------------------APIs GESTION DES GARES ----------------------------------------------------------------------//
 export const API_CREER_GARE_COMPAGNIE_TRANSPORT = `${BASE_URL}gares`;
@@ -117,6 +118,9 @@ export const API_CONFIRM_TICKET = `${BASE_URL}reservationBilletVoyages/confirmer
 
 export const API_CREATE_STRATEGIE_BAGAGE = `${BASE_URL}strategieBagages`;
 export const API_GET_STRATEGIE_PAR_COMPAGNIE = `${BASE_URL}strategieBagages/getByCompagnieTransport`;
+
+export const API_PRIX_BAGAGE_TYPE = `${BASE_URL}prixBagageParTypes`;
+export const API_GET_PRIX_BAGAGE_TYPE = `${BASE_URL}prixBagageParTypes/getByStrategieBagageType`;
 
 export const API_SAVE_BAGAGE = `${BASE_URL}bagages`;
 export const API_FIND_BAGS_BY_TICKET = `${BASE_URL}bagages/findByReservationBilletVoyageReference`;

@@ -13,143 +13,275 @@
           >Gérer les bagages de vos clients de façon professionnelle.</small
         >
         <div class="col-lg-7">
-          <v-card>
-            <v-card-title
-              ><span class="title_card">Information(s) Génerale(s)</span>
-            </v-card-title>
-            <v-card-text>
-              <div class="row justify-space-around">
-                <div class="col-lg-6">
-                  <label for="designation" class="form-label">Nom</label>
-                  <div>
-                    <input
-                      disabled
-                      :value="billetReservation.clientDetails.nom"
-                      type="text"
-                      class="form-control"
-                      aria-describedby="basic-addon1"
-                    />
+          <div class="container">
+            <div class="row">
+              <v-card>
+                <v-card-title
+                  ><span class="title_card">Information(s) Génerale(s)</span>
+                </v-card-title>
+                <v-card-text>
+                  <div class="row justify-space-around">
+                    <div class="col-lg-6">
+                      <label for="designation" class="form-label">Nom</label>
+                      <div>
+                        <input
+                          disabled
+                          :value="billetReservation.clientDetails.nom"
+                          type="text"
+                          class="form-control"
+                          aria-describedby="basic-addon1"
+                        />
+                      </div>
+                    </div>
+                    <div class="col-lg-6">
+                      <label for="exampleInputPassword1" class="form-label"
+                        >Prenom(s)</label
+                      >
+                      <div>
+                        <input
+                          disabled
+                          :value="billetReservation.clientDetails.prenoms"
+                          type="text"
+                          class="form-control"
+                          aria-describedby="basic-addon1"
+                        />
+                      </div>
+                    </div>
                   </div>
-                </div>
-                <div class="col-lg-6">
-                  <label for="exampleInputPassword1" class="form-label"
-                    >Prenom(s)</label
+                  <div class="row">
+                    <div class="col-lg-8">
+                      <label for="designation" class="form-label">E-mail</label>
+                      <div>
+                        <input
+                          :value="billetReservation.clientDetails.email"
+                          disabled
+                          type="text"
+                          class="form-control"
+                          aria-describedby="basic-addon1"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row justify-space-around">
+                    <div class="col-lg-6">
+                      <label for="designation" class="form-label"
+                        >Téléphone</label
+                      >
+                      <div>
+                        <input
+                          disabled
+                          :value="billetReservation.clientDetails.telephone"
+                          type="text"
+                          class="form-control"
+                          aria-describedby="basic-addon1"
+                        />
+                      </div>
+                    </div>
+                    <div class="col-lg-6">
+                      <label for="exampleInputPassword1" class="form-label"
+                        >Addresse</label
+                      >
+                      <div>
+                        <input
+                          disabled
+                          :value="billetReservation.clientDetails.addresse"
+                          type="text"
+                          class="form-control"
+                          aria-describedby="basic-addon1"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                  <v-divider></v-divider>
+                  <div class="row justify-space-around">
+                    <div class="col-lg-6">
+                      <label for="designation" class="form-label"
+                        >Programme</label
+                      >
+                      <div>
+                        <input
+                          disabled
+                          :value="billetReservation.programmeDesignation"
+                          type="text"
+                          class="form-control"
+                          aria-describedby="basic-addon1"
+                        />
+                      </div>
+                    </div>
+                    <div class="col-lg-6">
+                      <label for="exampleInputPassword1" class="form-label"
+                        >Offre de voyage</label
+                      >
+                      <div>
+                        <input
+                          disabled
+                          :value="billetReservation.offreVoyageDesignation"
+                          type="text"
+                          class="form-control"
+                          aria-describedby="basic-addon1"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                </v-card-text>
+              </v-card>
+            </div>
+            <br />
+            <div class="row">
+              <v-card>
+                <v-card-title
+                  ><span class="title_card">Étiquetage des bagages</span>
+                  <v-spacer></v-spacer>
+                  <v-btn btn x-small color="secondary" @click="dialog = true"
+                    >AJOUTER UN SAC</v-btn
                   >
-                  <div>
-                    <input
-                      disabled
-                      :value="billetReservation.clientDetails.prenoms"
-                      type="text"
-                      class="form-control"
-                      aria-describedby="basic-addon1"
-                    />
+                </v-card-title>
+                <v-card-text>
+                  <div class="row">
+                    <div class="col-lg-6">
+                      <label for="designation" class="form-label"
+                        >Désignation *</label
+                      >
+                      <div>
+                        <input
+                          v-if="
+                            typeStrategieCompagnieStrategie ==
+                            'typeStrategieBagagePoids'
+                          "
+                          type="text"
+                          v-model="bagageWeightObject.data.designation"
+                          class="form-control"
+                          aria-describedby="basic-addon1"
+                        />
+                        <input
+                          v-else
+                          type="text"
+                          v-model="bagageTypeObject.data.designation"
+                          class="form-control"
+                          aria-describedby="basic-addon1"
+                        />
+                      </div>
+                    </div>
+                    <div
+                      class="col-lg-6"
+                      v-if="
+                        typeStrategieCompagnieStrategie ==
+                        'typeStrategieBagagePoids'
+                      "
+                    >
+                      <label for="exampleInputPassword1" class="form-label"
+                        >Poids total *</label
+                      >
+                      <div class="input-group mb-3">
+                        <input
+                          type="number"
+                          class="form-control"
+                          v-model="
+                            bagageWeightObject.data.bagagePoidsDTO
+                              .poidsTotalBagage
+                          "
+                          aria-describedby="basic-addon1"
+                        />
+                        <span class="input-group-text" id="basic-addon1"
+                          >KG</span
+                        >
+                      </div>
+                    </div>
                   </div>
-                </div>
-              </div>
-              <div class="row">
-                <div class="col-lg-8">
-                  <label for="designation" class="form-label">E-mail</label>
-                  <div>
-                    <input
-                      :value="billetReservation.clientDetails.email"
-                      disabled
-                      type="text"
-                      class="form-control"
-                      aria-describedby="basic-addon1"
-                    />
+
+                  <div class="row">
+                    <div class="col-lg-12">
+                      <label for="designation" class="form-label"
+                        >Déscription *</label
+                      >
+                      <div>
+                        <textarea
+                          v-if="
+                            typeStrategieCompagnieStrategie ==
+                            'typeStrategieBagagePoids'
+                          "
+                          v-model="bagageWeightObject.data.description"
+                          class="form-control"
+                          name=""
+                          id=""
+                        ></textarea>
+                        <textarea
+                          v-else
+                          v-model="bagageTypeObject.data.description"
+                          class="form-control"
+                          name=""
+                          id=""
+                        ></textarea>
+                      </div>
+                    </div>
                   </div>
-                </div>
-              </div>
-              <div class="row justify-space-around">
-                <div class="col-lg-6">
-                  <label for="designation" class="form-label">Téléphone</label>
-                  <div>
-                    <input
-                      disabled
-                      :value="billetReservation.clientDetails.telephone"
-                      type="text"
-                      class="form-control"
-                      aria-describedby="basic-addon1"
-                    />
-                  </div>
-                </div>
-                <div class="col-lg-6">
-                  <label for="exampleInputPassword1" class="form-label"
-                    >Addresse</label
+                </v-card-text>
+                <v-card-actions class="justify-end">
+                  <v-btn btn color="secondary">REINITIALISER</v-btn
+                  >&nbsp;&nbsp;&nbsp;
+                  <v-btn btn color="success" @click="submitBag"
+                    >ENREGISTRER</v-btn
                   >
-                  <div>
-                    <input
-                      disabled
-                      :value="billetReservation.clientDetails.addresse"
-                      type="text"
-                      class="form-control"
-                      aria-describedby="basic-addon1"
-                    />
-                  </div>
-                </div>
-              </div>
-              <v-divider></v-divider>
-              <div class="row justify-space-around">
-                <div class="col-lg-6">
-                  <label for="designation" class="form-label">Programme</label>
-                  <div>
-                    <input
-                      disabled
-                      :value="billetReservation.programmeDesignation"
-                      type="text"
-                      class="form-control"
-                      aria-describedby="basic-addon1"
-                    />
-                  </div>
-                </div>
-                <div class="col-lg-6">
-                  <label for="exampleInputPassword1" class="form-label"
-                    >Offre de voyage</label
-                  >
-                  <div>
-                    <input
-                      disabled
-                      :value="billetReservation.offreVoyageDesignation"
-                      type="text"
-                      class="form-control"
-                      aria-describedby="basic-addon1"
-                    />
-                  </div>
-                </div>
-              </div>
-            </v-card-text>
-          </v-card>
+                </v-card-actions>
+              </v-card>
+            </div>
+          </div>
         </div>
 
         <div class="col-lg-5">
-          <v-card>
-            <v-card-title
-              ><span class="title_card">Bagages Enregistrés</span></v-card-title
-            >
-            <v-card-text>
-              <div v-if="bags.length == 0">
-                <span class="text-center">PAS DE BAGAGES ENREGISTRÉS</span>
-              </div>
-              <div v-else class="container">
-                <div class="row">
-                  <div class="col-lg-6" v-for="(bag, b) in bags" :key="b">
-                    <v-card>
-                      <v-card-title>
-                        <v-spacer></v-spacer>
-                        <v-btn icon color="secondary" @click="deleteBag(b)"
-                          ><v-icon size="30">mdi-close</v-icon></v-btn
-                        >
-                      </v-card-title>
-                      <v-card-subtitle>Bagage n° {{ b + 1 }} </v-card-subtitle>
-                      <v-card-text>
-                        {{ bag }}
-                      </v-card-text>
-                    </v-card>
+          <div class="container">
+            <div class="row">
+              <v-card>
+                <v-card-title
+                  ><span class="title_card"
+                    >Bagages Enregistrés</span
+                  ></v-card-title
+                >
+                <v-card-text>
+                  <div v-if="bags.length == 0">
+                    <span class="text-center">PAS DE BAGAGES ENREGISTRÉS</span>
                   </div>
-                </div>
-              </div>
-            </v-card-text>
-          </v-card>
+                  <div v-else class="container">
+                    <div class="row">
+                      <div class="col-lg-6" v-for="(bag, b) in bags" :key="b">
+                        <v-card>
+                          <v-card-title>
+                            <v-spacer></v-spacer>
+                            <v-btn icon color="secondary" @click="deleteBag(b)"
+                              ><v-icon size="30">mdi-close</v-icon></v-btn
+                            >
+                          </v-card-title>
+                          <v-card-subtitle
+                            >Bagage n° {{ b + 1 }}
+                          </v-card-subtitle>
+                          <v-card-text>
+                            {{ bag }}
+                          </v-card-text>
+                        </v-card>
+                      </div>
+                    </div>
+                  </div>
+                </v-card-text>
+              </v-card>
+            </div>
+            <br />
+            <div class="text-center" v-if="apiResponse == null"></div>
+            <div v-else>
+              <DetailBagageClient
+                v-if="
+                  typeStrategieCompagnieStrategie == 'typeStrategieBagagePoids'
+                "
+                :response="apiResponse"
+                :strategy-type="typeStrategieCompagnieStrategie"
+              ></DetailBagageClient>
+
+              <DetailBagageClientType
+                v-else
+                :response="apiResponse"
+                :strategy-type="typeStrategieCompagnieStrategie"
+              ></DetailBagageClientType>
+            </div>
+          </div>
         </div>
       </div>
 
@@ -168,7 +300,7 @@
                   v-model="typeBagageDesignation"
                 >
                   <option v-for="(bag, b) in referenceBagageList" :key="b">
-                    {{ bag.designation }}
+                    {{ bag.typeBagageDesignation }}
                   </option>
                 </select>
               </div>
@@ -197,102 +329,6 @@
           </v-card-actions>
         </v-card>
       </v-dialog>
-
-      <div class="row">
-        <div class="col-lg-7">
-          <v-card>
-            <v-card-title
-              ><span class="title_card">Étiquetage des bagages</span>
-              <v-spacer></v-spacer>
-              <v-btn btn x-small color="secondary" @click="dialog = true"
-                >AJOUTER UN SAC</v-btn
-              >
-            </v-card-title>
-            <v-card-text>
-              <div class="row">
-                <div class="col-lg-6">
-                  <label for="designation" class="form-label"
-                    >Désignation *</label
-                  >
-                  <div>
-                    <input
-                      v-if="
-                        typeStrategieCompagnieStrategie ==
-                        'typeStrategieBagagePoids'
-                      "
-                      type="text"
-                      v-model="bagageWeightObject.data.designation"
-                      class="form-control"
-                      aria-describedby="basic-addon1"
-                    />
-                    <input
-                      v-else
-                      type="text"
-                      v-model="bagageTypeObject.data.designation"
-                      class="form-control"
-                      aria-describedby="basic-addon1"
-                    />
-                  </div>
-                </div>
-                <div
-                  class="col-lg-6"
-                  v-if="
-                    typeStrategieCompagnieStrategie ==
-                    'typeStrategieBagagePoids'
-                  "
-                >
-                  <label for="exampleInputPassword1" class="form-label"
-                    >Poids total *</label
-                  >
-                  <div class="input-group mb-3">
-                    <input
-                      type="number"
-                      class="form-control"
-                      v-model="
-                        bagageWeightObject.data.bagagePoidsDTO.poidsTotalBagage
-                      "
-                      aria-describedby="basic-addon1"
-                    />
-                    <span class="input-group-text" id="basic-addon1">KG</span>
-                  </div>
-                </div>
-              </div>
-
-              <div class="row">
-                <div class="col-lg-12">
-                  <label for="designation" class="form-label"
-                    >Déscription *</label
-                  >
-                  <div>
-                    <textarea
-                      v-if="
-                        typeStrategieCompagnieStrategie ==
-                        'typeStrategieBagagePoids'
-                      "
-                      v-model="bagageWeightObject.data.description"
-                      class="form-control"
-                      name=""
-                      id=""
-                    ></textarea>
-                    <textarea
-                      v-else
-                      v-model="bagageTypeObject.data.description"
-                      class="form-control"
-                      name=""
-                      id=""
-                    ></textarea>
-                  </div>
-                </div>
-              </div>
-            </v-card-text>
-            <v-card-actions class="justify-end">
-              <v-btn btn color="secondary">REINITIALISER</v-btn
-              >&nbsp;&nbsp;&nbsp;
-              <v-btn btn color="success" @click="submitBag">ENREGISTRER</v-btn>
-            </v-card-actions> </v-card
-          ><br />
-        </div>
-      </div>
     </div>
     <v-alert
       class="myalert alert-error"
@@ -316,23 +352,23 @@
 
 <script>
 import {
+  API_GET_BAGAGE_TYPE_SELECTED,
   API_GET_STRATEGIE_PAR_COMPAGNIE,
-  API_OBTENIR_REFERENCE_PAR_PAR_FAMILLE,
   API_SAVE_BAGAGE,
   HEADERS,
 } from "@/components/globalConfig/globalConstConfig";
 import axios from "axios";
 import $ from "jquery";
-//import BagagePoids from "./widgets/BagagePoids.vue";
+import DetailBagageClient from "./widgets/DetailBagageClient.vue";
+import DetailBagageClientType from "./widgets/DetailBagageClientType.vue";
 
 export default {
   name: "GestionBagagePoids",
   components: {
-    //BagagePoids,
+    DetailBagageClient,
+    DetailBagageClientType,
   },
-  /*components: {
-    SaveBagDialog,
-  },*/
+
   data() {
     return {
       dialog: false,
@@ -351,8 +387,10 @@ export default {
         referenceFamilleDesignation: "referenceFamilleBagage",
       },
 
-      objectToSendReferenceBagage: {
-        datas: [],
+      ObjectBagageByType: {
+        data: {
+          strategieBagageTypeDesignation: "typeStrategieBagageType",
+        },
       },
 
       billetReservation: {},
@@ -382,6 +420,8 @@ export default {
           },
         },
       },
+
+      apiResponse: null,
     };
   },
 
@@ -420,7 +460,6 @@ export default {
 
     // Save new bag submit
     async submitBag() {
-      console.log("NOus sommes dans la method");
       if (this.typeStrategieCompagnieStrategie == "typeStrategieBagagePoids") {
         if (
           this.bagageWeightObject.data.designation == null ||
@@ -492,6 +531,9 @@ export default {
                 "error"
               );
             } else {
+              console.log("Nous Affichons l api response");
+              this.apiResponse = response.data.item;
+              console.log(this.apiResponse);
               this.$swal.fire(
                 "Opération effectuée",
                 response.data.status.message,
@@ -528,13 +570,10 @@ export default {
 
     // TO GET ALL TYPE BAGS
     async getReferenceBagageList() {
-      this.objectToSendReferenceBagage.datas.push(this.referenceBagage);
       await axios
-        .post(
-          API_OBTENIR_REFERENCE_PAR_PAR_FAMILLE,
-          this.objectToSendReferenceBagage,
-          { headers: HEADERS(this.$store.state.userAuthentified.token) }
-        )
+        .post(API_GET_BAGAGE_TYPE_SELECTED, this.ObjectBagageByType, {
+          headers: HEADERS(this.$store.state.userAuthentified.token),
+        })
         .then((response) => {
           this.referenceBagageList = response.data.items;
         })

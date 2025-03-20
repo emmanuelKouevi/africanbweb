@@ -3,7 +3,7 @@
     <div
       class="row"
       :hidden="response == null"
-      v-if="strategyType == 'typeStrategieBagagePoids'"
+      v-if="strategyType == 'typeStrategieBagageType'"
     >
       <div class="col-lg-12">
         <div class="row">
@@ -13,26 +13,7 @@
               <v-spacer></v-spacer>
             </v-card-title>
             <v-card-text>
-              <div class="row justify-space-around">
-                <div class="col-lg-6">
-                  <label for="designation" class="form-label"
-                    >Poids Total</label
-                  >
-                  <div class="input-group mb-3">
-                    <input
-                      disabled
-                      :value="
-                        response != null
-                          ? response.bagagePoidsDTO.poidsTotalBagage
-                          : ''
-                      "
-                      type="text"
-                      class="form-control"
-                      aria-describedby="basic-addon1"
-                    />
-                    <span class="input-group-text" id="basic-addon1">KG</span>
-                  </div>
-                </div>
+              <div class="row">
                 <div class="col-lg-6">
                   <label for="exampleInputPassword1" class="form-label"
                     >Montant à payer</label
@@ -50,26 +31,25 @@
                 </div>
               </div>
               <v-divider></v-divider>
-
               <span class="search_text text-h5"
                 >Total bagages:
                 {{
                   response != null
-                    ? response.bagagePoidsDTO.bagagePoidsReferenceDTOS.length
+                    ? response.bagageTypeDTO.bagageTypeReferenceDTOS.length
                     : ""
                 }}</span
               >
               <div v-if="response != null">
                 <div
                   v-if="
-                    response.bagagePoidsDTO.bagagePoidsReferenceDTOS.length > 0
+                    response.bagageTypeDTO.bagageTypeReferenceDTOS.length > 0
                   "
                 >
                   <div class="container row justify-space-center">
                     <div
                       class="col-lg-4"
-                      v-for="(bag, b) in response.bagagePoidsDTO
-                        .bagagePoidsReferenceDTOS"
+                      v-for="(bag, b) in response.bagageTypeDTO
+                        .bagageTypeReferenceDTOS"
                       :key="b"
                     >
                       <span>{{ bag.typeBagageDesignation }}</span>

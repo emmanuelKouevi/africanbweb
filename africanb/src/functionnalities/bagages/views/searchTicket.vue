@@ -126,19 +126,8 @@ export default {
         this.ticketAvailableList.forEach((element) => {
           if (element.designation == this.keyword) {
             referenceFound = element.designation;
-            if (
-              element.statusActualDesignation ==
-              "ReservationPayeeEtNonEffective"
-            ) {
-              this.$swal.fire(
-                "Erreur",
-                "Le billet de reservation a déjà expiré",
-                "error"
-              );
-            } else {
-              this.$store.commit("STORE_TICKET", element);
-              this.$router.push({ path: "/GestionBagage" });
-            }
+            this.$store.commit("STORE_TICKET", element);
+            this.$router.push({ path: "/GestionBagage" });
           } else {
             referenceFound = "Aucune correspondance";
             this.errorMsg = referenceFound;
