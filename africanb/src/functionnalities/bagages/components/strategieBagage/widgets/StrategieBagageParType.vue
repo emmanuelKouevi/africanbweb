@@ -27,7 +27,9 @@
         <v-card-title>
           <span class="title_card">Liste des types de bagages:</span>
           <v-spacer></v-spacer>
-          <v-btn btn color="secondary" small>Ajouter un type</v-btn>
+          <v-btn btn color="secondary" @click="dialogForType = true" small
+            >Ajouter un type</v-btn
+          >
         </v-card-title>
         <v-card-text
           v-if="typeStrategieBagage.strategieBagageTypeDTO !== undefined"
@@ -58,7 +60,11 @@
     <v-dialog v-model="dialogForType" persistent max-width="600px">
       <v-card>
         <v-card-title>
-          <span class="title_card">Editer la strategie</span>
+          <span class="title_card">{{
+            editedTypeBagage.id == null
+              ? "Enregistrer un type"
+              : "Modifier un type"
+          }}</span>
         </v-card-title>
         <v-card-text
           v-if="typeStrategieBagage.strategieBagageTypeDTO !== undefined"
@@ -126,15 +132,19 @@
         </v-card-text>
         <v-card-actions>
           <v-spacer></v-spacer>
-          <v-btn color="blue darken-1" text @click="dialogForType = false">
+          <v-btn color="blue darken-1" text @click="closeDialogForType">
             Annuler
           </v-btn>
           <v-btn
             color="blue darken-1"
             text
-            @click="updateStrategieParType(editedTypeBagage)"
+            @click="
+              editedTypeBagage.id == null
+                ? nouveauPrixBagage(editedTypeBagage)
+                : updateStrategieParType(editedTypeBagage)
+            "
           >
-            Modifier
+            {{ editedTypeBagage.id == null ? "Ajouter" : "Modifier" }}
           </v-btn>
         </v-card-actions>
       </v-card>
@@ -211,6 +221,11 @@ export default {
         },
       },
 
+      addNewPriceBagsObject: {
+        strategieBagageTypeDesignation: "typeStrategieBagageType",
+        datas: [],
+      },
+
       updatePriceList: [],
 
       editedTypeBagage: {
@@ -219,6 +234,7 @@ export default {
         prix: null,
         quantiteNonTaxable: null,
         typeBagageDesignation: null,
+        strategieBagageTypeDesignation: "typeStrategieBagageType",
       },
 
       defaultTypeBagage: {
@@ -241,13 +257,58 @@ export default {
   },
 
   methods: {
+    // AJOUTER UN NOUVEAU TYPE DE BAGAGE
+    async nouveauPrixBagage(typeBagage) {
+      this.addNewPriceBagsObject.datas.push(typeBagage);
+      await axios
+        .post(API_PRIX_BAGAGE_TYPE, this.addNewPriceBagsObject, {
+          headers: HEADERS(this.$store.state.userAuthentified.token),
+        })
+        .then((response) => {
+          console.log(response);
+          if (response.status == 200) {
+            if (response.data.status.code == 800) {
+              this.successMsg = "Opération effectuée avec succès";
+              $(".alert-success").fadeIn();
+              setTimeout(function () {
+                $(".alert-success").fadeOut();
+              }, 4000);
+            } else {
+              this.errorMsg = "Impossible d'ajouter un nouveau type";
+              $(".alert-error").fadeIn();
+              setTimeout(function () {
+                $(".alert-error").fadeOut();
+              }, 4000);
+            }
+          } else {
+            this.errorMsg = "Impossible d'ajouter un nouveau type";
+            $(".alert-error").fadeIn();
+            setTimeout(function () {
+              $(".alert-error").fadeOut();
+            }, 4000);
+          }
+        })
+        .catch((e) => {
+          this.errorMsg = e;
+          $(".alert-error").fadeIn();
+          setTimeout(function () {
+            $(".alert-error").fadeOut();
+          }, 4000);
+        })
+        .finally(() => {
+          this.addNewPriceBagsObject.datas = [];
+          this.typeBagage = Object.assign({}, this.defaultTypeBagage);
+          this.dialogForType = false;
+        });
+    },
+
+    // RÉCUPÉRER LA LISTE DES TYPES DE BAGAGES À JOUR
     async updatePrixBagage() {
       await axios
         .post(API_GET_PRIX_BAGAGE_TYPE, this.updatePriceObject, {
           headers: HEADERS(this.$store.state.userAuthentified.token),
         })
         .then((response) => {
-          console.log(response);
           if (response.status == 200) {
             if (response.data.status.code == 800) {
               this.typeStrategieBagage.strategieBagageTypeDTO.prixBagageParTypeDTOS =
@@ -325,6 +386,12 @@ export default {
       this.editedTypeBagageIndex = listTypeBagage.indexOf(type);
       this.editedTypeBagage = Object.assign({}, type);
       this.dialogForType = true;
+    },
+
+    // FERMER LA BOITE DE DIALOGUE
+    closeDialogForType() {
+      this.editedTypeBagage = Object.assign({}, this.defaultTypeBagage);
+      this.dialogForType = false;
     },
 
     //OBTENIR LA LISTE DES REFERENCES BAGAGES DISPONIBLE
