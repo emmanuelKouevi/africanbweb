@@ -133,7 +133,7 @@
                   ><span class="title_card">Étiquetage des bagages</span>
                   <v-spacer></v-spacer>
                   <v-btn btn x-small color="secondary" @click="dialog = true"
-                    >AJOUTER UN SAC</v-btn
+                    >AJOUTER UN TYPE DE BAGAGE</v-btn
                   >
                 </v-card-title>
                 <v-card-text>
@@ -287,7 +287,7 @@
 
       <v-dialog max-width="500px" persistent v-model="dialog">
         <v-card>
-          <v-card-title>AJOUTER UN SAC</v-card-title>
+          <v-card-title>Ajouter un type de bagage</v-card-title>
           <v-card-text>
             <div class="row">
               <div class="col-lg-6">

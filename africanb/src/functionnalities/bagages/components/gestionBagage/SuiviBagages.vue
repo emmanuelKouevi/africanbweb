@@ -78,7 +78,96 @@
       >
         <div class="col-lg-12">
           <v-card>
+            <v-card-title
+              ><span class="search_text"
+                >Liste des offres de voyage</span
+              ></v-card-title
+            >
             <v-card-text>
+              <v-data-table
+                :headers="headers"
+                :items="offreVoyageDisponibleList"
+                :loading="loading"
+                :search="search"
+              >
+                <template v-slot:[`item.isActif`]="{ item }">
+                  <v-chip
+                    x-small
+                    v-if="item.isActif == true"
+                    color="success"
+                    text-color="white"
+                    class="mr-2"
+                    ><span class="etat font-weight-bold">active</span></v-chip
+                  >
+                  <v-chip
+                    x-small
+                    v-else
+                    color="red"
+                    text-color="white"
+                    class="mr-2"
+                    ><span class="etat">non-active</span></v-chip
+                  >
+                </template>
+
+                <template v-slot:[`item.actions`]="{ item }">
+                  <v-icon
+                    title="sélectionner"
+                    color="secondary"
+                    class="mr-2"
+                    @click="getPlanningByOffersTravel(item.designation)"
+                    >mdi-gesture-tap</v-icon
+                  >
+                </template> </v-data-table
+              ><br />
+
+              <v-divider></v-divider>
+
+              <div class="container">
+                <div class="row">
+                  <div class="col-lg-3">
+                    <span
+                      v-if="programmeList.length != 0"
+                      class="search_text font-weight-bold"
+                      >Liste des programmes
+                    </span>
+                  </div>
+                </div>
+                <br /><br />
+                <div class="row">
+                  <div
+                    class="col-lg-3"
+                    v-for="(program, p) in programmeList"
+                    :key="p"
+                  >
+                    <v-card>
+                      <v-card-subtitle
+                        ><span class="font-weight-bold"
+                          >Programme {{ p + 1 }}</span
+                        >
+                        <v-spacer></v-spacer>
+                        <br />
+                        <div class="form-check">
+                          <input
+                            @click="getBagsByOffre(program.designation)"
+                            class="form-check-input"
+                            type="radio"
+                            :name="program"
+                            :value="program.designation"
+                            v-model="programSelected"
+                          />
+                          <label
+                            class="form-check-label"
+                            for="flexRadioDefault1"
+                          >
+                            {{ program.designation }}
+                          </label>
+                        </div>
+                      </v-card-subtitle>
+                    </v-card>
+                  </div>
+                </div>
+              </div>
+              <!--
               <div class="row">
                 <div class="col-lg-6">
                   <div>
@@ -92,6 +181,7 @@
                     />
                   </div>
                 </div>
+                
                 <div class="col-lg-3">
                   <div v-if="isSearchingByDesignation == true">
                     <v-progress-circular
@@ -105,7 +195,7 @@
                     >
                   </div>
                 </div>
-              </div>
+              </div>-->
             </v-card-text> </v-card
           ><br />
         </div>
@@ -233,39 +323,98 @@
           <div class="col-lg-7">
             <v-card>
               <v-card-title
-                ><span class="title_card">Détail des bagages</span>
+                ><span class="search_text">Détail des bagages</span>
                 <v-spacer></v-spacer>
               </v-card-title>
               <v-card-text>
-                <div class="row">
-                  <div class="col-lg-6">
-                    <label for="exampleInputPassword1" class="form-label"
-                      >Montant à payer</label
-                    >
-                    <div class="input-group mb-3">
-                      <input
-                        disabled
-                        :value="getTotalMontantSoldable"
-                        type="text"
-                        class="form-control"
-                        aria-describedby="basic-addon1"
-                      />
-                      <span class="input-group-text" id="basic-addon1"
-                        >FCFA</span
+                <v-data-table
+                  :headers="headersOne"
+                  :items="
+                    apiResponseProgramme == null ? [] : apiResponseProgramme
+                  "
+                  :loading="loadingOne"
+                  :search="searchOne"
+                >
+                </v-data-table>
+                <!--<span class="font-weight-bold">Information du client</span>
+                <div class="container">
+                  <div class="row">
+                    <div class="col-lg-6">
+                      <label for="exampleInputPassword1" class="form-label"
+                        >Nom:</label
                       >
+                      <div class="input-group mb-3">
+                        <input
+                          disabled
+                          :value="getTotalMontantSoldable"
+                          type="text"
+                          class="form-control"
+                          aria-describedby="basic-addon1"
+                        />
+                        <span class="input-group-text" id="basic-addon1"
+                          >FCFA</span
+                        >
+                      </div>
+                    </div>
+
+                    <div class="col-lg-6">
+                      <label for="exampleInputPassword1" class="form-label"
+                        >Prenom(s):</label
+                      >
+                      <div class="input-group mb-3">
+                        <input
+                          disabled
+                          :value="getTotalMontantSoldable"
+                          type="text"
+                          class="form-control"
+                          aria-describedby="basic-addon1"
+                        />
+                        <span class="input-group-text" id="basic-addon1"
+                          >FCFA</span
+                        >
+                      </div>
                     </div>
                   </div>
-                </div>
+
+                  <div class="row">
+                    <div class="col-lg-6">
+                      <label for="exampleInputPassword1" class="form-label"
+                        >Nom:</label
+                      >
+                      <div class="input-group mb-3">
+                        <input
+                          disabled
+                          :value="getTotalMontantSoldable"
+                          type="text"
+                          class="form-control"
+                          aria-describedby="basic-addon1"
+                        />
+                        <span class="input-group-text" id="basic-addon1"
+                          >FCFA</span
+                        >
+                      </div>
+                    </div>
+                  </div>
+                </div>-->
               </v-card-text>
             </v-card>
           </div>
           <div class="col-lg-5">
             <v-card>
-              <v-card-title
-                ><span class="search_text"
-                  >Total bagages: {{ getTotalBagage }}</span
-                ></v-card-title
-              >
+              <v-card-text>
+                <p>
+                  <span class="libelle">Total bagages: </span>
+                  <span class="search_text">{{ getTotalBagage }}</span>
+                </p>
+                <v-divider></v-divider>
+                <p>
+                  <span class="libelle">Montant Total: </span
+                  ><span class="search_text"
+                    >{{ getTotalMontantSoldable }} FCFA</span
+                  >
+                </p>
+              </v-card-text>
+              <!--
               <v-card-text v-if="apiResponseProgramme != null">
                 <div
                   class="row"
@@ -281,7 +430,7 @@
                     <span>{{ bag.typeBagageDesignation }}</span>
                   </div>
                 </div>
-                <!--<div
+                <div
                   v-if="
                     apiResponseProgramme[0].bagageTypeDTO
                       .bagageTypeReferenceDTOS.length > 0
@@ -300,8 +449,8 @@
                 </div>
                 <div v-else>
                   <span>AUCUN BAGAGE</span>
-                </div>-->
-              </v-card-text>
+                </div>
+              </v-card-text>-->
             </v-card>
           </div>
         </div>
@@ -321,7 +470,11 @@
 import {
   API_FIND_BAGS_BY_OFFRE,
   API_FIND_BAGS_BY_TICKET,
+  API_GET_RESERVATIONS_BY_ADMIN_TP,
+  API_GET_RESERVATIONS_BY_SELLER,
   API_GET_STRATEGIE_PAR_COMPAGNIE,
+  API_RECUPERER_LISTE_OFFRE_VOYAGE,
+  API_RECUPERER_PROGRAMME_PAR_OFFRE_VOYAGE,
   HEADERS,
 } from "@/components/globalConfig/globalConstConfig";
 import $ from "jquery";
@@ -342,6 +495,48 @@ export default {
       errorMsg: null,
       successMsg: null,
 
+      programSelected: null,
+
+      loading: true,
+
+      offreVoyageDisponibleList: [],
+      programmeList: [],
+
+      offreVoyageProgramObject: {
+        data: {
+          designation: null,
+        },
+      },
+
+      offreVoyageObject: {
+        data: {
+          compagnieTransportRaisonSociale: null,
+        },
+      },
+
+      search: "",
+      headers: [
+        { text: "reference", value: "id" },
+        { text: "Designation", value: "designation" },
+        { text: "Type de l'offre", value: "typeOffreVoyageDesignation" },
+        { text: "Ville de départ", value: "villeDepartDesignation" },
+        { text: "Ville d'arrivée", value: "villeDestinationDesignation" },
+        { text: "Active", value: "isActif" },
+        { text: "Actions", value: "actions", sortable: false },
+      ],
+
+      searchOne: "",
+      loadingOne: false,
+      headersOne: [
+        { text: "reference", value: "reservationBilletReference" },
+        { text: "Description", value: "designation" },
+        { text: "Montant à payer(CFA)", value: "montantSoldable" },
+        {
+          text: "Total bagages",
+          value: "bagageTypeDTO.bagageTypeReferenceDTOS.length",
+        },
+      ],
+
       referenceTicket: null,
 
       designationProgramme: null,
@@ -358,6 +553,12 @@ export default {
         },
       },
 
+      ticketAvailableList: [],
+
+      objectToSend: {
+        data: {},
+      },
+
       apiResponse: null,
       apiResponseProgramme: null,
 
@@ -370,6 +571,134 @@ export default {
   },
 
   methods: {
+    async searchTicketByReference() {
+      //this.isSearching = true;
+      if (this.referenceTicket == null) {
+        this.errorMsg = "Veuillez entrer une référence";
+        $(".alert-error").fadeIn();
+        setTimeout(function () {
+          $(".alert-error").fadeOut();
+        }, 4000);
+      } else if (this.referenceTicket == "") {
+        this.errorMsg = "Veuillez entrer une référence";
+        $(".alert-error").fadeIn();
+        setTimeout(function () {
+          $(".alert-error").fadeOut();
+        }, 4000);
+      } else {
+        var referenceFound = "";
+        this.ticketAvailableList.forEach((element) => {
+          if (element.designation == this.referenceTicket) {
+            referenceFound = element.designation;
+            this.$store.commit("STORE_TICKET", element);
+          } else {
+            referenceFound = "Aucune correspondance";
+            this.errorMsg = referenceFound;
+            $(".alert-error").fadeIn();
+            setTimeout(function () {
+              $(".alert-error").fadeOut();
+            }, 4000);
+          }
+        });
+      }
+      //this.isSearching = false;
+    },
+
+    //RÉCUPÉRER LA LISTE DES BILLETS DISPONIBLES.
+    async getTicketAvailables() {
+      await axios
+        .post(
+          this.$store.state.userAuthentified.roleCode ==
+            "RoleUtiGareCompagnieTransport"
+            ? API_GET_RESERVATIONS_BY_SELLER
+            : API_GET_RESERVATIONS_BY_ADMIN_TP,
+          this.objectToSend,
+          {
+            headers: HEADERS(this.$store.state.userAuthentified.token),
+          }
+        )
+        .then((response) => {
+          if (response.status == 200) {
+            if (response.data.hasError == false) {
+              this.ticketAvailableList = response.data.items;
+              console.log(this.ticketAvailableList);
+            } else {
+              //
+            }
+          } else {
+            alert("");
+          }
+        })
+        .catch((e) => {
+          this.errorMsg = e;
+        })
+        .finally(() => {
+          this.loading = false;
+        });
+    },
+
+    //OBTENIR LA LISTE DES PROGRAMMES PAR OFFRE DE VOYAGE
+    async getPlanningByOffersTravel(designationOffreVoyage) {
+      this.offreVoyageProgramObject.data.designation = designationOffreVoyage;
+      await axios
+        .post(
+          API_RECUPERER_PROGRAMME_PAR_OFFRE_VOYAGE,
+          this.offreVoyageProgramObject,
+          { headers: HEADERS(this.$store.state.userAuthentified.token) }
+        )
+        .then((response) => {
+          if (response.data.status.code == 800) {
+            this.programmeList = response.data.items;
+          } else {
+            this.programmeList = [];
+          }
+        })
+        .catch((e) => {
+          this.errorMsg = e;
+          this.programmeList = [];
+          $(".alert-error").fadeIn();
+          setTimeout(function () {
+            $(".alert-error").fadeOut();
+          }, 4000);
+        });
+    },
+
+    // OBTENIR LA LISTE DES OFFRES DE VOYAGE DISPONIBLE
+    async obtenirOffreVoyageListParCompagnie() {
+      this.offreVoyageObject.data.compagnieTransportRaisonSociale =
+        this.$store.state.userAuthentified.compagnieTransportRaisonSociale;
+      this.loading = true;
+      await axios
+        .post(API_RECUPERER_LISTE_OFFRE_VOYAGE, this.offreVoyageObject, {
+          headers: HEADERS(this.$store.state.userAuthentified.token),
+        })
+        .then((response) => {
+          if (response.status == 200) {
+            if (response.data.status.code != 800) {
+              this.errorMsg = response.data.status.message;
+              $(".alert-error").fadeIn();
+              setTimeout(function () {
+                $(".alert-error").fadeOut();
+              }, 4000);
+            } else {
+              this.offreVoyageDisponibleList = response.data.items;
+            }
+          } else {
+            this.errorMsg = "Erreur";
+            $(".alert-error").fadeIn();
+            setTimeout(function () {
+              $(".alert-error").fadeOut();
+            }, 4000);
+          }
+        })
+        .catch((e) => {
+          this.errorMsg = e;
+        })
+        .finally(() => {
+          this.loading = false;
+        });
+    },
+
     // Rechercher bagages par reference billet de réservation
     async getBagsByReference() {
       this.apiResponseProgramme = null;
@@ -402,14 +731,16 @@ export default {
         })
         .finally(() => {
           this.isSearchingByTicket = false;
+          this.searchTicketByReference();
         });
     },
 
     // Rechercher bagages par programme designation
-    async getBagsByOffre() {
+    async getBagsByOffre(designationProgram) {
       this.isSearchingByDesignation = true;
+      this.loadingOne = true;
       this.apiResponse = null;
-      this.bagageByProgramme.data.designation = this.designationProgramme;
+      this.bagageByProgramme.data.designation = designationProgram;
       await axios
         .post(API_FIND_BAGS_BY_OFFRE, this.bagageByProgramme, {
           headers: HEADERS(this.$store.state.userAuthentified.token),
@@ -436,6 +767,7 @@ export default {
         })
         .finally(() => {
           this.isSearchingByDesignation = false;
+          this.loadingOne = false;
         });
     },
 
@@ -495,6 +827,8 @@ export default {
 
   mounted() {
     this.getStrategyByCompany();
+    this.obtenirOffreVoyageListParCompagnie();
+    this.getTicketAvailables();
   },
 };
 </script>
@@ -534,5 +868,11 @@ input[type="text"] {
   font-family: "Montserrat";
   font-weight: 500;
   font-size: 20px;
+}
+
+.libelle {
+  font-family: "Montserrat";
+  font-size: 15px;
+  opacity: 0.8;
 }
 </style>
