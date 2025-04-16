@@ -230,7 +230,16 @@
                 <v-spacer></v-spacer>
               </v-card-title>
               <v-card-text>
-                <div class="row justify-space-around">
+                <v-data-table
+                  :headers="headersTwo"
+                  :items="
+                    apiResponseProgramme == null ? [] : apiResponseProgramme
+                  "
+                  :loading="loadingTwo"
+                  :search="searchTwo"
+                >
+                </v-data-table>
+                <!--<div class="row justify-space-around">
                   <div class="col-lg-6">
                     <label for="designation" class="form-label"
                       >Poids Total</label
@@ -272,7 +281,7 @@
                       >
                     </div>
                   </div>
-                </div>
+                </div>-->
               </v-card-text>
             </v-card>
           </div>
@@ -290,6 +299,19 @@
                 ></v-card-title
               >
               <v-card-text v-if="apiResponseProgramme != null">
+                <p>
+                  <span class="libelle">Total bagages: </span>
+                  <span class="search_text">{{ getTotalBagagePoids }}</span>
+                </p>
+                <v-divider></v-divider>
+                <p>
+                  <span class="libelle">Montant Total: </span
+                  ><span class="search_text"
+                    >{{ getTotalMontantSoldable }} FCFA</span
+                  >
+                </p>
+              </v-card-text>
+              <!--<v-card-text v-if="apiResponseProgramme != null">
                 <div
                   v-if="
                     apiResponseProgramme[0].bagagePoidsDTO
@@ -310,7 +332,7 @@
                 <div v-else>
                   <span>AUCUN BAGAGE</span>
                 </div>
-              </v-card-text>
+              </v-card-text>-->
             </v-card>
           </div>
         </div>
@@ -526,14 +548,26 @@ export default {
       ],
 
       searchOne: "",
-      loadingOne: false,
+      loadingTwo: false,
       headersOne: [
-        { text: "reference", value: "reservationBilletReference" },
+        { text: "N° billet", value: "reservationBilletReference" },
         { text: "Description", value: "designation" },
         { text: "Montant à payer(CFA)", value: "montantSoldable" },
         {
           text: "Total bagages",
           value: "bagageTypeDTO.bagageTypeReferenceDTOS.length",
+        },
+      ],
+
+      searchTwo: "",
+      loadingOne: false,
+      headersTwo: [
+        { text: "reference", value: "reservationBilletReference" },
+        { text: "Description", value: "designation" },
+        { text: "Montant à payer(CFA)", value: "montantSoldable" },
+        {
+          text: "Total bagages",
+          value: "bagagePoidsDTO.bagagePoidsReferenceDTOS.length",
         },
       ],
 
@@ -808,9 +842,28 @@ export default {
       var totalBagage = 0;
       if (this.apiResponseProgramme == null) return (totalBagage = 0);
       for (let i = 0; i < this.apiResponseProgramme.length; i++) {
-        totalBagage +=
-          this.apiResponseProgramme[i].bagageTypeDTO.bagageTypeReferenceDTOS
-            .length;
+        if (this.apiResponseProgramme[i].bagageTypeDTO == undefined) {
+          totalBagage += 0;
+        } else {
+          totalBagage +=
+            this.apiResponseProgramme[i].bagageTypeDTO.bagageTypeReferenceDTOS
+              .length;
+        }
+      }
+      return totalBagage;
+    },
+
+    getTotalBagagePoids() {
+      var totalBagage = 0;
+      if (this.apiResponseProgramme == null) return (totalBagage = 0);
+      for (let i = 0; i < this.apiResponseProgramme.length; i++) {
+        if (this.apiResponseProgramme[i].bagagePoidsDTO == undefined) {
+          totalBagage += 0;
+        } else {
+          totalBagage +=
+            this.apiResponseProgramme[i].bagagePoidsDTO.bagagePoidsReferenceDTOS
+              .length;
+        }
       }
       return totalBagage;
     },

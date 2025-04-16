@@ -191,14 +191,7 @@
                   >Supprimer</v-btn
                 >
               </template>
-            </v-data-table>
-            <v-alert
-              class="myalert alert-error"
-              type="error"
-              width="350px"
-              dismissible
-              >{{ errorMsg }}</v-alert
-            > </v-card
+            </v-data-table> </v-card
           ><br />
           <div class="float-right">
             <v-btn btn color="secondary" outlined>REINITIALISER</v-btn
@@ -211,6 +204,21 @@
         </v-card-text>
       </v-card>
     </div>
+    <v-alert
+      class="myalert alert-error"
+      type="error"
+      width="350px"
+      dismissible
+      >{{ errorMsg }}</v-alert
+    >
+
+    <v-alert
+      class="myalert alert-success"
+      type="success"
+      width="350px"
+      dismissible
+      >{{ successMsg }}</v-alert
+    >
   </v-app>
 </template>
 
@@ -575,6 +583,25 @@ export default {
 }
 
 .alert-warning {
+  position: fixed;
+  top: 25px;
+  right: 2%;
+  width: 25%;
+}
+
+.myalert {
+  display: none;
+  z-index: 1900;
+}
+
+.alert-success {
+  position: fixed;
+  top: 25px;
+  right: 2%;
+  width: 25%;
+}
+
+.alert-error {
   position: fixed;
   top: 25px;
   right: 2%;

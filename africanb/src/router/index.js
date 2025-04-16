@@ -91,6 +91,7 @@ const routes = [
     path: "/Login",
     name: "Login",
     component: Login,
+    meta: { requiresAuth: false },
   },
   {
     path: "/",
@@ -439,14 +440,18 @@ const router = new VueRouter({
   routes,
 });
 
-// Ajoutez une garde de navigation globale pour vérifier les autorisations
 router.beforeEach((to, from, next) => {
   const isAuth = localStorage.getItem("auth") === "true";
-  if (to.matched.some((record) => record.meta.requiresAuth && !isAuth)) {
-    next({ path: "/Login" });
+
+  if (to.matched.some((record) => record.meta.requiresAuth)) {
+    if (!isAuth) {
+      // Conservez le chemin d'origine pour la redirection après connexion
+      next({ path: "/Login", query: { redirect: to.fullPath } });
+    } else {
+      next();
+    }
   } else {
     next();
   }
 });
-
 export default router;

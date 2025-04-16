@@ -115,78 +115,80 @@
             </v-card-text>
           </v-card>
         </div>
-      </div>
-
-      <div class="">
-        <v-card>
-          <v-card-text>
-            <div class="row justify-space-around">
-              <div class="col-lg-6">
-                <label for="designation" class="form-label">Poids Total</label>
-                <div class="input-group mb-3">
-                  <input
-                    disabled
-                    :value="
-                      response != null
-                        ? response.bagagePoidsDTO.poidsTotalBagage
-                        : ''
-                    "
-                    type="text"
-                    class="form-control"
-                    aria-describedby="basic-addon1"
-                  />
-                  <span class="input-group-text" id="basic-addon1">KG</span>
-                </div>
-              </div>
-              <div class="col-lg-6">
-                <label for="exampleInputPassword1" class="form-label"
-                  >Montant à payer</label
-                >
-                <div class="input-group mb-3">
-                  <input
-                    disabled
-                    :value="response != null ? response.montantSoldable : ''"
-                    type="text"
-                    class="form-control"
-                    aria-describedby="basic-addon1"
-                  />
-                  <span class="input-group-text" id="basic-addon1">FCFA</span>
-                </div>
-              </div>
-            </div>
-            <v-divider></v-divider>
-
-            <span class="search_text text-h5"
-              >Total bagages:
-              {{
-                response != null
-                  ? response.bagagePoidsDTO.bagagePoidsReferenceDTOS.length
-                  : ""
-              }}</span
-            >
-            <div v-if="response != null">
-              <div
-                v-if="
-                  response.bagagePoidsDTO.bagagePoidsReferenceDTOS.length > 0
-                "
-              >
-                <div class="container row justify-space-center">
-                  <div
-                    class="col-lg-4"
-                    v-for="(bag, b) in response.bagagePoidsDTO
-                      .bagagePoidsReferenceDTOS"
-                    :key="b"
+        <br />
+        <div class="row">
+          <v-card>
+            <v-card-text>
+              <div class="row justify-space-around">
+                <div class="col-lg-6">
+                  <label for="designation" class="form-label"
+                    >Poids Total</label
                   >
-                    <span>{{ bag.typeBagageDesignation }}</span>
+                  <div class="input-group mb-3">
+                    <input
+                      disabled
+                      :value="
+                        response != null
+                          ? response.bagagePoidsDTO.poidsTotalBagage
+                          : ''
+                      "
+                      type="text"
+                      class="form-control"
+                      aria-describedby="basic-addon1"
+                    />
+                    <span class="input-group-text" id="basic-addon1">KG</span>
+                  </div>
+                </div>
+                <div class="col-lg-6">
+                  <label for="exampleInputPassword1" class="form-label"
+                    >Montant à payer</label
+                  >
+                  <div class="input-group mb-3">
+                    <input
+                      disabled
+                      :value="response != null ? response.montantSoldable : ''"
+                      type="text"
+                      class="form-control"
+                      aria-describedby="basic-addon1"
+                    />
+                    <span class="input-group-text" id="basic-addon1">FCFA</span>
                   </div>
                 </div>
               </div>
-              <div v-else>
-                <span>AUCUN BAGAGE</span>
+              <v-divider></v-divider>
+
+              <span class="search_text text-h5"
+                >Total bagages:
+                {{
+                  response != null
+                    ? response.bagagePoidsDTO.bagagePoidsReferenceDTOS.length
+                    : ""
+                }}</span
+              >
+              <div v-if="response != null">
+                <div
+                  v-if="
+                    response.bagagePoidsDTO.bagagePoidsReferenceDTOS.length > 0
+                  "
+                >
+                  <div class="container row justify-space-center">
+                    <div
+                      class="col-lg-4"
+                      v-for="(bag, b) in response.bagagePoidsDTO
+                        .bagagePoidsReferenceDTOS"
+                      :key="b"
+                    >
+                      <span>{{ bag.typeBagageDesignation }}</span>
+                    </div>
+                  </div>
+                </div>
+                <div v-else>
+                  <span>AUCUN BAGAGE</span>
+                </div>
               </div>
-            </div>
-          </v-card-text>
-        </v-card>
+            </v-card-text>
+          </v-card>
+        </div>
       </div>
     </div>
   </v-app>

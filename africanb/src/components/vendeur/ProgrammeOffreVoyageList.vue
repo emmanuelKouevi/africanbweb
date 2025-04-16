@@ -267,6 +267,7 @@ export default {
         .then((response) => {
           if (response.data.status.code == 800) {
             this.programmeList = response.data.items;
+            console.log(this.programmeList);
           } else {
             this.programmeList = [];
           }

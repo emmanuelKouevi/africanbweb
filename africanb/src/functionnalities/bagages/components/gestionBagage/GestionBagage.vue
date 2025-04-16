@@ -294,15 +294,37 @@
                 <label for="exampleInputEmail1" class="form-label"
                   >Sélectionner un type de bagage</label
                 >
-                <select
-                  class="form-select"
-                  aria-label="Default select example"
-                  v-model="typeBagageDesignation"
+                <div
+                  v-if="
+                    typeStrategieCompagnieStrategie ===
+                    'typeStrategieBagagePoids'
+                  "
                 >
-                  <option v-for="(bag, b) in referenceBagageList" :key="b">
-                    {{ bag.typeBagageDesignation }}
-                  </option>
-                </select>
+                  <select
+                    class="form-select"
+                    aria-label="Default select example"
+                    v-model="typeBagageDesignation"
+                  >
+                    <option
+                      v-for="(sac, b) in referenceBagageTypeList"
+                      :key="b"
+                    >
+                      {{ sac.designation }}
+                    </option>
+                  </select>
+                </div>
+
+                <div v-else>
+                  <select
+                    class="form-select"
+                    aria-label="Default select example"
+                    v-model="typeBagageDesignation"
+                  >
+                    <option v-for="(sac, b) in referenceBagageList" :key="b">
+                      {{ sac.designation }}
+                    </option>
+                  </select>
+                </div>
               </div>
             </div>
 
@@ -354,6 +376,7 @@
 import {
   API_GET_BAGAGE_TYPE_SELECTED,
   API_GET_STRATEGIE_PAR_COMPAGNIE,
+  API_OBTENIR_REFERENCE_PAR_PAR_FAMILLE,
   API_SAVE_BAGAGE,
   HEADERS,
 } from "@/components/globalConfig/globalConstConfig";
@@ -383,10 +406,6 @@ export default {
       typeStrategieCompagnieStrategie: null,
       typeBagageDesignation: null,
 
-      referenceBagage: {
-        referenceFamilleDesignation: "referenceFamilleBagage",
-      },
-
       ObjectBagageByType: {
         data: {
           strategieBagageTypeDesignation: "typeStrategieBagageType",
@@ -396,6 +415,15 @@ export default {
       billetReservation: {},
 
       referenceBagageList: [],
+      referenceBagageTypeList: [],
+
+      referenceBagage: {
+        referenceFamilleDesignation: "referenceFamilleBagage",
+      },
+
+      objectToSendReferenceBagage: {
+        datas: [],
+      },
 
       bags: [],
 
@@ -575,7 +603,31 @@ export default {
           headers: HEADERS(this.$store.state.userAuthentified.token),
         })
         .then((response) => {
+          console.log(response);
           this.referenceBagageList = response.data.items;
+        })
+        .catch((e) => {
+          this.errorMsg = e;
+          $(".alert-error").fadeIn();
+          setTimeout(function () {
+            $(".alert-error").fadeOut();
+          }, 4000);
+        });
+    },
+
+    //OBTENIR LA LISTE DES REFERENCES BAGAGES DISPONIBLE
+    async obtenirReferenceTypeBagage() {
+      this.objectToSendReferenceBagage.datas.push(this.referenceBagage);
+      await axios
+        .post(
+          API_OBTENIR_REFERENCE_PAR_PAR_FAMILLE,
+          this.objectToSendReferenceBagage,
+          { headers: HEADERS(this.$store.state.userAuthentified.token) }
+        )
+        .then((response) => {
+          console.log(response);
+          this.referenceBagageTypeList = response.data.items;
+          console.log(this.referenceBagageTypeList);
         })
         .catch((e) => {
           this.errorMsg = e;
@@ -596,6 +648,7 @@ export default {
     this.initializeTicketFound();
     this.getStrategyByCompany();
     this.getReferenceBagageList();
+    this.obtenirReferenceTypeBagage();
   },
 };
 </script>

@@ -259,6 +259,7 @@ export default {
   methods: {
     // AJOUTER UN NOUVEAU TYPE DE BAGAGE
     async nouveauPrixBagage(typeBagage) {
+      console.log(typeBagage);
       this.addNewPriceBagsObject.datas.push(typeBagage);
       await axios
         .post(API_PRIX_BAGAGE_TYPE, this.addNewPriceBagsObject, {
@@ -273,6 +274,7 @@ export default {
               setTimeout(function () {
                 $(".alert-success").fadeOut();
               }, 4000);
+              this.updatePrixBagage();
             } else {
               this.errorMsg = "Impossible d'ajouter un nouveau type";
               $(".alert-error").fadeIn();
