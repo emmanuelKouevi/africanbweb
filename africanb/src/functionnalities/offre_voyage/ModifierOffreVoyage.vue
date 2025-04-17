@@ -372,6 +372,7 @@
               <v-card>
                 <v-card-title>
                   <span class="text-h5">{{ formTitleProgramme }}</span>
+                  <v-spacer></v-spacer>
                 </v-card-title>
                 <v-card-text>
                   <form>
@@ -491,6 +492,15 @@
                   :key="pr"
                 >
                   <v-card>
+                    <v-card-title>
+                      <v-spacer></v-spacer>
+                      <v-btn x-small icon
+                        ><v-avatar size="25">
+                          <v-img
+                            src="../../assets/stats.svg"
+                          ></v-img> </v-avatar
+                      ></v-btn>
+                    </v-card-title>
                     <v-list>
                       <v-list-item>
                         <v-list-item-content>

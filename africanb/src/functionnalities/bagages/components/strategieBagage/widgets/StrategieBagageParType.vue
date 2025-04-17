@@ -187,7 +187,7 @@ import $ from "jquery";
 import axios from "axios";
 export default {
   name: "StrategieBagageParType",
-  props: ["items", "typeStrategieBagage"],
+  props: ["items", "typeStraegieBagage"],
   data() {
     return {
       strategieObject: {

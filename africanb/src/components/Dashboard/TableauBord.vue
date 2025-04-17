@@ -1,23 +1,26 @@
 <template>
-  <v-container
-    fluid
-    v-if="
-      $store.state.userAuthentified.roleCode == 'RoleUtiGareCompagnieTransport'
-    "
-  >
-    <DashboardSeller />
-  </v-container>
-  <v-container
-    fluid
-    v-else-if="
-      $store.state.userAuthentified.roleCode == 'RoleAdminCompagnieTransport'
-    "
-  >
-    <DashboardTransportAdmin />
-  </v-container>
-  <v-container fluid v-else>
-    <DashboardMainAdmin />
-  </v-container>
+  <div id="inspire">
+    <v-container
+      fluid
+      v-if="
+        $store.state.userAuthentified.roleCode ==
+        'RoleUtiGareCompagnieTransport'
+      "
+    >
+      <DashboardSeller />
+    </v-container>
+    <v-container
+      fluid
+      v-else-if="
+        $store.state.userAuthentified.roleCode == 'RoleAdminCompagnieTransport'
+      "
+    >
+      <DashboardTransportAdmin />
+    </v-container>
+    <v-container fluid v-else>
+      <DashboardMainAdmin />
+    </v-container>
+  </div>
 </template>
 
 <script>
@@ -44,6 +47,9 @@ export default {
 </script>
 
 <style scoped>
+#inspire {
+  background: #eeeeee;
+}
 .card-icon {
   margin-top: -20px;
   margin-left: 15px;

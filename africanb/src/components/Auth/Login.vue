@@ -164,7 +164,6 @@ export default {
             if (response.data.status.code == 800) {
               this.$store.commit("LOGIN_USER");
               this.$store.commit("SET_USER_AUTHENTIFIED", response.data.item);
-              //this.$router.push("/tableauBord");
               const user_info = JSON.stringify(response.data.item);
               localStorage.setItem("auth", true);
               localStorage.setItem("token_user", user_info);
