@@ -117,6 +117,96 @@
           <v-select label="Gare de transport" rounded solo dense></v-select>
         </div>
       </div>
+      <br />
+
+      <!-- STATISTIQUE DE RESERVATIONS DES OFFRES DE VOYAGES ANNUEL -->
+      <span class="statistic_text"
+        >Statistiques des offres de voyages (Journalier)</span
+      >
+      <div class="row">
+        <div class="col-lg-4">
+          <CardStat
+            :icon="require('@/assets/salary.png')"
+            title="Chiffre d'affaires"
+            :value="
+              dataStatisticsToday == null
+                ? 0
+                : dataStatisticsToday.chiffreAffaires
+            "
+            :isPrice="true"
+          ></CardStat>
+        </div>
+        <div class="col-lg-4">
+          <CardStat
+            :icon="require('@/assets/ticket.png')"
+            title="Total des reservations"
+            :value="
+              dataStatisticsToday == null
+                ? 0
+                : dataStatisticsToday.nombreTotalReservationBilletVoyage
+            "
+            :isPrice="false"
+          ></CardStat>
+        </div>
+        <div class="col-lg-4">
+          <CardStat
+            :icon="require('@/assets/cross.png')"
+            title="Chiffre d'affaire des bagages"
+            :value="
+              dataStatisticsToday == null
+                ? 0
+                : dataStatisticsToday.chiffreAffairesBagages
+            "
+            :isPrice="true"
+          ></CardStat>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-lg-5">
+          <v-card rounded="lg">
+            <v-card-text>
+              <LineChartGenerator
+                :chart-options="chartOptionsToday"
+                :chart-data="chartDataToday"
+                :chart-id="chartId"
+                :dataset-id-key="datasetIdKey"
+                :plugins="plugins"
+                :css-classes="cssClasses"
+                :styles="styles"
+                :width="width"
+                :height="height"
+              />
+            </v-card-text>
+          </v-card>
+        </div>
+
+        <div class="col-lg-7">
+          <v-card rounded="lg">
+            <v-card-text>
+              <Doughnut
+                :chart-options="chartOptionsDoughnutToday"
+                :chart-data="chartDataDoughnutToday"
+                :chart-id="chartId"
+                :dataset-id-key="datasetIdKey"
+                :plugins="plugins"
+                :css-classes="cssClasses"
+                :styles="styles"
+                :width="width"
+                :height="height"
+              />
+            </v-card-text>
+          </v-card>
+        </div>
+      </div>
+
+      <v-divider></v-divider>
+
+      <!-- STATISTIQUE DE RESERVATIONS DES OFFRES DE VOYAGES ANNUEL -->
+
+      <span class="statistic_text"
+        >Statistiques des offres de voyages (Annuel)</span
+      >
 
       <div class="row">
         <div class="col-lg-4">
@@ -188,6 +278,57 @@
           </v-card>
         </div>
       </div>
+
+      <v-divider></v-divider>
+      <div class="row">
+        <div class="lg">
+          <v-card>
+            <v-card-title
+              ><span class="simple_text"
+                >Liste des offres de voyage</span
+              ></v-card-title
+            >
+            <v-card-text>
+              <v-data-table
+                :headers="headers"
+                :items="offreVoyageDisponibleList"
+                :loading="loading"
+                :search="search"
+              >
+                <template v-slot:[`item.isActif`]="{ item }">
+                  <v-chip
+                    x-small
+                    v-if="item.isActif == true"
+                    color="success"
+                    text-color="white"
+                    class="mr-2"
+                    ><span class="etat font-weight-bold">active</span></v-chip
+                  >
+                  <v-chip
+                    x-small
+                    v-else
+                    color="red"
+                    text-color="white"
+                    class="mr-2"
+                    ><span class="etat">non-active</span></v-chip
+                  >
+                </template>
+
+                <template v-slot:[`item.actions`]="{ item }">
+                  <v-icon
+                    title="editer"
+                    color="blue"
+                    small
+                    class="mr-2"
+                    @click="editerOffreVoyage(item)"
+                    >mdi-pencil</v-icon
+                  >
+                </template>
+              </v-data-table>
+            </v-card-text>
+          </v-card>
+        </div>
+      </div>
     </v-container>
   </v-app>
 </template>
@@ -196,6 +337,7 @@
 import CardStat from "@/functionnalities/statistiques/admin/widgets/CardStat.vue";
 import {
   API_GET_DOCUMENT_URL,
+  API_RECUPERER_LISTE_OFFRE_VOYAGE,
   API_STATISTIQUE_RESERVATIONS,
   HEADERS,
 } from "../globalConfig/globalConstConfig";
@@ -266,14 +408,59 @@ export default {
 
   data() {
     return {
-      search: "",
       loading: true,
+      search: "",
       headers: [
-        { text: "Designation", value: "" },
-        { text: "Type ,de l'offre", value: "" },
-        { text: "Départ", value: "" },
-        { text: "Destination", value: "" },
+        { text: "reference", value: "id" },
+        { text: "Designation", value: "designation" },
+        { text: "Type de l'offre", value: "typeOffreVoyageDesignation" },
+        { text: "Ville de départ", value: "villeDepartDesignation" },
+        { text: "Ville d'arrivée", value: "villeDestinationDesignation" },
+        { text: "Active", value: "isActif" },
+        { text: "Actions", value: "actions", sortable: false },
       ],
+
+      offreVoyageDisponibleList: [],
+
+      offreVoyageObject: {
+        data: {
+          compagnieTransportRaisonSociale: null,
+        },
+      },
+
+      chartDataToday: {
+        labels: [],
+        datasets: [
+          {
+            label: "Chiffre Affaire Réservation (Aujourd'hui)",
+            backgroundColor: "#2f3542",
+            data: [],
+          },
+          {
+            label: "Chiffre Affaire Bagage (Aujourd'hui)",
+            backgroundColor: "#2ed573",
+            data: [],
+          },
+        ],
+      },
+      chartOptionsToday: {
+        responsive: true,
+        maintainAspectRatio: false,
+      },
+
+      chartDataDoughnutToday: {
+        labels: [],
+        datasets: [
+          {
+            backgroundColor: ["#2f3542", "#2ed573", "#2ed573"],
+            data: [],
+          },
+        ],
+      },
+      chartOptionsDoughnutToday: {
+        responsive: true,
+        maintainAspectRatio: false,
+      },
 
       chartData: {
         labels: [],
@@ -337,10 +524,77 @@ export default {
 
       photoProfilUrl: null,
       dataStatistics: null,
+      dataStatisticsToday: null,
     };
   },
 
   methods: {
+    //OBTENIR LISTE DES OFFRES DE VOYAGES DISPONIBLES PAR COMPAGNIE
+    async obtenirOffreVoyageListParCompagnie() {
+      this.offreVoyageObject.data.compagnieTransportRaisonSociale =
+        this.$store.state.userAuthentified.compagnieTransportRaisonSociale;
+      this.loading = true;
+      await axios
+        .post(API_RECUPERER_LISTE_OFFRE_VOYAGE, this.offreVoyageObject, {
+          headers: HEADERS(this.$store.state.userAuthentified.token),
+        })
+        .then((response) => {
+          if (response.status == 200) {
+            if (response.data.status.code != 800) {
+              this.errorMsg = response.data.status.message;
+              $(".alert-error").fadeIn();
+              setTimeout(function () {
+                $(".alert-error").fadeOut();
+              }, 4000);
+            } else {
+              this.offreVoyageDisponibleList = response.data.items;
+            }
+          } else {
+            this.errorMsg = "Erreur";
+            $(".alert-error").fadeIn();
+            setTimeout(function () {
+              $(".alert-error").fadeOut();
+            }, 4000);
+          }
+        })
+        .catch((e) => {
+          this.errorMsg = e;
+        })
+        .finally(() => {
+          this.loading = false;
+        });
+    },
+
+    // Obtenir les libelles pour la legende des graphics
+    getLabelAndDataSetGraphicsLineToday(data) {
+      if (this.dataStatisticsToday != null) {
+        for (var [cle, valeur] of Object.entries(
+          data.chiffreAffairesParOffreVoyage
+        )) {
+          this.chartDataToday.labels.push(cle);
+          this.chartDataToday.datasets[0].data.push(valeur);
+        }
+
+        for (var value of Object.entries(
+          data.chiffreAffairesBagagesParOffreVoyage
+        )) {
+          this.chartData.datasets[1].data.push(value);
+        }
+      }
+    },
+
+    // Obtenir les libelles pour la legende des graphics
+    getLabelAndDataSetGraphicsDoughnutToday(data) {
+      if (this.dataStatisticsToday != null) {
+        for (var [cle, valeur] of Object.entries(
+          data.nombreReservationBilletVoyageParOffreVoyage
+        )) {
+          this.chartDataDoughnutToday.labels.push(cle);
+          this.chartDataDoughnutToday.datasets[0].data.push(valeur);
+        }
+      }
+    },
+
     // Obtenir les libelles pour la legende des graphics
     getLabelAndDataSetGraphicsLine(data) {
       if (this.dataStatistics != null) {
@@ -371,8 +625,8 @@ export default {
       }
     },
 
-    // Récupérer les statistiques de reservation au chargement de la page
-    async getStatisticsByReservation() {
+    // Récupérer les statistiques de reservation des offre de voyage par an au chargement de la page
+    async getStatisticsReservationOffreVoyageByYear() {
       this.dataToSend.data.raisonSociale =
         this.$store.state.userAuthentified.compagnieTransportRaisonSociale;
       await axios
@@ -396,6 +650,52 @@ export default {
               this.dataStatistics = response.data.item;
               this.getLabelAndDataSetGraphicsLine(this.dataStatistics);
               this.getLabelAndDataSetGraphicsDoughnut(this.dataStatistics);
+            }
+          } else {
+            this.errorMsg = "Erreur";
+            $(".alert-error").fadeIn();
+            setTimeout(function () {
+              $(".alert-error").fadeOut();
+            }, 4000);
+          }
+        })
+        .catch((e) => {
+          this.errorMsg = e;
+        })
+        .finally(() => {
+          this.loading = false;
+        });
+    },
+
+    // Récupérer les statistiques de reservation des offre de voyage à la date d'aujourd'hui au chargement de la page
+    async getStatisticsReservationOffreVoyageToday() {
+      this.dataToSend.data.raisonSociale =
+        this.$store.state.userAuthentified.compagnieTransportRaisonSociale;
+      await axios
+        .post(
+          API_STATISTIQUE_RESERVATIONS("jour", "compagnie"),
+          this.dataToSend,
+          {
+            headers: HEADERS(this.$store.state.userAuthentified.token),
+          }
+        )
+        .then((response) => {
+          console.log(response);
+          if (response.status == 200) {
+            if (response.data.status.code != 800) {
+              this.errorMsg = response.data.status.message;
+              $(".alert-error").fadeIn();
+              setTimeout(function () {
+                $(".alert-error").fadeOut();
+              }, 4000);
+            } else {
+              this.dataStatisticsToday = response.data.item;
+              this.getLabelAndDataSetGraphicsLineToday(
+                this.dataStatisticsToday
+              );
+              this.getLabelAndDataSetGraphicsDoughnutToday(
+                this.dataStatisticsToday
+              );
             }
           } else {
             this.errorMsg = "Erreur";
@@ -454,7 +754,9 @@ export default {
 
   mounted() {
     this.getUrlPhotoProfil();
-    this.getStatisticsByReservation();
+    this.obtenirOffreVoyageListParCompagnie();
+    this.getStatisticsReservationOffreVoyageByYear();
+    this.getStatisticsReservationOffreVoyageToday();
   },
 };
 </script>
@@ -473,42 +775,6 @@ export default {
   opacity: 0.7;
 }
 
-.card-title-text {
-  font-size: 17px;
-  letter-spacing: 1.9px;
-  font-family: "Montserrat";
-  color: #2d3436;
-  opacity: 0.9;
-  font-weight: bold;
-}
-
-.libelle {
-  color: black;
-  opacity: 0.8;
-  font-family: "Montserrat";
-  font-size: 25px;
-  font-weight: bold;
-}
-
-.cfa {
-  color: white;
-}
-
-.btn-libelle {
-  text-decoration: underline;
-  color: white;
-}
-
-.titre {
-  font-weight: 15px;
-  font-weight: bold;
-  color: #2f3640;
-}
-
-.cfa {
-  color: white;
-}
-
 #inspire {
   background: #eeeeee;
 }
@@ -523,6 +789,11 @@ export default {
 }
 
 .simple_text {
+  font-family: "Montserrat";
+  font-size: 15px;
+}
+
+.statistic_text {
   font-family: "Montserrat";
   font-size: 15px;
 }
