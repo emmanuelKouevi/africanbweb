@@ -131,3 +131,9 @@ export const API_FIND_BAGS_BY_OFFRE = `${BASE_URL}bagages/findByProgrammeDesigna
 export const API_SEND_DOCUMENTS = `${BASE_URL}documents`;
 export const API_GET_DOCUMENT_URL = `${BASE_URL}documents/getDocumentUrl`;
 export const API_GET_DOCUMENT_BASE64 = `${BASE_URL}documents/getDocumentBase64`;
+
+// ------------------------------------------------------ STATISTIQUES DES RESERVATIONS ------------------------------------------------------ //
+
+export const API_STATISTIQUE_RESERVATIONS = (period, section) => {
+  return `${BASE_URL}statistiques/reservation/${period}/${section}`;
+};

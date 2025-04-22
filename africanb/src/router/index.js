@@ -79,6 +79,7 @@ import GestionBagage from "@/functionnalities/bagages/components/gestionBagage/G
 import BagageClient from "@/functionnalities/bagages/components/gestionBagage/BagageClient.vue";
 import SuiviBagages from "@/functionnalities/bagages/components/gestionBagage/SuiviBagages.vue";
 import StatistiqueReservationParProgramme from "@/functionnalities/statistiques/admin/views/StatistiqueReservationParProgramme.vue";
+import StatistiqueReservation from "@/functionnalities/statistiques/admin/views/StatistiqueReservation.vue";
 
 Vue.use(VueRouter);
 
@@ -436,6 +437,12 @@ const routes = [
         path: "/StatistiqueReservationParProgramme",
         name: "StatistiqueReservationParProgramme",
         component: StatistiqueReservationParProgramme,
+      },
+
+      {
+        path: "/StatistiqueReservation",
+        name: "StatistiqueReservation",
+        component: StatistiqueReservation,
       },
     ],
   },
