@@ -34,8 +34,8 @@
           <v-menu offset-y>
             <template v-slot:activator="{ on, attrs }">
               <v-btn btn color="white" small v-bind="attrs" v-on="on">
-                <v-icon color="black" size="15">mdi-calendar-search</v-icon> Par
-                date
+                <v-icon color="black" size="15">mdi-calendar-search</v-icon>
+                {{ dateSelected == null ? "Par Date" : dateSelected }}
               </v-btn>
             </template>
             <v-list>
@@ -53,7 +53,8 @@
           <v-menu offset-y>
             <template v-slot:activator="{ on, attrs }">
               <v-btn btn small color="white" v-bind="attrs" v-on="on">
-                <v-icon color="black">mdi-menu-down</v-icon> Section
+                <v-icon color="black">mdi-menu-down</v-icon>
+                {{ sectionGroup == null ? "Section" : sectionGroup }}
               </v-btn>
             </template>
             <v-list>
@@ -280,8 +281,11 @@
       </div>
 
       <v-divider></v-divider>
+      <span class="statistic_text"
+        >Statistiques des offres de voyages (Annuel)</span
+      >
       <div class="row">
-        <div class="lg">
+        <div class="col-lg-8">
           <v-card>
             <v-card-title
               ><span class="simple_text"
@@ -316,15 +320,107 @@
 
                 <template v-slot:[`item.actions`]="{ item }">
                   <v-icon
-                    title="editer"
-                    color="blue"
+                    title="plus de détails"
+                    color="teal"
                     small
                     class="mr-2"
-                    @click="editerOffreVoyage(item)"
-                    >mdi-pencil</v-icon
+                    @click="getStatisticsOffreVoyageCompagnie(item.designation)"
+                    >mdi-chart-bar</v-icon
                   >
                 </template>
               </v-data-table>
+            </v-card-text>
+          </v-card>
+        </div>
+
+        <div class="col-lg-4">
+          <CardStat
+            :icon="require('@/assets/cross.png')"
+            title="Offre de voyage"
+            :value="
+              offreVoyageStatistique == null
+                ? 'Aucune selection d\'offre'
+                : offreVoyageStatistique.offreVoyageDesignation
+            "
+            :isPrice="false"
+          ></CardStat>
+        </div>
+      </div>
+
+      <div class="row" v-if="offreVoyageStatistique != null">
+        <div class="col-lg-4">
+          <CardStat
+            :icon="require('@/assets/salary.png')"
+            title="Chiffre d'affaires"
+            :value="
+              offreVoyageStatistique == null
+                ? 0
+                : offreVoyageStatistique.chiffreAffairesReservation
+            "
+            :isPrice="true"
+          ></CardStat>
+        </div>
+        <div class="col-lg-4">
+          <CardStat
+            :icon="require('@/assets/ticket.png')"
+            title="Total des reservations"
+            :value="
+              dataStatistics == null
+                ? 0
+                : offreVoyageStatistique.nombreReservationBilletVoyage
+            "
+            :isPrice="false"
+          ></CardStat>
+        </div>
+        <div class="col-lg-4">
+          <CardStat
+            :icon="require('@/assets/cross.png')"
+            title="Chiffre d'affaire des bagages"
+            :value="
+              offreVoyageStatistique == null
+                ? 0
+                : offreVoyageStatistique.chiffreAffairesBagage == null
+                ? 0
+                : offreVoyageStatistique.chiffreAffairesBagage
+            "
+            :isPrice="true"
+          ></CardStat>
+        </div>
+      </div>
+
+      <div class="row" v-if="offreVoyageStatistique != null">
+        <div class="col-lg-5">
+          <v-card rounded="lg">
+            <v-card-text>
+              <LineChartGenerator
+                :chart-options="chartOptions"
+                :chart-data="chartDataByProgram"
+                :chart-id="chartId"
+                :dataset-id-key="datasetIdKey"
+                :plugins="plugins"
+                :css-classes="cssClasses"
+                :styles="styles"
+                :width="width"
+                :height="height"
+              />
+            </v-card-text>
+          </v-card>
+        </div>
+
+        <div class="col-lg-7">
+          <v-card rounded="lg">
+            <v-card-text>
+              <Doughnut
+                :chart-options="chartOptions"
+                :chart-data="chartDataDoughnutByProgram"
+                :chart-id="chartId"
+                :dataset-id-key="datasetIdKey"
+                :plugins="plugins"
+                :css-classes="cssClasses"
+                :styles="styles"
+                :width="width"
+                :height="height"
+              />
             </v-card-text>
           </v-card>
         </div>
@@ -338,6 +434,7 @@ import CardStat from "@/functionnalities/statistiques/admin/widgets/CardStat.vue
 import {
   API_GET_DOCUMENT_URL,
   API_RECUPERER_LISTE_OFFRE_VOYAGE,
+  API_STATISTIQUE_OFFRE_VOYAGE_RESERVATION,
   API_STATISTIQUE_RESERVATIONS,
   HEADERS,
 } from "../globalConfig/globalConstConfig";
@@ -443,7 +540,39 @@ export default {
           },
         ],
       },
+
+      chartDataByProgram: {
+        labels: [],
+        datasets: [
+          {
+            label: "CA par Programme",
+            backgroundColor: "#2f3542",
+            data: [],
+          },
+          {
+            label: "CA bagage par Programme",
+            backgroundColor: "#2ed573",
+            data: [],
+          },
+        ],
+      },
+
+      chartDataDoughnutByProgram: {
+        labels: [],
+        datasets: [
+          {
+            backgroundColor: ["#2f3542", "#2ed573", "#2ed573"],
+            data: [],
+          },
+        ],
+      },
+
       chartOptionsToday: {
+        responsive: true,
+        maintainAspectRatio: false,
+      },
+
+      chartOptions: {
         responsive: true,
         maintainAspectRatio: false,
       },
@@ -477,10 +606,6 @@ export default {
           },
         ],
       },
-      chartOptions: {
-        responsive: true,
-        maintainAspectRatio: false,
-      },
 
       chartDataDoughnut: {
         labels: [],
@@ -497,10 +622,10 @@ export default {
       },
 
       dateFilterList: [
-        { title: "Aujourd'hui" },
-        { title: "Periodique" },
-        { title: "À une date précise" },
-        { title: "Annuel" },
+        { title: "Aujourd'hui", value: "jour" },
+        { title: "Periodique", value: "period" },
+        { title: "À une date précise", value: "date" },
+        { title: "Annuel", value: "annuel" },
       ],
 
       sections: [{ title: "Gare de transport" }, { title: "Ma compagnie" }],
@@ -522,6 +647,14 @@ export default {
         },
       },
 
+      offreVoyageStats: {
+        data: {
+          offreVoyageDesignation: null,
+        },
+      },
+
+      offreVoyageStatistique: null,
+
       photoProfilUrl: null,
       dataStatistics: null,
       dataStatisticsToday: null,
@@ -529,6 +662,59 @@ export default {
   },
 
   methods: {
+    //OBTENIR LES STATISTIQUES DES OFFRES DE VOYAGE
+    async getStatisticsOffreVoyageCompagnie(offreVoyageDesignation) {
+      this.offreVoyageStatistique = null;
+      this.chartDataByProgram.labels = [];
+      this.chartDataByProgram.datasets[0].data = [];
+      this.chartDataByProgram.datasets[1].data = [];
+      this.chartDataDoughnutByProgram.labels = [];
+      this.chartDataDoughnutByProgram.datasets[0].data = [];
+      this.offreVoyageStats.data.offreVoyageDesignation =
+        offreVoyageDesignation;
+      await axios
+        .post(
+          API_STATISTIQUE_OFFRE_VOYAGE_RESERVATION("annuel"),
+          this.offreVoyageStats,
+          {
+            headers: HEADERS(this.$store.state.userAuthentified.token),
+          }
+        )
+        .then((response) => {
+          console.log(response);
+          if (response.status == 200) {
+            if (response.data.status.code != 800) {
+              this.errorMsg = response.data.status.message;
+              $(".alert-error").fadeIn();
+              setTimeout(function () {
+                $(".alert-error").fadeOut();
+              }, 4000);
+            } else {
+              //this.dataStatistics = response.data.item;
+              this.offreVoyageStatistique = response.data.item;
+              this.getLabelAndDataSetGraphicsLineByProgram(
+                this.offreVoyageStatistique
+              );
+              this.getLabelAndDataSetGraphicsDoughnutProgram(
+                this.offreVoyageStatistique
+              );
+            }
+          } else {
+            this.errorMsg = "Erreur";
+            $(".alert-error").fadeIn();
+            setTimeout(function () {
+              $(".alert-error").fadeOut();
+            }, 4000);
+          }
+        })
+        .catch((e) => {
+          this.errorMsg = e;
+        })
+        .finally(() => {
+          this.loading = false;
+        });
+    },
+
     //OBTENIR LISTE DES OFFRES DE VOYAGES DISPONIBLES PAR COMPAGNIE
     async obtenirOffreVoyageListParCompagnie() {
       this.offreVoyageObject.data.compagnieTransportRaisonSociale =
@@ -582,6 +768,38 @@ export default {
         }
       }
     },
+
+    // ------------------- Affichage des informations grâce aux graphs statistique en rapport avec les offres de voyages ------------------------ //
+
+    getLabelAndDataSetGraphicsLineByProgram(data) {
+      if (data != null) {
+        for (var [cle, valeur] of Object.entries(
+          data.chiffreAffairesReservationParProgramme
+        )) {
+          this.chartDataByProgram.labels.push(cle);
+          this.chartDataByProgram.datasets[0].data.push(valeur);
+        }
+
+        for (var value of Object.entries(
+          data.chiffreAffairesBagageParProgramme
+        )) {
+          this.chartDataByProgram.datasets[1].data.push(value);
+        }
+      }
+    },
+
+    getLabelAndDataSetGraphicsDoughnutProgram(data) {
+      if (data != null) {
+        for (var [cle, valeur] of Object.entries(
+          data.nombreReservationBilletVoyageParProgramme
+        )) {
+          this.chartDataDoughnutByProgram.labels.push(cle);
+          this.chartDataDoughnutByProgram.datasets[0].data.push(valeur);
+        }
+      }
+    },
+
+    // -----------------------------------------------------------------------------------------------------------------------------------------//
 
     // Obtenir les libelles pour la legende des graphics
     getLabelAndDataSetGraphicsDoughnutToday(data) {
@@ -638,6 +856,7 @@ export default {
           }
         )
         .then((response) => {
+          console.log("get Statistics by year");
           console.log(response);
           if (response.status == 200) {
             if (response.data.status.code != 800) {

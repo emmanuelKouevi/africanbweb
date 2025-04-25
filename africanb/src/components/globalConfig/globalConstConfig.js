@@ -137,3 +137,7 @@ export const API_GET_DOCUMENT_BASE64 = `${BASE_URL}documents/getDocumentBase64`;
 export const API_STATISTIQUE_RESERVATIONS = (period, section) => {
   return `${BASE_URL}statistiques/reservation/${period}/${section}`;
 };
+
+export const API_STATISTIQUE_OFFRE_VOYAGE_RESERVATION = (period) => {
+  return `${BASE_URL}statistiques/offreVoyage/${period}/compagnie`;
+};
