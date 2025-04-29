@@ -72,8 +72,8 @@
         </div>
 
         <div class="col col-lg-2">
-          <v-btn small color="secondary"
-            ><v-icon>mdi-magnify</v-icon> Rechercher</v-btn
+          <v-btn small color="secondary" @click="applyFilterReservation"
+            ><v-icon>mdi-magnify</v-icon> Appliquer</v-btn
           >
         </div>
       </div>
@@ -84,6 +84,7 @@
           :hidden="dateSelected !== 'Periodique' || dateSelected == null"
         >
           <v-text-field
+            v-model="dateDebut"
             label="Début"
             type="date"
             solo
@@ -96,6 +97,7 @@
           :hidden="dateSelected !== 'Periodique' || dateSelected == null"
         >
           <v-text-field
+            v-model="dateFin"
             label="Fin"
             type="date"
             solo
@@ -109,20 +111,129 @@
             dateSelected !== 'À une date précise' || dateSelected == null
           "
         >
-          <v-text-field type="date" solo rounded dense></v-text-field>
+          <v-text-field
+            v-model="datePrecise"
+            type="date"
+            solo
+            rounded
+            dense
+          ></v-text-field>
         </div>
         <div
           class="col-lg-3"
           :hidden="sectionGroup !== 'Gare de transport' || sectionGroup == null"
         >
-          <v-select label="Gare de transport" rounded solo dense></v-select>
+          <v-select
+            label="Gare de transport"
+            v-model="gareDesignationSelected"
+            rounded
+            solo
+            dense
+            :items="gareDisponiblesList"
+            item-text="designation"
+            item-value="designation"
+          ></v-select>
+        </div>
+      </div>
+      <br />
+
+      <!-- -->
+
+      <span
+        v-if="isFilterApply == true && sectionGroup == 'Gare de transport'"
+        class="statistic_text"
+        >Statistiques de reservation par Gare: ({{
+          gareDesignationSelected
+        }})</span
+      >
+
+      <div
+        class="row"
+        v-if="isFilterApply == true && sectionGroup == 'Gare de transport'"
+      >
+        <div class="col-lg-4">
+          <CardStat
+            :icon="require('@/assets/salary.png')"
+            title="Chiffre d'affaires"
+            :value="
+              dataStatisticGareTransport == null
+                ? 0
+                : dataStatisticGareTransport.chiffreAffaires
+            "
+            :isPrice="true"
+          ></CardStat>
+        </div>
+        <div class="col-lg-4">
+          <CardStat
+            :icon="require('@/assets/ticket.png')"
+            title="Total des reservations"
+            :value="
+              dataStatisticGareTransport == null
+                ? 0
+                : dataStatisticGareTransport.nombreTotalReservationBilletVoyage
+            "
+            :isPrice="false"
+          ></CardStat>
+        </div>
+        <div class="col-lg-4">
+          <CardStat
+            :icon="require('@/assets/cross.png')"
+            title="Chiffre d'affaire des bagages"
+            :value="
+              dataStatisticGareTransport == null
+                ? 0
+                : dataStatisticGareTransport.chiffreAffairesBagages
+            "
+            :isPrice="true"
+          ></CardStat>
+        </div>
+      </div>
+
+      <div
+        class="row"
+        v-if="isFilterApply == true && sectionGroup == 'Gare de transport'"
+      >
+        <div class="col-lg-5">
+          <v-card rounded="lg">
+            <v-card-text>
+              <LineChartGenerator
+                :chart-options="chartOptions"
+                :chart-data="chartDataGare"
+                :chart-id="chartId"
+                :dataset-id-key="datasetIdKey"
+                :plugins="plugins"
+                :css-classes="cssClasses"
+                :styles="styles"
+                :width="width"
+                :height="height"
+              />
+            </v-card-text>
+          </v-card>
+        </div>
+
+        <div class="col-lg-7">
+          <v-card rounded="lg">
+            <v-card-text>
+              <Doughnut
+                :chart-options="chartOptionsDoughnut"
+                :chart-data="chartDataDoughnutGare"
+                :chart-id="chartId"
+                :dataset-id-key="datasetIdKey"
+                :plugins="plugins"
+                :css-classes="cssClasses"
+                :styles="styles"
+                :width="width"
+                :height="height"
+              />
+            </v-card-text>
+          </v-card>
         </div>
       </div>
       <br />
 
       <!-- STATISTIQUE DE RESERVATIONS DES OFFRES DE VOYAGES ANNUEL -->
       <span class="statistic_text"
-        >Statistiques des offres de voyages (Journalier)</span
+        >Statistiques de reservations (Journalier)</span
       >
       <div class="row">
         <div class="col-lg-4">
@@ -155,6 +266,8 @@
             title="Chiffre d'affaire des bagages"
             :value="
               dataStatisticsToday == null
+                ? 0
+                : dataStatisticsToday.chiffreAffairesBagages == null
                 ? 0
                 : dataStatisticsToday.chiffreAffairesBagages
             "
@@ -205,9 +318,7 @@
 
       <!-- STATISTIQUE DE RESERVATIONS DES OFFRES DE VOYAGES ANNUEL -->
 
-      <span class="statistic_text"
-        >Statistiques des offres de voyages (Annuel)</span
-      >
+      <span class="statistic_text">Statistiques de reservations (Annuel)</span>
 
       <div class="row">
         <div class="col-lg-4">
@@ -282,7 +393,7 @@
 
       <v-divider></v-divider>
       <span class="statistic_text"
-        >Statistiques des offres de voyages (Annuel)</span
+        >Statistiques des offres de voyages ({{ getTextPeriod }})</span
       >
       <div class="row">
         <div class="col-lg-8">
@@ -433,6 +544,7 @@
 import CardStat from "@/functionnalities/statistiques/admin/widgets/CardStat.vue";
 import {
   API_GET_DOCUMENT_URL,
+  API_RECUPERER_LISTE_GARES_PAR_COMPAGNIE,
   API_RECUPERER_LISTE_OFFRE_VOYAGE,
   API_STATISTIQUE_OFFRE_VOYAGE_RESERVATION,
   API_STATISTIQUE_RESERVATIONS,
@@ -616,10 +728,38 @@ export default {
           },
         ],
       },
+
+      chartDataGare: {
+        labels: [],
+        datasets: [
+          {
+            label: "Chiffre Affaire Réservation (Annuel)",
+            backgroundColor: "#2f3542",
+            data: [],
+          },
+          {
+            label: "Chiffre Affaire Bagage (Annuel)",
+            backgroundColor: "#2ed573",
+            data: [],
+          },
+        ],
+      },
+
+      chartDataDoughnutGare: {
+        labels: [],
+        datasets: [
+          {
+            backgroundColor: ["#2f3542", "#2ed573", "#2ed573"],
+            data: [],
+          },
+        ],
+      },
       chartOptionsDoughnut: {
         responsive: true,
         maintainAspectRatio: false,
       },
+
+      isFilterApply: false,
 
       dateFilterList: [
         { title: "Aujourd'hui", value: "jour" },
@@ -644,44 +784,145 @@ export default {
       dataToSend: {
         data: {
           raisonSociale: null,
+          dateGiven: null,
+          period: {
+            dateDebut: null,
+            dateFin: null,
+          },
+        },
+      },
+
+      dataToSendGare: {
+        data: {
+          gareDesignation: null,
+          dateGiven: null,
+          period: {
+            dateDebut: null,
+            dateFin: null,
+          },
         },
       },
 
       offreVoyageStats: {
         data: {
           offreVoyageDesignation: null,
+          dateGiven: null,
+          period: {
+            dateDebut: null,
+            dateFin: null,
+          },
         },
       },
 
       offreVoyageStatistique: null,
 
+      gareListObject: {
+        data: {
+          compagnieTransportRaisonSociale: null,
+        },
+      },
+      gareDisponiblesList: [],
+      gareDesignationSelected: null,
+
       photoProfilUrl: null,
       dataStatistics: null,
+      dataStatisticGareTransport: null,
       dataStatisticsToday: null,
+      datePrecise: null,
+      dateDebut: null,
+      dateFin: null,
     };
   },
 
   methods: {
-    //OBTENIR LES STATISTIQUES DES OFFRES DE VOYAGE
-    async getStatisticsOffreVoyageCompagnie(offreVoyageDesignation) {
-      this.offreVoyageStatistique = null;
-      this.chartDataByProgram.labels = [];
-      this.chartDataByProgram.datasets[0].data = [];
-      this.chartDataByProgram.datasets[1].data = [];
-      this.chartDataDoughnutByProgram.labels = [];
-      this.chartDataDoughnutByProgram.datasets[0].data = [];
-      this.offreVoyageStats.data.offreVoyageDesignation =
-        offreVoyageDesignation;
+    // DELETE ALL DATAS GRAPH STATISTICS.
+
+    deleteAllDataGraph() {
+      this.chartData.labels = [];
+      this.chartData.datasets[0].data = [];
+      this.chartData.datasets[1].data = [];
+      this.chartDataDoughnut.labels = [];
+      this.chartDataDoughnut.datasets[0].data = [];
+
+      this.chartDataGare.labels = [];
+      this.chartDataGare.datasets[0].data = [];
+      this.chartDataGare.datasets[1].data = [];
+
+      this.chartDataDoughnutGare.labels = [];
+      this.chartDataDoughnutGare.datasets[0].data = [];
+    },
+
+    // APPLIQUER LA RECHERCHE PAR FILTRE.
+    async applyFilterReservation() {
+      this.deleteAllDataGraph();
+      this.isFilterApply = true;
+      var periodDate = "";
+      var section = "";
+
+      switch (this.sectionGroup) {
+        case "Ma compagnie":
+          section = "compagnie";
+          this.dataToSend.data.raisonSociale =
+            this.$store.state.userAuthentified.compagnieTransportRaisonSociale;
+          break;
+        case "Gare de transport":
+          section = "gare";
+          this.dataToSendGare.data.gareDesignation =
+            this.gareDesignationSelected;
+          break;
+        default:
+          section = "compagnie";
+          this.dataToSend.data.raisonSociale =
+            this.$store.state.userAuthentified.compagnieTransportRaisonSociale;
+          break;
+      }
+      switch (this.dateSelected) {
+        case "Aujourd'hui":
+          periodDate = "jour";
+          break;
+        case "Periodique":
+          if (section == "Ma compagnie" || section == "") {
+            periodDate = "period";
+            this.dataToSend.data.period.dateDebut = this.formatDate(
+              this.dateDebut
+            );
+
+            this.dataToSend.data.period.dateFin = this.formatDate(this.dateFin);
+          } else {
+            periodDate = "period";
+            this.dataToSendGare.data.period.dateDebut = this.formatDate(
+              this.dateDebut
+            );
+            this.dataToSendGare.data.period.dateFin = this.formatDate(
+              this.dateFin
+            );
+          }
+          break;
+        case "À une date précise":
+          periodDate = "date";
+          this.dataToSend.data.dateGiven = this.formatDate(this.datePrecise);
+          this.dataToSendGare.data.dateGiven = this.formatDate(
+            this.datePrecise
+          );
+          break;
+        case "Annuel":
+          periodDate = "annuel";
+          break;
+        default:
+          periodDate = "annuel";
+          break;
+      }
       await axios
         .post(
-          API_STATISTIQUE_OFFRE_VOYAGE_RESERVATION("annuel"),
-          this.offreVoyageStats,
+          API_STATISTIQUE_RESERVATIONS(periodDate, section),
+          section == "compagnie" || section == ""
+            ? this.dataToSend
+            : this.dataToSendGare,
           {
             headers: HEADERS(this.$store.state.userAuthentified.token),
           }
         )
         .then((response) => {
-          console.log(response);
           if (response.status == 200) {
             if (response.data.status.code != 800) {
               this.errorMsg = response.data.status.message;
@@ -690,7 +931,91 @@ export default {
                 $(".alert-error").fadeOut();
               }, 4000);
             } else {
-              //this.dataStatistics = response.data.item;
+              if (section == "gare") {
+                this.dataStatisticGareTransport = response.data.item;
+                this.getLabelAndDataSetGraphicsLineGare(
+                  this.dataStatisticGareTransport
+                );
+
+                this.getLabelAndDataSetGraphicsDoughnutGare(
+                  this.dataStatisticGareTransport
+                );
+              } else {
+                //this.dataStatistics = response.data.item;
+                //this.getLabelAndDataSetGraphicsLine(this.dataStatistics);
+                //this.getLabelAndDataSetGraphicsDoughnut(this.dataStatistics);
+              }
+            }
+          } else {
+            this.errorMsg = "Erreur";
+            $(".alert-error").fadeIn();
+            setTimeout(function () {
+              $(".alert-error").fadeOut();
+            }, 4000);
+          }
+        })
+        .catch((e) => {
+          this.errorMsg = e;
+        })
+        .finally(() => {
+          this.getStatisticsReservationOffreVoyageByYear();
+          this.loading = false;
+        });
+    },
+    //OBTENIR LES STATISTIQUES DES OFFRES DE VOYAGE
+    async getStatisticsOffreVoyageCompagnie(offreVoyageDesignation) {
+      var periodDate = "";
+      this.offreVoyageStatistique = null;
+      this.chartDataByProgram.labels = [];
+      this.chartDataByProgram.datasets[0].data = [];
+      this.chartDataByProgram.datasets[1].data = [];
+      this.chartDataDoughnutByProgram.labels = [];
+      this.chartDataDoughnutByProgram.datasets[0].data = [];
+      this.offreVoyageStats.data.offreVoyageDesignation =
+        offreVoyageDesignation;
+      switch (this.dateSelected) {
+        case "Aujourd'hui":
+          periodDate = "jour";
+          break;
+        case "Periodique":
+          periodDate = "periode";
+          this.offreVoyageStats.data.period.dateDebut = this.formatDate(
+            this.dateDebut
+          );
+          this.offreVoyageStats.data.period.dateFin = this.formatDate(
+            this.dateFin
+          );
+          break;
+        case "À une date précise":
+          periodDate = "date";
+          this.offreVoyageStats.data.dateGiven = this.formatDate(
+            this.datePrecise
+          );
+          break;
+        case "Annuel":
+          periodDate = "annuel";
+          break;
+        default:
+          periodDate = "annuel";
+          break;
+      }
+      await axios
+        .post(
+          API_STATISTIQUE_OFFRE_VOYAGE_RESERVATION(periodDate),
+          this.offreVoyageStats,
+          {
+            headers: HEADERS(this.$store.state.userAuthentified.token),
+          }
+        )
+        .then((response) => {
+          if (response.status == 200) {
+            if (response.data.status.code != 800) {
+              this.errorMsg = response.data.status.message;
+              $(".alert-error").fadeIn();
+              setTimeout(function () {
+                $(".alert-error").fadeOut();
+              }, 4000);
+            } else {
               this.offreVoyageStatistique = response.data.item;
               this.getLabelAndDataSetGraphicsLineByProgram(
                 this.offreVoyageStatistique
@@ -831,6 +1156,39 @@ export default {
       }
     },
 
+    getLabelAndDataSetGraphicsLineGare(data) {
+      if (this.dataStatisticGareTransport != null) {
+        for (var [cle, valeur] of Object.entries(
+          data.chiffreAffairesParProgramme
+        )) {
+          this.chartDataGare.labels.push(cle);
+          this.chartDataGare.datasets[0].data.push(valeur);
+        }
+
+        if (
+          data.chiffreAffairesBagagesParOffreVoyage != undefined ||
+          data.chiffreAffairesBagagesParOffreVoyage != null
+        ) {
+          for (var value of Object.entries(
+            data.chiffreAffairesBagagesParOffreVoyage
+          )) {
+            this.chartDataGare.datasets[1].data.push(value);
+          }
+        }
+      }
+    },
+
+    getLabelAndDataSetGraphicsDoughnutGare(data) {
+      if (this.dataStatisticGareTransport != null) {
+        for (var [cle, valeur] of Object.entries(
+          data.nombreReservationBilletVoyageParProgramme
+        )) {
+          this.chartDataDoughnutGare.labels.push(cle);
+          this.chartDataDoughnutGare.datasets[0].data.push(valeur);
+        }
+      }
+    },
+
     // Obtenir les libelles pour la legende des graphics
     getLabelAndDataSetGraphicsDoughnut(data) {
       if (this.dataStatistics != null) {
@@ -856,8 +1214,6 @@ export default {
           }
         )
         .then((response) => {
-          console.log("get Statistics by year");
-          console.log(response);
           if (response.status == 200) {
             if (response.data.status.code != 800) {
               this.errorMsg = response.data.status.message;
@@ -941,7 +1297,6 @@ export default {
           headers: HEADERS(this.$store.state.userAuthentified.token),
         })
         .then((response) => {
-          console.log(this.$store.state.userAuthentified.token);
           if (response.status == 200) {
             if (response.data.status.code != 800) {
               this.errorMsg = response.data.status.message;
@@ -967,12 +1322,80 @@ export default {
           this.loading = false;
         });
     },
+
+    // FORMAT DE LA DATE
+    formatDate(date) {
+      if (!date) return null;
+      const [year, month, day] = date.split("-");
+      return `${day}/${month}/${year}`;
+    },
+
+    // RECUPERER LA LISTE DES GARES ENREGISTRÉS PAR COMPAGNIE DE TRANSPORT
+    async obtenirGareListParCompagnieTransport() {
+      this.loading = true;
+      this.gareListObject.data.compagnieTransportRaisonSociale =
+        this.$store.state.userAuthentified.compagnieTransportRaisonSociale;
+      axios
+        .post(API_RECUPERER_LISTE_GARES_PAR_COMPAGNIE, this.gareListObject, {
+          headers: HEADERS(this.$store.state.userAuthentified.token),
+        })
+        .then((response) => {
+          if (response.status == 200) {
+            if (response.data.status.code != 800) {
+              this.errorMsg = response.data.status.message;
+              $(".alert-error").fadeIn();
+              setTimeout(function () {
+                $(".alert-error").fadeOut();
+              }, 4000);
+            } else {
+              this.gareDisponiblesList = response.data.items;
+            }
+          } else {
+            this.errorMsg = "Erreur";
+            $(".alert-error").fadeIn();
+            setTimeout(function () {
+              $(".alert-error").fadeOut();
+            }, 4000);
+          }
+        })
+        .catch((e) => {
+          this.errorMsg = e;
+        })
+        .finally(() => {
+          this.loading = false;
+        });
+    },
   },
 
-  computed: {},
+  computed: {
+    getTextPeriod() {
+      var text = "";
+      switch (this.dateSelected) {
+        case "Aujourd'hui":
+          text = "Journalier";
+          break;
+        case "Periodique":
+          text = "Période : " + this.dateDebut + " Au " + this.dateFin;
+          break;
+        case "À une date précise":
+          text = "À la date du: " + this.datePrecise;
+          break;
+
+        case "Annuel":
+          text = "Annuel";
+          break;
+
+        default:
+          text = "Annuel";
+          break;
+      }
+      return text;
+    },
+  },
 
   mounted() {
     this.getUrlPhotoProfil();
+    this.obtenirGareListParCompagnieTransport();
     this.obtenirOffreVoyageListParCompagnie();
     this.getStatisticsReservationOffreVoyageByYear();
     this.getStatisticsReservationOffreVoyageToday();
