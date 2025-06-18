@@ -25,22 +25,23 @@
           :isPrice="false"
         ></CardStat>
       </div>
+
       <div class="col-lg-4">
         <CardStat
-          :icon="require('@/assets/cross.png')"
-          title="Chiffre d'affaire des bagages"
+          :icon="require('@/assets/ticket.png')"
+          title="Chiffre d'Affaire Bagages"
           :value="
-            dataStatistiqueGareTransport == null
+            dataStatisticBagStation == null
               ? 0
-              : dataStatistiqueGareTransport.chiffreAffairesBagages
+              : dataStatisticBagStation.chiffreAffaires
           "
-          :isPrice="true"
+          :isPrice="false"
         ></CardStat>
       </div>
     </div>
 
     <div class="row">
-      <div class="col-lg-5">
+      <div class="col-lg-12">
         <v-card rounded="lg">
           <v-card-text>
             <LineChartGenerator
@@ -57,8 +58,11 @@
           </v-card-text>
         </v-card>
       </div>
+    </div>
+    <br />
 
-      <div class="col-lg-7">
+    <div class="row">
+      <div class="col-lg-12">
         <v-card rounded="lg">
           <v-card-text>
             <Doughnut
@@ -109,6 +113,11 @@ export default {
   name: "StatistiqueReservationParGareTransport",
   props: {
     dataStatistiqueGareTransport: {
+      type: Object,
+      default: null,
+    },
+
+    dataStatisticBagStation: {
       type: Object,
       default: null,
     },

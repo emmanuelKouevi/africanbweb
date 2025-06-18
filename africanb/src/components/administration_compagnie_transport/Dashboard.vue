@@ -152,7 +152,7 @@
       ></StatistiqueReservationParGareTransport>
       <br />
 
-      <!-- STATISTIQUE DE RESERVATIONS DES OFFRES DE VOYAGES ANNUEL -->
+      <!-- STATISTIQUE DE RESERVATIONS DES OFFRES DE VOYAGES JOURNALIER -->
       <span class="statistic_text"
         >Statistiques de reservations (Journalier)</span
       >
@@ -198,7 +198,7 @@
       </div>
 
       <div class="row">
-        <div class="col-lg-5">
+        <div class="col-lg-12">
           <v-card rounded="lg">
             <v-card-text>
               <LineChartGenerator
@@ -216,7 +216,7 @@
           </v-card>
         </div>
 
-        <div class="col-lg-7">
+        <div class="col-lg-12">
           <v-card rounded="lg">
             <v-card-text>
               <Doughnut
@@ -275,7 +275,7 @@
       </div>
 
       <div class="row">
-        <div class="col-lg-5">
+        <div class="col-lg-12">
           <v-card rounded="lg">
             <v-card-text>
               <LineChartGenerator
@@ -293,7 +293,7 @@
           </v-card>
         </div>
 
-        <div class="col-lg-7">
+        <div class="col-lg-12">
           <v-card rounded="lg">
             <v-card-text>
               <Doughnut
@@ -458,6 +458,21 @@
         </div>
       </div>
     </v-container>
+
+    <v-alert
+      class="myalert alert-success"
+      type="success"
+      width="350px"
+      dismissible
+      >{{ successMsg }}</v-alert
+    >
+    <v-alert
+      class="myalert alert-error"
+      type="error"
+      width="350px"
+      dismissible
+      >{{ errorMsg }}</v-alert
+    >
   </v-app>
 </template>
 
@@ -540,6 +555,9 @@ export default {
 
   data() {
     return {
+      errorMsg: null,
+      successMsg: null,
+
       loading: true,
       search: "",
       headers: [
@@ -596,7 +614,20 @@ export default {
         labels: [],
         datasets: [
           {
-            backgroundColor: ["#2f3542", "#2ed573", "#2ed573"],
+            backgroundColor: [
+              "#2f3542",
+              "#2ed573",
+              "#ffd32a",
+              "#ffa801",
+              "#3c40c6",
+              "#f53b57",
+              "#182C61",
+              "#9AECDB",
+              "#BDC581",
+              "#82589F",
+              "#EAB543",
+              "#079992",
+            ],
             data: [],
           },
         ],
@@ -616,7 +647,20 @@ export default {
         labels: [],
         datasets: [
           {
-            backgroundColor: ["#2f3542", "#2ed573", "#2ed573"],
+            backgroundColor: [
+              "#2f3542",
+              "#2ed573",
+              "#ffd32a",
+              "#ffa801",
+              "#3c40c6",
+              "#f53b57",
+              "#182C61",
+              "#9AECDB",
+              "#BDC581",
+              "#82589F",
+              "#EAB543",
+              "#079992",
+            ],
             data: [],
           },
         ],
@@ -711,10 +755,8 @@ export default {
       isFilterApply: false,
 
       dateFilterList: [
-        { title: "Aujourd'hui", value: "jour" },
         { title: "Periodique", value: "period" },
         { title: "À une date précise", value: "date" },
-        { title: "Annuel", value: "annuel" },
       ],
 
       sections: [{ title: "Gare de transport" }, { title: "Ma compagnie" }],
@@ -826,9 +868,6 @@ export default {
           break;
       }
       switch (this.dateSelected) {
-        case "Aujourd'hui":
-          periodDate = "jour";
-          break;
         case "Periodique":
           if (section == "Ma compagnie" || section == "") {
             periodDate = "period";
@@ -854,9 +893,7 @@ export default {
             this.datePrecise
           );
           break;
-        case "Annuel":
-          periodDate = "annuel";
-          break;
+
         default:
           periodDate = "annuel";
           break;
@@ -1387,5 +1424,24 @@ export default {
 .statistic_text {
   font-family: "Montserrat";
   font-size: 15px;
+}
+
+.myalert {
+  display: none;
+  z-index: 1900;
+}
+
+.alert-success {
+  position: fixed;
+  top: 25px;
+  right: 2%;
+  width: 25%;
+}
+
+.alert-error {
+  position: fixed;
+  top: 25px;
+  right: 2%;
+  width: 25%;
 }
 </style>

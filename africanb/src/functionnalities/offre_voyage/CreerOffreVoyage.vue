@@ -549,7 +549,11 @@ import {
   HEADERS,
 } from "@/components/globalConfig/globalConstConfig";
 import { required, minLength } from "vuelidate/lib/validators";
-import $ from "jquery";
+import {
+  showErrorMessage,
+  showSuccessMessage,
+  showWarningMessage,
+} from "../messages/messageProcess";
 
 export default {
   name: "CreerOffreVoyage",
@@ -712,10 +716,7 @@ export default {
         this.$v.villeEscaleData.villeDesignation.$invalid
       ) {
         this.errorMsg = "Le numero d'ordre et la ville escale sont obligatoire";
-        $(".alert-error").fadeIn();
-        setTimeout(function () {
-          $(".alert-error").fadeOut();
-        }, 2000);
+        showErrorMessage();
       } else {
         var escale = {
           position: null,
@@ -763,10 +764,7 @@ export default {
       this.$v.$touch();
       if (this.$v.prixOffreVoyageModel.$invalid) {
         this.errorMsg = "Vous devez saisir tous les champs obligatoires";
-        $(".alert-error").fadeIn();
-        setTimeout(function () {
-          $(".alert-error").fadeOut();
-        }, 4000);
+        showErrorMessage();
       } else {
         var price = {
           designation: null,
@@ -799,10 +797,7 @@ export default {
       this.$v.$touch();
       if (this.$v.offreVoyage.$invalid) {
         this.errorMsg = "Vous n'avez saisi les champs concernés";
-        $(".alert-error").fadeIn();
-        setTimeout(function () {
-          $(".alert-error").fadeOut();
-        }, 4000);
+        showErrorMessage();
       } else this.e6 = 2;
     },
     //SOUMISSION DU FORMULAIRE
@@ -810,10 +805,7 @@ export default {
       this.$v.$touch();
       if (this.$v.offreVoyage.$invalid) {
         this.errorMsg = "Vous n'avez saisi les champs concernés";
-        $(".alert-error").fadeIn();
-        setTimeout(function () {
-          $(".alert-error").fadeOut();
-        }, 4000);
+        showErrorMessage();
       } else this.creerOffreVoyage();
     },
 
@@ -833,10 +825,7 @@ export default {
         })
         .catch((e) => {
           this.errorMsg = e;
-          $(".alert-error").fadeIn();
-          setTimeout(function () {
-            $(".alert-error").fadeOut();
-          }, 4000);
+          showErrorMessage();
         });
     },
 
@@ -856,10 +845,7 @@ export default {
         })
         .catch((e) => {
           this.errorMsg = e;
-          $(".alert-error").fadeIn();
-          setTimeout(function () {
-            $(".alert-error").fadeOut();
-          }, 4000);
+          showErrorMessage();
         });
     },
 
@@ -875,10 +861,7 @@ export default {
         })
         .catch((e) => {
           this.errorMsg = e;
-          $(".alert-error").fadeIn();
-          setTimeout(function () {
-            $(".alert-error").fadeOut();
-          }, 4000);
+          showErrorMessage();
         });
     },
 
@@ -900,42 +883,27 @@ export default {
           if (response.status == 200) {
             if (response.data.status.code == 800) {
               this.successMsg = response.data.status.message;
-              $(".alert-success").fadeIn();
-              setTimeout(function () {
-                $(".alert-success").fadeOut();
-              }, 4000);
+              showSuccessMessage();
               this.offreVoyageToSend.datas = [];
             } else {
               this.errorMsg = response.data.status.message;
-              $(".alert-error").fadeIn();
-              setTimeout(function () {
-                $(".alert-error").fadeOut();
-              }, 3000);
+              showErrorMessage();
               this.offreVoyageToSend.datas = [];
             }
           } else if (response.status == 204) {
             this.warningMsg =
               "Erreur , lors de la création de l'offre de voyage";
-            $(".alert-warning").fadeIn();
-            setTimeout(function () {
-              $(".alert-warning").fadeOut();
-            }, 3000);
+            showWarningMessage();
             this.offreVoyageToSend.datas = [];
           } else {
             this.errorMsg = "Erreur , opération de création impossible";
-            $(".alert-error").fadeIn();
-            setTimeout(function () {
-              $(".alert-error").fadeOut();
-            }, 3000);
+            showErrorMessage();
             this.offreVoyageToSend.datas = [];
           }
         })
         .catch((e) => {
           this.errorMsg = e;
-          $(".alert-error").fadeIn();
-          setTimeout(function () {
-            $(".alert-error").fadeOut();
-          }, 4000);
+          showErrorMessage();
           this.offreVoyageToSend.datas = [];
         })
         .finally(() => {
@@ -962,10 +930,7 @@ export default {
         })
         .catch((e) => {
           this.errorMsg = e;
-          $(".alert-error").fadeIn();
-          setTimeout(function () {
-            $(".alert-error").fadeOut();
-          }, 4000);
+          showErrorMessage();
         });
     },
 
@@ -1115,11 +1080,11 @@ export default {
 }
 
 h4 {
-  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  font-family: "Montserrat";
 }
 
 .my_input {
-  font-family: "Times New Roman", Times, serif;
+  font-family: "Montserrat";
   font-size: 15px;
 }
 

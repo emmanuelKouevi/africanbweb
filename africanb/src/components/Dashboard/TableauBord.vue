@@ -17,6 +17,18 @@
     >
       <DashboardTransportAdmin />
     </v-container>
+    <v-container
+      fluid
+      v-else-if="$store.state.userAuthentified.roleCode == 'RoleAgentGare'"
+    >
+      <DashboardResponsableAgent />
+    </v-container>
+    <v-container
+      fluid
+      v-else-if="$store.state.userAuthentified.roleCode == 'RoleUtiBagagiste'"
+    >
+      <DashboardBagagiste />
+    </v-container>
     <v-container fluid v-else>
       <DashboardMainAdmin />
     </v-container>
@@ -27,12 +39,16 @@
 import DashboardSeller from "../vendeur/Dashboard.vue";
 import DashboardTransportAdmin from "@/components/administration_compagnie_transport/Dashboard.vue";
 import DashboardMainAdmin from "@/components/administrateur_societe/Dashboard.vue";
+import DashboardResponsableAgent from "@/functionnalities/dashboard/dashboardAgentGare.vue";
+import DashboardBagagiste from "@/functionnalities/dashboard/dashboardBagagiste.vue";
 export default {
   name: "TableauBord",
   components: {
     DashboardSeller,
     DashboardTransportAdmin,
     DashboardMainAdmin,
+    DashboardResponsableAgent,
+    DashboardBagagiste,
   },
   data() {
     return {};

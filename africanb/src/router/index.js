@@ -81,6 +81,9 @@ import SuiviBagages from "@/functionnalities/bagages/components/gestionBagage/Su
 import StatistiqueReservationParProgramme from "@/functionnalities/statistiques/admin/views/StatistiqueReservationParProgramme.vue";
 import StatistiqueReservation from "@/functionnalities/statistiques/admin/views/StatistiqueReservation.vue";
 
+import NouvelleTransaction from "@/functionnalities/caisses/NouvelleTransaction.vue";
+import EnvoyerNotification from "@/functionnalities/notifications/EnvoyerNotification.vue";
+
 Vue.use(VueRouter);
 
 const routes = [
@@ -443,6 +446,18 @@ const routes = [
         path: "/StatistiqueReservation",
         name: "StatistiqueReservation",
         component: StatistiqueReservation,
+      },
+
+      {
+        path: "/create-new-transaction",
+        name: "create-new-transaction",
+        component: NouvelleTransaction,
+      },
+
+      {
+        path: "/send-notification",
+        name: "send-notification",
+        component: EnvoyerNotification,
       },
     ],
   },

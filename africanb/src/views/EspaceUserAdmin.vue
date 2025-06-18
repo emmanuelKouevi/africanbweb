@@ -179,6 +179,42 @@
       <v-spacer></v-spacer>
 
       <v-menu
+        v-model="menuNotification"
+        :close-on-content-click="false"
+        :nudge-width="200"
+        offset-x
+      >
+        <template v-slot:activator="{ on, attrs }">
+          <v-btn icon color="transparent" v-bind="attrs" v-on="on"
+            ><v-badge color="green" overlap value="messages">
+              <v-icon color="black" large> mdi-bell </v-icon>
+            </v-badge></v-btn
+          >
+        </template>
+
+        <v-card>
+          <v-list>
+            <v-list-item>
+              <v-list-item-content>
+                <v-list-item-title class="simple_title"
+                  >Mes Notifications</v-list-item-title
+                >
+                <v-list-item-subtitle class="simple_title"
+                  >Notifications récentes</v-list-item-subtitle
+                >
+              </v-list-item-content>
+            </v-list-item>
+          </v-list>
+
+          <v-divider></v-divider>
+
+          <v-card-text>
+            <span class="text-center">Vous n'avez aucune notifications</span>
+          </v-card-text>
+        </v-card> </v-menu
+      >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+      <v-menu
         v-model="menuProfil"
         :close-on-content-click="false"
         :nudge-width="200"
@@ -288,6 +324,7 @@ import {
   API_GET_DOCUMENT_URL,
   API_GET_FUNCTIONNALITY_BY_ROLE,
   HEADERS,
+  LISTEN_URL_NOTIFICATION,
 } from "../components/globalConfig/globalConstConfig";
 import $ from "jquery";
 import {
@@ -302,12 +339,16 @@ import {
   FUNCTIONNALITY_MANAGE_ADHESION,
   FUNCTIONNALITY_MANAGE_STRATEGIE_BAGAGE,
   FUNCTIONNALITY_MANAGE_DOCUMENT,
+  FUNCTIONNALITY_GESTION_CAISSE,
+  FUNCTIONNALITY_MANAGE_NOTIFICATION,
 } from "../components/globalConfig/constFunctionnalies";
+let sseClient;
 export default {
   name: "EspaceUI",
   data() {
     return {
       menuProfil: false,
+      menuNotification: false,
       dialogLogout: false,
       mini: true,
       drawer: true,
@@ -319,6 +360,8 @@ export default {
           typeDocument: null,
         },
       },
+
+      messages: [],
 
       logoCompagnieTransport: {
         data: {
@@ -333,6 +376,85 @@ export default {
   },
 
   methods: {
+    // Retrieve notification from sse server connect
+    checkNotification() {
+      sseClient = this.$sse.create({
+        url: LISTEN_URL_NOTIFICATION("COMPAGNIE"),
+        format: "json",
+        polyfill: true,
+      });
+
+      sseClient.on("error", (e) => {
+        console.error("lost connection or failed to parse!", e);
+
+        // If this error is due to an unexpected disconnection, EventSource will
+        // automatically attempt to reconnect indefinitely. You will _not_ need to
+        // re-add your handlers.
+      });
+
+      // Handle messages without a specific event
+      sseClient.on("message", this.handleMessage);
+
+      // Handle 'chat' messages
+      sseClient.on("chat", this.handleChat);
+
+      // Handle once for a ban message
+      sseClient.once("ban", this.handleBan);
+
+      sseClient
+        .connect()
+        .then((sse) => {
+          console.log(sse);
+          console.log("We're connected!");
+
+          // Unsubscribes from event-less messages after 7 seconds
+          /*setTimeout(() => {
+            sseClient.off("message", this.handleMessage);
+            console.log("Stopped listening to event-less messages!");
+          }, 7000);
+
+          // Unsubscribes from chat messages after 14 seconds
+          setTimeout(() => {
+            sse.off("chat", this.handleChat);
+            console.log("Stopped listening to chat messages!");
+          }, 14000);*/
+        })
+        .catch((err) => {
+          // When this error is caught, it means the initial connection to the
+          // events server failed.  No automatic attempts to reconnect will be made.
+          console.error("Failed to connect to server", err);
+        });
+    },
+
+    handleBan(banMessage) {
+      console.log(banMessage);
+      // Note that we can access properties of message, since our parser is set to JSON
+      // and the hypothetical object has a `reason` property.
+      this.messages.push(`You've been banned! Reason: ${banMessage.reason}`);
+    },
+    handleChat(message) {
+      console.log(message);
+      // Note that we can access properties of message, since our parser is set to JSON
+      // and the hypothetical object has these properties.
+      this.messages.push(`${message.user} said: ${message.text}`);
+    },
+    handleMessage(message, lastEventId) {
+      console.log(message);
+      console.log(lastEventId);
+      console.warn("Received a message w/o an event!", message, lastEventId);
+    },
+    beforeDestroy() {
+      console.log("Nous sommes dans la destruction du sse");
+      // Make sure to close the connection with the events server
+      // when the component is destroyed, or we'll have ghost connections!
+      sseClient.disconnect();
+      console.log("Après destruction");
+
+      // Alternatively, we could have added the `sse: { cleanup: true }` option to our component,
+      // and the SSEManager would have automatically disconnected during beforeDestroy.
+    },
+
+    // Get user profil picture.
     async getUrlPhotoProfil() {
       this.photoProfilObject.data.typeDocument = "PHOTO_PROFIL";
       this.loading = true;
@@ -705,6 +827,44 @@ export default {
           globalFunctionnalities.push(manageDocumentFunctionality);
         }
 
+        if (element.code == FUNCTIONNALITY_MANAGE_NOTIFICATION) {
+          var functionManageNotification = {
+            title: "Gestion des notifications",
+            url: "",
+            items: [
+              {
+                title: "Envoyer une notification",
+                navigation: "/send-notification",
+              },
+              {
+                title: "Liste des notifications",
+                navigation: "/all-notifications-sended",
+              },
+            ],
+          };
+
+          globalFunctionnalities.push(functionManageNotification);
+        }
+
+        if (element.code == FUNCTIONNALITY_GESTION_CAISSE) {
+          var functionGestionCaisse = {
+            title: "Gestion des caisses",
+            url: "",
+            items: [
+              {
+                title: "Créer une transaction",
+                navigation: "/create-new-transaction",
+              },
+              {
+                title: "Consulter l'état de caisses",
+                navigation: "/check-state-wallet",
+              },
+            ],
+          };
+
+          globalFunctionnalities.push(functionGestionCaisse);
+        }
+
         if (element.code == FUNCTIONNALITY_MANAGE_ADHESION) {
           var adhesionFunction = {
             title: "Gestion des adhésions",
@@ -735,6 +895,14 @@ export default {
     this.getUrlPhotoProfil();
     this.getUrlLogoCompagnie();
     this.getAllFunctionnalitiesByUserRole();
+    this.checkNotification();
+  },
+
+  beforeDestroy() {
+    // Close the SSE connection when the component is destroyed
+    if (this.eventSource) {
+      this.eventSource.close();
+    }
   },
 };
 </script>
@@ -754,6 +922,6 @@ export default {
 }
 
 .simple_title {
-  font-family: "Raleway";
+  font-family: "Montserrat";
 }
 </style>

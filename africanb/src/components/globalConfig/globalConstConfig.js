@@ -138,6 +138,17 @@ export const API_STATISTIQUE_RESERVATIONS = (period, section) => {
   return `${BASE_URL}statistiques/reservation/${period}/${section}`;
 };
 
+export const API_STATISTIQUE_BAGAGES = (period) => {
+  return `${BASE_URL}statistiques/bagage/${period}/gare`;
+};
+
 export const API_STATISTIQUE_OFFRE_VOYAGE_RESERVATION = (period) => {
   return `${BASE_URL}statistiques/offreVoyage/${period}/compagnie`;
+};
+
+export const API_CREATE_TRANSACTION_URL = `${BASE_URL}transactions`;
+export const API_SEND_NOTIFICATION_URL = `${BASE_URL}notification/compagnie`;
+
+export const LISTEN_URL_NOTIFICATION = (type) => {
+  return `${BASE_URL}sse/connect?type=${type}`;
 };

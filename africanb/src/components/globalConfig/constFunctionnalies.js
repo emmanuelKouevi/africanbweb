@@ -195,3 +195,8 @@ export const FUNCTIONNALITY_MANAGE_STRATEGIE_BAGAGE =
   "functionnalityManageStrategieBagage";
 
 export const FUNCTIONNALITY_MANAGE_DOCUMENT = "functionnalityManageDocument";
+
+export const FUNCTIONNALITY_GESTION_CAISSE = "FunctionnalityGestionCaisse";
+
+export const FUNCTIONNALITY_MANAGE_NOTIFICATION =
+  "functionnalityManageNotification";

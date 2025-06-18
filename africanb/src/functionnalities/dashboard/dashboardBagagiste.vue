@@ -210,7 +210,7 @@ import {
   API_GET_DOCUMENT_URL,
   API_STATISTIQUE_RESERVATIONS,
   API_STATISTIQUE_BAGAGES,
-} from "../globalConfig/globalConstConfig";
+} from "@/components/globalConfig/globalConstConfig";
 import StatistiqueReservationParGareTransport from "@/functionnalities/statistiques/traders/views/StatistiqueReservationParGareTransport.vue";
 export default {
   name: "DashboardSeller",
@@ -272,11 +272,6 @@ export default {
       chartDataAnnual: {
         labels: [],
         datasets: [
-          {
-            label: "Chiffre Affaire Réservation (Aujourd'hui)",
-            backgroundColor: "#2f3542",
-            data: [],
-          },
           {
             label: "Chiffre Affaire Bagage (Aujourd'hui)",
             backgroundColor: "#2ed573",
@@ -560,6 +555,7 @@ export default {
           periodDate = "annuel";
           break;
       }
+      this.dataToSend.data.gareTransportDesignation = "Gare de Marcory";
       await axios
         .post(
           API_STATISTIQUE_RESERVATIONS(periodDate, "gare"),
@@ -691,7 +687,7 @@ export default {
     getLabelAndDataSetGraphicsLineAnnualBag(data) {
       if (data != null) {
         for (var value of Object.entries(data.chiffreAffairesParProgramme)) {
-          this.chartDataAnnual.datasets[1].data.push(value);
+          this.chartDataAnnual.datasets[0].data.push(value);
         }
       }
     },
@@ -745,8 +741,7 @@ export default {
 
     // GET DAILY BOOKING STATISTICS BY STATION
     async getDailyStatisticsByStation() {
-      this.dataToSend.data.gareDesignation =
-        this.$store.state.userAuthentified.gareDesignation;
+      this.dataToSend.data.gareDesignation = "Gare de Marcory";
       await axios
         .post(API_STATISTIQUE_RESERVATIONS("jour", "gare"), this.dataToSend, {
           headers: HEADERS(this.$store.state.userAuthentified.token),
@@ -786,8 +781,7 @@ export default {
 
     // GET ANNUAL BOOKING STATISTICS BY STATION
     async getAnnualStatisticsByStation() {
-      this.dataToSend.data.gareDesignation =
-        this.$store.state.userAuthentified.gareDesignation;
+      this.dataToSend.data.gareDesignation = "Gare de Marcory";
       await axios
         .post(API_STATISTIQUE_RESERVATIONS("annuel", "gare"), this.dataToSend, {
           headers: HEADERS(this.$store.state.userAuthentified.token),
@@ -827,8 +821,7 @@ export default {
 
     // GET DAILY NET SALES STATISTICS BY STATION
     async getDailyStatisticBagByStation() {
-      this.dataToSend.data.gareDesignation =
-        this.$store.state.userAuthentified.gareDesignation;
+      this.dataToSend.data.gareDesignation = "Gare de Marcory";
       await axios
         .post(API_STATISTIQUE_BAGAGES("jour"), this.dataToSend, {
           headers: HEADERS(this.$store.state.userAuthentified.token),
@@ -843,7 +836,6 @@ export default {
               }, 4000);
             } else {
               this.dailyStatisticBags = response.data.item;
-              console.log(this.dailyStatisticBags);
               this.getLabelAndDataSetGraphicsLineDailyBag(
                 this.dailyStatisticBags
               );
@@ -866,13 +858,13 @@ export default {
 
     // GET ANNUAL BAGS STATISTICS BY STATION
     async getAnnualStatisticBagByStation() {
-      this.dataToSend.data.gareDesignation =
-        this.$store.state.userAuthentified.gareDesignation;
+      this.dataToSend.data.gareDesignation = "Gare de Marcory";
       await axios
         .post(API_STATISTIQUE_BAGAGES("annuel"), this.dataToSend, {
           headers: HEADERS(this.$store.state.userAuthentified.token),
         })
         .then((response) => {
+          console.log(response);
           if (response.status == 200) {
             if (response.data.status.code != 800) {
               this.errorMsg = response.data.status.message;
@@ -882,7 +874,6 @@ export default {
               }, 4000);
             } else {
               this.annualStatisticBags = response.data.item;
-              console.log(this.dailyStatisticBags);
               this.getLabelAndDataSetGraphicsLineAnnualBag(
                 this.annualStatisticBags
               );
@@ -958,7 +949,8 @@ export default {
       this.loading = true;
       if (
         this.$store.state.userAuthentified.roleCode ==
-        "RoleAdminCompagnieTransport"
+          "RoleAdminCompagnieTransport" ||
+        this.$store.state.userAuthentified.roleCode == "RoleAgentGare"
       ) {
         this.getAllReservationTicketByAdmin();
       } else {
@@ -1021,9 +1013,6 @@ export default {
 
   mounted() {
     this.getUrlPhotoProfil();
-    this.getAllReservationTicketAvailable();
-    this.getDailyStatisticsByStation();
-    this.getAnnualStatisticsByStation();
     this.getDailyStatisticBagByStation();
     this.getAnnualStatisticBagByStation();
   },

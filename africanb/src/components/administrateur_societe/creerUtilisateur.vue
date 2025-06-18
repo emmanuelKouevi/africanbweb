@@ -187,7 +187,12 @@
                   <label for="exampleInputEmail1" class="form-label"
                     >E-mail</label
                   >
-                  <input type="email" id="" class="form-control" />
+                  <input
+                    v-model.trim="$v.userObject.email.$model"
+                    type="email"
+                    id=""
+                    class="form-control"
+                  />
                 </div>
                 <div class="col-lg-3">
                   <label for="exampleInputEmail1" class="form-label"
@@ -197,7 +202,7 @@
                     type="text"
                     class="form-control"
                     id="exampleInputEmail1"
-                    v-model.trim="$v.userObject.nom.$model"
+                    v-model.trim="$v.userObject.login.$model"
                   />
                 </div>
               </div>
