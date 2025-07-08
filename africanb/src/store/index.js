@@ -19,6 +19,8 @@ export default new Vuex.Store({
       token: null,
     },
 
+    programmeDesignationSSE: null,
+
     ticket: {},
 
     isAuthentified: false,
@@ -29,6 +31,10 @@ export default new Vuex.Store({
   getters: {},
 
   mutations: {
+    STORE_PROGRAMME(state, data) {
+      state.programmeDesignationSSE = data;
+    },
+
     STORE_TICKET(state, data) {
       state.ticket = data;
     },

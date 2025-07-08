@@ -1,30 +1,36 @@
 <template>
   <v-app id="inspire">
-    <nav class="navbar navbar-light bg-light fixed-top">
+    <nav class="navbar">
       <div class="container-fluid">
-        <a class="navbar-brand"><h2>URBAN BUS TICKET'S</h2></a>
+        <a class="navbar-brand">
+          <img
+            src="../assets/urbanGo.png"
+            height="140"
+            width="150"
+            alt=""
+            class="animate__animated animate__backInLeft animate__delay-1s"
+          />
+        </a>
         <ul class="nav nav-pills justify-content-end">
           <li class="nav-item">
             <a class="nav-link" href="#aboutUs-section" aria-current="page"
-              >A PROPOS</a
+              >À PROPOS</a
             >
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#our-services">NOS SERVICES</a>
+            <a class="nav-link" href="#our-services">SERVICES</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#partner-section">NOS PARTENAIRES</a>
+            <a class="nav-link" href="#partner-section">NOUS CONTACTER</a>
           </li>
-          <!--<li class="nav-item">
-            <a class="nav-link" href="#">NOUS CONTACTER</a>
-          </li>-->
+
           &nbsp;&nbsp;
           <li class="nav-item">
-            <button type="button" class="btn" @click="goToLoginPage">
-              <small></small>SE CONNECTER&nbsp;&nbsp;<v-icon color="white"
+            <v-btn color="#159e72" @click="goToLoginPage"
+              ><span>SE CONNECTER</span>&nbsp;&nbsp;<v-icon color="white"
                 >mdi-login</v-icon
-              >
-            </button>
+              ></v-btn
+            >
           </li>
         </ul>
       </div>
@@ -33,20 +39,20 @@
     <div class="container" id="top-header">
       <div class="container-fluid" id="top-header">
         <div class="row header">
-          <div class="col-lg-8 text_header">
+          <div class="col-lg-7">
             <h1 class="font-weight-bold enough">
-              Envie de voyager sans stress et de réserver vos billets en un clin
-              d'œil ? 🌍💺
+              Réservez vos billets en un clic !!!
             </h1>
             <br />
             <div class="content_text">
               <p>
-                <span id="african_bt">URBAN BUS TICKET'S </span>
-                est votre plateforme vous permettant de pouvoir administrer,
-                gérer de maniere efficiente votre compagnie de transport. Vos
-                bénéfices ne pourront qu'augmenter.
+                Découvrez la nouvelle façon de réserver vos billets de
+                transport, spectacles et événements. Une interface intuitive,
+                des prix transparents et une confirmation instantanée. Votre
+                prochaine aventure commence maintenant, sans stress ni
+                complication.
               </p>
-              <v-btn class="offres" small
+              <v-btn color="#159e72" small
                 ><span class="content_offre_text">Voir les offres</span
                 >&nbsp;&nbsp;<v-icon color="white"
                   >mdi-menu-right</v-icon
@@ -56,7 +62,58 @@
           </div>
 
           <div class="col-lg-5" id="img_header">
-            <img src="" height="400" alt="" />
+            <v-card
+              elevation="5"
+              class="animate__animated animate__backInDown animate__delay-2s"
+            >
+              <v-card-title
+                ><span class="scheduled_travel"
+                  >Planifiez vos voyages en toute sérénité</span
+                ></v-card-title
+              >
+              <v-card-text>
+                <div class="row">
+                  <div class="col-lg-5">
+                    <select
+                      class="form-select scheduled_input"
+                      aria-label="Default select example"
+                      aria-placeholder="Départ"
+                    >
+                      <option>Départ</option>
+                    </select>
+                  </div>
+                  <div class="col-lg-2">
+                    <v-btn color="#159e72"
+                      ><v-icon color="white" size="30">mdi-sync</v-icon></v-btn
+                    >
+                  </div>
+                  <div class="col-lg-5">
+                    <select
+                      class="form-select scheduled_input"
+                      aria-label="Default select example"
+                      aria-placeholder="Destination"
+                    >
+                      <option>Destination</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-lg-8">
+                    <input
+                      type="date"
+                      class="form-control scheduled_input"
+                      placeholder="Date de départ"
+                    />
+                  </div>
+                  <div class="col-lg-3">
+                    <v-btn text color="#159e72"
+                      ><v-icon>mdi-magnify</v-icon
+                      ><span>Rechercher</span></v-btn
+                    >
+                  </div>
+                </div>
+              </v-card-text>
+            </v-card>
           </div>
         </div>
       </div>
@@ -255,184 +312,6 @@
       </v-container>
     </v-footer>
   </v-app>
-
-  <!--<v-app id="inspire">
-
-        <v-app-bar app color="teal">
-            <v-toolbar-title class="icon_owner">
-                <v-img lazy-src="https://picsum.photos/id/11/10/6" max-height="60" max-width="100" src="../assets/UB.jpg"></v-img>
-            </v-toolbar-title>
-
-            <v-spacer></v-spacer>
-
-            <v-btn class="onglets" text><a href="#aboutMe" class="link">À PROPOS</a></v-btn>
-            <v-btn class="onglets" text><a href="#skills" class="link">NOS SERVICES</a></v-btn>
-            <v-menu offset-y>
-                <template v-slot:activator="{ on, attrs }"><v-btn text dark v-bind="attrs" v-on="on">PARTENAIRES</v-btn></template>
-                <v-list>
-                    <v-list-item link @click="goToAdhesionPage">
-                        <v-list-item-title><v-icon>mdi-account</v-icon>&nbsp;&nbsp;<small>Demander une adhésion</small></v-list-item-title>
-                    </v-list-item>
-                </v-list>
-            </v-menu> 
-            <v-btn class="onglets" text><a href="#contact" class="link">NOUS CONTACTER</a></v-btn>
-            <v-menu offset-y>
-                <template v-slot:activator="{ on, attrs }"><v-btn text dark v-bind="attrs" v-on="on">CONNEXION</v-btn></template>
-                <v-list>
-                    <v-list-item link @click="goToLoginPage">
-                        <v-list-item-title><v-icon>mdi-login</v-icon>&nbsp;&nbsp;<small>Se connecter</small></v-list-item-title>
-                    </v-list-item>
-                </v-list>
-            </v-menu> 
-
-        </v-app-bar>
-
-        <v-parallax height="750" dark src='../assets/other_inside_bus.jpg'>
-            <v-row align="center" justify="center">
-                <v-col class="text-center"  cols="12">
-                    <h1 class="text-h3 font-weight-bold mb-4"><span id="urban_text">URBAN</span> <span id="bus_text">BUS</span> <span id="ticket_text">TICKET'S</span></h1>
-                    <h1 class="font-weight-thin mb-4">OFFREZ VOUS DES SERVICES DE QUALITÉS.</h1>
-                </v-col>
-            </v-row>
-        </v-parallax><br><br>
-
-        <v-btn class="button_to_top"  rounded color="#3c6382" bottom ><v-icon size="25" color="white">mdi-arrow-up</v-icon></v-btn>
-
-         Sizes your content based upon application components
-        <v-main>
-            <v-container fluid>
-                <v-sheet>
-                    <v-row justify="center" align="center"><h1 class="section" id="aboutMe">À PROPOS DE</h1></v-row><br><br><br>
-
-                    <v-row>
-                        <v-col><v-img src="" cover height="350" width="500"></v-img></v-col>
-
-                        <v-col cols>
-                            <span class="aboutMe_content font-weight-thin">
-                                Lorem ipsum dolor, sit amet consectetur adipisicing elit. Dolores, sunt necessitatibus. Quibusdam deserunt rerum voluptatem ullam, molestiae omnis. Nisi quidem autem perferendis perspiciatis. Necessitatibus dolorum recusandae accusamus? Minus, autem voluptatibus.
-                                Lorem ipsum, dolor sit amet consectetur adipisicing elit. Vitae porro magnam rerum quas? Accusantium aspernatur consectetur tempore hic ab omnis, in, corporis numquam temporibus laboriosam corrupti officia optio quam velit!
-                            </span>
-                        </v-col>
-                    </v-row>
-                </v-sheet>
-            </v-container><br><br><br>
-
-            <div class="container-fluid">
-                <v-parallax height="300" dark src='../assets/travel_by_car.jpg'>
-                
-                </v-parallax>
-            </div><br><br><br>
-
-            <v-container fluid>
-                <v-sheet>
-                    <v-row justify="center" align="center"><h1 class="section" id="skills">NOS SERVICES</h1></v-row><br>
-                    <div class="competences font-weight-thin">
-                        <p> Lorem, ipsum dolor sit amet consectetur adipisicing elit. Ea laboriosam ut at sed? Explicabo impedit voluptate</p>
-                        <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Voluptatibus laborum quisquam natus molesti </p>
-                        <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Accusantium nihil odio dolorem.</p>
-                    </div><br>
-                    <v-row>
-                        <v-col class="card_skill">
-
-                        </v-col>
-                    </v-row>
-
-                    <v-row>
-                    
-                    </v-row>
-
-                </v-sheet>
-
-                </v-container><br><br><br>
-
-                    <v-container fluid class="mb-5">
-                        <v-sheet>
-                            <v-row justify="center" align="center"><h1 class="section" id="projects">NOS PARTENAIRES</h1></v-row><br>
-                            <v-row justify="center" align="center">
-                                <v-col>
-                                    <div class="competences font-weight-thin">Lorem ipsum dolor sit amet consectetur adipisicing elit. Vitae, esse! Odit esse quisquam enim laboriosam officia magnam nihil ratione ducimus voluptatem cumque sunt laborum dolore ullam, sequi, quaerat pariatur architecto.</div><br>
-                                </v-col>
-                            </v-row>
-                        </v-sheet>
-
-                    </v-container><br><br><br><br><br><br>
-
-
-                    <div class="container-fluid">
-                        <v-parallax height="870" dark src=''>
-                            <div class="section_contact"><h1 id="contact">CONTACTEZ - MOI</h1></div>
-                            <span class="text-center">Renseignez ce formulaire de contact, je vous repondrai dans les plus brefs délais</span>
-                            <v-row justify="center">
-                                <v-col cols="8">
-                                    <v-form>
-                                        <v-sheet color="black" class="contact_form">
-                                            <v-container fluid>
-                                                <v-row>
-                                                    <v-col><v-text-field class="my_input" dense label="Votre nom" solo></v-text-field></v-col>
-                                                    <v-col><v-text-field class="my_input" dense label="Votre Prénom" solo></v-text-field></v-col>
-                                                </v-row>
-
-                                                <v-row>
-                                                    <v-col><v-text-field class="my_input" dense label="Votre E-mail" solo></v-text-field></v-col>
-                                                    <v-col><v-text-field class="my_input" dense label="N° de Téléphone" solo></v-text-field></v-col>                                            
-                                                </v-row>
-
-                                                <v-row>
-                                                    <v-col><v-text-field class="my_input" dense label="Objet" solo></v-text-field></v-col>
-                                                </v-row>
-
-                                                <v-row>
-                                                    <v-col><v-textarea class="my_input" dense label="Votre message" solo></v-textarea></v-col>
-                                                </v-row>
-
-                                                <v-row>
-                                                    <v-col>
-                                                        <div class="form-check">
-                                                            <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked">
-                                                            <label class="form-check-label font-weight-bold" for="flexCheckChecked"> En soumettant ce formulaire, j'accepte que mes données personnelles soient utilisées pour me recontacter. Aucun autre traitement ne sera effectué avec mes informations.</label>
-                                                        </div>
-                                                    </v-col>
-                                                
-                                                </v-row>
-
-                                                <v-row>
-                                                    <v-col class="text-center"><v-btn class="btn_form" type="submit" color="#192a56">ENVOYER</v-btn></v-col>
-                                                </v-row>
-                                            </v-container>
-                                        </v-sheet>
-                                    </v-form>
-                                </v-col>
-
-                            </v-row><br>
-
-                            <v-row justify="space-between" align="center">
-                                <v-col><v-icon color="white">mdi-email-fast</v-icon> <span class="font-weight-thin">emmanuelhervekouevi@gmail.com</span></v-col>
-                                <v-col><v-icon color="white">mdi-cellphone-sound</v-icon> <span class="font-weight-thin">+225 07 89 72 85 01</span></v-col>
-                                <v-col><v-icon color="white">mdi-home-city</v-icon> <span class="font-weight-thin">Côte d'Ivoire - Abidjan</span></v-col>
-                                <v-col><v-icon color="white">mdi-linkedin</v-icon> <span class="font-weight-thin">Linkedin</span></v-col>
-                            </v-row>
-
-                        </v-parallax>
-
-                    </div><br><br><br>
-
-                </v-main>
-
-            <v-footer height="100" color=#2d3436>
-                
-                <v-container fluid>
-
-                    <v-row>
-                        <v-col class="text-center">
-                            <span class="copyright">© copyright - Urban Bus Ticket Tous droits réservés</span>
-                        </v-col>
-                    </v-row>
-
-                </v-container>
-
-            </v-footer>
-
-    </v-app>-->
 </template>
 
 <script>
@@ -490,6 +369,15 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.scheduled_travel {
+  font-weight: 700;
+  opacity: 0.8;
+  font-family: "Montserrat";
+}
+
+.scheduled_input {
+  font-family: "Montserrat";
+}
 .aboutUs {
   background-color: #dfe4ea;
   margin: auto;
@@ -510,17 +398,20 @@ export default {
   display: none;
   font-size: 25px;
   font-weight: 300;
-  font-family: "Roboto";
-  word-spacing: 4px;
+  font-family: "Montserrat";
+  font-size: 22px;
+  word-spacing: 2px;
 }
 
 .enough {
   color: #2c3a47;
   display: none;
+  font-family: "Montserrat";
+  font-size: 25px;
 }
 
 #african_bt {
-  background: linear-gradient(to right, #079992, #0c2461);
+  background: linear-gradient(to right, #159e72, #0c2461);
   font-size: 20px;
   font-weight: bold;
   background-clip: text;
@@ -532,22 +423,32 @@ export default {
   padding-top: 100px;
 }
 
-.navbar-brand {
+/*.navbar-brand {
   background: linear-gradient(to right, #079992, #0c2461);
   background-clip: text;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-}
+}*/
 
 .nav-link {
+  font-family: "Montserrat";
+  font-weight: bold;
   color: #2c3a47;
+}
+
+.nav-link:hover {
+  font-family: "Montserrat";
+  font-weight: bold;
+  transform: scale(1.14);
+  color: #079992;
 }
 
 .nav-item button {
   color: white;
+  font-weight: bold;
 }
 
-.nav-item button:hover {
+/*.nav-item button:hover {
   font-weight: bold;
 }
 
@@ -561,7 +462,7 @@ export default {
   font-size: 35px;
   font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
     Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
-}
+}*/
 
 .avatar {
   color: black;
@@ -715,7 +616,7 @@ export default {
 }
 
 .offres {
-  background: linear-gradient(#0c2461, #079992);
+  background: linear-gradient(#0c2461, #159e72);
 }
 
 .content_offre_text {

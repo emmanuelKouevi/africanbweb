@@ -200,3 +200,5 @@ export const FUNCTIONNALITY_GESTION_CAISSE = "FunctionnalityGestionCaisse";
 
 export const FUNCTIONNALITY_MANAGE_NOTIFICATION =
   "functionnalityManageNotification";
+
+export const FUNCTIONNALITY_MANAGE_BAGS = "functionalityManageBags";

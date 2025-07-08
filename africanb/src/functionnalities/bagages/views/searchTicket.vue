@@ -1,32 +1,95 @@
 <template>
-  <v-app>
+  <v-app id="inspire">
     <div class="container">
-      <span class="title_search">Rechercher un billet</span><br /><br />
+      <h3 class="title_search">Enregistrer des bagages</h3>
+      <small class="subtitle">Procédure et formalités d'enregistrement.</small
+      ><br /><br />
       <div class="row">
         <div class="col-lg-6">
-          <div>
-            <input
-              id="searchTicket"
-              type="text"
-              class="form-control"
-              aria-describedby="basic-addon1"
-              v-model="keyword"
-              placeholder="Entrer la référence du billet"
-            />
-          </div>
+          <v-card>
+            <v-card-title
+              ><span class="title_search">Recherche de billet</span
+              ><v-spacer></v-spacer>
+              <v-btn
+                x-small
+                color="secondary"
+                @click="showOrHideTicketList()"
+                >{{
+                  isShowTicketList == false
+                    ? "Afficher les réservations"
+                    : "Cacher les réservations"
+                }}</v-btn
+              >
+            </v-card-title>
+            <v-card-text>
+              <v-form>
+                <div class="mb-3">
+                  <label for="exampleInputPassword1" class="form-label"
+                    >Référence du billet:</label
+                  >
+
+                  <input
+                    id="searchTicket"
+                    type="text"
+                    class="form-control col-lg-10"
+                    aria-describedby="basic-addon1"
+                    v-model="keyword"
+                  />
+                </div> </v-form
+              ><br />
+              <div class="float-right" v-if="isSearching == true">
+                <v-progress-circular
+                  indeterminate
+                  color="secondary"
+                ></v-progress-circular>
+              </div>
+              <div class="float-right" v-else>
+                <v-btn
+                  small
+                  btn
+                  color="success"
+                  @click="searchTicketByReference"
+                  ><v-icon>mdi-magnify</v-icon>&nbsp;&nbsp;Rechercher</v-btn
+                >
+              </div> </v-card-text
+            ><br />
+          </v-card>
+          <div></div>
         </div>
-        <div class="col-lg-3">
-          <div v-if="isSearching == true">
-            <v-progress-circular
-              indeterminate
-              color="secondary"
-            ></v-progress-circular>
-          </div>
-          <div v-else>
-            <v-btn btn color="success" @click="searchTicketByReference"
-              ><v-icon>mdi-magnify</v-icon>&nbsp;&nbsp;Rechercher</v-btn
-            >
-          </div>
+        <div
+          class="col-lg-6 animate__animated animate__backInLeft animate__delay-1s"
+          v-if="isShowTicketList == true"
+        >
+          <v-card>
+            <v-card-title
+              ><span class="title_search">Liste des réservations</span
+              ><v-spacer>
+                <v-text-field
+                  v-model="search"
+                  placeholder="Recherche ..."
+                  class="col-lg-7"
+                ></v-text-field> </v-spacer
+            ></v-card-title>
+            <v-card-text>
+              <v-data-table
+                :headers="headers"
+                :search="search"
+                :loading="loading"
+                :items="ticketAvailableList"
+              >
+                <template v-slot:[`item.actions`]="{ item }">
+                  <v-icon
+                    title="Sélectionner"
+                    color="blue"
+                    small
+                    class="mr-2"
+                    @click="chooseTicketFromList(item)"
+                    >mdi-gesture-tap-button</v-icon
+                  >
+                </template>
+              </v-data-table>
+            </v-card-text>
+          </v-card>
         </div>
       </div>
     </div>
@@ -59,6 +122,19 @@ export default {
   name: "SearchTicket",
   data() {
     return {
+      isShowTicketList: false,
+
+      headers: [
+        { text: "Référence", value: "designation" },
+        { text: "Nom", value: "clientDetails.nom" },
+        { text: "Prenom", value: "clientDetails.prenoms" },
+        { text: "Actions", value: "actions", sortable: false },
+      ],
+
+      search: "",
+
+      loading: false,
+
       isSearching: false,
       keyword: null,
       errorMsg: null,
@@ -73,6 +149,14 @@ export default {
   },
 
   methods: {
+    // CHOOSE A TICKET FROM TICKET LIST
+    chooseTicketFromList(item) {
+      this.keyword = item.designation;
+    },
+    //HIDE OR SHOW RESERVATIONS LIST TICKET
+    showOrHideTicketList() {
+      this.isShowTicketList = !this.isShowTicketList;
+    },
     //RÉCUPÉRER LA LISTE DES BILLETS DISPONIBLES.
     async getTicketAvailables() {
       await axios
@@ -183,5 +267,25 @@ input[type="text"] {
   top: 25px;
   right: 2%;
   width: 25%;
+}
+
+#inspire {
+  background: #eeeeee;
+}
+
+.subtitle {
+  font-family: "Montserrat";
+}
+
+#searchTicket {
+  font-family: "Montserrat";
+  border-radius: 10px;
+  font-size: 16px;
+}
+
+.title_search {
+  font-weight: 700;
+  font-family: "Montserrat";
+  font-size: 20px;
 }
 </style>

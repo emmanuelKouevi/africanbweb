@@ -126,27 +126,17 @@
         </div>
       </div>
 
-      <StatistiqueReservationParGareTransport
+      <statsBagagisteWidgetVue
         v-if="isFilterApply == true"
         :chart-data-gare="
           dateSelected == 'Periodique' ? chartDataPeriod : chartDataMainDaily
-        "
-        :chartDataDoughnutGare="
-          dateSelected == 'Periodique'
-            ? chartDataDoughnutPeriod
-            : chartDataDoughnutMainDaily
-        "
-        :dataStatistiqueGareTransport="
-          dateSelected == 'Periodique'
-            ? periodStatisticByStation
-            : mainlyDateStatisticByStation
         "
         :data-statistic-bag-station="
           dateSelected == 'Periodique'
             ? periodStatisticBags
             : mainlyDateStatisticBags
         "
-      ></StatistiqueReservationParGareTransport
+      ></statsBagagisteWidgetVue
       ><br />
       <v-divider></v-divider>
       <div class="container">
@@ -157,12 +147,10 @@
         </div>
       </div>
 
-      <StatistiqueReservationParGareTransport
+      <statsBagagisteWidgetVue
         :chart-data-gare="chartDataDaily"
-        :chartDataDoughnutGare="chartDataDoughnutDaily"
-        :dataStatistiqueGareTransport="dailyStatisticByStation"
         :data-statistic-bag-station="dailyStatisticBags"
-      ></StatistiqueReservationParGareTransport
+      ></statsBagagisteWidgetVue
       ><br />
       <v-divider></v-divider>
 
@@ -174,12 +162,10 @@
         </div>
       </div>
 
-      <StatistiqueReservationParGareTransport
+      <statsBagagisteWidgetVue
         :chart-data-gare="chartDataAnnual"
-        :chartDataDoughnutGare="chartDataDoughnutAnnual"
-        :dataStatistiqueGareTransport="annualStatisticByStation"
         :dataStatisticBagStation="annualStatisticBags"
-      ></StatistiqueReservationParGareTransport>
+      ></statsBagagisteWidgetVue>
     </div>
 
     <v-alert
@@ -204,18 +190,16 @@
 import axios from "axios";
 import $ from "jquery";
 import {
-  API_GET_RESERVATIONS_BY_SELLER,
-  API_GET_RESERVATIONS_BY_ADMIN_TP,
   HEADERS,
   API_GET_DOCUMENT_URL,
   API_STATISTIQUE_RESERVATIONS,
   API_STATISTIQUE_BAGAGES,
 } from "@/components/globalConfig/globalConstConfig";
-import StatistiqueReservationParGareTransport from "@/functionnalities/statistiques/traders/views/StatistiqueReservationParGareTransport.vue";
+import statsBagagisteWidgetVue from "./widgets/statsBagagisteWidget.vue";
 export default {
   name: "DashboardSeller",
   components: {
-    StatistiqueReservationParGareTransport,
+    statsBagagisteWidgetVue,
   },
   data() {
     return {
@@ -224,18 +208,10 @@ export default {
 
       search: "",
       loading: true,
-      headers: [
-        { text: "REFERENCE", value: "" },
-        { text: "PRIX", value: "" },
-        { text: "NOM ET PRENOMS", value: "" },
-        { text: "E-MAIL", value: "" },
-      ],
 
       objectToSend: {
         data: {},
       },
-
-      reservationList: [],
 
       photoProfilObject: {
         data: {
@@ -303,63 +279,12 @@ export default {
         ],
       },
 
-      chartDataDoughnutAnnual: {
-        labels: [],
-        datasets: [
-          {
-            backgroundColor: [
-              "#2f3542",
-              "#2ed573",
-              "#ffd32a",
-              "#ffa801",
-              "#3c40c6",
-              "#f53b57",
-              "#182C61",
-              "#9AECDB",
-              "#BDC581",
-              "#82589F",
-              "#EAB543",
-              "#079992",
-            ],
-            data: [],
-          },
-        ],
-      },
-
       chartDataPeriod: {
         labels: [],
         datasets: [
           {
-            label: "Chiffre Affaire Réservation (Periode)",
-            backgroundColor: "#2f3542",
-            data: [],
-          },
-          {
             label: "Chiffre Affaire Bagage (Period)",
             backgroundColor: "#2ed573",
-            data: [],
-          },
-        ],
-      },
-
-      chartDataDoughnutPeriod: {
-        labels: [],
-        datasets: [
-          {
-            backgroundColor: [
-              "#2f3542",
-              "#2ed573",
-              "#ffd32a",
-              "#ffa801",
-              "#3c40c6",
-              "#f53b57",
-              "#182C61",
-              "#9AECDB",
-              "#BDC581",
-              "#82589F",
-              "#EAB543",
-              "#079992",
-            ],
             data: [],
           },
         ],
@@ -369,36 +294,8 @@ export default {
         labels: [],
         datasets: [
           {
-            label: "Chiffre Affaire Réservation (Periode)",
-            backgroundColor: "#2f3542",
-            data: [],
-          },
-          {
             label: "Chiffre Affaire Bagage (Period)",
             backgroundColor: "#2ed573",
-            data: [],
-          },
-        ],
-      },
-
-      chartDataDoughnutMainDaily: {
-        labels: [],
-        datasets: [
-          {
-            backgroundColor: [
-              "#2f3542",
-              "#2ed573",
-              "#ffd32a",
-              "#ffa801",
-              "#3c40c6",
-              "#f53b57",
-              "#182C61",
-              "#9AECDB",
-              "#BDC581",
-              "#82589F",
-              "#EAB543",
-              "#079992",
-            ],
             data: [],
           },
         ],
@@ -447,18 +344,6 @@ export default {
       }
     },
 
-    // GET DATAS FOR ANNUAL STATISTICS OF DOUGHNUTS GRAPH
-    async getLabelAndDataSetGraphicsDoughnutMainDaily(data) {
-      if (data != null) {
-        for (var [cle, valeur] of Object.entries(
-          data.nombreReservationBilletVoyageParProgramme
-        )) {
-          this.chartDataDoughnutMainDaily.labels.push(cle);
-          this.chartDataDoughnutMainDaily.datasets[0].data.push(valeur);
-        }
-      }
-    },
-
     getLabelAndDataSetGraphicsLinePeriodBag(data) {
       if (data != null) {
         if (
@@ -466,7 +351,7 @@ export default {
           data.chiffreAffairesParProgramme != undefined
         )
           for (var value of Object.entries(data.chiffreAffairesParProgramme)) {
-            this.chartDataPeriod.datasets[1].data.push(value);
+            this.chartDataPeriod.datasets[0].data.push(value);
           }
       }
     },
@@ -474,7 +359,7 @@ export default {
     getLabelAndDataSetGraphicsLineMainlyDateBag(data) {
       if (data != null) {
         for (var value of Object.entries(data.chiffreAffairesParProgramme)) {
-          this.chartDataMainDaily.datasets[1].data.push(value);
+          this.chartDataMainDaily.datasets[0].data.push(value);
         }
       }
     },
@@ -511,24 +396,12 @@ export default {
 
       this.chartDataAnnual.labels = [];
       this.chartDataAnnual.datasets[0].data = [];
-      this.chartDataAnnual.datasets[1].data = [];
-
-      this.chartDataDoughnutAnnual.labels = [];
-      this.chartDataDoughnutAnnual.datasets[0].data = [];
 
       this.chartDataMainDaily.labels = [];
       this.chartDataMainDaily.datasets[0].data = [];
-      this.chartDataMainDaily.datasets[1].data = [];
-
-      this.chartDataDoughnutMainDaily.labels = [];
-      this.chartDataDoughnutMainDaily.datasets[0].data = [];
 
       this.chartDataPeriod.labels = [];
       this.chartDataPeriod.datasets[0].data = [];
-      this.chartDataPeriod.datasets[1].data = [];
-
-      this.chartDataDoughnutPeriod.labels = [];
-      this.chartDataDoughnutPeriod.datasets[0].data = [];
     },
 
     // APPLIQUER LA RECHERCHE PAR FILTRE.
@@ -586,12 +459,6 @@ export default {
                   }, 4000);
                 } else {
                   this.periodStatisticByStation = response.data.item;
-                  this.getLabelAndDataSetGraphicsLinePeriod(
-                    this.periodStatisticByStation
-                  );
-                  this.getLabelAndDataSetGraphicsDoughnutPeriod(
-                    this.periodStatisticByStation
-                  );
                 }
               } else if (periodDate == "date") {
                 if (this.datePrecise == "" || this.datePrecise == null) {
@@ -602,12 +469,6 @@ export default {
                   }, 4000);
                 } else {
                   this.mainlyDateStatisticByStation = response.data.item;
-                  this.getLabelAndDataSetGraphicsLineMainDate(
-                    this.mainlyDateStatisticByStation
-                  );
-                  this.getLabelAndDataSetGraphicsDoughnutMainDaily(
-                    this.mainlyDateStatisticByStation
-                  );
                 }
               } else {
                 console.log("N'affichons rien");
@@ -625,8 +486,6 @@ export default {
           this.errorMsg = e;
         })
         .finally(() => {
-          this.getDailyStatisticsByStation();
-          this.getAnnualStatisticsByStation();
           this.getDailyStatisticBagByStation();
           this.getAnnualStatisticBagByStation();
           this.loading = false;
@@ -727,18 +586,6 @@ export default {
       }
     },
 
-    // GET DATAS FOR ANNUAL STATISTICS OF DOUGHNUTS GRAPH
-    async getLabelAndDataSetGraphicsDoughnutAnnual(data) {
-      if (data != null) {
-        for (var [cle, valeur] of Object.entries(
-          data.nombreReservationBilletVoyageParProgramme
-        )) {
-          this.chartDataDoughnutAnnual.labels.push(cle);
-          this.chartDataDoughnutAnnual.datasets[0].data.push(valeur);
-        }
-      }
-    },
-
     // GET DAILY BOOKING STATISTICS BY STATION
     async getDailyStatisticsByStation() {
       this.dataToSend.data.gareDesignation = "Gare de Marcory";
@@ -756,52 +603,6 @@ export default {
               }, 4000);
             } else {
               this.dailyStatisticByStation = response.data.item;
-              this.getLabelAndDataSetGraphicsLineDaily(
-                this.dailyStatisticByStation
-              );
-              this.getLabelAndDataSetGraphicsDoughnutDaily(
-                this.dailyStatisticByStation
-              );
-            }
-          } else {
-            this.errorMsg = "Erreur";
-            $(".alert-error").fadeIn();
-            setTimeout(function () {
-              $(".alert-error").fadeOut();
-            }, 4000);
-          }
-        })
-        .catch((e) => {
-          this.errorMsg = e;
-        })
-        .finally(() => {
-          this.loading = false;
-        });
-    },
-
-    // GET ANNUAL BOOKING STATISTICS BY STATION
-    async getAnnualStatisticsByStation() {
-      this.dataToSend.data.gareDesignation = "Gare de Marcory";
-      await axios
-        .post(API_STATISTIQUE_RESERVATIONS("annuel", "gare"), this.dataToSend, {
-          headers: HEADERS(this.$store.state.userAuthentified.token),
-        })
-        .then((response) => {
-          if (response.status == 200) {
-            if (response.data.status.code != 800) {
-              this.errorMsg = response.data.status.message;
-              $(".alert-error").fadeIn();
-              setTimeout(function () {
-                $(".alert-error").fadeOut();
-              }, 4000);
-            } else {
-              this.annualStatisticByStation = response.data.item;
-              this.getLabelAndDataSetGraphicsLineAnnual(
-                this.annualStatisticByStation
-              );
-              this.getLabelAndDataSetGraphicsDoughnutAnnual(
-                this.annualStatisticByStation
-              );
             }
           } else {
             this.errorMsg = "Erreur";
@@ -894,70 +695,6 @@ export default {
         });
     },
 
-    // OBTENIR LA LISTE DE TOUTES LES RESERVATIONS ADMINISTRATEUR.
-    async getAllReservationTicketByAdmin() {
-      await axios
-        .post(API_GET_RESERVATIONS_BY_ADMIN_TP, this.objectToSend, {
-          headers: HEADERS(this.$store.state.userAuthentified.token),
-        })
-        .then((response) => {
-          if (response.status == 200) {
-            if (response.data.hasError == false) {
-              this.reservationList = response.data.items;
-            } else {
-              //
-            }
-          } else {
-            alert("");
-          }
-        })
-        .catch((e) => {
-          this.errorMsg = e;
-        })
-        .finally(() => {
-          this.loading = false;
-        });
-    },
-
-    // OBTENIR LA LISTE DE TOUTES LES RESERVATIONS PAR VENDEUR
-    async getAllReservationTicketBySeller() {
-      await axios
-        .post(API_GET_RESERVATIONS_BY_SELLER, this.objectToSend, {
-          headers: HEADERS(this.$store.state.userAuthentified.token),
-        })
-        .then((response) => {
-          if (response.status == 200) {
-            if (response.data.hasError == false) {
-              this.reservationList = response.data.items;
-            } else {
-              //
-            }
-          } else {
-            //
-          }
-        })
-        .catch((e) => {
-          this.errorMsg = e;
-        })
-        .finally(() => {
-          this.loading = false;
-        });
-    },
-
-    //OBTENIR LA LISTE DES RESERVATIONS EFFECTUÉ PAR LES UTILISATEUR À LA GARE
-    async getAllReservationTicketAvailable() {
-      this.loading = true;
-      if (
-        this.$store.state.userAuthentified.roleCode ==
-          "RoleAdminCompagnieTransport" ||
-        this.$store.state.userAuthentified.roleCode == "RoleAgentGare"
-      ) {
-        this.getAllReservationTicketByAdmin();
-      } else {
-        this.getAllReservationTicketBySeller();
-      }
-    },
-
     // RECUPERER LA PHOTO DE PROFIL DE L'UTILISATEUR
     async getUrlPhotoProfil() {
       this.photoProfilObject.data.typeDocument = "PHOTO_PROFIL";
@@ -1001,18 +738,10 @@ export default {
     },
   },
 
-  computed: {
-    totalPriceReservation() {
-      var total = 0;
-      for (let index = 0; index < this.reservationList.length; index++) {
-        total += this.reservationList[index].montantTotalReservation;
-      }
-      return total;
-    },
-  },
+  computed: {},
 
   mounted() {
-    this.getUrlPhotoProfil();
+    //this.getUrlPhotoProfil();
     this.getDailyStatisticBagByStation();
     this.getAnnualStatisticBagByStation();
   },

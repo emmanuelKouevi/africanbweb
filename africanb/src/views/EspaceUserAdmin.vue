@@ -173,7 +173,7 @@
         <v-img
           max-height="50px"
           max-width="75px"
-          src="../assets/UB.jpg"
+          src="../assets/urbanGo.png"
         ></v-img>
       </v-toolbar-title>
       <v-spacer></v-spacer>
@@ -186,7 +186,12 @@
       >
         <template v-slot:activator="{ on, attrs }">
           <v-btn icon color="transparent" v-bind="attrs" v-on="on"
-            ><v-badge color="green" overlap value="messages">
+            ><v-badge
+              color="green"
+              overlap
+              :value="messages.length"
+              :content="messages.length"
+            >
               <v-icon color="black" large> mdi-bell </v-icon>
             </v-badge></v-btn
           >
@@ -208,8 +213,19 @@
 
           <v-divider></v-divider>
 
-          <v-card-text>
+          <v-card-text v-if="messages.length == 0">
             <span class="text-center">Vous n'avez aucune notifications</span>
+          </v-card-text>
+
+          <v-card-text v-else>
+            <v-list-item v-for="(mes, msg) in messages" :key="msg">
+              <v-list-item-content>
+                <v-list-item-title class="compagnie">{{
+                  mes.raisonSociale
+                }}</v-list-item-title>
+                <v-list-item-subtitle>{{ mes.message }}</v-list-item-subtitle>
+              </v-list-item-content>
+            </v-list-item>
           </v-card-text>
         </v-card> </v-menu
       >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -341,7 +357,9 @@ import {
   FUNCTIONNALITY_MANAGE_DOCUMENT,
   FUNCTIONNALITY_GESTION_CAISSE,
   FUNCTIONNALITY_MANAGE_NOTIFICATION,
+  FUNCTIONNALITY_MANAGE_BAGS,
 } from "../components/globalConfig/constFunctionnalies";
+
 let sseClient;
 export default {
   name: "EspaceUI",
@@ -354,6 +372,8 @@ export default {
       drawer: true,
       functionnalitiesListByUserRole: [],
       functionnalitiesListComponents: [],
+
+      sseConnection: null,
 
       photoProfilObject: {
         data: {
@@ -381,77 +401,69 @@ export default {
       sseClient = this.$sse.create({
         url: LISTEN_URL_NOTIFICATION("COMPAGNIE"),
         format: "json",
+        withCredentials: false,
         polyfill: true,
       });
 
-      sseClient.on("error", (e) => {
-        console.error("lost connection or failed to parse!", e);
-
-        // If this error is due to an unexpected disconnection, EventSource will
-        // automatically attempt to reconnect indefinitely. You will _not_ need to
-        // re-add your handlers.
-      });
-
       // Handle messages without a specific event
-      sseClient.on("message", this.handleMessage);
-
-      // Handle 'chat' messages
-      sseClient.on("chat", this.handleChat);
-
-      // Handle once for a ban message
-      sseClient.once("ban", this.handleBan);
+      sseClient.on("KOUEVI CT_toutclient", (event) =>
+        this.messages.push(event)
+      );
 
       sseClient
         .connect()
         .then((sse) => {
-          console.log(sse);
           console.log("We're connected!");
-
-          // Unsubscribes from event-less messages after 7 seconds
-          /*setTimeout(() => {
-            sseClient.off("message", this.handleMessage);
-            console.log("Stopped listening to event-less messages!");
-          }, 7000);
-
-          // Unsubscribes from chat messages after 14 seconds
-          setTimeout(() => {
-            sse.off("chat", this.handleChat);
-            console.log("Stopped listening to chat messages!");
-          }, 14000);*/
+          console.log(sse);
         })
         .catch((err) => {
           // When this error is caught, it means the initial connection to the
           // events server failed.  No automatic attempts to reconnect will be made.
           console.error("Failed to connect to server", err);
         });
+
+      /*this.sseConnection = this.$sse
+        .create({
+          url: LISTEN_URL_NOTIFICATION("COMPAGNIE"),
+          format: "json",
+          polyfill: true,
+        })
+        .on("KOUEVI CT_toutclient", (event) => this.messages.push(event))
+        .on("error", (err) =>
+          console.error("Failed to parse or lost connection:", err)
+        )
+        .connect()
+        .catch((err) => console.error("Failed make initial connection:", err));*/
     },
 
-    handleBan(banMessage) {
-      console.log(banMessage);
-      // Note that we can access properties of message, since our parser is set to JSON
-      // and the hypothetical object has a `reason` property.
-      this.messages.push(`You've been banned! Reason: ${banMessage.reason}`);
+    checkNotificationProgram() {
+      this.$sse
+        .create({
+          url: LISTEN_URL_NOTIFICATION("COMPAGNIE_PROGRAMME"),
+          format: "json",
+          polyfill: true,
+        })
+        .on("Prog 003_programme", (event) => this.messages.push(event))
+        .on("error", (err) =>
+          console.error("Failed to parse or lost connection:", err)
+        )
+        .connect()
+        .catch((err) => console.error("Failed make initial connection:", err));
     },
-    handleChat(message) {
-      console.log(message);
-      // Note that we can access properties of message, since our parser is set to JSON
-      // and the hypothetical object has these properties.
-      this.messages.push(`${message.user} said: ${message.text}`);
-    },
-    handleMessage(message, lastEventId) {
-      console.log(message);
-      console.log(lastEventId);
-      console.warn("Received a message w/o an event!", message, lastEventId);
-    },
-    beforeDestroy() {
-      console.log("Nous sommes dans la destruction du sse");
-      // Make sure to close the connection with the events server
-      // when the component is destroyed, or we'll have ghost connections!
-      sseClient.disconnect();
-      console.log("Après destruction");
 
-      // Alternatively, we could have added the `sse: { cleanup: true }` option to our component,
-      // and the SSEManager would have automatically disconnected during beforeDestroy.
+    checkNotificationSystem() {
+      this.$sse
+        .create({
+          url: LISTEN_URL_NOTIFICATION("SYSTEM"),
+          format: "json",
+          polyfill: true,
+        })
+        .on("tout_utilisateur", (event) => this.messages.push(event))
+        .on("error", (err) =>
+          console.error("Failed to parse or lost connection:", err)
+        )
+        .connect()
+        .catch((err) => console.error("Failed make initial connection:", err));
     },
 
     // Get user profil picture.
@@ -697,7 +709,7 @@ export default {
           globalFunctionnalities.push(manageReservationTicket);
         }
 
-        if (element.code == FUNCTIONNALITY_MANAGE_RESERVATION_TICKET) {
+        if (element.code == FUNCTIONNALITY_MANAGE_BAGS) {
           var manageBags = {
             title: "Gestion des bagages",
             url: require("@/assets/bus.png"),
@@ -896,13 +908,12 @@ export default {
     this.getUrlLogoCompagnie();
     this.getAllFunctionnalitiesByUserRole();
     this.checkNotification();
+    //this.checkNotificationProgram();
+    //this.checkNotificationSystem();
   },
 
   beforeDestroy() {
-    // Close the SSE connection when the component is destroyed
-    if (this.eventSource) {
-      this.eventSource.close();
-    }
+    sseClient.disconnect();
   },
 };
 </script>
@@ -922,6 +933,11 @@ export default {
 }
 
 .simple_title {
+  font-family: "Montserrat";
+}
+
+.compagnie {
+  font-weight: bold;
   font-family: "Montserrat";
 }
 </style>

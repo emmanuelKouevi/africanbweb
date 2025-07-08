@@ -1,29 +1,33 @@
 <template>
   <v-app id="inspire">
     <div class="row">
-      <div class="col-lg-8 presentation"></div>
-      <div class="col-lg-4 pl-6">
-        <div class="container p-5">
-          <v-img
-            @click="$router.push({ path: '/' }).catch(() => {})"
-            max-height="100"
-            max-width="100"
-            src="../../assets/UB.jpg"
-          ></v-img>
-          <div>
-            <span class="welcome_text">Bienvenue</span>,&nbsp;
-            <span class="connexion_text">connectez-vous à votre compte...</span>
+      <div class="box_login">
+        <v-card
+          class="animate__animated animate__backInLeft animate__delay-1s"
+          max-height="550"
+          width="500"
+          elevation="5"
+        >
+          <div class="text-center">
+            <img src="../../assets/urbanGo.png" alt="" height="150" />
           </div>
-          <br />
-
-          <div class="row">
+          <div class="text-center">
+            <span class="welcome_text">BIENVENUE</span>
+          </div>
+          <v-card-subtitle class="text-subtitle"
+            >Connectez-vous pour administrer vos réservations et finaliser vos
+            opérations. </v-card-subtitle
+          ><br />
+          <v-card-text>
             <v-form @submit.prevent="login">
               <div class="mb-3">
                 <v-text-field
+                  append-icon="mdi-account"
+                  height="5"
                   type="text"
                   class="input"
                   v-model.trim="$v.userLogin.login.$model"
-                  placeholder="Login"
+                  placeholder="Adresse e-mail ou pseudo"
                   outlined
                   color="teal"
                   dense
@@ -51,8 +55,8 @@
                 <br />
 
                 <div class="row p-3" v-if="isLoading == false">
-                  <v-btn type="submit" color="teal" outlined
-                    >SE CONNECTER</v-btn
+                  <v-btn type="submit" color="#159d73"
+                    ><span class="btn-login">SE CONNECTER</span></v-btn
                   >
                 </div>
 
@@ -67,37 +71,10 @@
                 </div>
               </div>
             </v-form>
-            <v-divider></v-divider>
-          </div>
-          <div class="row">
-            <span class="dont_have_account text-center"
-              >Vous n'avez pas de compte ?
-              <small
-                class="new_asking"
-                @click="
-                  $router.push({ path: '/DemandeAdhesion' }).catch(() => {})
-                "
-                >Demandez votre adhésion</small
-              ></span
-            >
-          </div>
-        </div>
+          </v-card-text>
+        </v-card>
       </div>
     </div>
-
-    <br />
-
-    <v-footer class="footer" dark>
-      <v-container fluid>
-        <v-row>
-          <v-col class="text-center">
-            <span class="font-weight-bold"
-              >© copyright 2023 - African bus. Tous droits réservés</span
-            >
-          </v-col>
-        </v-row>
-      </v-container>
-    </v-footer>
     <v-overlay :value="overlay"
       ><v-progress-circular indeterminate size="64"></v-progress-circular
     ></v-overlay>
@@ -288,11 +265,29 @@ export default {
   color: black;
   font-size: 20px;
   font-family: "Montserrat";
-  font-weight: normal;
+  font-weight: bold;
+  opacity: 0.75;
 }
 
 .input {
-  border-radius: 7px;
+  border-radius: 10px;
+  font-size: 15px;
   font-family: "Montserrat";
+}
+
+.box_login {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.btn-login {
+  color: white;
+}
+
+.text-subtitle {
+  font-family: "Montserrat";
+  text-align: center;
+  font-size: 16px;
 }
 </style>

@@ -129,6 +129,47 @@
                   >
 
                   <select
+                    v-if="
+                      $store.state.userAuthentified.roleCode == 'RoleAgentGare'
+                    "
+                    v-model="typeNotification"
+                    class="form-select col-lg-5 content_form"
+                    aria-label="Default select example"
+                  >
+                    <option
+                      class="content_form"
+                      v-for="(type, t) in referenceTypeNotificationAgent"
+                      :value="type.designation"
+                      :key="t"
+                    >
+                      {{ type.description }}
+                    </option>
+                  </select>
+
+                  <select
+                    v-if="
+                      $store.state.userAuthentified.roleCode ==
+                      'RoleAdminCompagnieTransport'
+                    "
+                    v-model="typeNotification"
+                    class="form-select col-lg-5 content_form"
+                    aria-label="Default select example"
+                  >
+                    <option
+                      class="content_form"
+                      v-for="(type, t) in referenceTypeNotificationCompagnie"
+                      :value="type.designation"
+                      :key="t"
+                    >
+                      {{ type.description }}
+                    </option>
+                  </select>
+
+                  <select
+                    v-if="
+                      $store.state.userAuthentified.roleCode ==
+                      'RoleAdminSocieteMere'
+                    "
                     v-model="typeNotification"
                     class="form-select col-lg-5 content_form"
                     aria-label="Default select example"
@@ -249,6 +290,7 @@ import {
   API_RECUPERER_LISTE_OFFRE_VOYAGE,
   API_RECUPERER_PROGRAMME_PAR_OFFRE_VOYAGE,
   API_SEND_NOTIFICATION_URL,
+  API_SEND_NOTIFICATION_URL_SYSTEM,
   HEADERS,
 } from "@/components/globalConfig/globalConstConfig";
 import $ from "jquery";
@@ -261,7 +303,9 @@ export default {
   data() {
     return {
       errorMsg: null,
+
       successMsg: null,
+
       overlay: false,
 
       goToStepTwo: false,
@@ -273,6 +317,12 @@ export default {
       },
 
       referenceTypeNotificationList: [],
+
+      referenceTypeNotificationAgent: [],
+
+      referenceTypeNotificationCompagnie: [],
+
+      referenceTypeNotificationSystem: [],
 
       typeNotification: null,
 
@@ -349,7 +399,7 @@ export default {
           this.offreVoyageToSend.data.designation = null;
         });
     },
-    // obtenir la liste des offres de voyage
+    // OBTENIR LA LISTE DES OFFRES DE VOYAGES
     async getOffreVoyageList() {
       await axios
         .post(API_RECUPERER_LISTE_OFFRE_VOYAGE, this.offreVoyageObject, {
@@ -380,7 +430,7 @@ export default {
         });
     },
 
-    // Obtenir la liste des reférences par type notifications
+    // OBTENIR LA LISTE DES REFERENCES PAR TYPE DE NOTIFICATION
     async getReferenceTypeNotification() {
       await axios
         .post(
@@ -392,6 +442,16 @@ export default {
         )
         .then((response) => {
           this.referenceTypeNotificationList = response.data.items;
+          this.referenceTypeNotificationList.forEach((element) => {
+            if (element.designation == "TOUT_UTILISATEUR") {
+              this.referenceTypeNotificationSystem.push(element);
+            } else if (element.designation == "TOUT_CLIENT") {
+              this.referenceTypeNotificationCompagnie.push(element);
+            } else {
+              this.referenceTypeNotificationCompagnie.push(element);
+              this.referenceTypeNotificationAgent.push(element);
+            }
+          });
         })
         .catch((e) => {
           this.errorMsg = e;
@@ -427,10 +487,18 @@ export default {
         this.sendNotificationToSystem.data.type = this.typeNotification;
       } else {
         this.sendNotificationToProgram.data.type = this.typeNotification;
+        this.$store.commit(
+          "STORE_PROGRAMME",
+          this.sendNotificationToProgram.data.programmmeDesignation
+        );
       }
       await axios
         .post(
-          API_SEND_NOTIFICATION_URL,
+          this.typeNotification == "TOUT_UTILISATEUR" &&
+            this.$store.state.userAuthentified.roleCode ==
+              "RoleAdminSocieteMere"
+            ? API_SEND_NOTIFICATION_URL_SYSTEM
+            : API_SEND_NOTIFICATION_URL,
           this.typeNotification == "TOUT_CLIENT"
             ? this.sendNotificationToCustomer
             : this.typeNotification == "TOUT_UTILISATEUR"

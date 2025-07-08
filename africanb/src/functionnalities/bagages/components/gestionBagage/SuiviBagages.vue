@@ -1,5 +1,5 @@
 <template>
-  <v-app>
+  <v-app id="inspire">
     <div class="container">
       <br />
       <span class="title_card">SUIVI DES BAGAGES</span>
@@ -927,5 +927,9 @@ input[type="text"] {
   font-family: "Montserrat";
   font-size: 15px;
   opacity: 0.8;
+}
+
+#inspire {
+  background: #eeeeee;
 }
 </style>

@@ -148,6 +148,7 @@ export const API_STATISTIQUE_OFFRE_VOYAGE_RESERVATION = (period) => {
 
 export const API_CREATE_TRANSACTION_URL = `${BASE_URL}transactions`;
 export const API_SEND_NOTIFICATION_URL = `${BASE_URL}notification/compagnie`;
+export const API_SEND_NOTIFICATION_URL_SYSTEM = `${BASE_URL}notification/system`;
 
 export const LISTEN_URL_NOTIFICATION = (type) => {
   return `${BASE_URL}sse/connect?type=${type}`;
