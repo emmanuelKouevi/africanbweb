@@ -57,7 +57,7 @@ import selectionnerOffreVoyageReservation from "@/functionnalities/vendeur/Selec
 import reservationBillet from "../components/vendeur/ReservationBillet";
 import modifierPays from "@/components/administrateur_societe/modifierPays.vue";
 import modifierVille from "@/components/administrateur_societe/modifierVille.vue";
-import UserInfo from "@/components/UserInfo.vue";
+import UserInfo from "@/functionnalities/users/views/UserDetail.vue";
 import InfosAdhesion from "@/components/InfosAdhesion.vue";
 import InfosAdhesionValide from "@/components/InfosAdhesionValide.vue";
 import creerDemandeAdhesion from "../functionnalities/adhesion/DemandeAdhesion.vue";
