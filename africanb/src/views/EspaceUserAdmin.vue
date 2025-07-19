@@ -436,6 +436,21 @@ export default {
         .catch((err) => console.error("Failed make initial connection:", err));*/
     },
 
+    sseNotificationStatisticSeller() {
+      this.sseConnection = this.$sse
+        .create({
+          url: LISTEN_URL_NOTIFICATION("STATISTIQUE_GARE_RESERVATION"),
+          format: "json",
+          polyfill: true,
+        })
+        .on()
+        .on("error", (err) =>
+          console.error("Failed to parse or lost connection:", err)
+        )
+        .connect()
+        .catch((err) => console.error("Failed make initial connection:", err));
+    },
+
     checkNotificationProgram() {
       this.$sse
         .create({
@@ -761,7 +776,7 @@ export default {
             items: [
               {
                 title: "Creer un compte utilisateur",
-                navigation: "/creerUtilisateur",
+                navigation: "/create_user",
               },
               {
                 title: "Liste des comptes",
@@ -909,7 +924,8 @@ export default {
     this.getAllFunctionnalitiesByUserRole();
     this.checkNotification();
     //this.checkNotificationProgram();
-    //this.checkNotificationSystem();
+    this.checkNotificationSystem();
+    this.sseNotificationStatisticSeller();
   },
 
   beforeDestroy() {

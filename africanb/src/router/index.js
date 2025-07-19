@@ -17,7 +17,9 @@ import creerVille from "../components/administrateur_societe/CreerVille";
 import selectionnerVille from "../components/administrateur_societe/SelectionnerVille";
 import creerFonctionnalite from "../components/administrateur_societe/creerFonctionnalite";
 import creerRoleUtilisateur from "../components/administrateur_societe/creerRoleUtilisateur";
-import creerUtilisateur from "../components/administrateur_societe/creerUtilisateur";
+//import creerUtilisateur from "../components/administrateur_societe/creerUtilisateur";
+import CreateAccountUser from "@/functionnalities/users/views/CreateAccountUser.vue";
+
 import gestionFunctionnalitesEtRoles from "../components/administrateur_societe/gestionFonctionnalitesEtRoles";
 import modifierCompteUtilisateur from "../components/administrateur_societe/userProfil";
 import resetPasswordUser from "../components/administrateur_societe/changerPassword";
@@ -306,9 +308,9 @@ const routes = [
         component: creerRoleUtilisateur,
       },
       {
-        path: "/creerUtilisateur",
-        name: "creerUtilisateur",
-        component: creerUtilisateur,
+        path: "/create_user",
+        name: "CreateAccountUser",
+        component: CreateAccountUser,
       },
       {
         path: "/gestionFonctionnalitesEtRoles",

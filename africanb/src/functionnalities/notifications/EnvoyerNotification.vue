@@ -292,6 +292,7 @@ import {
   API_SEND_NOTIFICATION_URL,
   API_SEND_NOTIFICATION_URL_SYSTEM,
   HEADERS,
+  LISTEN_URL_NOTIFICATION,
 } from "@/components/globalConfig/globalConstConfig";
 import $ from "jquery";
 import axios from "axios";
@@ -299,6 +300,7 @@ import {
   showErrorMessage,
   showSuccessMessage,
 } from "../messages/messageProcess";
+let sseClient;
 export default {
   data() {
     return {
@@ -343,6 +345,7 @@ export default {
 
       sendNotificationToProgram: {
         data: {
+          raisonSociale: "KOUEVI CT",
           programmmeDesignation: null,
           message: null,
           type: null,
@@ -509,8 +512,17 @@ export default {
           }
         )
         .then((response) => {
+          console.log(response);
           if (response.data.item == "OK") {
             this.successMsg = "Notification envoyée avec succès";
+            if (
+              this.typeNotification != "TOUT_CLIENT" &&
+              this.typeNotification != "TOUT_UTILISATEUR"
+            ) {
+              console.log("Nous envoyons une notification par programme");
+              console.log(this.typeNotification);
+              this.checkNotificationProgram();
+            }
             showSuccessMessage();
           } else {
             this.errorMsg = response.data.status.message;
@@ -526,6 +538,34 @@ export default {
           this.overlay = false;
         });
     },
+
+    checkNotificationProgram() {
+      sseClient = this.$sse.create({
+        url: LISTEN_URL_NOTIFICATION("COMPAGNIE_PROGRAMME"),
+        format: "json",
+        withCredentials: false,
+        polyfill: true,
+      });
+
+      // Handle messages without a specific event
+      sseClient.on("Prog TOUM-TOUMO_programme", (event) => console.log(event));
+
+      sseClient
+        .connect()
+        .then((sse) => {
+          console.log("We're connected!");
+          console.log(sse);
+        })
+        .catch((err) => {
+          // When this error is caught, it means the initial connection to the
+          // events server failed.  No automatic attempts to reconnect will be made.
+          console.error("Failed to connect to server", err);
+        });
+    },
+  },
+
+  beforeDestroy() {
+    sseClient.disconnect();
   },
 
   mounted() {
