@@ -439,11 +439,11 @@ export default {
     sseNotificationStatisticSeller() {
       this.sseConnection = this.$sse
         .create({
-          url: LISTEN_URL_NOTIFICATION("STATISTIQUE_GARE_RESERVATION"),
+          url: LISTEN_URL_NOTIFICATION("STATISTIQUE_GARE_CAISSE"),
           format: "json",
           polyfill: true,
         })
-        .on()
+        .on("gare de marcory_caisse")
         .on("error", (err) =>
           console.error("Failed to parse or lost connection:", err)
         )
@@ -922,10 +922,11 @@ export default {
     this.getUrlPhotoProfil();
     this.getUrlLogoCompagnie();
     this.getAllFunctionnalitiesByUserRole();
-    this.checkNotification();
+    //this.checkNotification();
+    //this.sseNotificationStatisticSeller();
     //this.checkNotificationProgram();
-    this.checkNotificationSystem();
-    this.sseNotificationStatisticSeller();
+    //this.checkNotificationSystem();
+    //this.sseNotificationStatisticSeller();
   },
 
   beforeDestroy() {

@@ -38,12 +38,14 @@
 
     <div class="container" id="top-header">
       <div class="container-fluid" id="top-header">
-        <div class="row header">
+        <div class="row header text-center">
+          <!--
           <div class="col-lg-7">
             <h1 class="font-weight-bold enough">
               Réservez vos billets en un clic !!!
             </h1>
             <br />
+            
             <div class="content_text">
               <p>
                 Découvrez la nouvelle façon de réserver vos billets de
@@ -59,11 +61,12 @@
                 ></v-btn
               >
             </div>
-          </div>
+            
+          </div>-->
 
-          <div class="col-lg-5" id="img_header">
+          <div class="col-lg-12" id="img_header">
             <v-card
-              elevation="5"
+              color="white"
               class="animate__animated animate__backInDown animate__delay-2s"
             >
               <v-card-title

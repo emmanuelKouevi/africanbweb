@@ -26,73 +26,23 @@
                     >Sélectionner le role.
                   </label>
                   <select
-                    class="form-select col-lg-6 user_field"
+                    class="form-select col-lg-7 user_field"
                     aria-label="Default select example"
+                    v-model="userRoleCode"
                   >
-                    <option></option>
+                    <option v-for="(role, r) in userRoleToShow" :key="r">
+                      {{ role.libelle }}
+                    </option>
                   </select>
                 </div>
               </div>
-              <br />
 
-              <div class="row">
-                <span class="user_section">Information du compte</span>
-              </div>
-              <br />
               <div class="container">
-                <div class="mb-3">
-                  <label for="exampleInputPassword1" class="form-label"
-                    >Nom:
-                  </label>
-                  <input
-                    type="text"
-                    class="form-control col-lg-6 user_field"
-                    id="exampleInputEmail1"
-                  />
-                </div>
-
-                <div class="mb-3">
-                  <label for="exampleInputPassword1" class="form-label"
-                    >Prénom(s):
-                  </label>
-                  <input
-                    type="text"
-                    class="form-control col-lg-8 user_field"
-                    id="exampleInputEmail1"
-                  />
-                </div>
-
-                <div class="row">
-                  <div class="col-lg-6">
-                    <label for="exampleInputEmail1" class="form-label"
-                      >E-mail:</label
-                    >
-                    <input
-                      type="text"
-                      class="form-control col-lg-12 user_field"
-                      id="exampleInputEmail1"
-                    />
-                  </div>
-                  <div class="col-lg-6">
-                    <label for="exampleInputEmail1" class="form-label"
-                      >Login:</label
-                    >
-                    <input
-                      type="text"
-                      class="form-control col-lg-7 user_field"
-                      id="exampleInputEmail1"
-                    />
-                  </div>
-                </div>
-                <br /><br /><br />
-                <div class="float-right">
-                  <v-btn btn small color="secondary"
-                    ><span>Reinitialiser</span></v-btn
-                  >&nbsp;&nbsp;
-                  <v-btn type="submit" color="success" btn small
-                    ><span>Créer le compte</span></v-btn
-                  >
-                </div>
+                <UserTypeAdminCompagnie
+                  v-if="
+                    userRoleCode === 'Role Administrateur Compagnie Transport'
+                  "
+                />
               </div>
               <br />
             </v-card-text>
@@ -100,7 +50,32 @@
         </div>
 
         <div class="col-lg-5">
-          <ListOfCompagnies />
+          <div class="row">
+            <div
+              class="col-lg-12"
+              v-if="
+                $store.state.userAuthentified.roleCode ===
+                'RoleAdminSocieteMere'
+              "
+            >
+              <ListOfCompagnies />
+            </div>
+            <div
+              class="col-lg-12"
+              :hidden="
+                userRoleCode === 'Role Administrateur Compagnie Transport' ||
+                userRoleCode == null
+              "
+              v-if="
+                $store.state.userAuthentified.roleCode ===
+                  'RoleAdminCompagnieTransport' ||
+                $store.state.userAuthentified.roleCode ===
+                  'RoleAdminSocieteMere'
+              "
+            >
+              <ListOfStations />
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -108,15 +83,99 @@
 </template>
 
 <script>
+import {
+  ROLE_ADMIN_COMPAGNIE_TRANSPORT,
+  ROLE_ADMIN_SOCIETE_MERE,
+  ROLE_AGENT_GARE,
+  ROLE_BAGAGISTE,
+  ROLE_UTI_GARE_COMPAGNIE_TRANSPORT,
+  ROLE_UTI_SIMPLE,
+} from "@/components/globalConfig/constUsersRoles";
+import { getUserRoleApi } from "@/functionnalities/common/services/commonApi";
 import ListOfCompagnies from "@/functionnalities/common/views/ListOfCompagnies.vue";
+import ListOfStations from "@/functionnalities/common/views/ListOfStations.vue";
+import { showErrorMessage } from "@/functionnalities/messages/messageProcess";
+import UserTypeAdminCompagnie from "../widgets/create_account/UserTypeAdminCompagnie.vue";
 
 export default {
   name: "CreateAccountUser.vue",
   components: {
     ListOfCompagnies,
+    ListOfStations,
+    UserTypeAdminCompagnie,
   },
   data() {
-    return {};
+    return {
+      errorMsg: null,
+      successMsg: null,
+
+      userRoleCode: null,
+
+      overlay: false,
+
+      compagnieSellerUser: {
+        nom: null,
+        prenoms: null,
+        login: null,
+        email: null,
+        compagnieTransportRaisonSociale: null,
+        gareDesignation: null,
+        roleCode: null,
+      },
+
+      roleList: [],
+
+      userRoleToShow: [],
+    };
+  },
+
+  methods: {
+    async getAllUserRole() {
+      try {
+        const userRoles = await getUserRoleApi(
+          {},
+          this.$store.state.userAuthentified.token
+        );
+        this.roleList = userRoles;
+        if (
+          this.$store.state.userAuthentified.roleCode ===
+          ROLE_ADMIN_SOCIETE_MERE
+        ) {
+          this.roleList.forEach((element) => {
+            if (
+              element.code !== ROLE_ADMIN_SOCIETE_MERE &&
+              element.code !== ROLE_UTI_SIMPLE &&
+              element.code !== ROLE_UTI_GARE_COMPAGNIE_TRANSPORT &&
+              element.code !== ROLE_AGENT_GARE &&
+              element.code !== ROLE_BAGAGISTE
+            ) {
+              this.userRoleToShow.push(element);
+            }
+          });
+        }
+
+        if (
+          this.$store.state.userAuthentified.roleCode ===
+          ROLE_ADMIN_COMPAGNIE_TRANSPORT
+        ) {
+          this.roleList.forEach((element) => {
+            if (
+              element.code !== ROLE_ADMIN_COMPAGNIE_TRANSPORT &&
+              element.code !== ROLE_ADMIN_SOCIETE_MERE &&
+              element.code !== ROLE_UTI_SIMPLE
+            ) {
+              this.userRoleToShow.push(element);
+            }
+          });
+        }
+      } catch (error) {
+        showErrorMessage();
+      }
+    },
+  },
+
+  mounted() {
+    this.getAllUserRole();
   },
 };
 </script>

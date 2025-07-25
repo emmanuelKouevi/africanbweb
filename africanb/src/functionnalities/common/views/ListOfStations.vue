@@ -2,7 +2,7 @@
   <div>
     <v-card>
       <v-card-title
-        ><span class="user_section">Compagnie(s) disponible(s)</span
+        ><span class="user_section">Gare(s) disponible(s)</span
         ><v-spacer></v-spacer>
         <v-text-field
           class="input"
@@ -15,14 +15,14 @@
         ></v-text-field>
       </v-card-title>
       <v-card-text>
-        <v-data-table :search="search" :headers="headers" :items="compagnies">
+        <v-data-table :search="search" :headers="headers" :items="stations">
           <template v-slot:[`item.actions`]="{ item }">
             <v-icon
               title="Sélectionner"
               color="teal"
               small
               class="mr-2"
-              @click="chooseCompagny(item)"
+              @click="chooseStation(item)"
               >mdi-gesture-tap-button</v-icon
             >
           </template>
@@ -41,7 +41,7 @@
 
 <script>
 import { showErrorMessage } from "@/functionnalities/messages/messageProcess";
-import { getCompagniesAvailableApi } from "../services/commonApi";
+import { getStationApi } from "../services/commonApi";
 
 export default {
   name: "ListOfCompagnies.vue",
@@ -57,38 +57,40 @@ export default {
 
       search: "",
       headers: [
-        { text: "Raison sociale", value: "raisonSociale" },
-        { text: "Sigle", value: "sigle" },
+        { text: "Reference", value: "designation" },
+        { text: "Localisation", value: "adresseLocalisation" },
         { text: "Actions", value: "actions", sortable: false },
       ],
 
-      dataCompagnyObject: {
-        index: 0,
-        size: 8,
+      dataStationObject: {
+        data: {
+          compagnieTransportRaisonSociale:
+            this.$store.state.userAuthentified.compagnieTransportRaisonSociale,
+        },
       },
-      compagnies: [],
+      stations: [],
     };
   },
 
   methods: {
     // RÉCUPÉRER LA LISTE DES COMPAGNIES DE TRANSPORT
-    async getCompagniesOfTransport() {
+    async getStations() {
       try {
-        const compagnies = await getCompagniesAvailableApi(
-          this.dataCompagnyObject,
+        const stations = await getStationApi(
+          this.dataStationObject,
           this.$store.state.userAuthentified.token
         );
-        this.compagnies = compagnies;
+        this.stations = stations;
       } catch (error) {
         showErrorMessage();
       }
     },
   },
 
-  chooseCompagny() {},
+  chooseStation() {},
 
   mounted() {
-    this.getCompagniesOfTransport();
+    this.getStations();
   },
 };
 </script>
