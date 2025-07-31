@@ -43,6 +43,15 @@
                     userRoleCode === 'Role Administrateur Compagnie Transport'
                   "
                 />
+                <UserTypeSeller
+                  v-if="userRoleCode === 'Role Utilisateur Gare (Vendeur)'"
+                />
+
+                <UserTypeManager
+                  v-if="userRoleCode === 'Responsable de gare'"
+                />
+
+                <UserTypeBagageHandler v-if="userRoleCode === 'Bagagiste'" />
               </div>
               <br />
             </v-card-text>
@@ -50,32 +59,7 @@
         </div>
 
         <div class="col-lg-5">
-          <div class="row">
-            <div
-              class="col-lg-12"
-              v-if="
-                $store.state.userAuthentified.roleCode ===
-                'RoleAdminSocieteMere'
-              "
-            >
-              <ListOfCompagnies />
-            </div>
-            <div
-              class="col-lg-12"
-              :hidden="
-                userRoleCode === 'Role Administrateur Compagnie Transport' ||
-                userRoleCode == null
-              "
-              v-if="
-                $store.state.userAuthentified.roleCode ===
-                  'RoleAdminCompagnieTransport' ||
-                $store.state.userAuthentified.roleCode ===
-                  'RoleAdminSocieteMere'
-              "
-            >
-              <ListOfStations />
-            </div>
-          </div>
+          <CompagnieAndStations :userRole="userRoleCode" />
         </div>
       </div>
     </div>
@@ -86,23 +70,27 @@
 import {
   ROLE_ADMIN_COMPAGNIE_TRANSPORT,
   ROLE_ADMIN_SOCIETE_MERE,
-  ROLE_AGENT_GARE,
-  ROLE_BAGAGISTE,
-  ROLE_UTI_GARE_COMPAGNIE_TRANSPORT,
+  //ROLE_AGENT_GARE,
+  //ROLE_BAGAGISTE,
+  //ROLE_UTI_GARE_COMPAGNIE_TRANSPORT,
   ROLE_UTI_SIMPLE,
 } from "@/components/globalConfig/constUsersRoles";
 import { getUserRoleApi } from "@/functionnalities/common/services/commonApi";
-import ListOfCompagnies from "@/functionnalities/common/views/ListOfCompagnies.vue";
-import ListOfStations from "@/functionnalities/common/views/ListOfStations.vue";
 import { showErrorMessage } from "@/functionnalities/messages/messageProcess";
 import UserTypeAdminCompagnie from "../widgets/create_account/UserTypeAdminCompagnie.vue";
+import CompagnieAndStations from "@/functionnalities/common/views/CompagnieAndStations.vue";
+import UserTypeSeller from "../widgets/create_account/UserTypeSeller.vue";
+import UserTypeManager from "../widgets/create_account/UserTypeManager.vue";
+import UserTypeBagageHandler from "../widgets/create_account/UserTypeBagageHandler.vue";
 
 export default {
   name: "CreateAccountUser.vue",
   components: {
-    ListOfCompagnies,
-    ListOfStations,
+    CompagnieAndStations,
     UserTypeAdminCompagnie,
+    UserTypeSeller,
+    UserTypeManager,
+    UserTypeBagageHandler,
   },
   data() {
     return {
@@ -144,10 +132,7 @@ export default {
           this.roleList.forEach((element) => {
             if (
               element.code !== ROLE_ADMIN_SOCIETE_MERE &&
-              element.code !== ROLE_UTI_SIMPLE &&
-              element.code !== ROLE_UTI_GARE_COMPAGNIE_TRANSPORT &&
-              element.code !== ROLE_AGENT_GARE &&
-              element.code !== ROLE_BAGAGISTE
+              element.code !== ROLE_UTI_SIMPLE
             ) {
               this.userRoleToShow.push(element);
             }

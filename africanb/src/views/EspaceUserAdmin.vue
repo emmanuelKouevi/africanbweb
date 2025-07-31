@@ -437,18 +437,27 @@ export default {
     },
 
     sseNotificationStatisticSeller() {
-      this.sseConnection = this.$sse
-        .create({
-          url: LISTEN_URL_NOTIFICATION("STATISTIQUE_GARE_CAISSE"),
-          format: "json",
-          polyfill: true,
-        })
-        .on("gare de marcory_caisse")
-        .on("error", (err) =>
-          console.error("Failed to parse or lost connection:", err)
-        )
+      sseClient = this.$sse.create({
+        url: LISTEN_URL_NOTIFICATION("STATISTIQUE_COMPAGNIE"),
+        format: "json",
+        withCredentials: false,
+        polyfill: true,
+      });
+
+      // Handle messages without a specific event
+      sseClient.on("kouevi_ct_annuel", (event) => console.log(event.data));
+
+      sseClient
         .connect()
-        .catch((err) => console.error("Failed make initial connection:", err));
+        .then((sse) => {
+          console.log("We're connected!");
+          console.log(sse);
+        })
+        .catch((err) => {
+          // When this error is caught, it means the initial connection to the
+          // events server failed.  No automatic attempts to reconnect will be made.
+          console.error("Failed to connect to server", err);
+        });
     },
 
     checkNotificationProgram() {
@@ -923,7 +932,7 @@ export default {
     this.getUrlLogoCompagnie();
     this.getAllFunctionnalitiesByUserRole();
     //this.checkNotification();
-    //this.sseNotificationStatisticSeller();
+    this.sseNotificationStatisticSeller();
     //this.checkNotificationProgram();
     //this.checkNotificationSystem();
     //this.sseNotificationStatisticSeller();

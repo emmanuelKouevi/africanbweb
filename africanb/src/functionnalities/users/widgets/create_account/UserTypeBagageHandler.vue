@@ -39,6 +39,20 @@
             >Compagnie (Raison sociale):</label
           >
           <input
+            disabled
+            v-if="
+              $store.state.userAuthentified.roleCode ===
+              'RoleAdminCompagnieTransport'
+            "
+            type="text"
+            class="form-control col-lg-9 user_field"
+            id="exampleInputEmail1"
+            :value="
+              $store.state.userAuthentified.compagnieTransportRaisonSociale
+            "
+          />
+          <input
+            v-else
             type="text"
             class="form-control col-lg-9 user_field"
             id="exampleInputEmail1"
@@ -141,6 +155,13 @@ export default {
   methods: {
     // Soumission du formulaire de création d'un utilisateur
     submit() {
+      if (
+        this.$store.state.userAuthentified.roleCode ===
+        "RoleAdminCompagnieTransport"
+      ) {
+        this.userBagHandler.compagnieTransportRaisonSociale =
+          this.$store.state.userAuthentified.compagnieTransportRaisonSociale;
+      }
       let isReadyToSubmit =
         (this.userBagHandler.nom != null || this.userBagHandler.nom == "") &&
         (this.userBagHandler.prenoms != null ||

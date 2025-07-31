@@ -91,7 +91,6 @@ export default {
 
     // Recuperer la liste des fonctionnalités par rôle utilisateur
     async getFunctionnalitiesByUserRole(userRoleCode) {
-      console.log(this.user.roleCode);
       this.gettingFunctionnalityData.data.code = userRoleCode;
       await axios
         .post(

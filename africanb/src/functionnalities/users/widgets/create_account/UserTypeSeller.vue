@@ -12,7 +12,7 @@
             type="text"
             class="form-control col-lg-11 user_field"
             id="exampleInputEmail1"
-            v-model="userManager.nom"
+            v-model="userSeller.nom"
           />
         </div>
       </div>
@@ -26,7 +26,7 @@
             type="text"
             class="form-control col-lg-10 user_field"
             id="exampleInputEmail1"
-            v-model="userManager.prenoms"
+            v-model="userSeller.prenoms"
           />
         </div>
       </div>
@@ -39,10 +39,24 @@
             >Compagnie (Raison sociale):</label
           >
           <input
+            disabled
+            v-if="
+              $store.state.userAuthentified.roleCode ===
+              'RoleAdminCompagnieTransport'
+            "
             type="text"
             class="form-control col-lg-9 user_field"
             id="exampleInputEmail1"
-            v-model="userManager.compagnieTransportRaisonSociale"
+            :value="
+              $store.state.userAuthentified.compagnieTransportRaisonSociale
+            "
+          />
+          <input
+            v-else
+            type="text"
+            class="form-control col-lg-9 user_field"
+            id="exampleInputEmail1"
+            v-model="userSeller.compagnieTransportRaisonSociale"
           />
         </div>
       </div>
@@ -50,11 +64,12 @@
       <div class="col-lg-6">
         <div class="mb-3">
           <label for="exampleInputPassword1" class="form-label">Gare:</label>
+
           <input
             type="text"
             class="form-control col-lg-9 user_field"
             id="exampleInputEmail1"
-            v-model="userManager.gareDesignation"
+            v-model="userSeller.gareDesignation"
           />
         </div>
       </div>
@@ -67,7 +82,7 @@
           type="text"
           class="form-control col-lg-12 user_field"
           id="exampleInputEmail1"
-          v-model="userManager.email"
+          v-model="userSeller.email"
         />
       </div>
       <div class="col-lg-6">
@@ -76,7 +91,7 @@
           type="text"
           class="form-control col-lg-7 user_field"
           id="exampleInputEmail1"
-          v-model="userManager.login"
+          v-model="userSeller.login"
         />
       </div>
     </div>
@@ -122,7 +137,7 @@ export default {
       successMsg: null,
       overlay: false,
 
-      userManager: {
+      userSeller: {
         nom: null,
         prenoms: null,
         login: null,
@@ -141,13 +156,21 @@ export default {
   methods: {
     // Soumission du formulaire de création d'un utilisateur
     submit() {
+      if (
+        this.$store.state.userAuthentified.roleCode ===
+        "RoleAdminCompagnieTransport"
+      ) {
+        this.userSeller.compagnieTransportRaisonSociale =
+          this.$store.state.userAuthentified.compagnieTransportRaisonSociale;
+      }
       let isReadyToSubmit =
-        (this.userManager.nom != null || this.userManager.nom == "") &&
-        (this.userManager.prenoms != null || this.userManager.prenoms == "") &&
-        (this.userManager.login != null || this.userManager.login == "") &&
-        (this.userManager.email != null || this.userManager.email == "") &&
-        (this.userManager.compagnieTransportRaisonSociale != null ||
-          this.userManager.compagnieTransportRaisonSociale == "");
+        (this.userSeller.nom != null || this.userSeller.nom == "") &&
+        (this.userSeller.prenoms != null || this.userSeller.prenoms == "") &&
+        (this.userSeller.login != null || this.userSeller.login == "") &&
+        (this.userSeller.email != null || this.userSeller.email == "") &&
+        (this.userSeller.compagnieTransportRaisonSociale != null ||
+          this.userSeller.compagnieTransportRaisonSociale == "");
+
       if (!isReadyToSubmit) {
         this.errorMsg = "Veuillez renseigner correctement le formulaire !!!";
         $(".alert-error").fadeIn();
@@ -155,7 +178,7 @@ export default {
           $(".alert-error").fadeOut();
         }, 4000);
       } else {
-        this.userCreateToSend.datas.push(this.userManager);
+        this.userCreateToSend.datas.push(this.userSeller);
         this.createUser();
       }
     },

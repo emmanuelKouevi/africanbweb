@@ -15,17 +15,11 @@
         ></v-text-field>
       </v-card-title>
       <v-card-text>
-        <v-data-table :search="search" :headers="headers" :items="stations">
-          <template v-slot:[`item.actions`]="{ item }">
-            <v-icon
-              title="Sélectionner"
-              color="teal"
-              small
-              class="mr-2"
-              @click="chooseStation(item)"
-              >mdi-gesture-tap-button</v-icon
-            >
-          </template>
+        <v-data-table
+          :search="search"
+          :headers="headers"
+          :items="stations == null ? [] : stations"
+        >
         </v-data-table>
       </v-card-text>
     </v-card>
@@ -42,12 +36,18 @@
 <script>
 import { showErrorMessage } from "@/functionnalities/messages/messageProcess";
 import { getStationApi } from "../services/commonApi";
+import { ROLE_ADMIN_COMPAGNIE_TRANSPORT } from "@/components/globalConfig/constUsersRoles";
 
 export default {
   name: "ListOfCompagnies.vue",
   props: {
     compagnieTransport: {
       type: Object,
+      default: null,
+    },
+
+    compagnieStations: {
+      type: Array,
       default: null,
     },
   },
@@ -59,13 +59,11 @@ export default {
       headers: [
         { text: "Reference", value: "designation" },
         { text: "Localisation", value: "adresseLocalisation" },
-        { text: "Actions", value: "actions", sortable: false },
       ],
 
       dataStationObject: {
         data: {
-          compagnieTransportRaisonSociale:
-            this.$store.state.userAuthentified.compagnieTransportRaisonSociale,
+          compagnieTransportRaisonSociale: null,
         },
       },
       stations: [],
@@ -75,19 +73,24 @@ export default {
   methods: {
     // RÉCUPÉRER LA LISTE DES COMPAGNIES DE TRANSPORT
     async getStations() {
-      try {
-        const stations = await getStationApi(
-          this.dataStationObject,
-          this.$store.state.userAuthentified.token
-        );
-        this.stations = stations;
-      } catch (error) {
-        showErrorMessage();
+      if (
+        this.$store.state.userAuthentified.roleCode ==
+        ROLE_ADMIN_COMPAGNIE_TRANSPORT
+      ) {
+        this.dataStationObject.data.compagnieTransportRaisonSociale =
+          this.$store.state.userAuthentified.compagnieTransportRaisonSociale;
+        try {
+          const stations = await getStationApi(
+            this.dataStationObject,
+            this.$store.state.userAuthentified.token
+          );
+          this.stations = stations;
+        } catch (error) {
+          showErrorMessage();
+        }
       }
     },
   },
-
-  chooseStation() {},
 
   mounted() {
     this.getStations();

@@ -39,6 +39,20 @@
             >Compagnie (Raison sociale):</label
           >
           <input
+            disabled
+            v-if="
+              $store.state.userAuthentified.roleCode ===
+              'RoleAdminCompagnieTransport'
+            "
+            type="text"
+            class="form-control col-lg-9 user_field"
+            id="exampleInputEmail1"
+            :value="
+              $store.state.userAuthentified.compagnieTransportRaisonSociale
+            "
+          />
+          <input
+            v-else
             type="text"
             class="form-control col-lg-9 user_field"
             id="exampleInputEmail1"
@@ -49,9 +63,8 @@
 
       <div class="col-lg-6">
         <div class="mb-3">
-          <label for="exampleInputPassword1" class="form-label"
-            >Compagnie (Raison sociale):</label
-          >
+          <label for="exampleInputPassword1" class="form-label">Gare:</label>
+
           <input
             type="text"
             class="form-control col-lg-9 user_field"
@@ -143,6 +156,13 @@ export default {
   methods: {
     // Soumission du formulaire de création d'un utilisateur
     submit() {
+      if (
+        this.$store.state.userAuthentified.roleCode ===
+        "RoleAdminCompagnieTransport"
+      ) {
+        this.userManager.compagnieTransportRaisonSociale =
+          this.$store.state.userAuthentified.compagnieTransportRaisonSociale;
+      }
       let isReadyToSubmit =
         (this.userManager.nom != null || this.userManager.nom == "") &&
         (this.userManager.prenoms != null || this.userManager.prenoms == "") &&

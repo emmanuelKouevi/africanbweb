@@ -39,13 +39,18 @@
     <div class="container" id="top-header">
       <div class="container-fluid" id="top-header">
         <div class="row header text-center">
-          <!--
           <div class="col-lg-7">
+            <img
+              class="animate__animated animate__backInLeft animate__slower"
+              src="../assets/urban.jpg"
+              height="400px"
+              alt=""
+            />
             <h1 class="font-weight-bold enough">
               Réservez vos billets en un clic !!!
             </h1>
             <br />
-            
+
             <div class="content_text">
               <p>
                 Découvrez la nouvelle façon de réserver vos billets de
@@ -54,17 +59,10 @@
                 prochaine aventure commence maintenant, sans stress ni
                 complication.
               </p>
-              <v-btn color="#159e72" small
-                ><span class="content_offre_text">Voir les offres</span
-                >&nbsp;&nbsp;<v-icon color="white"
-                  >mdi-menu-right</v-icon
-                ></v-btn
-              >
             </div>
-            
-          </div>-->
+          </div>
 
-          <div class="col-lg-12" id="img_header">
+          <div class="col-lg-5" id="img_header">
             <v-card
               color="white"
               class="animate__animated animate__backInDown animate__delay-2s"
@@ -398,6 +396,7 @@ export default {
 }
 
 .content_text {
+  text-align: start;
   display: none;
   font-size: 25px;
   font-weight: 300;
@@ -411,6 +410,7 @@ export default {
   display: none;
   font-family: "Montserrat";
   font-size: 25px;
+  text-align: start;
 }
 
 #african_bt {

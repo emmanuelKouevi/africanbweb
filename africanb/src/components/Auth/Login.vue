@@ -212,12 +212,6 @@ export default {
   padding-top: 90px;
 }
 
-.presentation {
-  background-image: url("../../assets/inside_bus.jpg");
-  background-repeat: no-repeat;
-  background-size: cover;
-}
-
 .connexion_text {
   color: black;
   text-align: center;
