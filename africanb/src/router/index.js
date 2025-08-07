@@ -15,8 +15,8 @@ import creerPays from "../components/administrateur_societe/CreerPays";
 import selectionnerPays from "../components/administrateur_societe/SelectionnerPays";
 import creerVille from "../components/administrateur_societe/CreerVille";
 import selectionnerVille from "../components/administrateur_societe/SelectionnerVille";
-import creerFonctionnalite from "../components/administrateur_societe/creerFonctionnalite";
-import creerRoleUtilisateur from "../components/administrateur_societe/creerRoleUtilisateur";
+//import creerFonctionnalite from "../components/administrateur_societe/creerFonctionnalite";
+//import creerRoleUtilisateur from "../components/administrateur_societe/creerRoleUtilisateur";
 //import creerUtilisateur from "../components/administrateur_societe/creerUtilisateur";
 import CreateAccountUser from "@/functionnalities/users/views/CreateAccountUser.vue";
 
@@ -86,6 +86,8 @@ import StatistiqueReservation from "@/functionnalities/statistiques/admin/views/
 import NouvelleTransaction from "@/functionnalities/caisses/NouvelleTransaction.vue";
 import EnvoyerNotification from "@/functionnalities/notifications/EnvoyerNotification.vue";
 
+import RoleAdmin from "@/functionnalities/roles/views/Role.vue";
+import PermissionUser from "@/functionnalities/permissions/views/Permission.vue";
 Vue.use(VueRouter);
 
 const routes = [
@@ -298,14 +300,14 @@ const routes = [
         component: selectionnerDemandeAdhesionCompagnie,
       },
       {
-        path: "/creerFonctionnalite",
-        name: "creerFonctionnalite",
-        component: creerFonctionnalite,
+        path: "/permissions",
+        name: "/permissions",
+        component: PermissionUser,
       },
       {
         path: "/creerRoleUtilisateur",
         name: "creerRoleUtilisateur",
-        component: creerRoleUtilisateur,
+        component: RoleAdmin,
       },
       {
         path: "/create_user",

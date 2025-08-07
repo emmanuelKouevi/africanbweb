@@ -52,6 +52,10 @@
                 />
 
                 <UserTypeBagageHandler v-if="userRoleCode === 'Bagagiste'" />
+
+                <UserTypeBagageHandler
+                  v-if="userRoleCode === 'Nouveau role Test'"
+                />
               </div>
               <br />
             </v-card-text>

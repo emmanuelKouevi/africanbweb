@@ -803,8 +803,8 @@ export default {
             url: "",
             items: [
               {
-                title: "Ajouter une fonctionnalité",
-                navigation: "/creerFonctionnalite",
+                title: "Permissions",
+                navigation: "/permissions",
               },
               {
                 title: "Ajouter un rôle utilisateur",

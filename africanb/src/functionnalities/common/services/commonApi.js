@@ -1,4 +1,5 @@
 import {
+  API_GET_ALL_FUNCTIONNALITIES,
   API_GET_ALL_ROLES,
   API_OBTENIR_LISTE_DE_TOUTES_LES_DEMANDES_ADHESIONS,
   API_RECUPERER_LISTE_GARES_PAR_COMPAGNIE,
@@ -6,7 +7,40 @@ import {
 } from "@/components/globalConfig/globalConstConfig";
 import { showErrorMessage } from "@/functionnalities/messages/messageProcess";
 import axios from "axios";
+import $ from "jquery";
+// API GET ALL FUNCTIONNALITIES PERMISSIONS
+export const getAllPermissionApi = async (body, headers) => {
+  let permissions = [];
+  await axios
+    .post(API_GET_ALL_FUNCTIONNALITIES, body, { headers: headers })
+    .then((response) => {
+      if (response.status == 200) {
+        if (response.data.status.code != 800) {
+          //this.errorMsg = response.data.status.message;
+          $(".alert-error").fadeIn();
+          setTimeout(function () {
+            $(".alert-error").fadeOut();
+          }, 4000);
+        } else {
+          permissions = response.data.items;
+        }
+      } else {
+        permissions = [];
+        //this.errorMsg = "Erreur";
+        $(".alert-error").fadeIn();
+        setTimeout(function () {
+          $(".alert-error").fadeOut();
+        }, 4000);
+      }
+    })
+    .catch((e) => {
+      permissions = [];
+      console.log(e);
+      //this.errorMsg = e;
+    });
 
+  return permissions;
+};
 // API GET ALL COMPAGNIES CREATED
 export const getCompagniesAvailableApi = async (body, headers) => {
   let compagnieList = [];
