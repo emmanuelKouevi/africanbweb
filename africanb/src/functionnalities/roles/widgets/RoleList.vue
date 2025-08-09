@@ -29,12 +29,14 @@
             <div class="row">
               <div class="col-lg-6">
                 <div class="mb-3">
-                  <label for="exampleInputPassword1" class="form-label"
+                  <label
+                    for="exampleInputPassword1"
+                    class="form-label role_field"
                     >Désignation du rôle
                   </label>
                   <input
                     type="text"
-                    class="form-control col-lg-12 user_field"
+                    class="form-control col-lg-12 role_field"
                     id="exampleInputEmail1"
                     v-model="roleObject.libelle"
                   />
@@ -279,5 +281,9 @@ export default {
   top: 25px;
   right: 2%;
   width: 25%;
+}
+
+.role_field {
+  font-family: "Montserrat";
 }
 </style>

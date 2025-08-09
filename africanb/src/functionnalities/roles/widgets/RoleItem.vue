@@ -8,7 +8,7 @@
           </div>
           <div class="row">
             <div class="col-lg-4">
-              <v-btn small text color="#159e72" @click="isOpenDialog = true"
+              <v-btn small text color="#159e72" @click="editUserRole(role)"
                 ><span class="">Éditer</span></v-btn
               >
             </div>
@@ -33,7 +33,7 @@
                   </label>
                   <input
                     type="text"
-                    class="form-control col-lg-12 user_field"
+                    class="form-control col-lg-12 role_field"
                     id="exampleInputEmail1"
                     v-model="roleObject.libelle"
                   />
@@ -47,7 +47,7 @@
                   </label>
                   <input
                     type="text"
-                    class="form-control col-lg-12 user_field"
+                    class="form-control col-lg-12 role_field"
                     id="exampleInputEmail1"
                     v-model="roleObject.code"
                   />
@@ -57,9 +57,8 @@
             <br />
             <p class="add_role_title">Permissions</p>
             <v-data-table
-              v-model="permissionSelected"
               :headers="permissionHeaders"
-              :items="permissionList"
+              :items="permissionSelected"
               :single-select="singleSelect"
               item-key="code"
               show-select
@@ -80,16 +79,47 @@
           <v-btn small color="secondary" text @click="isOpenDialog = false">
             Fermer
           </v-btn>
-          <v-btn small color="#159e72" btn>
+          <v-btn small color="#159e72" btn @click="submit">
             <span class="text_btn">Enregistrer</span>
           </v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
+
+    <v-alert
+      rounded="lg"
+      class="myalert alert-error"
+      type="error"
+      width="350px"
+      dismissible
+      >{{ errorMsg }}</v-alert
+    >
+    <v-alert
+      rounded="lg"
+      class="myalert alert-success"
+      type="success"
+      width="350px"
+      dismissible
+      >{{ successMsg }}</v-alert
+    >
+
+    <v-overlay :value="overlay"
+      ><v-progress-circular indeterminate size="64"></v-progress-circular
+    ></v-overlay>
   </div>
 </template>
 
 <script>
+import {
+  API_CREATE_USER_ROLE,
+  HEADERS,
+} from "@/components/globalConfig/globalConstConfig";
+import {
+  showErrorMessage,
+  showSuccessMessage,
+} from "@/functionnalities/messages/messageProcess";
+import axios from "axios";
+
 export default {
   name: "RoleItem.vue",
   props: {
@@ -101,17 +131,78 @@ export default {
 
   data() {
     return {
+      successMsg: null,
+      errorMsg: null,
+      overlay: false,
+
       isOpenDialog: false,
       singleSelect: false,
       permissionSelected: [],
       permissionHeaders: [{ text: "Libelle", value: "libelle" }],
 
       roleObject: {
-        code: null,
-        libelle: null,
-        datasFunctionalities: [],
+        code: "",
+        libelle: "",
+      },
+
+      userRoleDataToSend: {
+        datas: [],
       },
     };
+  },
+
+  methods: {
+    // SOUMETTRE MODIFICATION D'UN RÔLE
+    submit() {
+      let isReadyToSubmit =
+        this.roleObject.libelle != null &&
+        this.roleObject.libelle.length > 0 &&
+        this.roleObject.code != null &&
+        this.roleObject.code.length > 0;
+      if (!isReadyToSubmit) {
+        this.errorMsg = "Les champs de modifications sont vides";
+        showErrorMessage();
+      } else {
+        this.updateRole();
+      }
+    },
+
+    // MODIFIER UN ROLE VIA API
+    async updateRole() {
+      this.userRoleDataToSend.datas.push(this.roleObject);
+      this.overlay = true;
+      await axios
+        .put(API_CREATE_USER_ROLE, this.userRoleDataToSend, {
+          headers: HEADERS(this.$store.state.userAuthentified.token),
+        })
+        .then((response) => {
+          if (response.status == 200) {
+            if (response.data.status.code == 800) {
+              this.successMsg = response.data.status.message;
+              showSuccessMessage();
+            } else {
+              this.errorMsg = response.data.status.message;
+              showErrorMessage();
+            }
+          }
+        })
+        .catch((e) => {
+          this.errorMsg = e;
+          showErrorMessage();
+        })
+        .finally(() => {
+          this.userRoleDataToSend.datas = [];
+          this.isOpenDialog = false;
+          this.overlay = false;
+          this.$router.go(0);
+        });
+    },
+
+    // EDIT A USER ROLE
+    editUserRole(role) {
+      this.roleObject = Object.assign({}, role);
+      this.isOpenDialog = true;
+    },
   },
 };
 </script>
@@ -121,5 +212,39 @@ export default {
   font-family: "Montserrat";
   font-weight: bold;
   color: black;
+}
+
+.text_btn {
+  color: white;
+}
+
+.myalert {
+  display: none;
+  z-index: 1900;
+}
+
+.alert-success {
+  position: fixed;
+  top: 25px;
+  right: 2%;
+  width: 25%;
+}
+
+.alert-error {
+  position: fixed;
+  top: 25px;
+  right: 2%;
+  width: 25%;
+}
+
+.alert-warning {
+  position: fixed;
+  top: 25px;
+  right: 2%;
+  width: 25%;
+}
+
+.role_field {
+  font-family: "Montserrat";
 }
 </style>
