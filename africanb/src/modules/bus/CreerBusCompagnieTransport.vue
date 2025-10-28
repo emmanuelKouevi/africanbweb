@@ -1,124 +1,3 @@
-<!--<template>
-  <v-app id="inspire">
-    <div class="container">
-      <v-form @submit.prevent="submitForm">
-        <v-container fluid>
-          <v-card elevation="5">
-            <v-card-title
-              ><h6 class="font-weight-bold">
-                ENREGISTRER UN BUS
-              </h6></v-card-title
-            >
-            <v-card-subtitle
-              >Enregister un bus pour faciliter votre prgrammation d'offre de
-              voyage et sa mise en ligne.</v-card-subtitle
-            ><br />
-
-            <v-card-text>
-              <v-container fluid>
-                <form>
-                  <div class="row">
-                    <div class="col-lg-4">
-                      <label for="exampleInputEmail1" class="form-label"
-                        >Référence du bus</label
-                      >
-                      <v-text-field
-                        type="text"
-                        dense
-                        outlined
-                        color="teal"
-                        :error-messages="designationBus"
-                        v-model.trim="$v.addedBusData.designation.$model"
-                      ></v-text-field>
-                    </div>
-                    <div class="col-lg-4">
-                      <label for="exampleInputEmail1" class="form-label"
-                        >Numéro du bus</label
-                      >
-                      <v-text-field
-                        type="number"
-                        min="0"
-                        dense
-                        outlined
-                        color="teal"
-                        :error-messages="numeroContrainte"
-                        v-model.number="$v.addedBusData.numero.$model"
-                      ></v-text-field>
-                    </div>
-
-                    <div class="col-lg-4">
-                      <label for="exampleInputEmail1" class="form-label"
-                        >Nombre de place</label
-                      >
-                      <v-text-field
-                        color="teal"
-                        class="my_input"
-                        type="number"
-                        min="0"
-                        :error-messages="nbrePlaceBusContrainte"
-                        v-model.number="$v.addedBusData.nombrePlace.$model"
-                        dense
-                        outlined
-                      ></v-text-field>
-                    </div>
-                  </div>
-                  <br />
-                </form>
-                <br />
-              </v-container>
-              <div class="float-right">
-                <v-btn
-                  id="btnInitialize"
-                  dark
-                  color="secondary"
-                  data-cy="btnInitialize"
-                  outlined
-                  @click="reinitializeForm"
-                  >REINITIALISER</v-btn
-                >&nbsp;&nbsp;
-                <v-btn
-                  id="btnCreate"
-                  type="submit"
-                  dark
-                  color="success"
-                  data-cy="btnCreate"
-                  outlined
-                >
-                  ENREGISTRER</v-btn
-                >
-              </div> </v-card-text
-            ><br />
-          </v-card>
-        </v-container>
-      </v-form>
-    </div>
-    <v-alert
-      class="myalert alert-success"
-      type="success"
-      width="350px"
-      dismissible
-      >{{ successMsg }}</v-alert
-    >
-    <v-alert
-      class="myalert alert-warning"
-      type="warning"
-      width="350px"
-      dismissible
-      >{{ warningMsg }}</v-alert
-    >
-    <v-alert
-      class="myalert alert-error"
-      type="error"
-      width="350px"
-      dismissible
-      >{{ errorMsg }}</v-alert
-    >
-    <v-overlay :value="overlay"
-      ><v-progress-circular indeterminate size="64"></v-progress-circular
-    ></v-overlay>
-  </v-app>
-</template> -->
-
 <template>
   <v-app id="inspire">
     <div class="container">
@@ -134,126 +13,67 @@
         <div class="col-lg-12">
           <v-card>
             <v-card-title
-              ><span class="main_title">Information de l'autocar.</span>
+              ><span class="main_title">Liste des autocars en cours.</span>
               <v-spacer></v-spacer>
               <!--BOITE DE DIALOGUE POUR LES PRIX -->
-              <v-dialog
-                v-model="dialogForPlanning"
-                persistent
-                max-width="600px"
-              >
+              <v-dialog v-model="addNewBusDialog" persistent max-width="600px">
                 <template v-slot:activator="{ on, attrs }">
-                  <v-btn
-                    :disabled="offreVoyageDesignation == null"
-                    small
-                    color="secondary"
-                    v-bind="attrs"
-                    v-on="on"
-                  >
-                    Ajouter un autocar
+                  <v-btn small color="secondary" v-bind="attrs" v-on="on">
+                    Nouveau autocar
                   </v-btn>
                 </template>
                 <v-card>
                   <v-card-title>
-                    <span class="text-h5">Définir un programme</span>
+                    <span class="text-h5">Ajouter un autocar</span>
                   </v-card-title>
                   <v-card-text>
                     <form>
-                      <div class="row">
-                        <div class="col-lg">
-                          <label for="exampleInputEmail1" class="form-label"
-                            >Réference du programme:</label
-                          >
-                          <input
-                            type="text"
-                            class="form-control"
-                            id="exampleInputEmail1"
-                            v-model.trim="
-                              $v.programmeOffreVoyageModel.designation.$model
-                            "
-                          />
-                        </div>
+                      <div class="mb-3">
+                        <label for="exampleInputPassword1" class="form-label"
+                          >Référence du bus:</label
+                        >
+
+                        <input
+                          type="text"
+                          class="form-control content_form col-lg-6 input_field"
+                          v-model.trim="$v.newBus.designation.$model"
+                          name=""
+                          id=""
+                        />
                       </div>
 
                       <div class="row">
-                        <div class="col-lg-6">
-                          <label for="exampleInputEmail1" class="form-label"
-                            >Date de départ:</label
-                          >
-                          <input
-                            type="date"
-                            class="form-control"
-                            id="exampleInputEmail1"
-                            v-model.trim="
-                              $v.programmeOffreVoyageModel.dateDepart.$model
-                            "
-                          />
-                        </div>
-
-                        <div class="col-lg-6">
-                          <label for="exampleInputEmail1" class="form-label"
-                            >Date d'arrivée:</label
-                          >
-                          <input
-                            type="date"
-                            class="form-control"
-                            id="exampleInputEmail1"
-                            v-model.trim="
-                              $v.programmeOffreVoyageModel.dateArrivee.$model
-                            "
-                          />
-                        </div>
-                      </div>
-
-                      <div class="row">
-                        <div class="col-lg-6">
-                          <label for="exampleInputEmail1" class="form-label"
-                            >Heure de départ:</label
-                          >
-                          <input
-                            type="time"
-                            class="form-control"
-                            id="exampleInputEmail1"
-                            v-model.trim="
-                              $v.programmeOffreVoyageModel.heureDepart.$model
-                            "
-                          />
-                        </div>
-
-                        <div class="col-lg-6">
-                          <label for="exampleInputEmail1" class="form-label"
-                            >Heure d'arrivée (Estimation):</label
-                          >
-                          <input
-                            type="time"
-                            class="form-control"
-                            id="exampleInputEmail1"
-                            v-model.trim="
-                              $v.programmeOffreVoyageModel.heureArrivee.$model
-                            "
-                          />
-                        </div>
-                      </div>
-                      <div class="row">
-                        <div class="col-lg-6">
-                          <label for="exampleInputEmail1" class="form-label"
-                            >Selectionner un autocar:</label
-                          >
-                          <select
-                            class="form-select"
-                            aria-label="Default select example"
-                            v-model.trim="
-                              $v.programmeOffreVoyageModel.numeroBus.$model
-                            "
-                          >
-                            <option
-                              v-for="(bus, b) in availableBusList"
-                              :key="b"
-                              :value="bus.numero"
+                        <div class="col-md-5">
+                          <div class="mb-3">
+                            <label
+                              for="exampleInputPassword1"
+                              class="form-label"
+                              >Numéro du bus:</label
                             >
-                              {{ bus.designation }}
-                            </option>
-                          </select>
+
+                            <input
+                              type="number"
+                              min="0"
+                              class="form-control content_form input_field"
+                              v-model.number="$v.newBus.numero.$model"
+                              name=""
+                              id=""
+                            />
+                          </div>
+                        </div>
+
+                        <div class="col-md-5">
+                          <label for="inputCity" class="form-label">
+                            Place(s) disponible(s):</label
+                          >
+                          <input
+                            type="number"
+                            min="0"
+                            class="form-control content_form input_field"
+                            v-model.number="$v.newBus.nombrePlace.$model"
+                            name=""
+                            id=""
+                          />
                         </div>
                       </div>
                     </form>
@@ -263,14 +83,14 @@
                     <v-btn
                       color="blue darken-1"
                       text
-                      @click="dialogForPlanning = false"
+                      @click="addNewBusDialog = false"
                     >
                       Annuler
                     </v-btn>
                     <v-btn
                       color="blue darken-1"
                       text
-                      @click="savePlanningInList"
+                      @click="addNewBusInList(newBus)"
                     >
                       Enregistrer
                     </v-btn>
@@ -280,12 +100,73 @@
               <!-- FIN DE BOITE DE DIALOGUE -->
             </v-card-title>
             <v-card-text>
-              <form>
-                <br />
-              </form>
+              <span v-if="busObject.datas.length == 0" class="text-center"
+                >Aucun autocar en cours de création !</span
+              >
+              <div class="row" v-else>
+                <div
+                  class="col-lg-3"
+                  v-for="(bus, b) in busObject.datas"
+                  :key="b"
+                >
+                  <v-card rounded="lg" hover>
+                    <v-card-title>
+                      <span class="bus_designation">{{ bus.designation }}</span>
+                      <v-spacer></v-spacer>
+                      <v-btn icon
+                        ><v-icon color="red" @click="deleteBusItem(b)"
+                          >mdi-close</v-icon
+                        ></v-btn
+                      >
+                    </v-card-title>
+                    <v-card-text>
+                      <v-list>
+                        <v-list-item>
+                          <v-list-item-content>
+                            <v-list-item-subtitle>Numéro:</v-list-item-subtitle>
+                          </v-list-item-content>
 
+                          <v-list-item-content>
+                            <v-list-item-subtitle>{{
+                              bus.numero
+                            }}</v-list-item-subtitle>
+                          </v-list-item-content>
+                        </v-list-item>
+
+                        <v-list-item>
+                          <v-list-item-content>
+                            <v-list-item-subtitle
+                              >Places :</v-list-item-subtitle
+                            >
+                          </v-list-item-content>
+
+                          <v-list-item-content>
+                            <v-list-item-subtitle>{{
+                              bus.nombrePlace
+                            }}</v-list-item-subtitle>
+                          </v-list-item-content>
+                        </v-list-item>
+                      </v-list>
+                    </v-card-text>
+                  </v-card>
+                </div>
+              </div>
               <br /><br />
+              <div class="float-right" v-if="busObject.datas.length != 0">
+                <v-btn btn small color="secondary" @click="busObject.datas = []"
+                  ><span>REINITIALISER</span></v-btn
+                >&nbsp;&nbsp;
+                <v-btn
+                  type="submit"
+                  color="success"
+                  btn
+                  small
+                  @click="saveBus()"
+                  ><span>AJOUTER À SA FLOTTE</span></v-btn
+                >
+              </div>
             </v-card-text>
+            <br />
           </v-card>
         </div>
       </div>
@@ -331,6 +212,8 @@ export default {
 
       overlay: false,
 
+      addNewBusDialog: false,
+
       warningMsg: false,
 
       busObject: {
@@ -343,18 +226,17 @@ export default {
         },
       },
 
-      addedBusData: {
+      newBus: {
         designation: null,
         numero: null,
         nombrePlace: null,
         raisonSociale: null,
-        //offreVoyageDesignation: null,
       },
     };
   },
 
   validations: {
-    addedBusData: {
+    newBus: {
       designation: {
         required,
       },
@@ -368,11 +250,9 @@ export default {
   },
 
   methods: {
-    // SOUMISSION DU FORMULAIRE D'ENREGISTREMENT
-    submitForm() {
-      this.$v.$touch();
-      if (this.$v.addedBusData.$invalid) {
-        this.errorMsg = "Vous n'avez saisi les champs concernés";
+    createSetOfBus() {
+      if (this.busObject.datas.length == 0) {
+        this.errorMsg = "Aucun autocar configuré !";
         $(".alert-error").fadeIn();
         setTimeout(function () {
           $(".alert-error").fadeOut();
@@ -382,18 +262,45 @@ export default {
       }
     },
 
-    reinitializeForm() {
-      this.addedBusData.designation = null;
-      this.addedBusData.numero = null;
-      this.addedBusData.nombrePlace = null;
+    // REINITAILISER LE FORMULAIRE D'AJOUTER D'AUTOCAR DANS LE DIALOGUE
+    reinitFormDialog() {
+      this.newBus.designation = null;
+      this.newBus.numero = null;
+      this.newBus.nombrePlace = null;
+    },
+
+    // AJOUTER UN NOUVEAU BUS DANS LA LISTE DES BUS À ENVOYER AU BACKEND
+    addNewBusInList(busSended) {
+      this.$v.$touch();
+      if (this.$v.newBus.$invalid) {
+        this.errorMsg = "Vous n'avez saisi les champs concernés";
+        $(".alert-error").fadeIn();
+        setTimeout(function () {
+          $(".alert-error").fadeOut();
+        }, 4000);
+      } else {
+        var bus = {
+          designation: null,
+          numero: null,
+          nombrePlace: null,
+          raisonSociale:
+            this.$store.state.userAuthentified.compagnieTransportRaisonSociale,
+        };
+        bus.designation = busSended.designation;
+        bus.numero = busSended.numero;
+        bus.nombrePlace = busSended.nombrePlace;
+        this.busObject.datas.push(bus);
+        this.reinitFormDialog();
+      }
+    },
+
+    deleteBusItem(position) {
+      this.busObject.datas.splice(position, 1);
     },
 
     //ENREGISTRER UN BUS
     async saveBus() {
       this.overlay = true;
-      this.addedBusData.raisonSociale =
-        this.$store.state.userAuthentified.compagnieTransportRaisonSociale;
-      this.busObject.datas.push(this.addedBusData);
       await axios
         .post(API_ASSOCIER_BUS_OFFRE_VOYAGE, this.busObject, {
           headers: HEADERS(this.$store.state.userAuthentified.token),
@@ -440,7 +347,7 @@ export default {
           this.busObject.datas = [];
         })
         .finally(() => {
-          this.reinitializeForm();
+          this.busObject.datas = [];
           this.overlay = false;
         });
     },
@@ -456,28 +363,26 @@ export default {
     // GESTION DES CONTRAINTES POUR LE FORMULAIRE D'ENREGISTREMENT DE BUS
     designationBus() {
       const errors = [];
-      if (!this.$v.addedBusData.designation.$dirty) return errors;
-      !this.$v.addedBusData.designation.required &&
+      if (!this.$v.newBus.designation.$dirty) return errors;
+      !this.$v.newBus.designation.required &&
         errors.push("Entrer une désignation pour le bus.");
       return errors;
     },
 
     numeroContrainte() {
       const errors = [];
-      if (!this.$v.addedBusData.numero.$dirty) return errors;
-      !this.$v.addedBusData.numero.required &&
-        errors.push("Information requis.");
-      !this.isOverToZero(this.addedBusData.numero) &&
-        errors.push("Champs Incorrect");
+      if (!this.$v.newBus.numero.$dirty) return errors;
+      !this.$v.newBus.numero.required && errors.push("Information requis.");
+      !this.isOverToZero(this.newBus.numero) && errors.push("Champs Incorrect");
       return errors;
     },
 
     nbrePlaceBusContrainte() {
       const errors = [];
-      if (!this.$v.addedBusData.nombrePlace.$dirty) return errors;
-      !this.$v.addedBusData.nombrePlace.required &&
+      if (!this.$v.newBus.nombrePlace.$dirty) return errors;
+      !this.$v.newBus.nombrePlace.required &&
         errors.push("Information requis.");
-      !this.isOverToZero(this.addedBusData.nombrePlace) &&
+      !this.isOverToZero(this.newBus.nombrePlace) &&
         errors.push("Champs Incorrect");
       return errors;
     },
@@ -510,5 +415,25 @@ export default {
   top: 25px;
   right: 2%;
   width: 25%;
+}
+
+.bus_designation {
+  font-size: 15px;
+  font-weight: bold;
+  font-family: "Montserrat";
+}
+
+.main_title {
+  opacity: 0.8;
+  font-family: "Montserrat";
+  font-weight: bold;
+}
+
+.subtitle {
+  font-family: "Montserrat";
+}
+
+.input_field {
+  font-family: "Montserrat";
 }
 </style>
