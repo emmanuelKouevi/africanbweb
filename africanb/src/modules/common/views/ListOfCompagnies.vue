@@ -83,7 +83,7 @@
 </template>
 
 <script>
-import { showErrorMessage } from "@/functionnalities/messages/messageProcess";
+import { showErrorMessage } from "@/modules/messages/messageProcess";
 import {
   getCompagniesAvailableApi,
   getStationApi,

@@ -130,7 +130,7 @@ import {
 import {
   showErrorMessage,
   showSuccessMessage,
-} from "@/functionnalities/messages/messageProcess";
+} from "@/modules/messages/messageProcess";
 import axios from "axios";
 export default {
   name: "PermissionList.vue",

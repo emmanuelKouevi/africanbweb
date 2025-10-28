@@ -5,7 +5,7 @@ import {
   API_RECUPERER_LISTE_GARES_PAR_COMPAGNIE,
   HEADERS,
 } from "@/components/globalConfig/globalConstConfig";
-import { showErrorMessage } from "@/functionnalities/messages/messageProcess";
+import { showErrorMessage } from "@/modules/messages/messageProcess";
 import axios from "axios";
 import $ from "jquery";
 // API GET ALL FUNCTIONNALITIES PERMISSIONS

@@ -79,10 +79,10 @@ import {
   //ROLE_UTI_GARE_COMPAGNIE_TRANSPORT,
   ROLE_UTI_SIMPLE,
 } from "@/components/globalConfig/constUsersRoles";
-import { getUserRoleApi } from "@/functionnalities/common/services/commonApi";
-import { showErrorMessage } from "@/functionnalities/messages/messageProcess";
+import { getUserRoleApi } from "@/modules/common/services/commonApi";
+import { showErrorMessage } from "@/modules/messages/messageProcess";
 import UserTypeAdminCompagnie from "../widgets/create_account/UserTypeAdminCompagnie.vue";
-import CompagnieAndStations from "@/functionnalities/common/views/CompagnieAndStations.vue";
+import CompagnieAndStations from "@/modules/common/views/CompagnieAndStations.vue";
 import UserTypeSeller from "../widgets/create_account/UserTypeSeller.vue";
 import UserTypeManager from "../widgets/create_account/UserTypeManager.vue";
 import UserTypeBagageHandler from "../widgets/create_account/UserTypeBagageHandler.vue";

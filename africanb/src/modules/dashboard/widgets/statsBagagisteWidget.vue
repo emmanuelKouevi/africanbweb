@@ -40,7 +40,7 @@
 </template>
 
 <script>
-import CardStat from "@/functionnalities/statistiques/admin/widgets/CardStat.vue";
+import CardStat from "@/modules/statistiques/admin/widgets/CardStat.vue";
 import { Line as LineChartGenerator } from "vue-chartjs/legacy";
 import {
   Chart as ChartJS,

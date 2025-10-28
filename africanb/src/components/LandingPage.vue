@@ -17,9 +17,13 @@
               >À PROPOS</a
             >
           </li>
+
           <li class="nav-item">
-            <a class="nav-link" href="#our-services">SERVICES</a>
+            <a class="nav-link" href="#aboutUs-section" aria-current="page"
+              >NOS PARTENAIRES</a
+            >
           </li>
+
           <li class="nav-item">
             <a class="nav-link" href="#partner-section">NOUS CONTACTER</a>
           </li>
@@ -36,16 +40,91 @@
       </div>
     </nav>
 
-    <div class="container" id="top-header">
+    <div class="container">
+      <div class="row header">
+        <div class="col-lg-4">
+          <img
+            class="animate__animated animate__backInLeft animate__slower animate__delay-1s"
+            src="../assets/urban.jpg"
+            height="300px"
+            alt=""
+          />
+        </div>
+        <div
+          class="col-lg-3 animate__animated animate__backInLeft animate__slower animate__delay-2s"
+        >
+          <vLottiePlayer
+            name="workoutMonkeyAnim"
+            loop
+            :animationData="require('../assets/lotties/arrow.json')"
+          />
+        </div>
+        <div class="col-lg-5" id="img_header">
+          <v-card
+            color="white"
+            class="animate__animated animate__backInDown animate__slower animate__delay-3s"
+          >
+            <v-card-title
+              ><span class="scheduled_travel"
+                >Planifiez vos voyages en toute sérénité</span
+              ></v-card-title
+            >
+            <v-card-text>
+              <div class="row">
+                <div class="col-lg-5">
+                  <select
+                    class="form-select scheduled_input"
+                    aria-label="Default select example"
+                    aria-placeholder="Départ"
+                  >
+                    <option>Depart</option>
+                    <option v-for="(ville, v) in villesList" :key="v">
+                      {{ ville.designation }}
+                    </option>
+                  </select>
+                </div>
+                <div class="col-lg-2">
+                  <v-btn color="#159e72"
+                    ><v-icon color="white" size="30">mdi-sync</v-icon></v-btn
+                  >
+                </div>
+                <div class="col-lg-5">
+                  <select
+                    class="form-select scheduled_input"
+                    aria-label="Default select example"
+                    aria-placeholder="Destination"
+                  >
+                    <option>Destination</option>
+                    <option v-for="(ville, v) in villesList" :key="v">
+                      {{ ville.designation }}
+                    </option>
+                  </select>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-lg-8">
+                  <input
+                    type="date"
+                    class="form-control scheduled_input"
+                    placeholder="Date de départ"
+                  />
+                </div>
+                <div class="col-lg-3">
+                  <v-btn text color="#159e72"
+                    ><v-icon>mdi-magnify</v-icon><span>Rechercher</span></v-btn
+                  >
+                </div>
+              </div>
+            </v-card-text>
+          </v-card>
+        </div>
+      </div>
+    </div>
+
+    <div class="container">
       <div class="container-fluid" id="top-header">
-        <div class="row header text-center">
-          <div class="col-lg-7">
-            <img
-              class="animate__animated animate__backInLeft animate__slower"
-              src="../assets/urban.jpg"
-              height="400px"
-              alt=""
-            />
+        <div class="row text-center">
+          <div class="col-lg-8">
             <h1 class="font-weight-bold enough">
               Réservez vos billets en un clic !!!
             </h1>
@@ -60,61 +139,6 @@
                 complication.
               </p>
             </div>
-          </div>
-
-          <div class="col-lg-5" id="img_header">
-            <v-card
-              color="white"
-              class="animate__animated animate__backInDown animate__delay-2s"
-            >
-              <v-card-title
-                ><span class="scheduled_travel"
-                  >Planifiez vos voyages en toute sérénité</span
-                ></v-card-title
-              >
-              <v-card-text>
-                <div class="row">
-                  <div class="col-lg-5">
-                    <select
-                      class="form-select scheduled_input"
-                      aria-label="Default select example"
-                      aria-placeholder="Départ"
-                    >
-                      <option>Départ</option>
-                    </select>
-                  </div>
-                  <div class="col-lg-2">
-                    <v-btn color="#159e72"
-                      ><v-icon color="white" size="30">mdi-sync</v-icon></v-btn
-                    >
-                  </div>
-                  <div class="col-lg-5">
-                    <select
-                      class="form-select scheduled_input"
-                      aria-label="Default select example"
-                      aria-placeholder="Destination"
-                    >
-                      <option>Destination</option>
-                    </select>
-                  </div>
-                </div>
-                <div class="row">
-                  <div class="col-lg-8">
-                    <input
-                      type="date"
-                      class="form-control scheduled_input"
-                      placeholder="Date de départ"
-                    />
-                  </div>
-                  <div class="col-lg-3">
-                    <v-btn text color="#159e72"
-                      ><v-icon>mdi-magnify</v-icon
-                      ><span>Rechercher</span></v-btn
-                    >
-                  </div>
-                </div>
-              </v-card-text>
-            </v-card>
           </div>
         </div>
       </div>
@@ -136,21 +160,21 @@
           data-aos-duration="800"
         >
           <span id="aboutUs_text">
-            Urban Bus Ticket’s simplifie vos voyages en autocar à travers la
-            Côte d’Ivoire en vous offrant une plateforme intuitive de
-            réservation en ligne. Avec nous, réservez facilement, rapidement, et
-            en toute sécurité, en profitant d’un large choix d’itinéraires,
-            d’horaires et de tarifs compétitifs. Notre mission est de rendre vos
-            déplacements en autocar aussi fluides que possible. En collaboration
-            avec des transporteurs de confiance, nous assurons flexibilité,
-            confort, et tranquillité d’esprit. Que ce soit pour le travail, les
-            loisirs, ou une aventure entre amis, chaque étape de votre
-            réservation est optimisée pour répondre à vos attentes. Nous sommes
-            fiers de fournir une alternative pratique et abordable aux autres
-            modes de transport en Côte d’Ivoire. Chez Urban Bus Ticket’s, nous
-            vous offrons le confort, la fiabilité et le service client de
-            qualité que vous méritez. Merci de voyager avec nous – votre confort
-            est notre priorité !
+            urbanGo simplifie vos voyages en autocar à travers la Côte d’Ivoire
+            en vous offrant une plateforme intuitive de réservation en ligne.
+            Avec nous, réservez facilement, rapidement, et en toute sécurité, en
+            profitant d’un large choix d’itinéraires, d’horaires et de tarifs
+            compétitifs. Notre mission est de rendre vos déplacements en autocar
+            aussi fluides que possible. En collaboration avec des transporteurs
+            de confiance, nous assurons flexibilité, confort, et tranquillité
+            d’esprit. Que ce soit pour le travail, les loisirs, ou une aventure
+            entre amis, chaque étape de votre réservation est optimisée pour
+            répondre à vos attentes. Nous sommes fiers de fournir une
+            alternative pratique et abordable aux autres modes de transport en
+            Côte d’Ivoire. Chez Urban Bus Ticket’s, nous vous offrons le
+            confort, la fiabilité et le service client de qualité que vous
+            méritez. Merci de voyager avec nous – votre confort est notre
+            priorité !
           </span>
         </div>
       </div>
@@ -161,7 +185,8 @@
       <br /><br /><br /><br /><br /><br /><br />
       <div class="row justify-content-center" id="our-services">
         <h1 class="section_title">
-          <v-icon color="#2C3A47" size="64">mdi-menu-right</v-icon>NOS SERVICES
+          <v-icon color="#2C3A47" size="64">mdi-menu-right</v-icon>NOS
+          PARTENAIRES
         </h1>
       </div>
       <br />
@@ -169,158 +194,158 @@
         <br />
         <div class="row">
           <div
-            class="col-lg-4"
-            data-aos="fade-right"
-            data-aos-offset="300"
-            data-aos-easing="ease-in-sine"
-            data-aos-delay="500"
+            class="text-center"
+            data-aos="flip-right"
+            data-aos-delay="1000"
+            data-aos-duration="800"
           >
-            <v-card rounded="xl" elevation="5" height="600px">
-              <v-img src="../assets/growth.svg" height="220" cover></v-img>
-              <v-divider></v-divider>
-              <v-card-title>Simplification de la Réservation 📲</v-card-title>
-              <v-card-text>
-                Notre mission est de rendre la réservation en autocar aussi
-                simple et rapide que possible. Grâce à une interface intuitive
-                et sécurisée, nous permettons aux usagers de réserver leur
-                trajet en quelques clics. Voyager devient aussi facile que de
-                naviguer sur votre téléphone.
-              </v-card-text>
-            </v-card>
-          </div>
-
-          <div
-            class="col-lg-4"
-            data-aos="fade-right"
-            data-aos-offset="300"
-            data-aos-easing="ease-in-sine"
-            data-aos-delay="800"
-          >
-            <v-card rounded="xl" elevation="5" height="600px">
-              <v-img src="../assets/managing.svg" height="220" cover></v-img>
-              <v-divider></v-divider>
-              <v-card-title>Choix et Flexibilité 🔍</v-card-title>
-              <v-card-text>
-                Accédez à une grande variété d’itinéraires et de transporteurs.
-                Sur notre plateforme, comparez facilement les horaires, tarifs,
-                et options de siège proposés par différents transporteurs. Que
-                vous voyagiez pour affaires, en famille ou entre amis, trouvez
-                l'option idéale pour vous.
-              </v-card-text>
-            </v-card>
-          </div>
-
-          <div
-            class="col-lg-4"
-            data-aos="fade-right"
-            data-aos-offset="300"
-            data-aos-easing="ease-in-sine"
-            data-aos-delay="1100"
-          >
-            <v-card rounded="xl" elevation="5" height="600px">
-              <v-img
-                src="../assets/otp-security.svg"
-                height="220"
-                cover
-              ></v-img>
-              <v-divider></v-divider>
-              <v-card-title
-                >Service Client : Accompagnement et Suivi 🤝</v-card-title
-              >
-              <v-card-text>
-                Votre satisfaction est notre priorité. Bien que chaque compagnie
-                de transport gère directement son service client, les équipes
-                d'Urban Bus Ticket’s travaillent en étroite collaboration avec
-                elles pour traiter vos réclamations et s’assurer que vos
-                préoccupations soient prises en compte. Nous nous engageons à
-                faciliter le dialogue entre les voyageurs et les transporteurs
-                pour une expérience de voyage sans souci.
-              </v-card-text>
-            </v-card>
+            <span id="ourPartner_text">Aucun partenaire pour le moment.</span>
           </div>
         </div>
       </div>
+      <br /><br /><br /><br /><br /><br />
     </div>
 
-    <div class="container-fluid partner_background">
+    <v-footer color="#193462">
       <div class="container">
-        <div class="row justify-content-center">
-          <h1 class="section_title" id="partner-section">
-            <v-icon color="#2C3A47" size="64">mdi-menu-right</v-icon>PARTENARIAT
-          </h1>
-        </div>
-        <br />
-
-        <div class="container">
-          <div class="row">
-            <v-card> </v-card>
-            <div class="col-lg-7">
-              <div>
-                Chez Urban Bus Ticket’s, nous nous engageons à fournir un
-                service clientèle exceptionnel, répondant aux questions et aux
-                préoccupations de nos clients avec rapidité et efficacité. Nous
-                sommes là pour accompagner nos clients à chaque étape de leur
-                voyage, de la réservation initiale à l'arrivée à destination.
-                Nous sommes fiers de jouer un rôle dans la facilitation des
-                voyages en autocar, en offrant aux voyageurs une alternative
-                pratique et abordable aux autres modes de transport. Chez Urban
-                Bus Ticket’s, nous sommes déterminés à rendre chaque voyage
-                aussi agréable que possible, en offrant la commodité, la
-                fiabilité et le service de qualité que nos clients méritent.
-                Merci de nous faire confiance pour vos besoins de voyage en
-                autocar.
-              </div>
-              <br />
-              <v-btn
-                class="partner_btn"
-                @click="
-                  $router.push({ path: '/DemandeAdhesion' }).catch(() => {})
-                "
-                small
-                btn
-                ><span class="adhesion">DEMANDER VOTRE ADHÉSION</span></v-btn
-              >
-            </div>
-
-            <div
-              class="col-lg-5"
-              data-aos="fade-zoom-in"
-              data-aos-easing="ease-in-back"
-              data-aos-delay="300"
-              data-aos-offset="0"
-              data-aos-duration="1500"
-            >
-              <v-card rounded="xl" max-height="">
-                <v-img src="../assets/partner.jpg" height="400" cover></v-img>
-              </v-card>
+        <div class="row g-4">
+          <!-- Section Contact -->
+          <div class="col-lg-4 col-md-6 fade-in-up">
+            <h5 class="footer-title">Contact</h5>
+            <div class="d-flex flex-column gap-2">
+              <a href="mailto:contact@votreapp.com" class="contact-item">
+                <div class="contact-icon">
+                  <v-icon color="white">mdi-gmail</v-icon>
+                </div>
+                urbanGo@gmail.com
+              </a>
+              <a href="tel:+33123456789" class="contact-item">
+                <div class="contact-icon">
+                  <v-icon color="white">mdi-phone</v-icon>
+                </div>
+                +337 683441299
+              </a>
+              <a href="mailto:support@votreapp.com" class="contact-item">
+                <div class="contact-icon">
+                  <i class="bi bi-chat-dots-fill"></i>
+                </div>
+                support@urbanGo.com
+              </a>
             </div>
           </div>
-          <br />
+
+          <!-- Section App Stores -->
+          <div class="col-lg-4 col-md-6 fade-in-up-delay-1">
+            <h5 class="footer-title">Téléchargez l'application</h5>
+            <p class="text-light mb-3">Disponible sur toutes les plateformes</p>
+            <div class="d-flex flex-column gap-2">
+              <a href="#" class="store-btn">
+                <div class="store-icon">
+                  <i class="bi bi-apple"></i>
+                </div>
+                <div class="store-text d-flex flex-column align-items-start">
+                  <small>Télécharger sur</small>
+                  <span>App Store</span>
+                </div>
+              </a>
+              <a href="#" class="store-btn">
+                <div class="store-icon">
+                  <i class="bi bi-google-play"></i>
+                </div>
+                <div class="store-text d-flex flex-column align-items-start">
+                  <small>Disponible sur</small>
+                  <span>Google Play</span>
+                </div>
+              </a>
+            </div>
+          </div>
+
+          <!-- Section À propos -->
+          <div class="col-lg-4 col-md-12 fade-in-up-delay-2">
+            <h5 class="footer-title">À propos</h5>
+            <div class="text-light">
+              <p class="mb-3">
+                Une application moderne et intuitive pour vous accompagner au
+                quotidien.
+              </p>
+              <p class="mb-3">Développée avec passion par notre équipe.</p>
+              <!-- Réseaux sociaux -->
+              <div class="d-flex gap-3">
+                <a href="#" class="text-light fs-4" title="Facebook">
+                  <v-icon color="white">mdi-facebook</v-icon>
+                </a>
+                <a href="#" class="text-light fs-4" title="Twitter">
+                  <v-icon color="white">mdi-whatsapp</v-icon>
+                </a>
+                <a href="#" class="text-light fs-4" title="Instagram">
+                  <v-icon color="white">mdi-instagram</v-icon>
+                </a>
+                <a href="#" class="text-light fs-4" title="LinkedIn">
+                  <v-icon color="white">mdi-telegram</v-icon>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Footer Bottom -->
+        <hr class="my-4" style="border-color: rgba(255, 255, 255, 0.1)" />
+        <div class="footer-bottom">
+          <div class="row align-items-center">
+            <div class="col-md-6">
+              <p class="mb-0">
+                © 2025 Votre Application. Tous droits réservés.
+              </p>
+            </div>
+            <div class="col-md-6">
+              <p class="company-info text-md-end mb-0">
+                Votre Entreprise • Conçu et développé avec
+                <v-icon color="red">mdi-heart</v-icon>
+              </p>
+            </div>
+          </div>
         </div>
       </div>
-    </div>
-    <br />
-
-    <v-footer color="secondary">
-      <v-container fluid>
-        <v-row>
-          <v-col class="text-center">
-            <span class="copyright"
-              >© copyright 2023 - Urban Bus Ticket. Tous droits réservés</span
-            >
-          </v-col>
-        </v-row>
-      </v-container>
     </v-footer>
   </v-app>
 </template>
 
 <script>
 import $ from "jquery";
+import axios from "axios";
+import VueLottiePlayer from "vue-lottie-player";
+import { API_OBTENIR_LISTE_DES_VILLES_DISPONIBLE } from "./globalConfig/globalConstConfig";
 export default {
   name: "LandingVue",
+  components: {
+    vLottiePlayer: VueLottiePlayer,
+  },
+
+  data() {
+    return {
+      defaultObject: {},
+
+      villesList: [],
+    };
+  },
 
   methods: {
+    // OBTENIR LA LISTE DES VILLES DISPONIBLES
+    async obtenirListeVillesDispo() {
+      await axios
+        .post(API_OBTENIR_LISTE_DES_VILLES_DISPONIBLE, this.defaultObject)
+        .then((response) => {
+          this.villesList = response.data.items;
+        })
+        .catch((e) => {
+          this.errorMsg = e;
+          $(".alert-error").fadeIn();
+          setTimeout(function () {
+            $(".alert-error").fadeOut();
+          }, 4000);
+        });
+    },
+
     // GO TO LOGIN PAGE TO GET INTEFACE USER
     goToLoginPage() {
       this.$router.push({ path: "/Login" });
@@ -365,6 +390,8 @@ export default {
     setTimeout(function () {
       $(".content_text").slideDown();
     }, 2100);
+
+    this.obtenirListeVillesDispo();
   },
 };
 </script>
@@ -426,6 +453,12 @@ export default {
   padding-top: 100px;
 }
 
+.available {
+  color: white;
+  font-family: "Montserrat";
+  font-size: 20px;
+}
+
 /*.navbar-brand {
   background: linear-gradient(to right, #079992, #0c2461);
   background-clip: text;
@@ -466,6 +499,10 @@ export default {
   font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
     Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
 }*/
+
+.text-light {
+  font-family: "Montserrat";
+}
 
 .avatar {
   color: black;
@@ -591,7 +628,13 @@ export default {
 .copyright {
   color: white;
   font-size: 18px;
-  font-family: Georgia, "Times New Roman", Times, serif;
+  font-family: "Montserrat";
+}
+
+.facebook {
+  color: white;
+  font-size: 18px;
+  font-family: "Montserrat";
 }
 
 .link {
@@ -635,7 +678,15 @@ export default {
   text-align: center;
   font-size: 25px;
   color: #2c3e50;
-  font-family: "Roboto";
+  font-family: "Montserrat";
+  opacity: 0.8;
+}
+
+#ourPartner_text {
+  text-align: center;
+  font-size: 25px;
+  color: #2c3e50;
+  font-family: "Montserrat";
   opacity: 0.8;
 }
 
@@ -678,5 +729,146 @@ export default {
 
 .adhesion {
   color: white;
+}
+
+.footer-custom {
+  background: var(--footer-bg);
+  color: white;
+  position: relative;
+  overflow: hidden;
+}
+
+.footer-custom::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.3),
+    transparent
+  );
+}
+
+.footer-title {
+  color: white;
+  font-family: "Montserrat";
+  font-weight: 600;
+  position: relative;
+  margin-bottom: 1.5rem;
+}
+
+.footer-title::after {
+  content: "";
+  position: absolute;
+  bottom: -8px;
+  left: 0;
+  width: 40px;
+  height: 2px;
+  background: linear-gradient(90deg, var(--accent-color), #42a5f5);
+  border-radius: 1px;
+}
+
+.contact-item {
+  display: flex;
+  align-items: center;
+  padding: 0.5rem;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+  text-decoration: none;
+  color: #e3f2fd;
+}
+
+.contact-item:hover {
+  background: rgba(255, 255, 255, 0.1);
+  transform: translateX(5px);
+  color: var(--accent-color);
+  text-decoration: none;
+}
+
+.contact-icon {
+  width: 20px;
+  height: 20px;
+  background: linear-gradient(135deg, var(--accent-color), #42a5f5);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  margin-right: 0.75rem;
+  flex-shrink: 0;
+}
+
+.store-btn {
+  background: linear-gradient(135deg, #424242, #616161);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  transition: all 0.3s ease;
+  text-decoration: none;
+  color: white;
+  padding: 0.75rem 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.store-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+  background: linear-gradient(135deg, #525252, #757575);
+  color: white;
+  text-decoration: none;
+}
+
+.store-icon {
+  width: 24px;
+  height: 24px;
+  background: white;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  color: #424242;
+  font-size: 12px;
+  flex-shrink: 0;
+}
+
+.store-text small {
+  font-size: 0.7rem;
+  opacity: 0.8;
+}
+
+.store-text span {
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+.footer-bottom {
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  color: white;
+  font-family: "Montserrat";
+}
+
+.company-info {
+  color: white;
+  font-family: "Montserrat";
+  font-size: 0.9rem;
+}
+
+/* Animations Bootstrap compatible */
+.fade-in-up {
+  animation: fadeInUp 0.6s ease-out;
+}
+
+.fade-in-up-delay-1 {
+  animation: fadeInUp 0.6s ease-out 0.2s both;
+}
+
+.fade-in-up-delay-2 {
+  animation: fadeInUp 0.6s ease-out 0.4s both;
 }
 </style>

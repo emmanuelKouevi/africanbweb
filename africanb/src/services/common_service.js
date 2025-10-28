@@ -2,7 +2,7 @@ import {
   API_OBTENIR_REFERENCE_PAR_PAR_FAMILLE,
   HEADERS,
 } from "@/components/globalConfig/globalConstConfig";
-import { showErrorMessage } from "@/functionnalities/messages/messageProcess";
+import { showErrorMessage } from "@/modules/messages/messageProcess";
 import axios from "axios";
 
 // obtenir la liste de la reférence passé en paramètre

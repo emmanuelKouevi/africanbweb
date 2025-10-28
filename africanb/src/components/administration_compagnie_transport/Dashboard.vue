@@ -477,7 +477,7 @@
 </template>
 
 <script>
-import CardStat from "@/functionnalities/statistiques/admin/widgets/CardStat.vue";
+import CardStat from "@/modules/statistiques/admin/widgets/CardStat.vue";
 import {
   API_GET_DOCUMENT_URL,
   API_RECUPERER_LISTE_GARES_PAR_COMPAGNIE,
@@ -501,7 +501,7 @@ import {
   ArcElement,
   PointElement,
 } from "chart.js";
-import StatistiqueReservationParGareTransport from "@/functionnalities/statistiques/traders/views/StatistiqueReservationParGareTransport.vue";
+import StatistiqueReservationParGareTransport from "@/modules/statistiques/traders/views/StatistiqueReservationParGareTransport.vue";
 
 ChartJS.register(
   Title,

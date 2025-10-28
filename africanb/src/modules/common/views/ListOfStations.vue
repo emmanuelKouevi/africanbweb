@@ -34,7 +34,7 @@
 </template>
 
 <script>
-import { showErrorMessage } from "@/functionnalities/messages/messageProcess";
+import { showErrorMessage } from "@/modules/messages/messageProcess";
 import { getStationApi } from "../services/commonApi";
 import { ROLE_ADMIN_COMPAGNIE_TRANSPORT } from "@/components/globalConfig/constUsersRoles";
 

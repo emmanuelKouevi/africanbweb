@@ -18,76 +18,76 @@ import selectionnerVille from "../components/administrateur_societe/Selectionner
 //import creerFonctionnalite from "../components/administrateur_societe/creerFonctionnalite";
 //import creerRoleUtilisateur from "../components/administrateur_societe/creerRoleUtilisateur";
 //import creerUtilisateur from "../components/administrateur_societe/creerUtilisateur";
-import CreateAccountUser from "@/functionnalities/users/views/CreateAccountUser.vue";
+import CreateAccountUser from "@/modules/users/views/CreateAccountUser.vue";
 
 import gestionFunctionnalitesEtRoles from "../components/administrateur_societe/gestionFonctionnalitesEtRoles";
 import modifierCompteUtilisateur from "../components/administrateur_societe/userProfil";
 import resetPasswordUser from "../components/administrateur_societe/changerPassword";
 import selectionnerUtilisateur from "../components/administrateur_societe/selectionnerUtilisateur";
 
-import creerOffreVoyage from "@/functionnalities/offre_voyage/CreerOffreVoyage.vue";
+import creerOffreVoyage from "@/modules/offre_voyage/CreerOffreVoyage.vue";
 import creerVilleEscale from "../components/administration_compagnie_transport/CreerVilleEscale";
 import programmerOffreVoyage from "../components/administration_compagnie_transport/ProgrammerOffreVoyage";
 import creerModeTarif from "../components/administration_compagnie_transport/CreerModeTarif";
-import selectionnerOffreVoyage from "@/functionnalities/offre_voyage/SelectionnerOffreVoyage.vue";
-import modifierOffreVoyage from "@/functionnalities/offre_voyage/ModifierOffreVoyage.vue";
+import selectionnerOffreVoyage from "@/modules/offre_voyage/SelectionnerOffreVoyage.vue";
+import modifierOffreVoyage from "@/modules/offre_voyage/ModifierOffreVoyage.vue";
 import rattacherJourSemaineOffreVoyage from "../components/administration_compagnie_transport/RattacherJourSemaineOffreVoyage";
 import creerProprieteCaracteristiqueOffreVoyage from "../components/administration_compagnie_transport/CreerProprieteCaracteristiqueOffreVoyage";
 import modifierModeTarif from "../components/administration_compagnie_transport/ModifierModeTarif";
 import modifierVilleEscaleOffreVoyage from "../components/administration_compagnie_transport/ModifierVilleEscaleOffreVoyage";
 import modifierJourOffreVoyage from "../components/administration_compagnie_transport/ModifierJourOffreVoyage";
 import gestionBagageCompagnieTransport from "../components/administration_compagnie_transport/GestionBagageCompagnieTransport";
-import creerGareCompagnieTransport from "../functionnalities/gare_transport/CreerGareCompagnieTransport.vue";
-import selectionnerGareCompagnieTransport from "../functionnalities/gare_transport/SelectionnerGareCompagnieTransport.vue";
+import creerGareCompagnieTransport from "../modules/gare_transport/CreerGareCompagnieTransport.vue";
+import selectionnerGareCompagnieTransport from "../modules/gare_transport/SelectionnerGareCompagnieTransport.vue";
 import tableauBord from "../components/Dashboard/TableauBord";
 import creerModeAbonnement from "../components/administration_compagnie_transport/CreerModeAbonnement";
 import creerModePaiement from "../components/administration_compagnie_transport/CreerModePaiement";
 import selectionnerModeAbonnementEtPaiement from "../components/administration_compagnie_transport/SelectionnerModeAbonnementEtPaiement";
 import modifierModePaiement from "../components/administration_compagnie_transport/ModifierModePaiement";
 import documentAttestationTransport from "../components/administration_compagnie_transport/DocumentAttestationTransport";
-import associerBusCompagnieTransport from "@/functionnalities/bus/CreerBusCompagnieTransport.vue";
-import selectionnerBusCompagnieTransport from "@/functionnalities/bus/SelectionnerBusTransport.vue";
+import associerBusCompagnieTransport from "@/modules/bus/CreerBusCompagnieTransport.vue";
+import selectionnerBusCompagnieTransport from "@/modules/bus/SelectionnerBusTransport.vue";
 import resetPasswordUserCompagnie from "../components/administration_compagnie_transport/changerPasswordCompagnieTransport.vue";
 import userProfilCompagnieTransport from "../components/administration_compagnie_transport/userProfilCompagnieTransport.vue";
 import LandingPage from "../components/LandingPage";
-import planifierOffreVoyage from "@/functionnalities/offre_voyage/PlanifierOffreVoyage.vue";
+import planifierOffreVoyage from "@/modules/offre_voyage/PlanifierOffreVoyage.vue";
 
 // IMPORT FOR ENTITY VENDEUR
 import selectionnerReservationBillet from "../components/vendeur/SelectionnerReservationBillet";
 import DetailReservation from "../components/vendeur/DetailReservation";
-import selectionnerOffreVoyageReservation from "@/functionnalities/vendeur/SelectionnerUnProgramme.vue";
+import selectionnerOffreVoyageReservation from "@/modules/vendeur/SelectionnerUnProgramme.vue";
 import reservationBillet from "../components/vendeur/ReservationBillet";
 import modifierPays from "@/components/administrateur_societe/modifierPays.vue";
 import modifierVille from "@/components/administrateur_societe/modifierVille.vue";
-import UserInfo from "@/functionnalities/users/views/UserDetail.vue";
+import UserInfo from "@/modules/users/views/UserDetail.vue";
 import InfosAdhesion from "@/components/InfosAdhesion.vue";
 import InfosAdhesionValide from "@/components/InfosAdhesionValide.vue";
-import creerDemandeAdhesion from "../functionnalities/adhesion/DemandeAdhesion.vue";
-import creerDemandeAdhesionInterne from "@/functionnalities/adhesion/CreerDemandeAdhesion.vue";
+import creerDemandeAdhesion from "../modules/adhesion/DemandeAdhesion.vue";
+import creerDemandeAdhesionInterne from "@/modules/adhesion/CreerDemandeAdhesion.vue";
 import SelectionnerProgrammeOffreVoyageList from "../components/vendeur/ProgrammeOffreVoyageList.vue";
 
-import VerifierBilletReservation from "@/functionnalities/ticket/VerifierBilletReservation.vue";
-import ConfirmerBilletReservation from "@/functionnalities/ticket/ConfirmerBilletReservation.vue";
+import VerifierBilletReservation from "@/modules/ticket/VerifierBilletReservation.vue";
+import ConfirmerBilletReservation from "@/modules/ticket/ConfirmerBilletReservation.vue";
 
-import CreerStrategieBagage from "@/functionnalities/bagages/components/strategieBagage/CreerStrategieBagage.vue";
-import SelectionnerStrategieParCompagnie from "@/functionnalities/bagages/components/strategieBagage/SelectionnerStrategieParCompagnie.vue";
-import ModifierStrategieBagage from "@/functionnalities/bagages/components/strategieBagage/ModifierStrategieBagage.vue";
+import CreerStrategieBagage from "@/modules/bagages/components/strategieBagage/CreerStrategieBagage.vue";
+import SelectionnerStrategieParCompagnie from "@/modules/bagages/components/strategieBagage/SelectionnerStrategieParCompagnie.vue";
+import ModifierStrategieBagage from "@/modules/bagages/components/strategieBagage/ModifierStrategieBagage.vue";
 
-import DocumentAttestationTransport from "@/functionnalities/documents/DocumentAttestationTransport.vue";
-import DocumentLogoCompagnieTransport from "@/functionnalities/documents/DocumentLogoCompagnieTransport.vue";
-import SelectionnerDocument from "@/functionnalities/documents/SelectionnerDocument.vue";
-import SearchTicket from "@/functionnalities/bagages/views/searchTicket.vue";
-import GestionBagage from "@/functionnalities/bagages/components/gestionBagage/GestionBagage.vue";
-import BagageClient from "@/functionnalities/bagages/components/gestionBagage/BagageClient.vue";
-import SuiviBagages from "@/functionnalities/bagages/components/gestionBagage/SuiviBagages.vue";
-import StatistiqueReservationParProgramme from "@/functionnalities/statistiques/admin/views/StatistiqueReservationParProgramme.vue";
-import StatistiqueReservation from "@/functionnalities/statistiques/admin/views/StatistiqueReservation.vue";
+import DocumentAttestationTransport from "@/modules/documents/DocumentAttestationTransport.vue";
+import DocumentLogoCompagnieTransport from "@/modules/documents/DocumentLogoCompagnieTransport.vue";
+import SelectionnerDocument from "@/modules/documents/SelectionnerDocument.vue";
+import SearchTicket from "@/modules/bagages/views/searchTicket.vue";
+import GestionBagage from "@/modules/bagages/components/gestionBagage/GestionBagage.vue";
+import BagageClient from "@/modules/bagages/components/gestionBagage/BagageClient.vue";
+import SuiviBagages from "@/modules/bagages/components/gestionBagage/SuiviBagages.vue";
+import StatistiqueReservationParProgramme from "@/modules/statistiques/admin/views/StatistiqueReservationParProgramme.vue";
+import StatistiqueReservation from "@/modules/statistiques/admin/views/StatistiqueReservation.vue";
 
-import NouvelleTransaction from "@/functionnalities/caisses/NouvelleTransaction.vue";
-import EnvoyerNotification from "@/functionnalities/notifications/EnvoyerNotification.vue";
+import NouvelleTransaction from "@/modules/caisses/NouvelleTransaction.vue";
+import EnvoyerNotification from "@/modules/notifications/EnvoyerNotification.vue";
 
-import RoleAdmin from "@/functionnalities/roles/views/Role.vue";
-import PermissionUser from "@/functionnalities/permissions/views/Permission.vue";
+import RoleAdmin from "@/modules/roles/views/Role.vue";
+import PermissionUser from "@/modules/permissions/views/Permission.vue";
 Vue.use(VueRouter);
 
 const routes = [

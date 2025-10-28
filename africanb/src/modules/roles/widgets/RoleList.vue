@@ -1,34 +1,37 @@
 <template>
-  <div>
-    <v-card rounded="lg" elevation="3" v-if="role !== undefined">
-      <v-card-text>
-        <div class="container">
-          <div class="row">
-            <span class="text_role_libelle">{{ role.libelle }}</span>
-          </div>
-          <div class="row">
-            <div class="col-lg-4">
-              <v-btn small text color="#159e72" @click="editUserRole(role)"
-                ><span class="">Éditer</span></v-btn
-              >
-            </div>
-          </div>
-        </div>
-      </v-card-text>
-    </v-card>
+  <div v-if="roles !== undefined || roles !== null">
+    <div class="row">
+      <div class="col-lg-4" v-for="(role, r) in roles" :key="r">
+        <RoleItem :role="role" />
+      </div>
+      <div class="col-lg-4">
+        <v-card rounded="lg">
+          <v-card-title
+            ><span class="add_role_card_title">Nouveau rôle</span>
+            <v-spacer></v-spacer>
+            <v-btn small color="#159e72" @click="isOpenDialog = true"
+              ><span class="text_btn">Ajouter un rôle</span></v-btn
+            >
+          </v-card-title>
+          <v-card-subtitle>Ajouter un rôle utilisateur.</v-card-subtitle>
+        </v-card>
+      </div>
+    </div>
 
     <v-dialog v-model="isOpenDialog" persistent max-width="800px">
       <v-card>
         <v-card-title>
-          <span class="add_role_title">Editer un rôle</span>
+          <span class="add_role_title">Ajouter un rôle</span>
         </v-card-title>
-        <v-card-subtitle>Modifier un rôle utilisateur</v-card-subtitle>
+        <v-card-subtitle>Ajouter un nouveau rôle</v-card-subtitle>
         <v-card-text>
           <v-container>
             <div class="row">
               <div class="col-lg-6">
                 <div class="mb-3">
-                  <label for="exampleInputPassword1" class="form-label"
+                  <label
+                    for="exampleInputPassword1"
+                    class="form-label role_field"
                     >Désignation du rôle
                   </label>
                   <input
@@ -47,7 +50,7 @@
                   </label>
                   <input
                     type="text"
-                    class="form-control col-lg-12 role_field"
+                    class="form-control col-lg-12 user_field"
                     id="exampleInputEmail1"
                     v-model="roleObject.code"
                   />
@@ -57,8 +60,9 @@
             <br />
             <p class="add_role_title">Permissions</p>
             <v-data-table
+              v-model="permissionSelected"
               :headers="permissionHeaders"
-              :items="permissionSelected"
+              :items="permissionList"
               :single-select="singleSelect"
               item-key="code"
               show-select
@@ -102,7 +106,6 @@
       dismissible
       >{{ successMsg }}</v-alert
     >
-
     <v-overlay :value="overlay"
       ><v-progress-circular indeterminate size="64"></v-progress-circular
     ></v-overlay>
@@ -110,39 +113,49 @@
 </template>
 
 <script>
+import { getAllPermissionApi } from "@/modules/common/services/commonApi";
+import RoleItem from "./RoleItem.vue";
+import {
+  showErrorMessage,
+  showSuccessMessage,
+} from "@/modules/messages/messageProcess";
+import axios from "axios";
 import {
   API_CREATE_USER_ROLE,
   HEADERS,
 } from "@/components/globalConfig/globalConstConfig";
-import {
-  showErrorMessage,
-  showSuccessMessage,
-} from "@/functionnalities/messages/messageProcess";
-import axios from "axios";
 
 export default {
-  name: "RoleItem.vue",
+  name: "RoleList.vue",
   props: {
-    role: {
-      type: Object,
+    roles: {
+      type: Array,
       default: null,
     },
+  },
+  components: {
+    RoleItem,
   },
 
   data() {
     return {
-      successMsg: null,
-      errorMsg: null,
+      isOpenDialog: false,
       overlay: false,
 
-      isOpenDialog: false,
+      errorMsg: "",
+      successMsg: "",
+      warningMsg: "",
+
       singleSelect: false,
       permissionSelected: [],
       permissionHeaders: [{ text: "Libelle", value: "libelle" }],
 
+      permissionList: [],
+
       roleObject: {
-        code: "",
-        libelle: "",
+        code: null,
+        libelle: null,
+        datasFunctionalities: [],
       },
 
       userRoleDataToSend: {
@@ -152,27 +165,48 @@ export default {
   },
 
   methods: {
-    // SOUMETTRE MODIFICATION D'UN RÔLE
+    reinitialisation() {
+      this.permissionSelected = [];
+      this.roleObject.code = null;
+      this.roleObject.libelle = null;
+      this.roleObject.datasFunctionalities = [];
+    },
+
+    //SOUMETTRE NOUVEAU ROLE UTILISATEUR
     submit() {
       let isReadyToSubmit =
-        this.roleObject.libelle != null &&
-        this.roleObject.libelle.length > 0 &&
-        this.roleObject.code != null &&
-        this.roleObject.code.length > 0;
+        (this.roleObject.code != null || this.roleObject.code == "") &&
+        (this.roleObject.libelle != null || this.roleObject.libelle == "");
       if (!isReadyToSubmit) {
-        this.errorMsg = "Les champs de modifications sont vides";
+        this.errorMsg = "Veuillez renseigner les champs obligatoires !!!";
         showErrorMessage();
       } else {
-        this.updateRole();
+        if (this.permissionSelected.length == 0) {
+          this.errorMsg = "Veuillez rattacher des permissions !!";
+          showErrorMessage();
+        } else {
+          this.roleObject.datasFunctionalities = this.permissionList;
+          this.addNewRole();
+        }
       }
     },
 
-    // MODIFIER UN ROLE VIA API
-    async updateRole() {
+    // RECUPERER LA LISTE DES PERMISSIONS UTILISATEURS DISPONIBLES
+    async getFunctionnaliesAvailable() {
+      const permissions = await getAllPermissionApi(
+        {},
+        this.$store.state.userAuthentified.token
+      );
+
+      this.permissionList = permissions;
+    },
+
+    // ADD A NEW ROLE USER
+    async addNewRole() {
       this.userRoleDataToSend.datas.push(this.roleObject);
       this.overlay = true;
       await axios
-        .put(API_CREATE_USER_ROLE, this.userRoleDataToSend, {
+        .post(API_CREATE_USER_ROLE, this.userRoleDataToSend, {
           headers: HEADERS(this.$store.state.userAuthentified.token),
         })
         .then((response) => {
@@ -192,30 +226,35 @@ export default {
         })
         .finally(() => {
           this.userRoleDataToSend.datas = [];
+          this.reinitialisation();
           this.isOpenDialog = false;
           this.overlay = false;
-          this.$router.go(0);
+          this.$emit("update-roles");
         });
     },
+  },
 
-    // EDIT A USER ROLE
-    editUserRole(role) {
-      this.roleObject = Object.assign({}, role);
-      this.isOpenDialog = true;
-    },
+  mounted() {
+    this.getFunctionnaliesAvailable();
   },
 };
 </script>
 
 <style scoped>
-.text_role_libelle {
+.add_role_card_title {
   font-family: "Montserrat";
   font-weight: bold;
-  color: black;
+  opacity: 0.7;
 }
 
 .text_btn {
   color: white;
+  font-weight: 400;
+}
+
+.add_role_title {
+  font-weight: bold;
+  font-family: "Montserrat";
 }
 
 .myalert {

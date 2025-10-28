@@ -13,12 +13,14 @@ import "animate.css";
 import VueAnimated from "@asika32764/vue-animate";
 import "aos/dist/aos.css";
 import VueSSE from "vue-sse";
+import VueLottiePlayer from "vue-lottie-player";
 
 Vue.config.productionTip = false;
 Vue.use(Vuelidate);
 Vue.use(VueSweetalert2);
 Vue.use(VueAnimated);
 Vue.use(VueSSE);
+Vue.use(VueLottiePlayer);
 
 new Vue({
   router,

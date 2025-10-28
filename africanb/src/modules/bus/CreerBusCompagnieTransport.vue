@@ -1,4 +1,4 @@
-<template>
+<!--<template>
   <v-app id="inspire">
     <div class="container">
       <v-form @submit.prevent="submitForm">
@@ -106,6 +106,199 @@
       dismissible
       >{{ warningMsg }}</v-alert
     >
+    <v-alert
+      class="myalert alert-error"
+      type="error"
+      width="350px"
+      dismissible
+      >{{ errorMsg }}</v-alert
+    >
+    <v-overlay :value="overlay"
+      ><v-progress-circular indeterminate size="64"></v-progress-circular
+    ></v-overlay>
+  </v-app>
+</template> -->
+
+<template>
+  <v-app id="inspire">
+    <div class="container">
+      <div class="row">
+        <h3 class="main_title">Ajouter un nouvel autocar à sa flotte.</h3>
+        <small class="subtitle"
+          >Gérez efficacement vos autocars pour bien programmer vos
+          offres.</small
+        >
+      </div>
+      <br />
+      <div class="row">
+        <div class="col-lg-12">
+          <v-card>
+            <v-card-title
+              ><span class="main_title">Information de l'autocar.</span>
+              <v-spacer></v-spacer>
+              <!--BOITE DE DIALOGUE POUR LES PRIX -->
+              <v-dialog
+                v-model="dialogForPlanning"
+                persistent
+                max-width="600px"
+              >
+                <template v-slot:activator="{ on, attrs }">
+                  <v-btn
+                    :disabled="offreVoyageDesignation == null"
+                    small
+                    color="secondary"
+                    v-bind="attrs"
+                    v-on="on"
+                  >
+                    Ajouter un autocar
+                  </v-btn>
+                </template>
+                <v-card>
+                  <v-card-title>
+                    <span class="text-h5">Définir un programme</span>
+                  </v-card-title>
+                  <v-card-text>
+                    <form>
+                      <div class="row">
+                        <div class="col-lg">
+                          <label for="exampleInputEmail1" class="form-label"
+                            >Réference du programme:</label
+                          >
+                          <input
+                            type="text"
+                            class="form-control"
+                            id="exampleInputEmail1"
+                            v-model.trim="
+                              $v.programmeOffreVoyageModel.designation.$model
+                            "
+                          />
+                        </div>
+                      </div>
+
+                      <div class="row">
+                        <div class="col-lg-6">
+                          <label for="exampleInputEmail1" class="form-label"
+                            >Date de départ:</label
+                          >
+                          <input
+                            type="date"
+                            class="form-control"
+                            id="exampleInputEmail1"
+                            v-model.trim="
+                              $v.programmeOffreVoyageModel.dateDepart.$model
+                            "
+                          />
+                        </div>
+
+                        <div class="col-lg-6">
+                          <label for="exampleInputEmail1" class="form-label"
+                            >Date d'arrivée:</label
+                          >
+                          <input
+                            type="date"
+                            class="form-control"
+                            id="exampleInputEmail1"
+                            v-model.trim="
+                              $v.programmeOffreVoyageModel.dateArrivee.$model
+                            "
+                          />
+                        </div>
+                      </div>
+
+                      <div class="row">
+                        <div class="col-lg-6">
+                          <label for="exampleInputEmail1" class="form-label"
+                            >Heure de départ:</label
+                          >
+                          <input
+                            type="time"
+                            class="form-control"
+                            id="exampleInputEmail1"
+                            v-model.trim="
+                              $v.programmeOffreVoyageModel.heureDepart.$model
+                            "
+                          />
+                        </div>
+
+                        <div class="col-lg-6">
+                          <label for="exampleInputEmail1" class="form-label"
+                            >Heure d'arrivée (Estimation):</label
+                          >
+                          <input
+                            type="time"
+                            class="form-control"
+                            id="exampleInputEmail1"
+                            v-model.trim="
+                              $v.programmeOffreVoyageModel.heureArrivee.$model
+                            "
+                          />
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col-lg-6">
+                          <label for="exampleInputEmail1" class="form-label"
+                            >Selectionner un autocar:</label
+                          >
+                          <select
+                            class="form-select"
+                            aria-label="Default select example"
+                            v-model.trim="
+                              $v.programmeOffreVoyageModel.numeroBus.$model
+                            "
+                          >
+                            <option
+                              v-for="(bus, b) in availableBusList"
+                              :key="b"
+                              :value="bus.numero"
+                            >
+                              {{ bus.designation }}
+                            </option>
+                          </select>
+                        </div>
+                      </div>
+                    </form>
+                  </v-card-text>
+                  <v-card-actions>
+                    <v-spacer></v-spacer>
+                    <v-btn
+                      color="blue darken-1"
+                      text
+                      @click="dialogForPlanning = false"
+                    >
+                      Annuler
+                    </v-btn>
+                    <v-btn
+                      color="blue darken-1"
+                      text
+                      @click="savePlanningInList"
+                    >
+                      Enregistrer
+                    </v-btn>
+                  </v-card-actions>
+                </v-card>
+              </v-dialog>
+              <!-- FIN DE BOITE DE DIALOGUE -->
+            </v-card-title>
+            <v-card-text>
+              <form>
+                <br />
+              </form>
+
+              <br /><br />
+            </v-card-text>
+          </v-card>
+        </div>
+      </div>
+    </div>
+
+    <v-alert
+      class="myalert alert-success"
+      type="success"
+      width="350px"
+      dismissible
+      >{{ successMsg }}</v-alert
+    >
+
     <v-alert
       class="myalert alert-error"
       type="error"

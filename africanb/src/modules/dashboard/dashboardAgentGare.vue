@@ -211,7 +211,7 @@ import {
   API_STATISTIQUE_RESERVATIONS,
   API_STATISTIQUE_BAGAGES,
 } from "@/components/globalConfig/globalConstConfig";
-import StatistiqueReservationParGareTransport from "@/functionnalities/statistiques/traders/views/StatistiqueReservationParGareTransport.vue";
+import StatistiqueReservationParGareTransport from "@/modules/statistiques/traders/views/StatistiqueReservationParGareTransport.vue";
 export default {
   name: "DashboardSeller",
   components: {

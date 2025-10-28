@@ -6,7 +6,7 @@ import {
 /*import {
   showErrorMessage,
   showSuccessMessage,
-} from "@/functionnalities/messages/messageProcess";*/
+} from "@/modules/messages/messageProcess";*/
 import axios from "axios";
 import $ from "jquery";
 

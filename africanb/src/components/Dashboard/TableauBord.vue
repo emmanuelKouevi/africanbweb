@@ -39,8 +39,8 @@
 import DashboardSeller from "../vendeur/Dashboard.vue";
 import DashboardTransportAdmin from "@/components/administration_compagnie_transport/Dashboard.vue";
 import DashboardMainAdmin from "@/components/administrateur_societe/Dashboard.vue";
-import DashboardResponsableAgent from "@/functionnalities/dashboard/dashboardAgentGare.vue";
-import DashboardBagagiste from "@/functionnalities/dashboard/dashboardBagagiste.vue";
+import DashboardResponsableAgent from "@/modules/dashboard/dashboardAgentGare.vue";
+import DashboardBagagiste from "@/modules/dashboard/dashboardBagagiste.vue";
 export default {
   name: "TableauBord",
   components: {
