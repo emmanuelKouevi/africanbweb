@@ -202,3 +202,6 @@ export const FUNCTIONNALITY_MANAGE_NOTIFICATION =
   "functionnalityManageNotification";
 
 export const FUNCTIONNALITY_MANAGE_BAGS = "functionalityManageBags";
+
+export const FUNCTIONALITY_MANAGE_CATEGORIE_VOYAGEUR =
+  "FunctionalityManageCategorieVoyageur";

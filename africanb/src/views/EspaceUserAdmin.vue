@@ -358,6 +358,7 @@ import {
   FUNCTIONNALITY_GESTION_CAISSE,
   FUNCTIONNALITY_MANAGE_NOTIFICATION,
   FUNCTIONNALITY_MANAGE_BAGS,
+  FUNCTIONALITY_MANAGE_CATEGORIE_VOYAGEUR,
 } from "../components/globalConfig/constFunctionnalies";
 
 let sseClient;
@@ -645,6 +646,26 @@ export default {
             ],
           };
           globalFunctionnalities.push(manageSubscription);
+        }
+
+        if (element.code == FUNCTIONALITY_MANAGE_CATEGORIE_VOYAGEUR) {
+          var manageCategorie = {
+            title: "Gestion des catégories",
+            url: require("@/assets/station.png"),
+            items: [
+              {
+                title: "Ajouter une catégorie",
+                url: "mdi-train-car",
+                navigation: "/ajouter_categorie",
+              },
+              {
+                title: "Liste des gares disponibles",
+                url: require("../assets/liste.png"),
+                navigation: "/selectionnerGareCompagnieTransport",
+              },
+            ],
+          };
+          globalFunctionnalities.push(manageCategorie);
         }
 
         if (element.code == FUNCTIONNALITY_MANAGE_STATION) {

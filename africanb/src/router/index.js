@@ -15,9 +15,6 @@ import creerPays from "../components/administrateur_societe/CreerPays";
 import selectionnerPays from "../components/administrateur_societe/SelectionnerPays";
 import creerVille from "../components/administrateur_societe/CreerVille";
 import selectionnerVille from "../components/administrateur_societe/SelectionnerVille";
-//import creerFonctionnalite from "../components/administrateur_societe/creerFonctionnalite";
-//import creerRoleUtilisateur from "../components/administrateur_societe/creerRoleUtilisateur";
-//import creerUtilisateur from "../components/administrateur_societe/creerUtilisateur";
 import CreateAccountUser from "@/modules/users/views/CreateAccountUser.vue";
 
 import gestionFunctionnalitesEtRoles from "../components/administrateur_societe/gestionFonctionnalitesEtRoles";
@@ -85,6 +82,8 @@ import StatistiqueReservation from "@/modules/statistiques/admin/views/Statistiq
 
 import NouvelleTransaction from "@/modules/caisses/NouvelleTransaction.vue";
 import EnvoyerNotification from "@/modules/notifications/EnvoyerNotification.vue";
+
+import CreateNewCategory from "@/modules/categorie_voyageur/views/CreateNewCategory.vue";
 
 import RoleAdmin from "@/modules/roles/views/Role.vue";
 import PermissionUser from "@/modules/permissions/views/Permission.vue";
@@ -456,6 +455,12 @@ const routes = [
         path: "/create-new-transaction",
         name: "create-new-transaction",
         component: NouvelleTransaction,
+      },
+
+      {
+        path: "/ajouter_categorie",
+        name: "ajouter_categorie",
+        component: CreateNewCategory,
       },
 
       {
