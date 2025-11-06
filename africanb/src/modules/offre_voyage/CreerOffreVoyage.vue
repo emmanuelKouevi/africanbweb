@@ -641,7 +641,7 @@ export default {
       },
 
       referenceCategorieVoyageur: {
-        referenceFamilleDesignation: "referenceFamilleCategorieVoyaeur",
+        referenceFamilleDesignation: "referenceFamilleCategorieVoyageur",
       },
 
       referenceModeOffreVoyageList: [],

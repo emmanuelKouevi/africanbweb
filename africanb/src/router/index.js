@@ -84,6 +84,7 @@ import NouvelleTransaction from "@/modules/caisses/NouvelleTransaction.vue";
 import EnvoyerNotification from "@/modules/notifications/EnvoyerNotification.vue";
 
 import CreateNewCategory from "@/modules/categorie_voyageur/views/CreateNewCategory.vue";
+import SelectCategory from "@/modules/categorie_voyageur/views/SelectCategory.vue";
 
 import RoleAdmin from "@/modules/roles/views/Role.vue";
 import PermissionUser from "@/modules/permissions/views/Permission.vue";
@@ -461,6 +462,12 @@ const routes = [
         path: "/ajouter_categorie",
         name: "ajouter_categorie",
         component: CreateNewCategory,
+      },
+
+      {
+        path: "/select_category",
+        name: "select_category",
+        component: SelectCategory,
       },
 
       {

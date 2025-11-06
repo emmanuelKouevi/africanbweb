@@ -652,18 +652,7 @@ export default {
           var manageCategorie = {
             title: "Gestion des catégories",
             url: require("@/assets/station.png"),
-            items: [
-              {
-                title: "Ajouter une catégorie",
-                url: "mdi-train-car",
-                navigation: "/ajouter_categorie",
-              },
-              {
-                title: "Liste des gares disponibles",
-                url: require("../assets/liste.png"),
-                navigation: "/selectionnerGareCompagnieTransport",
-              },
-            ],
+            navigation: "/select_category",
           };
           globalFunctionnalities.push(manageCategorie);
         }

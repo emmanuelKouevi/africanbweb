@@ -205,26 +205,6 @@ export default {
   },
 
   methods: {
-    //OBTENIR REFERENCE DESIGNATION CATEGORIE VOYAGEUR
-    async obtenirReferenceModeCategorieVoyageur() {
-      this.objectToSendReferenceModeCategorieVoyageur.datas.push(
-        this.referenceCategorieVoyageur
-      );
-      await axios
-        .post(
-          API_OBTENIR_REFERENCE_PAR_PAR_FAMILLE,
-          this.objectToSendReferenceModeCategorieVoyageur,
-          { headers: HEADERS(this.$store.state.userAuthentified.token) }
-        )
-        .then((response) => {
-          this.referenceModeCategorieVoyageurList = response.data.items;
-        })
-        .catch((e) => {
-          this.errorMsg = e;
-          showErrorMessage();
-        });
-    },
-
     createSetOfBus() {
       if (this.busObject.datas.length == 0) {
         this.errorMsg = "Aucun autocar configuré !";

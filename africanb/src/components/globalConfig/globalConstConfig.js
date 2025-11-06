@@ -33,6 +33,7 @@ export const API_CREER_VILLE = `${BASE_URL}villes`;
 export const API_OBTENIR_LISTE_DES_VILLES_DISPONIBLE = `${BASE_URL}villes/getAllCities`;
 export const API_OBTENIR_LISTE_DES_PAYS_DISPONIBLE = `${BASE_URL}pays/getAllPays`;
 export const API_OBTENIR_REFERENCE_PAR_PAR_FAMILLE = `${BASE_URL}references/getReferenceByReferenceFamille`;
+export const API_CREATE_CATEGORY = `${BASE_URL}categoriePrix`;
 export const API_OBTENIR_VILLE_ESCALE_PAR_OFFRE = `${BASE_URL}villeEscales/getVilleByOffreVoyageDesignation`;
 
 // ------------------------------- APIS ADMINISTRATEUR COMPAGNIE DE TRANSPORT ----------------------------------//
