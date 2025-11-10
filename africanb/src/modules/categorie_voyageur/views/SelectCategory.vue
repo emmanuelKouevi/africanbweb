@@ -234,4 +234,14 @@ export default {
   right: 2%;
   width: 25%;
 }
+
+.main_title {
+  opacity: 0.8;
+  font-family: "Montserrat";
+  font-weight: bold;
+}
+
+.subtitle {
+  font-family: "Montserrat";
+}
 </style>

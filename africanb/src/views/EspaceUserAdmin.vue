@@ -359,6 +359,7 @@ import {
   FUNCTIONNALITY_MANAGE_NOTIFICATION,
   FUNCTIONNALITY_MANAGE_BAGS,
   FUNCTIONALITY_MANAGE_CATEGORIE_VOYAGEUR,
+  FUNCTIONALITY_MANAGE_REFERENCE,
 } from "../components/globalConfig/constFunctionnalies";
 
 let sseClient;
@@ -634,6 +635,28 @@ export default {
               {
                 title: "Creer un mode abonnement",
                 navigation: "/creerModeAbonnement",
+              },
+              {
+                title: "Creer un mode de paiement",
+                navigation: "/creerModePaiement",
+              },
+              {
+                title: "Liste des abonnements et paiements",
+                navigation: "/selectionnerModeAbonnementEtPaiement",
+              },
+            ],
+          };
+          globalFunctionnalities.push(manageSubscription);
+        }
+
+        if (element.code == FUNCTIONALITY_MANAGE_REFERENCE) {
+          var manageSubscription = {
+            title: "Gestion des references",
+            url: require("@/assets/souscription.png"),
+            items: [
+              {
+                title: "Gestion des références familles",
+                navigation: "/reference_famille",
               },
               {
                 title: "Creer un mode de paiement",

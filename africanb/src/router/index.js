@@ -79,6 +79,7 @@ import BagageClient from "@/modules/bagages/components/gestionBagage/BagageClien
 import SuiviBagages from "@/modules/bagages/components/gestionBagage/SuiviBagages.vue";
 import StatistiqueReservationParProgramme from "@/modules/statistiques/admin/views/StatistiqueReservationParProgramme.vue";
 import StatistiqueReservation from "@/modules/statistiques/admin/views/StatistiqueReservation.vue";
+import GestionReferenceFamille from "@/modules/references/views/AddOrSelectReferenceFamille.vue";
 
 import NouvelleTransaction from "@/modules/caisses/NouvelleTransaction.vue";
 import EnvoyerNotification from "@/modules/notifications/EnvoyerNotification.vue";
@@ -462,6 +463,12 @@ const routes = [
         path: "/ajouter_categorie",
         name: "ajouter_categorie",
         component: CreateNewCategory,
+      },
+
+      {
+        path: "/reference_famille",
+        name: "reference_famille",
+        component: GestionReferenceFamille,
       },
 
       {

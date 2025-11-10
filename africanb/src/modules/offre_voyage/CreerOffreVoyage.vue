@@ -547,6 +547,7 @@ import {
   API_OBTENIR_REFERENCE_PAR_PAR_FAMILLE,
   API_CREER_OFFRE_VOYAGE,
   HEADERS,
+  API_GET_ALL_CATEGORY,
 } from "@/components/globalConfig/globalConstConfig";
 import { required, minLength } from "vuelidate/lib/validators";
 import {
@@ -634,6 +635,13 @@ export default {
 
       objectToSendReferenceModeCategorieVoyageur: {
         datas: [],
+      },
+
+      retrieveObjectCategory: {
+        data: {
+          compagnieTransportId:
+            this.$store.state.userAuthentified.compagnieTransportId,
+        },
       },
 
       referenceModeOffreVoyage: {
@@ -830,7 +838,24 @@ export default {
     },
 
     //OBTENIR REFERENCE DESIGNATION CATEGORIE VOYAGEUR
-    async obtenirReferenceModeCategorieVoyageur() {
+    async getAllCategoryByCompagnieTransport() {
+      await axios
+        .post(API_GET_ALL_CATEGORY, this.retrieveObjectCategory, {
+          headers: HEADERS(this.$store.state.userAuthentified.token),
+        })
+        .then((response) => {
+          console.log(response);
+          this.referenceModeCategorieVoyageurList =
+            response.data.item.referenceDTOS;
+        })
+        .catch((e) => {
+          this.errorMsg = e;
+          showErrorMessage();
+        });
+    },
+
+    //OBTENIR REFERENCE DESIGNATION CATEGORIE VOYAGEUR
+    /*async obtenirReferenceModeCategorieVoyageur() {
       this.objectToSendReferenceModeCategorieVoyageur.datas.push(
         this.referenceCategorieVoyageur
       );
@@ -847,7 +872,7 @@ export default {
           this.errorMsg = e;
           showErrorMessage();
         });
-    },
+    },*/
 
     //OBTENIR REFERENCE DESIGNATION TYPE OFFRE DE VOYAGE
     async obtenirReferenceTypeOffreVoyage() {
@@ -1047,7 +1072,8 @@ export default {
     this.getAllCities();
     this.obtenirReferenceTypeOffreVoyage();
     this.obtenirReferenceModeOffreVoyage();
-    this.obtenirReferenceModeCategorieVoyageur();
+    this.getAllCategoryByCompagnieTransport();
+    //this.obtenirReferenceModeCategorieVoyageur();
   },
 };
 </script>

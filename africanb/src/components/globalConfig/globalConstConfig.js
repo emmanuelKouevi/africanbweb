@@ -34,6 +34,7 @@ export const API_OBTENIR_LISTE_DES_VILLES_DISPONIBLE = `${BASE_URL}villes/getAll
 export const API_OBTENIR_LISTE_DES_PAYS_DISPONIBLE = `${BASE_URL}pays/getAllPays`;
 export const API_OBTENIR_REFERENCE_PAR_PAR_FAMILLE = `${BASE_URL}references/getReferenceByReferenceFamille`;
 export const API_CREATE_CATEGORY = `${BASE_URL}categoriePrix`;
+export const API_GET_ALL_CATEGORY = `${BASE_URL}categoriePrix/compagnieTransport`;
 export const API_OBTENIR_VILLE_ESCALE_PAR_OFFRE = `${BASE_URL}villeEscales/getVilleByOffreVoyageDesignation`;
 
 // ------------------------------- APIS ADMINISTRATEUR COMPAGNIE DE TRANSPORT ----------------------------------//
@@ -114,6 +115,11 @@ export const API_GENERATE_REPORT = `${BASE_URL}reservationBilletVoyages/generate
 export const API_CHECK_TICKET = `${BASE_URL}reservationBilletVoyages/verifierUnBilletVoyage`;
 
 export const API_CONFIRM_TICKET = `${BASE_URL}reservationBilletVoyages/confirmerUnVoyage`;
+
+// ------------------------------------------------------------- REFERENCE-------------------------------------------------------------------------//
+
+export const API_CREATE_REFERENCE_FAMILLE = `${BASE_URL}referencesFamille`;
+export const API_CREATE_REFERENCE = `${BASE_URL}references`;
 
 // ------------------------------------------------------- STRATEGIE BAGAGES -------------------------------------------------------------//
 
