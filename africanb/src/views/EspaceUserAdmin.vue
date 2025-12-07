@@ -650,7 +650,7 @@ export default {
         }
 
         if (element.code == FUNCTIONALITY_MANAGE_REFERENCE) {
-          var manageSubscription = {
+          var manageReference = {
             title: "Gestion des references",
             url: require("@/assets/souscription.png"),
             items: [
@@ -668,7 +668,7 @@ export default {
               },
             ],
           };
-          globalFunctionnalities.push(manageSubscription);
+          globalFunctionnalities.push(manageReference);
         }
 
         if (element.code == FUNCTIONALITY_MANAGE_CATEGORIE_VOYAGEUR) {
