@@ -347,19 +347,22 @@ import {
   FUNCTIONNALITY_MANAGE_OFFRE_VOYAGE,
   FUNCTIONNALITY_MANAGE_STATION,
   FUNCTIONNALITY_MANAGE_BUS,
-  FUNCTIONNALITY_MANAGE_RESERVATION_TICKET,
-  FUNCTIONNALITY_MANAGE_SUBSCRIPTION_AND_PAYMENT,
-  FUNCTIONNALITY_MANAGE_LOCALISATION,
-  FUNCTIONNALITY_MANAGE_USERS,
-  FUNCTIONNALITY_MANAGE_ROLE_AND_FUNCTIONNALITY,
   FUNCTIONNALITY_MANAGE_ADHESION,
-  FUNCTIONNALITY_MANAGE_STRATEGIE_BAGAGE,
   FUNCTIONNALITY_MANAGE_DOCUMENT,
-  FUNCTIONNALITY_GESTION_CAISSE,
   FUNCTIONNALITY_MANAGE_NOTIFICATION,
   FUNCTIONNALITY_MANAGE_BAGS,
   FUNCTIONALITY_MANAGE_CATEGORIE_VOYAGEUR,
   FUNCTIONALITY_MANAGE_REFERENCE,
+  FUNCTIONNALITY_MANAGE_COUNTRY,
+  FUNCTIONNALITY_MANAGE_TOWN,
+  FUNCTIONNALITY_MANAGE_ACCOUNT,
+  FUNCTIONNALITY_MANAGE_WALLET,
+  FUNCTIONNALITY_MANAGE_ROLE_AND_PERMISSIONS,
+  FUNCTIONNALITY_MANAGE_SUBSCRIPTION,
+  FUNCTIONNALITY_MANAGE_PAYMENT,
+  FUNCTIONNALITY_CHECK_TICKET,
+  FUNCTIONNALITY_MANAGE_RESERVATION_STATION,
+  FUNCTIONNALITY_MANAGE_STRATEGIE_BAGS,
 } from "../components/globalConfig/constFunctionnalies";
 
 let sseClient;
@@ -627,7 +630,7 @@ export default {
       var globalFunctionnalities = [];
 
       this.functionnalitiesListByUserRole.forEach((element) => {
-        if (element.code == FUNCTIONNALITY_MANAGE_SUBSCRIPTION_AND_PAYMENT) {
+        if (element.code == FUNCTIONNALITY_MANAGE_SUBSCRIPTION) {
           var manageSubscription = {
             title: "Gestion des abonnements et paiments",
             url: require("@/assets/souscription.png"),
@@ -636,6 +639,20 @@ export default {
                 title: "Creer un mode abonnement",
                 navigation: "/creerModeAbonnement",
               },
+              {
+                title: "Liste des abonnements et paiements",
+                navigation: "/selectionnerModeAbonnementEtPaiement",
+              },
+            ],
+          };
+          globalFunctionnalities.push(manageSubscription);
+        }
+
+        if (element.code == FUNCTIONNALITY_MANAGE_PAYMENT) {
+          var managePayment = {
+            title: "Moyens de Paiement",
+            url: require("@/assets/souscription.png"),
+            items: [
               {
                 title: "Creer un mode de paiement",
                 navigation: "/creerModePaiement",
@@ -646,7 +663,7 @@ export default {
               },
             ],
           };
-          globalFunctionnalities.push(manageSubscription);
+          globalFunctionnalities.push(managePayment);
         }
 
         if (element.code == FUNCTIONALITY_MANAGE_REFERENCE) {
@@ -740,7 +757,25 @@ export default {
           globalFunctionnalities.push(manageOffreVoyage);
         }
 
-        if (element.code == FUNCTIONNALITY_MANAGE_RESERVATION_TICKET) {
+        if (element.code == FUNCTIONNALITY_CHECK_TICKET) {
+          var manageOffreVoyage = {
+            title: "Vérification de tickets",
+            url: require("@/assets/route.png"),
+            items: [
+              {
+                title: "Vérifier un billet de voyage",
+                navigation: "/verifierBilletReservation",
+              },
+              {
+                title: "Confirmer un billet de voyage",
+                navigation: "/confirmerBilletReservation",
+              },
+            ],
+          };
+          globalFunctionnalities.push(manageOffreVoyage);
+        }
+
+        if (element.code == FUNCTIONNALITY_MANAGE_RESERVATION_STATION) {
           var manageReservationTicket = {
             title: "Gestion des billets de reservation",
             url: require("@/assets/billets.png"),
@@ -784,22 +819,14 @@ export default {
           globalFunctionnalities.push(manageBags);
         }
 
-        if (element.code == FUNCTIONNALITY_MANAGE_LOCALISATION) {
-          var createlocation = {
-            title: "Localité",
+        if (element.code == FUNCTIONNALITY_MANAGE_COUNTRY) {
+          var manageCountry = {
+            title: "Pays",
             url: "",
             items: [
               {
-                title: "Ajouter une ville",
-                navigation: "/creerVille",
-              },
-              {
                 title: "Ajouter un pays",
                 navigation: "/creerPays",
-              },
-              {
-                title: "Liste des villes",
-                navigation: "/selectionnerVille",
               },
               {
                 title: "Liste des pays",
@@ -808,11 +835,30 @@ export default {
             ],
           };
 
-          globalFunctionnalities.push(createlocation);
+          globalFunctionnalities.push(manageCountry);
         }
 
-        if (element.code == FUNCTIONNALITY_MANAGE_USERS) {
-          var createUserFunction = {
+        if (element.code == FUNCTIONNALITY_MANAGE_TOWN) {
+          var manageTown = {
+            title: "Villes",
+            url: "",
+            items: [
+              {
+                title: "Ajouter une ville",
+                navigation: "/creerVille",
+              },
+              {
+                title: "Liste des villes",
+                navigation: "/selectionnerVille",
+              },
+            ],
+          };
+
+          globalFunctionnalities.push(manageTown);
+        }
+
+        if (element.code == FUNCTIONNALITY_MANAGE_ACCOUNT) {
+          var manageAccount = {
             title: "Gestion des comptes utilisateurs",
             url: require("@/assets/partners.png"),
             items: [
@@ -827,10 +873,10 @@ export default {
             ],
           };
 
-          globalFunctionnalities.push(createUserFunction);
+          globalFunctionnalities.push(manageAccount);
         }
 
-        if (element.code == FUNCTIONNALITY_MANAGE_ROLE_AND_FUNCTIONNALITY) {
+        if (element.code == FUNCTIONNALITY_MANAGE_ROLE_AND_PERMISSIONS) {
           var createRoleAndFunctionnality = {
             title: "Gestion des rôles et fonctionnalités",
             url: "",
@@ -854,7 +900,7 @@ export default {
           globalFunctionnalities.push(createRoleAndFunctionnality);
         }
 
-        if (element.code == FUNCTIONNALITY_MANAGE_STRATEGIE_BAGAGE) {
+        if (element.code == FUNCTIONNALITY_MANAGE_STRATEGIE_BAGS) {
           var createStrategieBagageFunctionality = {
             title: "Gestion des strategies de bagages",
             url: require("@/assets/bagages.png"),
@@ -915,7 +961,7 @@ export default {
           globalFunctionnalities.push(functionManageNotification);
         }
 
-        if (element.code == FUNCTIONNALITY_GESTION_CAISSE) {
+        if (element.code == FUNCTIONNALITY_MANAGE_WALLET) {
           var functionGestionCaisse = {
             title: "Gestion des caisses",
             url: "",

@@ -156,54 +156,65 @@ export const FUNCTIONNALITY_MANAGE_ALL_ACCOUNT_USER =
 
 /* FONCTIONNALITÉS POUR L'ENTITÉ VENDEUR */
 export const FUNCTIONNALITY_RESERVE_TICKET =
-  "functionnalityReserveTicketInStation";
+  "FunctionnalityReserveTicketInStation";
 export const FUNCTIONNALITY_RESERVING_FROM_OFFRE_VOYAGE =
-  "functionnalityChooseOffreVoyage";
+  "FunctionnalityChooseOffreVoyage";
 export const FUNCTIONNALITY_SELECTION_RESERVATION_TICKET =
   "functionnalitySelectTicketRservation";
 
-export const FUNCTIONNALITY_TO_CONFIRM_TICKET = "functionnalityConfirmTicket";
+export const FUNCTIONNALITY_TO_CONFIRM_TICKET = "FunctionnalityConfirmTicket";
 
-export const FUNCTIONNALITY_TO_CHECK_TICKET = "functionnalityCheckTicket";
+export const FUNCTIONNALITY_TO_CHECK_TICKET = "FunctionnalityCheckTicket";
+
+export const FUNCTIONNALITY_CHECK_TICKET = "FunctionnalityCheckTicket";
 
 // DEFINITION DE NOUVELLES FONCTIONNALITÉS
 
 export const FUNCTIONNALITY_MANAGE_OFFRE_VOYAGE =
-  "functionnalityManageOffreVoyage";
+  "FunctionnalityManageOffreVoyage";
 
-export const FUNCTIONNALITY_MANAGE_BUS = "functionnalityManageBus";
+export const FUNCTIONNALITY_MANAGE_BUS = "FunctionnalityManageBus";
 
-export const FUNCTIONNALITY_MANAGE_STATION = "functionnalityManageStation";
+export const FUNCTIONNALITY_MANAGE_STATION = "FunctionnalityManageStation";
 
-export const FUNCTIONNALITY_MANAGE_RESERVATION_TICKET =
-  "functionnalityManageReservationTicket";
+export const FUNCTIONNALITY_MANAGE_RESERVATION_STATION =
+  "FunctionnalityManageReservationStation";
 
 export const FUNCTIONNALITY_MANAGE_SUBSCRIPTION_AND_PAYMENT =
-  "functionnalityManageSubscriptionAndPayment";
+  "FunctionnalityManageSubscriptionAndPayment";
 
-export const FUNCTIONNALITY_MANAGE_USERS = "functionnalityManageUsers";
+export const FUNCTIONNALITY_MANAGE_SUBSCRIPTION =
+  "FunctionnalityManageSubscription";
 
-export const FUNCTIONNALITY_MANAGE_ROLE_AND_FUNCTIONNALITY =
-  "functionnalityManageRoleAndFunctionnality";
+export const FUNCTIONNALITY_MANAGE_PAYMENT = "FunctionnalityManagePayment";
+
+export const FUNCTIONNALITY_MANAGE_ACCOUNT = "FunctionnalityManageAccount";
+
+export const FUNCTIONNALITY_MANAGE_ROLE_AND_PERMISSIONS =
+  "FunctionnalityManageRoleAndPermissions";
+
+export const FUNCTIONNALITY_MANAGE_COUNTRY = "FunctionnalityManageCountry";
+
+export const FUNCTIONNALITY_MANAGE_TOWN = "FunctionnalityManageTown";
 
 export const FUNCTIONNALITY_MANAGE_LOCALISATION =
-  "functionnalityManageLocalisation";
+  "FunctionnalityManageLocalisation";
 
-export const FUNCTIONNALITY_MANAGE_ADHESION = "functionnalityManageAdhesion";
+export const FUNCTIONNALITY_MANAGE_ADHESION = "FunctionnalityManageAdhesion";
 
-export const FUNCTIONNALITY_MANAGE_STRATEGIE_BAGAGE =
-  "functionnalityManageStrategieBagage";
+export const FUNCTIONNALITY_MANAGE_STRATEGIE_BAGS =
+  "FunctionnalityManageStrategieBags";
 
-export const FUNCTIONNALITY_MANAGE_DOCUMENT = "functionnalityManageDocument";
+export const FUNCTIONNALITY_MANAGE_DOCUMENT = "FunctionnalityManageDocument";
 
-export const FUNCTIONNALITY_GESTION_CAISSE = "FunctionnalityGestionCaisse";
+export const FUNCTIONNALITY_MANAGE_WALLET = "FunctionnalityManageWallet";
 
 export const FUNCTIONNALITY_MANAGE_NOTIFICATION =
-  "functionnalityManageNotification";
+  "FunctionnalityManageNotification";
 
-export const FUNCTIONNALITY_MANAGE_BAGS = "functionalityManageBags";
+export const FUNCTIONNALITY_MANAGE_BAGS = "FunctionnalityManageBags";
 
 export const FUNCTIONALITY_MANAGE_CATEGORIE_VOYAGEUR =
-  "FunctionalityManageCategorieVoyageur";
+  "FunctionnalityManageCategorieVoyageur";
 
-export const FUNCTIONALITY_MANAGE_REFERENCE = "functionalityManageReference";
+export const FUNCTIONALITY_MANAGE_REFERENCE = "FunctionnalityManageReference";
