@@ -218,3 +218,5 @@ export const FUNCTIONALITY_MANAGE_CATEGORIE_VOYAGEUR =
   "FunctionnalityManageCategorieVoyageur";
 
 export const FUNCTIONALITY_MANAGE_REFERENCE = "FunctionnalityManageReference";
+
+export const FUNCTIONALITY_ONLY_USER_SIMPLE = "FunctionnalityOnlyUserSimple";
